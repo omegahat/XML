@@ -1,0 +1,56 @@
+@
+\section{Different Data Types}
+\subsection{Primitives}
+logical, string, char, integer, double
+
+Collections: list, array, namedlist.
+
+\subsection{Non-Primitives}
+dataframe, factor 
+
+@
+\section{Namespaces}
+<<>>=
+
+v <- xmlRoot(xmlTreeParse("longitudinalData.xml", handlers=list(integer=RSinteger, double=RSdouble, logical = RSlogical, string = RSstring, array =RSArray, anamedlist = RSnamedList, logitudinal = RSlongitudinal , object = RSobject, list=RSlist), asTree=T))
+     
+
+
+@
+\section{Handlers}
+Connecting to namespaces.
+
+
+@ 
+<<Examples>>=
+d <- RSxmlScan("longitudinalData.xml")
+d[[1]]$y
+
+d <- RSxmlScan("longitudinalData.xml", longitudinal = RSlongitudinal)
+d[[1]]$y
+
+
+@ Here we use the default tag name dispatch to see if there is a
+function named \texttt{readXML.}\textit{tagName}.  If there is an
+explicit handler specified in the call to \SFunction{RSxmlScan} with a
+name that matches the current tag name, it is called before we get to
+call this ``generic''. That is because the default
+\SFunction{startElement} handler is only called if there is no handler
+function for the specific tag name.
+<<>>=
+readXML.longitudinal <- RSlongitudinal
+RSxmlScan("longitudinal.xml")
+     
+
+
+@ 
+<<>>=
+
+l <- list(times=as.integer(c(1,4)), cov=c(23.4, 45.6))
+class(l) <- "lgtdl"
+
+
+
+@ 
+\section{Shared sub-structures \& Element Links}
+<<>>=

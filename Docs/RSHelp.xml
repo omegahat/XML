@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+<!DOCTYPE article>
+
+<article>
+<abstract>
+
+<section>
+
+We discuss the basic tools for handling documentation of S-language
+objects (datasets, functions, etc.) using XML rather than the specific
+styles used by SPlus4, SPlus5 and 6 and R.  The details presented here
+are more specific than those in <a
+href="literateS.xml">literateS.xml</a> document than the.
+</abstract>
+
+</section>
+<section>
+<title>
+Documenting an Existing Function
+</title>
+Let's suppose we start with an existing S function in either SPlus5,
+SPlus 6, or R. Next, we decide to document it.  The strategy is to get
+a template help file and then to insert the specifics for this
+function into that document and write it to a file so that it can be
+edited.
+
+We obtain the default or template help document for this type of
+object. This is an XML tree and is either created by reading a
+template file or generated directly using the
+<sfunction>xmlNode</sfunction> and <sfunction>xmlTextNode</sfunction>
+functions.
+<scode>
+<![CDATA[
+ getHelpTemplate <-
+ function(x, file = "data/RSHelpTemplate.xml")  {
+  if(missing(file)) {
+   if(missing(x) || is.function(x)) {
+     file <- "data/RSHelpTemplate.xml"
+   } else {
+     file <- "data/RSDataHelpTemplate.xml"
+   }
+  }
+   xmlTreeParse(system.file(file))
+ }
+]]>
+</scode>
+
+
+Now, we take this tree of XML nodes and find the elements that we can
+complete or fill-in with information from the specific function we are
+documenting. This is where we have to assume something about the
+format of the template help file. Specifically, we will look for
+particular top-level tags into which to insert this information.  This
+includes the <tag>aliases</tag> and <tag>usage</tag> tags.  Also, when
+generating the partially filled-in tree, we will allow the user to
+specify entries for things such as references, author
+and keywords.
+
+<function lang="S">
+<autoDoc>
+
+This creates the tree DOM tree that contains the default/template
+document elements for an S help page.  It generates this template tree
+via a call to <sfunction>getHelpTemplate</sfunction> and then it
+inserts the different function-specific information into the tree,
+such as the usage and arguments section.
+
+</autoDoc>
+<def>
+<![CDATA[
+createDoc <-
+function(what, author = NULL, keywords=NULL, references = NULL, template = NULL)
+{
+ if(missing(template)) 
+   template <- getHelpTemplate(what)
+
+ r <- xmlRoot(template)
+
+ name <- substitute(what)
+
+ r[["name"]] <- xmlTextNode("name", name)
+ r[["aliases"]][[1]] <- xmlNode("alias", xmlTextNode(name))
+
+
+ if(!missing(keywords)) {
+    tmp <-    lapply(keywords, function(i) {
+                                  if(!inherits(i, "XMLNode"))
+                                     i <- xmlNode("keyword", i)
+                                  i
+                                })
+#   names(tmp) <- rep("keyword", length(tmp))
+
+   r[["keywords"]] <- append.xmlNode(r[["keywords"]], tmp)
+ }
+
+ if(!missing(references)) {
+    tmp <-    lapply(references, function(i) {
+                                  if(!inherits(i, "XMLNode"))
+                                     i <- xmlNode("reference", i)
+                                  i
+                                })
+   names(tmp) <- rep("reference", length(tmp))
+   r[["references"]] <- append.xmlNode(r[["references"]],tmp)
+ }
+
+ if(!missing(author))
+   r[["author"]] <- xmlNode("author", author)
+
+ if(typeof(what) == "closure") {
+    tmp <- createFunctionUsage(what, name)
+    r[["usage"]] <- tmp$usage
+    r[["arguments"]] <- tmp$arguments
+ }
+
+ f <- tempfile()
+ sink(f)
+ print(what)
+ sink()
+ txt <- paste(scan(f, what="", sep="\n"), collapse="\n")
+ r[["definition"]][[1]] <- xmlCDataNode(txt)
+
+ r
+}
+]]>
+</def>
+</function>
+
+<function lang="S">
+<autoDoc>
+</autoDoc>
+<def>
+<![CDATA[
+createFunctionUsage <-
+function(what, name) {
+
+ is.missing.arg <- function(arg) typeof(arg) == "symbol" &&  deparse(arg) == ""
+
+ usage <- xmlNode("usage", xmlNode("name", name))
+ arguments <- xmlNode("arguments")
+
+ args <- formals(what)
+ for(i in 1:length(args)) {
+   argName <- names(args)[i]
+   kid <- xmlNode("arg",xmlNode("name", argName))
+   if(!is.missing.arg(args[[i]])) {
+    kid <- append.xmlNode(kid, xmlNode("defaultValue", deparse(args[[i]])))
+   }
+   usage <- append.xmlNode(usage, arg=kid)
+   arguments <- append.xmlNode(arguments, 
+                                 arg= xmlNode("arg", xmlNode("name", argName),
+                                                  xmlNode("description")))
+ }
+
+ list(usage=usage, arguments=arguments)
+}
+]]>
+</def>
+</function>
+
+
+<example>
+<![CDATA[
+createDoc(createDoc, author=xmlNode("a","Duncan Temple Lang",
+attrs=c(href="mailto:duncan@research.bell-labs.com")),
+keywords=c("Documentation", "XML"))
+
+k <- createDoc(createDoc, author=xmlNode("a","Duncan Temple Lang", attrs=c(href="mailto:duncan@research.bell-labs.com")), keywords=c("Documentation", "XML"), references=list(xmlNode("url", "W3", attrs=c(href="http://www.w3.org/XML")), "Some text"))
+]]>
+</example>
+</section>
+
+<section>
+
+<ul>
+<li> create application neutral documentation;
+<li> structured document that is easy to parse in a variety of
+different languages;
+<li> verify all arguments are documented, even after definition
+has changed.
+</ul>
+</section>
+
+</article>

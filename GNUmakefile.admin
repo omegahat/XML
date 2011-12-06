@@ -1,0 +1,122 @@
+# define these so that we get the files in the tars
+# conditionally defined in SRC
+PDFLATEX=
+ifndef LIBEXPAT
+ LIBEXPAT=/home/duncan/Projects/expat
+endif
+
+ifndef LIBXML
+ LIBXML=/home/duncan/Projects/libxml-1.7.3
+endif
+
+################################################
+# Material for R library.
+################################################
+
+ # Name of the file containing the code in the R/ directory.
+LIB_NAME=XML
+
+ # where to install to, not where LibIndex is located,
+ # but the actual directory below that.
+#TARGET_DIR=.
+TARGET_DIR=$(OMEGA_HOME)/R/library/$(LIB_NAME)
+
+ # phrase that is to go into LibIndex
+R_LIB_DESCRIPTION="Event and document based XML parsers."
+
+S_FUNCTIONS_DIR=Src
+
+ALL_S_SCRIPTS= Src/parseDTD.R Src/xmlEventParse.R Src/xmlTreeParse.R Src/First.lib Src/gnumericHandler.R Src/defaultXMLHandler.R Src/applyDOM.R
+#$(shell ls $(S_FUNCTIONS_DIR)/*.R)
+
+  # Throw away those starting with S4.
+#S_SCRIPTS=$(patsubst S4%,,$(ALL_S_SCRIPTS:$(S_FUNCTIONS_DIR)/%=%))
+
+ # Throw away the First
+#R_SRC=$(filter-out $(S_FUNCTIONS_DIR)/First.S,$(S_SCRIPTS:%=$(S_FUNCTIONS_DIR)/%)) 
+R_SRC=$(ALL_S_SCRIPTS)
+
+ # local R-specific files.
+R_SRC+=$(LOCAL_SRC:%=Src/%)
+
+R_MAN_FILES=$(shell ls man/*.Rd)
+
+R_DATA_FILES=data/test.xml data/job.xml data/foo.dtd data/mathml.xml data/svg.xml data/dataFrameEvent.R \
+             data/enhancedDataFrame.R data/README data/mtcars.xml data/gnumeric.xml
+
+
+ifndef R_CONFIG_DIR
+ R_CONFIG_DIR=$(OMEGA_HOME)/R/Config
+endif
+
+include $(R_CONFIG_DIR)/GNUmakefile.Rlib
+
+# externalWeb  rule to put on omegahat.org in download/R/
+#   index.html, Todo.html, xml.tar.gz
+
+EXTERNAL_WEB_DIR=/home/ftp/pub/Omega/download/contrib/RS-XML
+
+#xml.tar.gz
+externalWeb: xml-package.tar.gz Todo.html index.html WritingXML.html
+	for f in $^ ; do \
+	   scp $$f franz.stat.wisc.edu:$(EXTERNAL_WEB_DIR)/ ; \
+	done
+
+R_NATIVE_SRC_FILES=\
+   $(SRC:%=%.c)	$(SRC:%=%.h)  RS_XML.h \
+   GNUmakefile \
+
+# list of files that go into the basic source version.
+TAR_ENTRIES=\
+   $(R_NATIVE_SRC_FILES) \
+   index.html WritingXML.html Todo.html FAQ.html README \
+   $(ALL_S_SCRIPTS) \
+   COPYRIGHT Copyright \
+   DESCRIPTION TITLE \
+   $(shell ls man/*.Rd) $(R_DATA_FILES) \
+   $(shell find expat libxml -name 'GNU*')  libxml/PATCH.attribute \
+   RSCommon.h \
+   SUtils.c    SUtils.h \
+   RUtils.c    RUtils.h
+
+tar xml.tar.gz: ./RSCommon.h
+	if [ ! -d tmp/XML ] ; then mkdir -p tmp/XML ; fi
+	tar cf - $(TAR_ENTRIES) | (cd tmp/XML ; tar xf - )
+	(cd tmp ; tar zcvf ../$@ $(TAR_ENTRIES:%=XML/%))
+
+
+EXPAT_MAKES= GNUmakefile GNUmakefile.lib xmltok/GNUmakefile xmlparse/GNUmakefile
+THIRD_PARTY_MAKES=libxml/GNUmakefile libxml/PATCH.attribute $(EXPAT_MAKES:%=expat/%)
+
+# An R package distribution.
+xml-package.tar.gz:  XML/src/RSCommon.h
+	$(MAKE) ADMIN=1 TARGET_DIR=XML
+	cp INSTALL.R XML
+	tar cf - $(THIRD_PARTY_MAKES) | (cd XML ; tar xf -)
+	cp index.html WritingXML.html Todo.html FAQ.html README XML/
+	tar zcvf $@ XML
+
+
+./RSCommon.h XML/RSCommon.h XML/src/RSCommon.h:
+	if [ ! -d $(@D) ] ; then mkdir -p $(@D) ; fi
+	cp $(OMEGA_HOME)/Interfaces/CORBA/CORBAConfig/RSCommon.h $(@D)
+	chmod u+w $@
+
+# Additional commands for installing the R package
+# code. 
+install::
+	tar cf - $(THIRD_PARTY_MAKES) | (cd XML ; tar xf -)
+	$(augment-package-makefile)
+
+define augment-package-makefile
+ echo ".PHONY: expat libxml" >> XML/Makefile
+ echo "expat:" >> XML/Makefile
+ echo '	cd expat ; tar cf -  . | (cd $$(LIBEXPAT) ; tar xf - )' >> XML/Makefile
+ echo "libxml:" >> XML/Makefile
+ echo '	cd libxml ; tar cf - . | (cd $$(LIBXML) ; tar xf - )' >> XML/Makefile
+ echo "" >> XML/Makefile
+ echo "libxmlpatch:" >> XML/Makefile
+ echo '	(PWD=`pwd`; export PWD ; cd $$(LIBXML) ; patch -f < $$(PWD)/libxml/PATCH.attribute)' >> XML/Makefile
+ echo "" >> XML/Makefile
+endef
+

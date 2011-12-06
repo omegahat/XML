@@ -1,0 +1,2327 @@
+Hmm ... looks like a package
+
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011)
+ restricted \write18 enabled.
+entering extended mode
+
+(/private/var/folders/f8/2dd5rdyx1bjbw4jttt0x1hm80000gn/T/RtmpMBBlcM/Rd2pdf8744
+57ba67ae/Rd2.tex
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, ge
+rman-x-2009-06-19, ngerman-x-2009-06-19, afrikaans, ancientgreek, ibycus, arabi
+c, armenian, basque, bulgarian, catalan, pinyin, coptic, croatian, czech, danis
+h, dutch, ukenglish, usenglishmax, esperanto, estonian, ethiopic, farsi, finnis
+h, french, galician, german, ngerman, swissgerman, monogreek, greek, hungarian,
+ icelandic, assamese, bengali, gujarati, hindi, kannada, malayalam, marathi, or
+iya, panjabi, tamil, telugu, indonesian, interlingua, irish, italian, kurmanji,
+ lao, latin, latvian, lithuanian, mongolian, mongolianlmc, bokmal, nynorsk, pol
+ish, portuguese, romanian, russian, sanskrit, serbian, serbianc, slovak, sloven
+ian, spanish, swedish, turkish, turkmen, ukrainian, uppersorbian, welsh, loaded
+.
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/bk10.clo))
+(/Users/duncan/Projects/R-new-devel/share/texmf/tex/latex/Rd.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/url/url.sty) NOT loading ae
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/t1enc.def))
+(/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/times.sty)
+NOT loading lmodern
+(/usr/local/texlive/2011/texmf-dist/tex/latex/inconsolata/inconsolata.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/ts1enc.def))
+(/usr/local/texlive/2011/texmf-dist/tex/latex/graphics/keyval.sty))
+(/usr/local/texlive/2011/texmf-dist/tex/latex/graphics/color.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/latexconfig/color.cfg)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/pdftex-def/pdftex.def
+(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/infwarerr.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/ltxcmds.sty)))
+(/usr/local/texlive/2011/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/local/texlive/2011/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+
+Package hyperref Message: Driver (autodetected): hpdftex.
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/local/texlive/2011/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 342.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 342.
+
+) (/usr/local/texlive/2011/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/inputenc.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/t1enc.dfu)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/ot1enc.dfu)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/omsenc.dfu)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/ts1enc.dfu))
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/latin1.def))
+Writing index file Rd2.idx
+No file Rd2.aux.
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/local/texlive/2011/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/local/texlive/2011/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(/usr/local/texlive/2011/texmf-dist/tex/latex/inconsolata/t1fi4.fd)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/t1phv.fd)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [1{/usr/local/texl
+ive/2011/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+Overfull \hbox (54.78088pt too wide) in paragraph at lines 89--89
+ []               \T1/fi4/m/n/10 suppressNamespaceWarning = getOption("suppress
+XMLNamespaceWarning", FALSE),[] 
+
+Overfull \hbox (1.33824pt too wide) in paragraph at lines 136--141
+\T1/ptm/m/n/10 is passed on to the rel-e-vant func-tion that cre-ates the text 
+nodes, e.g. [][]\T1/fi4/m/n/10 xmlTextNode[][][]
+[2] [3]
+Overfull \hbox (59.28088pt too wide) in paragraph at lines 223--223
+ []\T1/fi4/m/n/9 b = newXMLNode("bob", namespace = c(r = "http://www.r-project.
+org", omg = "http://www.omegahat.org"))[] 
+[4]
+Overfull \hbox (9.78088pt too wide) in paragraph at lines 290--290
+ []                \T1/fi4/m/n/9 xmlNode("a", "a link", attrs = c(href = "http:
+//www.omegahat.org/RSXML")))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (34.23923pt too wide) in paragraph at lines 338--341
+\T1/ptm/m/n/10 ent types of trees/nodes. These can in-clude \T1/fi4/m/n/10 attr
+s\T1/ptm/m/n/10 , \T1/fi4/m/n/10 namespace\T1/ptm/m/n/10 , \T1/fi4/m/n/10 names
+paceDefinitions\T1/ptm/m/n/10 ,
+[5] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [6]
+Overfull \hbox (14.28088pt too wide) in paragraph at lines 454--454
+ [] \T1/fi4/m/n/9 n = append.xmlNode(n, xmlNode("varNames", xmlNode("string", "
+A"), xmlNode("string", "B")))[] 
+[7] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [8]
+Overfull \hbox (109.78088pt too wide) in paragraph at lines 554--554
+ []\T1/fi4/m/n/10 asXMLTreeNode(node, env, id = get(".nodeIdGenerator", env)(xm
+lName(node)), className = "XMLTreeNode")[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [9]
+Overfull \hbox (12.16985pt too wide) in paragraph at lines 641--646
+[]\T1/ptm/m/n/10 More in-for-ma-tion can be found at [][]$\T1/fi4/m/n/10 http :
+ / / xmlsoft . org / catalog . html$[][] \T1/ptm/m/n/10 and [][]$\T1/fi4/m/n/10
+ http : / / www . sagehill .
+[10]
+Overfull \hbox (18.78088pt too wide) in paragraph at lines 717--717
+ []          \T1/fi4/m/n/9 catalogAdd(c("http://www.omegahat.org/XML" = system.
+file("XML", package = "XML")))[] 
+
+Overfull \hbox (0.78088pt too wide) in paragraph at lines 718--718
+ []          \T1/fi4/m/n/9 catalogAdd("http://www.omegahat.org/XML", system.fil
+e("XML", package = "XML"))[] 
+
+Overfull \hbox (86.28088pt too wide) in paragraph at lines 719--719
+ []          \T1/fi4/m/n/9 catalogAdd("http://www.r-project.org/doc/", paste(R.
+home(), "doc", "", sep = .Platform$file.sep))[] 
+
+Overfull \hbox (5.28088pt too wide) in paragraph at lines 722--722
+ []     \T1/fi4/m/n/9 #          This shows how we can load a catalog and then 
+resolve a system identifier[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (42.85767pt too wide) in paragraph at lines 738--745
+\T1/ptm/m/n/10 tially dif-fer-ent re-mote files. We can use a cat-a-log to map 
+a ref-er-ence such as \T1/fi4/m/n/10 http://www.omegahat.org/XSL/
+[11]
+Overfull \hbox (18.78088pt too wide) in paragraph at lines 802--802
+ []\T1/fi4/m/n/9 Sys.setenv("XML_CATALOG_FILES" = system.file("exampleData", "c
+atalog.xml", package = "XML"))[] 
+[12] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [13]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [14]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [15]
+Overfull \hbox (212.28088pt too wide) in paragraph at lines 1052--1052
+ []  \T1/fi4/m/n/9 d = Doctype(name = "section", public = c("-//OASIS//DTD DocB
+ook XML V4.2//EN", "http://oasis-open.org/docbook/xml/4.2/docbookx.dtd"))[] 
+
+Overfull \hbox (252.78088pt too wide) in paragraph at lines 1056--1056
+ []  \T1/fi4/m/n/9 d = Doctype(name = "section", public = c("-//OASIS//DTD DocB
+ook XML V4.2//EN"), system = "http://oasis-open.org/docbook/xml/4.2/docbookx.dt
+d")[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [16]
+Overfull \hbox (212.28088pt too wide) in paragraph at lines 1108--1108
+ []  \T1/fi4/m/n/9 d = Doctype(name = "section", public = c("-//OASIS//DTD DocB
+ook XML V4.2//EN", "http://oasis-open.org/docbook/xml/4.2/docbookx.dtd"))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [17]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [18]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [19]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [20]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [21]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [22]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [23]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [24]
+Overfull \hbox (7.3792pt too wide) in paragraph at lines 1666--1673
+[][][]\T1/fi4/m/n/10 xmlEventParse[][][] [][]startElement.SAX[][][] [][]endElem
+ent.SAX[][][] [][]comment.SAX[][][] [][]processingInstruction.SAX[][][]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [25]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [26] [27]
+Overfull \hbox (9.78088pt too wide) in paragraph at lines 1889--1889
+ []\T1/fi4/m/n/10 getNodeSet(doc, path, namespaces = xmlNamespaceDefinitions(do
+c, simplify = TRUE),[] 
+
+Overfull \hbox (24.78088pt too wide) in paragraph at lines 1890--1890
+ []                    \T1/fi4/m/n/10 fun = NULL, sessionEncoding = CE_NATIVE, 
+addFinalizer = NA, ...)[] 
+
+Overfull \hbox (39.78088pt too wide) in paragraph at lines 1898--1898
+ []                               \T1/fi4/m/n/10 nsDefs = xmlNamespaceDefinitio
+ns(doc, recursive = TRUE),[] 
+[28]
+Overfull \hbox (50.56981pt too wide) in paragraph at lines 1961--1973
+\T1/ptm/m/n/10 we have an XML doc-u-ment \T1/fi4/m/n/10 <help xmlns="http://www
+.r-project.org/Rd"><topic>...</topic></help>
+
+Overfull \hbox (11.73862pt too wide) in paragraph at lines 1961--1973
+\T1/fi4/m/n/10 project.org/Rd \T1/ptm/m/n/10 cor-re-spond-ing to the one in the
+ XML doc-u-ment. So we would use \T1/fi4/m/n/10 getNodeSet(doc,
+[29]
+Overfull \hbox (9.78088pt too wide) in paragraph at lines 2073--2073
+ [] \T1/fi4/m/n/9 getNodeSet(z, "/a:Envelope/a:Body", c("a" = "http://schemas.x
+mlsoap.org/soap/envelope/"))[] 
+[30]
+Overfull \hbox (54.78088pt too wide) in paragraph at lines 2117--2117
+ [] \T1/fi4/m/n/9 rates = xpathApply(doc, "//ns:Cube[@currency='SIT']", xmlGetA
+ttr, "rate", namespaces = namespaces )[] 
+
+Overfull \hbox (99.78088pt too wide) in paragraph at lines 2121--2121
+ [] \T1/fi4/m/n/9 rates = xpathApply(doc, "//ns:Cube[@currency='SIT']", quote(x
+mlGetAttr(x, "rate")), namespaces = namespaces )[] 
+
+Overfull \hbox (9.78088pt too wide) in paragraph at lines 2130--2130
+ []  \T1/fi4/m/n/9 getNodeSet(d, "/o:a//c:c", c("o" = "http://www.omegahat.org"
+, "c" = "http://www.c.org"))[] 
+
+Underfull \vbox (badness 10000) has occurred while \output is active [31]
+Overfull \hbox (59.28088pt too wide) in paragraph at lines 2173--2173
+ []  \T1/fi4/m/n/9 doc = htmlTreeParse("http://finance.yahoo.com/bonds/composit
+e_bond_rates", useInternalNodes = TRUE)[] 
+
+Underfull \vbox (badness 10000) has occurred while \output is active [32]
+Overfull \hbox (81.78088pt too wide) in paragraph at lines 2224--2224
+ []    \T1/fi4/m/n/9 txt = '<top xmlns="http://www.r-project.org" xmlns:r="http
+://www.r-project.org"><r:a><b/></r:a></top>'[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [33]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [34]
+Overfull \hbox (32.28088pt too wide) in paragraph at lines 2378--2378
+ []     \T1/fi4/m/n/9 #           Here we read  a "censored" "database" of song
+s from Apple's  iTune application[] 
+[35] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [36]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [37]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [38]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (4.97928pt too wide) in paragraph at lines 2631--2644
+\T1/fi4/m/n/10 libxmlFeatures \T1/ptm/m/n/10 re-turns a log-i-cal vec-tor with 
+names given by:  \T1/fi4/m/n/10 [1] "THREAD" "TREE" "OUTPUT"
+
+Overfull \hbox (39.78088pt too wide) in paragraph at lines 2631--2644
+\T1/fi4/m/n/10 "PUSH" "READER" [6] "PATTERN" "WRITER" "SAX1" "FTP" "HTTP" [11] 
+"VALID" "HTML" "LEGACY"
+
+Overfull \hbox (9.78088pt too wide) in paragraph at lines 2631--2644
+\T1/fi4/m/n/10 "C14N" "CATALOG" [16] "XPATH" "XPTR" "XINCLUDE" "ICONV" "ISO8859
+X" [21] "UNICODE"
+
+Overfull \hbox (24.78088pt too wide) in paragraph at lines 2631--2644
+\T1/fi4/m/n/10 "REGEXP" "AUTOMATA" "EXPR" "SCHEMAS" [26] "SCHEMATRON" "MODULES"
+ "DEBUG" "DEBUG_MEM"
+[39] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [40]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [41] [42]
+Overfull \hbox (16.26955pt too wide) in paragraph at lines 2874--2879
+\T1/ptm/m/n/10 the XML doc-u-ment, \ e.g. \T1/fi4/m/n/10 c(shelp = "http://www.
+omegahat.org/XML/SHelp") 
+[43] [44] [45]
+Overfull \hbox (41.28088pt too wide) in paragraph at lines 3089--3089
+ []\T1/fi4/m/n/9 z = xmlTree("people", dtd = c("people", "//a//b//c//d", "http:
+//www.omegahat.org/XML/types.dtd"))[] 
+
+Overfull \hbox (122.28088pt too wide) in paragraph at lines 3106--3106
+ []\T1/fi4/m/n/9 z$addNode("r:data",  namespace = c(r = "http://www.r-project.o
+rg", omg = "http://www.omegahat.org"), close = FALSE)[] 
+
+Underfull \vbox (badness 10000) has occurred while \output is active [46]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [47]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (4.78088pt too wide) in paragraph at lines 3214--3214
+ []\T1/fi4/m/n/10 parseDTD(extId, asText=FALSE, name="", isURL=FALSE, error = x
+mlErrorCumulator())[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/ts1ptm.fd) [48] [49]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (15.2779pt too wide) in paragraph at lines 3369--3371
+[]\T1/ptm/m/n/10 a string giv-ing the name of the user, e.g. in FTP "ftp://dunc
+an@www.omegahat.org",
+
+Overfull \hbox (37.88806pt too wide) in paragraph at lines 3372--3374
+[]\T1/ptm/m/n/10 the CGI query part of the string, e.g. the bit af-ter '?' of t
+he form \T1/fi4/m/n/10 name=value&name=value 
+
+Overfull \hbox (23.28088pt too wide) in paragraph at lines 3391--3391
+ []  \T1/fi4/m/n/9 as(parseURI("http://duncan@www.omegahat.org:8080/RCurl/index
+.html#my_anchor"), "character")[] 
+
+Overfull \hbox (36.78088pt too wide) in paragraph at lines 3393--3393
+ []  \T1/fi4/m/n/9 as(parseURI("ftp://duncan@www.omegahat.org:8080/RCurl/index.
+html?foo=1&bar=axd"), "character")[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [50]
+Overfull \hbox (32.28088pt too wide) in paragraph at lines 3465--3465
+ []  \T1/fi4/m/n/9 txt = sprintf("<Placemark><Point><coordinates>%.3f,%.3f,0</c
+oordinates></Point></Placemark>",[] 
+[51] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [52] [53]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (10.71863pt too wide) in paragraph at lines 3634--3640
+[]\T1/ptm/m/n/10 These are only rel-e-vant for "in-ter-nal nodes" as gen-er-ate
+d via [][]\T1/fi4/m/n/10 xmlInternalTreeParse[][][] \T1/ptm/m/n/10 and [][]\T1/
+fi4/m/n/10 newXMLNode[][][]
+
+Overfull \hbox (12.97781pt too wide) in paragraph at lines 3634--3640
+\T1/ptm/m/n/10 and their re-lated func-tions. When deal-ing with XML doc-u-ment
+s via [][]\T1/fi4/m/n/10 xmlTreeParse[][][] \T1/ptm/m/n/10 or [][]\T1/fi4/m/n/1
+0 xmlEventParse[][][]\T1/ptm/m/n/10 ,
+[54] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (3.77963pt too wide) in paragraph at lines 3737--3741
+\T1/fi4/m/n/10 HTMLInternalDocument\T1/ptm/m/n/10 , or an HTML node of class \T
+1/fi4/m/n/10 XMLInternalElementNode\T1/ptm/m/n/10 ,
+[55]
+Overfull \hbox (28.77847pt too wide) in paragraph at lines 3784--3788
+[]\T1/ptm/m/n/10 currently ad-di-tional pa-ram-e-ters that are passed on to [][
+]\T1/fi4/m/n/10 as.data.frame[][][] \T1/ptm/m/n/10 if \T1/fi4/m/n/10 as.data.fr
+ame
+[56]
+Overfull \hbox (36.78088pt too wide) in paragraph at lines 3828--3828
+ []                      \T1/fi4/m/n/9 ncol(tmp)-1, byrow = TRUE, dimnames = li
+st(NULL, as.character(tmp[[1]]))))[] 
+
+Overfull \hbox (63.78088pt too wide) in paragraph at lines 3852--3852
+ []  \T1/fi4/m/n/9 zz = readHTMLTable("http://www.inflationdata.com/Inflation/C
+onsumer_Price_Index/HistoricalCPI.aspx")[] 
+
+Overfull \hbox (23.28088pt too wide) in paragraph at lines 3853--3853
+ []  \T1/fi4/m/n/9 if(any(i <- sapply(zz, ncol) == 14)) {  # guard against the 
+structure of the page changing.[] 
+
+Overfull \hbox (9.78088pt too wide) in paragraph at lines 3855--3855
+ []        \T1/fi4/m/n/9 # convert columns to numeric.  Could use colClasses in
+ the call to readHTMLTable()[] 
+[57]
+Overfull \hbox (23.28088pt too wide) in paragraph at lines 3877--3877
+ [] \T1/fi4/m/n/9 u = "http://tidesonline.nos.noaa.gov/data_read.shtml?station_
+info=9414290+San+Francisco,+CA"[] 
+
+Overfull \hbox (45.78088pt too wide) in paragraph at lines 3894--3894
+ []  \T1/fi4/m/n/9 tt =  getURL("http://www.omegahat.org/RCurl/testPassword/tab
+le.html",  userpwd = "bob:duncantl")[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [58]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (39.78088pt too wide) in paragraph at lines 3975--3975
+ []\T1/fi4/m/n/10 saveXML(doc, file=NULL, compression=0, indent=TRUE, prefix = 
+'<?xml version="1.0"?>\n',[] 
+
+Overfull \hbox (39.78088pt too wide) in paragraph at lines 3978--3978
+ []\T1/fi4/m/n/10 saveXML(doc, file=NULL, compression=0, indent=TRUE, prefix = 
+'<?xml version="1.0"?>\n',[] 
+
+Overfull \hbox (39.78088pt too wide) in paragraph at lines 3981--3981
+ []\T1/fi4/m/n/10 saveXML(doc, file=NULL, compression=0, indent=TRUE, prefix = 
+'<?xml version="1.0"?>\n',[] 
+
+Overfull \hbox (39.78088pt too wide) in paragraph at lines 3984--3984
+ []\T1/fi4/m/n/10 saveXML(doc, file=NULL, compression=0, indent=TRUE, prefix = 
+'<?xml version="1.0"?>\n',[] 
+
+Overfull \hbox (39.78088pt too wide) in paragraph at lines 3987--3987
+ []\T1/fi4/m/n/10 saveXML(doc, file=NULL, compression=0, indent=TRUE, prefix = 
+'<?xml version="1.0"?>\n',[] 
+[59] [60] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [61]
+Overfull \hbox (11.70992pt too wide) in paragraph at lines 4153--4154
+[]\T1/fi4/m/n/10 signature(name = "ANY", base = "ANY", sysId = "ANY", publicId
+
+Overfull \hbox (42.65938pt too wide) in paragraph at lines 4154--4155
+[]\T1/fi4/m/n/10 signature(target = "ANY", content = "ANY", .state = "SAXState"
+)\T1/ptm/m/n/10 :
+[62]
+Overfull \hbox (77.28088pt too wide) in paragraph at lines 4202--4202
+ [] \T1/fi4/m/n/9 z = xmlEventParse(filename, genericSAXHandlers(), state = new
+("ElementNameCounter"), addContext = FALSE)[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [63]
+Overfull \hbox (4.78088pt too wide) in paragraph at lines 4294--4294
+ []\T1/fi4/m/n/10 entityDeclaration.SAX(name, base, sysId, publicId, notationNa
+me,  .state = NULL)[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [64]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [65]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [66]
+Overfull \hbox (0.78088pt too wide) in paragraph at lines 4507--4507
+ [] \T1/fi4/m/n/9 x <- xmlRoot(xmlTreeParse(system.file("exampleData", "gnumeri
+c.xml", package = "XML")))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [67] [68]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [69]
+Overfull \hbox (189.78088pt too wide) in paragraph at lines 4663--4663
+ [] \T1/fi4/m/n/10 'xmlAttrs<-'(node, append = TRUE, suppressNamespaceWarning =
+ getOption("suppressXMLNamespaceWarning", FALSE), value)[] 
+[70] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [71]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [72]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [73]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [74]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [75]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [76]
+Overfull \hbox (7.36877pt too wide) in paragraph at lines 5153--5169
+[]\T1/ptm/m/n/10 The ad-di-tion of the \T1/fi4/m/n/10 recursive \T1/ptm/m/n/10 
+ar-gu-ment makes this func-tion be-have like the \T1/fi4/m/n/10 getElementsByTa
+gName
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [77]
+Overfull \hbox (5.28088pt too wide) in paragraph at lines 5255--5255
+ []  \T1/fi4/m/n/9 xmlElementSummary(system.file("exampleData", "eurofxref-hist
+.xml.gz", package = "XML"))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [78]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [79]
+Overfull \hbox (0.26694pt too wide) in paragraph at lines 5361--5366
+\T1/ptm/m/n/10 han-dler el-e-ments with the same name as the XML el-e-ment of i
+n-ter-est, i.e. \T1/fi4/m/n/10 "myTag" = function(x,
+[80]
+Overfull \hbox (52.63095pt too wide) in paragraph at lines 5440--5451
+\T1/fi4/m/n/10 entityDeclaration()\T1/ptm/m/n/10 , \T1/fi4/m/n/10 processingIns
+truction()\T1/ptm/m/n/10 , \T1/fi4/m/n/10 text()\T1/ptm/m/n/10 , \T1/fi4/m/n/10
+ cdata()\T1/ptm/m/n/10 , \T1/fi4/m/n/10 startDocument()\T1/ptm/m/n/10 ,
+
+Overfull \hbox (14.2404pt too wide) in paragraph at lines 5459--5478
+\T1/fi4/m/n/10 = "", system = "character", public = "character" ) name \T1/ptm/
+m/n/10 gives the name
+
+Overfull \hbox (28.59091pt too wide) in paragraph at lines 5459--5478
+\T1/fi4/m/n/10 "External_General_Unparsed"\T1/ptm/m/n/10 , \T1/fi4/m/n/10 "Inte
+rnal_Parameter"\T1/ptm/m/n/10 , \T1/fi4/m/n/10 "External_Parameter"\T1/ptm/m/n/
+10 ,
+[81] [82]
+Underfull \vbox (badness 2698) has occurred while \output is active [83]
+[84]
+Underfull \vbox (badness 10000) has occurred while \output is active [85]
+Overfull \hbox (77.28088pt too wide) in paragraph at lines 5804--5804
+ [] \T1/fi4/m/n/9 xmlEventParse(system.file("exampleData", "namespaces.xml", pa
+ckage="XML"), handlers = h, saxVersion = 2)[] 
+
+Overfull \hbox (27.78088pt too wide) in paragraph at lines 5826--5826
+ []  \T1/fi4/m/n/9 invisible(xmlEventParse(filename, branches = list(b = functi
+on(node) {print(names(node))})))[] 
+
+Overfull \hbox (117.78088pt too wide) in paragraph at lines 5827--5827
+ []  \T1/fi4/m/n/9 invisible(xmlEventParse(filename, branches = list(b = functi
+on(node) {print(xmlName(xmlChildren(node)[[1]]))})))[] 
+
+Underfull \vbox (badness 10000) has occurred while \output is active [86]
+Overfull \hbox (36.78088pt too wide) in paragraph at lines 5849--5849
+ []  \T1/fi4/m/n/9 xmlEventParse(fileName, handlers = list(startElement = start
+Element, endElement = endElement))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (99.78088pt too wide) in paragraph at lines 5881--5881
+ []\T1/fi4/m/n/10 xmlFlatListTree(nodes = list(), parents = character(), childr
+en = list(), env = new.env(), n = 200)[] 
+[87]
+Overfull \hbox (3.29826pt too wide) in paragraph at lines 5904--5909
+[]\T1/ptm/m/n/10 An ob-ject of class XMLFlat-Tree which is spe-cial-ized to \T1
+/fi4/m/n/10 XMLFlatListTree \T1/ptm/m/n/10 by the \T1/fi4/m/n/10 xmlFlatListTre
+e
+[88] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [89] [90]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [91]
+Overfull \hbox (40.3587pt too wide) in paragraph at lines 6185--6189
+[]\T1/ptm/m/n/10 Objects of this type are cre-ated via [][]\T1/fi4/m/n/10 xmlTr
+eeParse[][][] \T1/ptm/m/n/10 and [][]\T1/fi4/m/n/10 htmlTreeParse[][][] \T1/ptm
+/m/n/10 with the ar-gu-ment \T1/fi4/m/n/10 useInternalNodes
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [92] [93]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [94]
+Overfull \hbox (50.28088pt too wide) in paragraph at lines 6389--6389
+ []   \T1/fi4/m/n/9 doc = xmlParse('<top xmlns:r="http://www.r-project.org"><bo
+b><code>a = 1:10</code></bob></top>')[] 
+
+Overfull \hbox (50.28088pt too wide) in paragraph at lines 6395--6395
+ []   \T1/fi4/m/n/9 doc = xmlParse('<top xmlns:r="http://www.r-project.org"><bo
+b><code>a = 1:10</code></bob></top>')[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (125.45811pt too wide) in paragraph at lines 6416--6422
+[]\T1/ptm/m/n/10 If the given node has any names-pace def-i-ni-tions de-clared 
+within it, i.e. of the form \T1/fi4/m/n/10 xmlns:myNamespace="http://www.myNS.o
+rg"\T1/ptm/m/n/10 ,
+
+Overfull \hbox (29.78088pt too wide) in paragraph at lines 6434--6434
+ []\T1/fi4/m/n/10 xmlNamespaceDefinitions(x, addNames = TRUE, recursive = FALSE
+, simplify = FALSE, ...)[] 
+[95] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [96]
+Overfull \hbox (84.78088pt too wide) in paragraph at lines 6532--6532
+ []\T1/fi4/m/n/10 xmlNode(name, ..., attrs=NULL, namespace="", namespaceDefinit
+ions = NULL, .children = list(...))[] 
+[97]
+Overfull \hbox (46.18103pt too wide) in paragraph at lines 6610--6617
+[][][]\T1/fi4/m/n/10 addChildren[][][] [][]xmlTreeParse[][][] [][]asXMLNode[][]
+[] [][]newXMLNode[][][] [][]newXMLPINode[][][] [][]newXMLCDataNode[][][] [][]ne
+wXMLCommentNode[][][] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [98]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [99pdfTeX warning 
+(ext4): destination with the same identifier (name{Rfn.XMLAbstractNode.Rdash.cl
+ass}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.6752 \item[\code{attrs}]
+                           attributes for the top-level node, in the form of...
+] [100]
+Overfull \hbox (29.89848pt too wide) in paragraph at lines 6827--6831
+[][][]\T1/fi4/m/n/10 xmlTree[][][] \T1/ptm/m/n/10 for a na-tive/internal (C-lev
+el) rep-re-sen-ta-tion of the tree, [][]\T1/fi4/m/n/10 xmlNode[][][]\T1/ptm/m/n
+/10 , [][]\T1/fi4/m/n/10 xmlTextNode[][][]\T1/ptm/m/n/10 , [][]\T1/fi4/m/n/10 a
+ppend.xmlNode[][][] 
+[101] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [102]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (104.78088pt too wide) in paragraph at lines 7045--7045
+ []\T1/fi4/m/n/10 xmlParseDoc(file, options = 1L, encoding = character(), asTex
+t = !file.exists(file), baseURL = file)[] 
+[103] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [104]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [105]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [106]
+Overfull \hbox (59.72841pt too wide) in paragraph at lines 7267--7270
+[]\T1/ptm/m/n/10 an ob-ject of class \T1/fi4/m/n/10 xmlSchemaRef \T1/ptm/m/n/10
+ which is usu-ally the re-sult of a call to [][]\T1/fi4/m/n/10 xmlInternalTreeP
+arse[][][]
+[107]
+Overfull \hbox (14.28088pt too wide) in paragraph at lines 7312--7312
+ []  \T1/fi4/m/n/9 xsd = xmlParse(system.file("exampleData", "author.xsd", pack
+age = "XML"), isSchema =TRUE)[] 
+
+Overfull \hbox (0.78088pt too wide) in paragraph at lines 7313--7313
+ []  \T1/fi4/m/n/9 doc = xmlInternalTreeParse(system.file("exampleData", "autho
+r.xml",  package = "XML"))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [108]
+Overfull \hbox (11.87766pt too wide) in paragraph at lines 7384--7391
+[]\T1/ptm/m/n/10 These func-tions are used in calls to [][]\T1/fi4/m/n/10 saveR
+DS[][][] \T1/ptm/m/n/10 and [][]\T1/fi4/m/n/10 readRDS[][][] \T1/ptm/m/n/10 via
+ the \T1/fi4/m/n/10 refhook \T1/ptm/m/n/10 ar-gu-ment.  \T1/fi4/m/n/10 saveRDS(
+obj,
+
+Overfull \hbox (29.78088pt too wide) in paragraph at lines 7384--7391
+\T1/fi4/m/n/10 filename, refhook = xmlSerializeHook) readRDS(filename, refhook 
+= xmlDeserializeHook) 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [109]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [110] [111]
+Overfull \hbox (21.64818pt too wide) in paragraph at lines 7603--7610
+[]\T1/ptm/m/n/10 a char-ac-ter vec-tor. XML nodes con-tain-ing R code (e.g. \T1
+/fi4/m/n/10 r:code\T1/ptm/m/n/10 , \T1/fi4/m/n/10 r:init\T1/ptm/m/n/10 , \T1/fi
+4/m/n/10 r:function\T1/ptm/m/n/10 ,
+[112] [113] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+[114]
+Overfull \hbox (36.78088pt too wide) in paragraph at lines 7805--7805
+ []  \T1/fi4/m/n/9 xmlEventParse(fileName, handlers = list(startElement = start
+Element, endElement = endElement))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (15.49895pt too wide) in paragraph at lines 7820--7827
+\T1/ptm/m/n/10 used if \T1/fi4/m/n/10 NULL \T1/ptm/m/n/10 is spec-i-fied for th
+e \T1/fi4/m/n/10 error \T1/ptm/m/n/10 ar-gu-ment of [][]\T1/fi4/m/n/10 xmlTreeP
+arse[][][]\T1/ptm/m/n/10 , [][]\T1/fi4/m/n/10 xmlTreeParse[][][] \T1/ptm/m/n/10
+ and [][]\T1/fi4/m/n/10 htmlTreeParse[][][]\T1/ptm/m/n/10 . 
+[115] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [116]
+[117] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [118]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [119]
+Overfull \hbox (25.42009pt too wide) in paragraph at lines 8186--8191
+\T1/ptm/m/n/10 the cor-re-spond-ing URI, \ e.g \T1/fi4/m/n/10 c(shelp = "http:/
+/www.omegahat.org/XML/SHelp")
+[120] [121]
+Overfull \hbox (122.28088pt too wide) in paragraph at lines 8295--8295
+ []\T1/fi4/m/n/9 z$addNode("r:data",  namespace = c(r = "http://www.r-project.o
+rg", omg = "http://www.omegahat.org"), close = FALSE)[] 
+
+Overfull \hbox (45.78088pt too wide) in paragraph at lines 8321--8321
+ []\T1/fi4/m/n/9 zc = xmlTree("people", dtd = c("people", "//a//b//c//d", "http
+://www.omegahat.org/XML/types.dtd"))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [122]
+Overfull \hbox (19.78088pt too wide) in paragraph at lines 8374--8374
+ []\T1/fi4/m/n/10 xmlInternalTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, 
+replaceEntities=FALSE,[] 
+
+Overfull \hbox (9.78088pt too wide) in paragraph at lines 8382--8382
+ []\T1/fi4/m/n/10 xmlNativeTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, re
+placeEntities=FALSE,[] 
+
+Overfull \hbox (14.78088pt too wide) in paragraph at lines 8398--8398
+ []\T1/fi4/m/n/10 xmlSchemaParse(file, asText = FALSE, xinclude = TRUE, error =
+ xmlErrorCumulator())[] 
+[123] [124]
+Overfull \hbox (5.97972pt too wide) in paragraph at lines 8528--8538
+\T1/fi4/m/n/10 xmlns:xi="http://www.w3.org/2001/XInclude"> \T1/ptm/m/n/10 to in
+-sert con-tent from other
+
+Overfull \hbox (15.52872pt too wide) in paragraph at lines 8564--8567
+[]\T1/ptm/m/n/10 If this is \T1/fi4/m/n/10 NULL\T1/ptm/m/n/10 , the de-fault er
+-ror han-dler func-tion in the pack-age [][]\T1/fi4/m/n/10 xmlStructuredStop[][
+][]
+[125]
+Overfull \hbox (49.96924pt too wide) in paragraph at lines 8654--8657
+[]\T1/ptm/m/n/10 Some nodes spe-cial-iza-tions of \T1/fi4/m/n/10 XMLNode\T1/ptm
+/m/n/10 , such as \T1/fi4/m/n/10 XMLComment\T1/ptm/m/n/10 , \T1/fi4/m/n/10 XMLP
+rocessingInstruction\T1/ptm/m/n/10 ,
+[126]
+Overfull \hbox (43.6898pt too wide) in paragraph at lines 8684--8698
+\T1/ptm/m/n/10 con-tains only white space.  \T1/fi4/m/n/10 xmlChildren(node)[ !
+ xmlSApply(node, function(x)
+[127]
+Underfull \vbox (badness 10000) has occurred while \output is active [128]
+Underfull \vbox (badness 10000) has occurred while \output is active [129]
+Overfull \hbox (99.78088pt too wide) in paragraph at lines 8870--8870
+ [] \T1/fi4/m/n/9 htmlTreeParse(system.file("examples", "index.html", package =
+ "XML"), handlers = h2, useInternalNodes = TRUE)[] 
+
+Underfull \vbox (badness 10000) has occurred while \output is active [130]
+Overfull \hbox (63.78088pt too wide) in paragraph at lines 8914--8914
+ []                                                      \T1/fi4/m/n/9 cat("Err
+ors in XML document\n", e$message, "\n")[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [131]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [132]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [133]
+No file Rd2.ind.
+[134] (./Rd2.aux)
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+ )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.scan} has been referenced but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grep} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.read.table} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.stop} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.simpleError} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.length} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.readRDS} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.saveRDS} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.oldClass.Rdash.class} has been referenced but d
+oes not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.list} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.names} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.readLines} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.vector.Rdash.class} has been referenced but doe
+s not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.character.Rdash.class} has been referenced but 
+does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.source} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.apply} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.as.data.frame} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.print} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.getNativeSymbolInfo} has been referenced but do
+es not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.sapply} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.Encoding} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.coerce} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.lapply} has been referenced but does not exist,
+ replaced by a fixed one
+
+{/usr/local/texlive/2011/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/tex
+live/2011/texmf-dist/fonts/enc/dvips/inconsolata/fi4-ec.enc}</usr/local/texlive
+/2011/texmf-dist/fonts/type1/public/inconsolata/Inconsolata.pfb></usr/local/tex
+live/2011/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/20
+11/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2011/texmf-d
+ist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/
+type1/urw/times/utmr8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/
+times/utmri8a.pfb>
+Output written on Rd2.pdf (134 pages, 377834 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.15 [TeX Live 2011] (kpathsea + Thai support).
+Scanning input file ./Rd2.idx....done (825 entries accepted, 0 rejected).
+Sorting entries.........done (8794 comparisons).
+Generating output file ./Rd2.ind....done (1059 lines written, 1 warning).
+Output written in ./Rd2.ind.
+Transcript written in ./Rd2.ilg.
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011)
+ restricted \write18 enabled.
+entering extended mode
+
+(/private/var/folders/f8/2dd5rdyx1bjbw4jttt0x1hm80000gn/T/RtmpMBBlcM/Rd2pdf8744
+57ba67ae/Rd2.tex
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, ge
+rman-x-2009-06-19, ngerman-x-2009-06-19, afrikaans, ancientgreek, ibycus, arabi
+c, armenian, basque, bulgarian, catalan, pinyin, coptic, croatian, czech, danis
+h, dutch, ukenglish, usenglishmax, esperanto, estonian, ethiopic, farsi, finnis
+h, french, galician, german, ngerman, swissgerman, monogreek, greek, hungarian,
+ icelandic, assamese, bengali, gujarati, hindi, kannada, malayalam, marathi, or
+iya, panjabi, tamil, telugu, indonesian, interlingua, irish, italian, kurmanji,
+ lao, latin, latvian, lithuanian, mongolian, mongolianlmc, bokmal, nynorsk, pol
+ish, portuguese, romanian, russian, sanskrit, serbian, serbianc, slovak, sloven
+ian, spanish, swedish, turkish, turkmen, ukrainian, uppersorbian, welsh, loaded
+.
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/bk10.clo))
+(/Users/duncan/Projects/R-new-devel/share/texmf/tex/latex/Rd.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/url/url.sty) NOT loading ae
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/t1enc.def))
+(/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/times.sty)
+NOT loading lmodern
+(/usr/local/texlive/2011/texmf-dist/tex/latex/inconsolata/inconsolata.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/ts1enc.def))
+(/usr/local/texlive/2011/texmf-dist/tex/latex/graphics/keyval.sty))
+(/usr/local/texlive/2011/texmf-dist/tex/latex/graphics/color.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/latexconfig/color.cfg)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/pdftex-def/pdftex.def
+(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/infwarerr.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/ltxcmds.sty)))
+(/usr/local/texlive/2011/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/local/texlive/2011/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+
+Package hyperref Message: Driver (autodetected): hpdftex.
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/local/texlive/2011/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 342.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 342.
+
+) (/usr/local/texlive/2011/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/inputenc.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/t1enc.dfu)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/ot1enc.dfu)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/omsenc.dfu)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/ts1enc.dfu))
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/latin1.def))
+Writing index file Rd2.idx
+(./Rd2.aux) (/usr/local/texlive/2011/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/local/texlive/2011/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/local/texlive/2011/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(./Rd2.out) (./Rd2.out)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/inconsolata/t1fi4.fd)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/t1phv.fd) (./Rd2.toc
+[1{/usr/local/texlive/2011/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+[2]) (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [3]
+Overfull \hbox (54.78088pt too wide) in paragraph at lines 89--89
+ []               \T1/fi4/m/n/10 suppressNamespaceWarning = getOption("suppress
+XMLNamespaceWarning", FALSE),[] 
+
+Overfull \hbox (1.33824pt too wide) in paragraph at lines 136--141
+\T1/ptm/m/n/10 is passed on to the rel-e-vant func-tion that cre-ates the text 
+nodes, e.g. [][]\T1/fi4/m/n/10 xmlTextNode[][][]
+[4]
+Overfull \hbox (59.28088pt too wide) in paragraph at lines 223--223
+ []\T1/fi4/m/n/9 b = newXMLNode("bob", namespace = c(r = "http://www.r-project.
+org", omg = "http://www.omegahat.org"))[] 
+[5]
+Underfull \vbox (badness 10000) has occurred while \output is active [6]
+Overfull \hbox (9.78088pt too wide) in paragraph at lines 290--290
+ []                \T1/fi4/m/n/9 xmlNode("a", "a link", attrs = c(href = "http:
+//www.omegahat.org/RSXML")))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (34.23923pt too wide) in paragraph at lines 338--341
+\T1/ptm/m/n/10 ent types of trees/nodes. These can in-clude \T1/fi4/m/n/10 attr
+s\T1/ptm/m/n/10 , \T1/fi4/m/n/10 namespace\T1/ptm/m/n/10 , \T1/fi4/m/n/10 names
+paceDefinitions\T1/ptm/m/n/10 ,
+[7] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [8]
+Overfull \hbox (14.28088pt too wide) in paragraph at lines 454--454
+ [] \T1/fi4/m/n/9 n = append.xmlNode(n, xmlNode("varNames", xmlNode("string", "
+A"), xmlNode("string", "B")))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [9]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (109.78088pt too wide) in paragraph at lines 554--554
+ []\T1/fi4/m/n/10 asXMLTreeNode(node, env, id = get(".nodeIdGenerator", env)(xm
+lName(node)), className = "XMLTreeNode")[] 
+[10] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (12.16985pt too wide) in paragraph at lines 641--646
+[]\T1/ptm/m/n/10 More in-for-ma-tion can be found at [][]$\T1/fi4/m/n/10 http :
+ / / xmlsoft . org / catalog . html$[][] \T1/ptm/m/n/10 and [][]$\T1/fi4/m/n/10
+ http : / / www . sagehill .
+[11]
+Overfull \hbox (18.78088pt too wide) in paragraph at lines 717--717
+ []          \T1/fi4/m/n/9 catalogAdd(c("http://www.omegahat.org/XML" = system.
+file("XML", package = "XML")))[] 
+
+Overfull \hbox (0.78088pt too wide) in paragraph at lines 718--718
+ []          \T1/fi4/m/n/9 catalogAdd("http://www.omegahat.org/XML", system.fil
+e("XML", package = "XML"))[] 
+
+Overfull \hbox (86.28088pt too wide) in paragraph at lines 719--719
+ []          \T1/fi4/m/n/9 catalogAdd("http://www.r-project.org/doc/", paste(R.
+home(), "doc", "", sep = .Platform$file.sep))[] 
+[12]
+Overfull \hbox (5.28088pt too wide) in paragraph at lines 722--722
+ []     \T1/fi4/m/n/9 #          This shows how we can load a catalog and then 
+resolve a system identifier[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (42.85767pt too wide) in paragraph at lines 738--745
+\T1/ptm/m/n/10 tially dif-fer-ent re-mote files. We can use a cat-a-log to map 
+a ref-er-ence such as \T1/fi4/m/n/10 http://www.omegahat.org/XSL/
+[13]
+Overfull \hbox (18.78088pt too wide) in paragraph at lines 802--802
+ []\T1/fi4/m/n/9 Sys.setenv("XML_CATALOG_FILES" = system.file("exampleData", "c
+atalog.xml", package = "XML"))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [14] [15]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [16]
+Overfull \hbox (212.28088pt too wide) in paragraph at lines 1052--1052
+ []  \T1/fi4/m/n/9 d = Doctype(name = "section", public = c("-//OASIS//DTD DocB
+ook XML V4.2//EN", "http://oasis-open.org/docbook/xml/4.2/docbookx.dtd"))[] 
+
+Overfull \hbox (252.78088pt too wide) in paragraph at lines 1056--1056
+ []  \T1/fi4/m/n/9 d = Doctype(name = "section", public = c("-//OASIS//DTD DocB
+ook XML V4.2//EN"), system = "http://oasis-open.org/docbook/xml/4.2/docbookx.dt
+d")[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [17]
+Overfull \hbox (212.28088pt too wide) in paragraph at lines 1108--1108
+ []  \T1/fi4/m/n/9 d = Doctype(name = "section", public = c("-//OASIS//DTD DocB
+ook XML V4.2//EN", "http://oasis-open.org/docbook/xml/4.2/docbookx.dtd"))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [18] [19]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [20]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [21]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [22]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [23]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [24]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [25]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (7.3792pt too wide) in paragraph at lines 1666--1673
+[][][]\T1/fi4/m/n/10 xmlEventParse[][][] [][]startElement.SAX[][][] [][]endElem
+ent.SAX[][][] [][]comment.SAX[][][] [][]processingInstruction.SAX[][][]
+[26] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [27]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [28] [29]
+Overfull \hbox (9.78088pt too wide) in paragraph at lines 1889--1889
+ []\T1/fi4/m/n/10 getNodeSet(doc, path, namespaces = xmlNamespaceDefinitions(do
+c, simplify = TRUE),[] 
+
+Overfull \hbox (24.78088pt too wide) in paragraph at lines 1890--1890
+ []                    \T1/fi4/m/n/10 fun = NULL, sessionEncoding = CE_NATIVE, 
+addFinalizer = NA, ...)[] 
+
+Overfull \hbox (39.78088pt too wide) in paragraph at lines 1898--1898
+ []                               \T1/fi4/m/n/10 nsDefs = xmlNamespaceDefinitio
+ns(doc, recursive = TRUE),[] 
+[30]
+Overfull \hbox (50.56981pt too wide) in paragraph at lines 1961--1973
+\T1/ptm/m/n/10 we have an XML doc-u-ment \T1/fi4/m/n/10 <help xmlns="http://www
+.r-project.org/Rd"><topic>...</topic></help>
+
+Overfull \hbox (11.73862pt too wide) in paragraph at lines 1961--1973
+\T1/fi4/m/n/10 project.org/Rd \T1/ptm/m/n/10 cor-re-spond-ing to the one in the
+ XML doc-u-ment. So we would use \T1/fi4/m/n/10 getNodeSet(doc,
+[31]
+Overfull \hbox (9.78088pt too wide) in paragraph at lines 2073--2073
+ [] \T1/fi4/m/n/9 getNodeSet(z, "/a:Envelope/a:Body", c("a" = "http://schemas.x
+mlsoap.org/soap/envelope/"))[] 
+[32]
+Overfull \hbox (54.78088pt too wide) in paragraph at lines 2117--2117
+ [] \T1/fi4/m/n/9 rates = xpathApply(doc, "//ns:Cube[@currency='SIT']", xmlGetA
+ttr, "rate", namespaces = namespaces )[] 
+
+Overfull \hbox (99.78088pt too wide) in paragraph at lines 2121--2121
+ [] \T1/fi4/m/n/9 rates = xpathApply(doc, "//ns:Cube[@currency='SIT']", quote(x
+mlGetAttr(x, "rate")), namespaces = namespaces )[] 
+
+Overfull \hbox (9.78088pt too wide) in paragraph at lines 2130--2130
+ []  \T1/fi4/m/n/9 getNodeSet(d, "/o:a//c:c", c("o" = "http://www.omegahat.org"
+, "c" = "http://www.c.org"))[] 
+
+Underfull \vbox (badness 10000) has occurred while \output is active [33]
+Overfull \hbox (59.28088pt too wide) in paragraph at lines 2173--2173
+ []  \T1/fi4/m/n/9 doc = htmlTreeParse("http://finance.yahoo.com/bonds/composit
+e_bond_rates", useInternalNodes = TRUE)[] 
+
+Underfull \vbox (badness 10000) has occurred while \output is active [34]
+Overfull \hbox (81.78088pt too wide) in paragraph at lines 2224--2224
+ []    \T1/fi4/m/n/9 txt = '<top xmlns="http://www.r-project.org" xmlns:r="http
+://www.r-project.org"><r:a><b/></r:a></top>'[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [35]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [36]
+Overfull \hbox (32.28088pt too wide) in paragraph at lines 2378--2378
+ []     \T1/fi4/m/n/9 #           Here we read  a "censored" "database" of song
+s from Apple's  iTune application[] 
+[37] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [38]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [39]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [40]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (4.97928pt too wide) in paragraph at lines 2631--2644
+\T1/fi4/m/n/10 libxmlFeatures \T1/ptm/m/n/10 re-turns a log-i-cal vec-tor with 
+names given by:  \T1/fi4/m/n/10 [1] "THREAD" "TREE" "OUTPUT"
+
+Overfull \hbox (39.78088pt too wide) in paragraph at lines 2631--2644
+\T1/fi4/m/n/10 "PUSH" "READER" [6] "PATTERN" "WRITER" "SAX1" "FTP" "HTTP" [11] 
+"VALID" "HTML" "LEGACY"
+
+Overfull \hbox (9.78088pt too wide) in paragraph at lines 2631--2644
+\T1/fi4/m/n/10 "C14N" "CATALOG" [16] "XPATH" "XPTR" "XINCLUDE" "ICONV" "ISO8859
+X" [21] "UNICODE"
+
+Overfull \hbox (24.78088pt too wide) in paragraph at lines 2631--2644
+\T1/fi4/m/n/10 "REGEXP" "AUTOMATA" "EXPR" "SCHEMAS" [26] "SCHEMATRON" "MODULES"
+ "DEBUG" "DEBUG_MEM"
+[41] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [42]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [43] [44]
+Overfull \hbox (16.26955pt too wide) in paragraph at lines 2874--2879
+\T1/ptm/m/n/10 the XML doc-u-ment, \ e.g. \T1/fi4/m/n/10 c(shelp = "http://www.
+omegahat.org/XML/SHelp") 
+[45] [46] [47]
+Overfull \hbox (41.28088pt too wide) in paragraph at lines 3089--3089
+ []\T1/fi4/m/n/9 z = xmlTree("people", dtd = c("people", "//a//b//c//d", "http:
+//www.omegahat.org/XML/types.dtd"))[] 
+
+Overfull \hbox (122.28088pt too wide) in paragraph at lines 3106--3106
+ []\T1/fi4/m/n/9 z$addNode("r:data",  namespace = c(r = "http://www.r-project.o
+rg", omg = "http://www.omegahat.org"), close = FALSE)[] 
+
+Underfull \vbox (badness 10000) has occurred while \output is active [48]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [49]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (4.78088pt too wide) in paragraph at lines 3214--3214
+ []\T1/fi4/m/n/10 parseDTD(extId, asText=FALSE, name="", isURL=FALSE, error = x
+mlErrorCumulator())[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/ts1ptm.fd) [50] [51]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (15.2779pt too wide) in paragraph at lines 3369--3371
+[]\T1/ptm/m/n/10 a string giv-ing the name of the user, e.g. in FTP "ftp://dunc
+an@www.omegahat.org",
+
+Overfull \hbox (37.88806pt too wide) in paragraph at lines 3372--3374
+[]\T1/ptm/m/n/10 the CGI query part of the string, e.g. the bit af-ter '?' of t
+he form \T1/fi4/m/n/10 name=value&name=value 
+
+Overfull \hbox (23.28088pt too wide) in paragraph at lines 3391--3391
+ []  \T1/fi4/m/n/9 as(parseURI("http://duncan@www.omegahat.org:8080/RCurl/index
+.html#my_anchor"), "character")[] 
+
+Overfull \hbox (36.78088pt too wide) in paragraph at lines 3393--3393
+ []  \T1/fi4/m/n/9 as(parseURI("ftp://duncan@www.omegahat.org:8080/RCurl/index.
+html?foo=1&bar=axd"), "character")[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [52]
+Overfull \hbox (32.28088pt too wide) in paragraph at lines 3465--3465
+ []  \T1/fi4/m/n/9 txt = sprintf("<Placemark><Point><coordinates>%.3f,%.3f,0</c
+oordinates></Point></Placemark>",[] 
+[53] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [54] [55]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (10.71863pt too wide) in paragraph at lines 3634--3640
+[]\T1/ptm/m/n/10 These are only rel-e-vant for "in-ter-nal nodes" as gen-er-ate
+d via [][]\T1/fi4/m/n/10 xmlInternalTreeParse[][][] \T1/ptm/m/n/10 and [][]\T1/
+fi4/m/n/10 newXMLNode[][][]
+
+Overfull \hbox (12.97781pt too wide) in paragraph at lines 3634--3640
+\T1/ptm/m/n/10 and their re-lated func-tions. When deal-ing with XML doc-u-ment
+s via [][]\T1/fi4/m/n/10 xmlTreeParse[][][] \T1/ptm/m/n/10 or [][]\T1/fi4/m/n/1
+0 xmlEventParse[][][]\T1/ptm/m/n/10 ,
+[56] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (3.77963pt too wide) in paragraph at lines 3737--3741
+\T1/fi4/m/n/10 HTMLInternalDocument\T1/ptm/m/n/10 , or an HTML node of class \T
+1/fi4/m/n/10 XMLInternalElementNode\T1/ptm/m/n/10 ,
+[57]
+Overfull \hbox (28.77847pt too wide) in paragraph at lines 3784--3788
+[]\T1/ptm/m/n/10 currently ad-di-tional pa-ram-e-ters that are passed on to [][
+]\T1/fi4/m/n/10 as.data.frame[][][] \T1/ptm/m/n/10 if \T1/fi4/m/n/10 as.data.fr
+ame
+[58]
+Overfull \hbox (36.78088pt too wide) in paragraph at lines 3828--3828
+ []                      \T1/fi4/m/n/9 ncol(tmp)-1, byrow = TRUE, dimnames = li
+st(NULL, as.character(tmp[[1]]))))[] 
+
+Overfull \hbox (63.78088pt too wide) in paragraph at lines 3852--3852
+ []  \T1/fi4/m/n/9 zz = readHTMLTable("http://www.inflationdata.com/Inflation/C
+onsumer_Price_Index/HistoricalCPI.aspx")[] 
+
+Overfull \hbox (23.28088pt too wide) in paragraph at lines 3853--3853
+ []  \T1/fi4/m/n/9 if(any(i <- sapply(zz, ncol) == 14)) {  # guard against the 
+structure of the page changing.[] 
+
+Overfull \hbox (9.78088pt too wide) in paragraph at lines 3855--3855
+ []        \T1/fi4/m/n/9 # convert columns to numeric.  Could use colClasses in
+ the call to readHTMLTable()[] 
+[59]
+Overfull \hbox (23.28088pt too wide) in paragraph at lines 3877--3877
+ [] \T1/fi4/m/n/9 u = "http://tidesonline.nos.noaa.gov/data_read.shtml?station_
+info=9414290+San+Francisco,+CA"[] 
+
+Overfull \hbox (45.78088pt too wide) in paragraph at lines 3894--3894
+ []  \T1/fi4/m/n/9 tt =  getURL("http://www.omegahat.org/RCurl/testPassword/tab
+le.html",  userpwd = "bob:duncantl")[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [60]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (39.78088pt too wide) in paragraph at lines 3975--3975
+ []\T1/fi4/m/n/10 saveXML(doc, file=NULL, compression=0, indent=TRUE, prefix = 
+'<?xml version="1.0"?>\n',[] 
+
+Overfull \hbox (39.78088pt too wide) in paragraph at lines 3978--3978
+ []\T1/fi4/m/n/10 saveXML(doc, file=NULL, compression=0, indent=TRUE, prefix = 
+'<?xml version="1.0"?>\n',[] 
+
+Overfull \hbox (39.78088pt too wide) in paragraph at lines 3981--3981
+ []\T1/fi4/m/n/10 saveXML(doc, file=NULL, compression=0, indent=TRUE, prefix = 
+'<?xml version="1.0"?>\n',[] 
+
+Overfull \hbox (39.78088pt too wide) in paragraph at lines 3984--3984
+ []\T1/fi4/m/n/10 saveXML(doc, file=NULL, compression=0, indent=TRUE, prefix = 
+'<?xml version="1.0"?>\n',[] 
+
+Overfull \hbox (39.78088pt too wide) in paragraph at lines 3987--3987
+ []\T1/fi4/m/n/10 saveXML(doc, file=NULL, compression=0, indent=TRUE, prefix = 
+'<?xml version="1.0"?>\n',[] 
+[61] [62] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [63]
+Overfull \hbox (11.70992pt too wide) in paragraph at lines 4153--4154
+[]\T1/fi4/m/n/10 signature(name = "ANY", base = "ANY", sysId = "ANY", publicId
+
+Overfull \hbox (42.65938pt too wide) in paragraph at lines 4154--4155
+[]\T1/fi4/m/n/10 signature(target = "ANY", content = "ANY", .state = "SAXState"
+)\T1/ptm/m/n/10 :
+[64]
+Overfull \hbox (77.28088pt too wide) in paragraph at lines 4202--4202
+ [] \T1/fi4/m/n/9 z = xmlEventParse(filename, genericSAXHandlers(), state = new
+("ElementNameCounter"), addContext = FALSE)[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [65]
+Overfull \hbox (4.78088pt too wide) in paragraph at lines 4294--4294
+ []\T1/fi4/m/n/10 entityDeclaration.SAX(name, base, sysId, publicId, notationNa
+me,  .state = NULL)[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [66]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [67]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [68]
+Overfull \hbox (0.78088pt too wide) in paragraph at lines 4507--4507
+ [] \T1/fi4/m/n/9 x <- xmlRoot(xmlTreeParse(system.file("exampleData", "gnumeri
+c.xml", package = "XML")))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [69] [70]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [71]
+Overfull \hbox (189.78088pt too wide) in paragraph at lines 4663--4663
+ [] \T1/fi4/m/n/10 'xmlAttrs<-'(node, append = TRUE, suppressNamespaceWarning =
+ getOption("suppressXMLNamespaceWarning", FALSE), value)[] 
+[72] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [73]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [74]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [75]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [76]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [77]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [78]
+Overfull \hbox (7.36877pt too wide) in paragraph at lines 5153--5169
+[]\T1/ptm/m/n/10 The ad-di-tion of the \T1/fi4/m/n/10 recursive \T1/ptm/m/n/10 
+ar-gu-ment makes this func-tion be-have like the \T1/fi4/m/n/10 getElementsByTa
+gName
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [79]
+Overfull \hbox (5.28088pt too wide) in paragraph at lines 5255--5255
+ []  \T1/fi4/m/n/9 xmlElementSummary(system.file("exampleData", "eurofxref-hist
+.xml.gz", package = "XML"))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [80]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [81]
+Overfull \hbox (0.26694pt too wide) in paragraph at lines 5361--5366
+\T1/ptm/m/n/10 han-dler el-e-ments with the same name as the XML el-e-ment of i
+n-ter-est, i.e. \T1/fi4/m/n/10 "myTag" = function(x,
+[82]
+Overfull \hbox (52.63095pt too wide) in paragraph at lines 5440--5451
+\T1/fi4/m/n/10 entityDeclaration()\T1/ptm/m/n/10 , \T1/fi4/m/n/10 processingIns
+truction()\T1/ptm/m/n/10 , \T1/fi4/m/n/10 text()\T1/ptm/m/n/10 , \T1/fi4/m/n/10
+ cdata()\T1/ptm/m/n/10 , \T1/fi4/m/n/10 startDocument()\T1/ptm/m/n/10 ,
+
+Overfull \hbox (14.2404pt too wide) in paragraph at lines 5459--5478
+\T1/fi4/m/n/10 = "", system = "character", public = "character" ) name \T1/ptm/
+m/n/10 gives the name
+
+Overfull \hbox (28.59091pt too wide) in paragraph at lines 5459--5478
+\T1/fi4/m/n/10 "External_General_Unparsed"\T1/ptm/m/n/10 , \T1/fi4/m/n/10 "Inte
+rnal_Parameter"\T1/ptm/m/n/10 , \T1/fi4/m/n/10 "External_Parameter"\T1/ptm/m/n/
+10 ,
+[83] [84]
+Underfull \vbox (badness 2698) has occurred while \output is active [85]
+[86]
+Underfull \vbox (badness 10000) has occurred while \output is active [87]
+Overfull \hbox (77.28088pt too wide) in paragraph at lines 5804--5804
+ [] \T1/fi4/m/n/9 xmlEventParse(system.file("exampleData", "namespaces.xml", pa
+ckage="XML"), handlers = h, saxVersion = 2)[] 
+
+Overfull \hbox (27.78088pt too wide) in paragraph at lines 5826--5826
+ []  \T1/fi4/m/n/9 invisible(xmlEventParse(filename, branches = list(b = functi
+on(node) {print(names(node))})))[] 
+
+Overfull \hbox (117.78088pt too wide) in paragraph at lines 5827--5827
+ []  \T1/fi4/m/n/9 invisible(xmlEventParse(filename, branches = list(b = functi
+on(node) {print(xmlName(xmlChildren(node)[[1]]))})))[] 
+
+Underfull \vbox (badness 10000) has occurred while \output is active [88]
+Overfull \hbox (36.78088pt too wide) in paragraph at lines 5849--5849
+ []  \T1/fi4/m/n/9 xmlEventParse(fileName, handlers = list(startElement = start
+Element, endElement = endElement))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (99.78088pt too wide) in paragraph at lines 5881--5881
+ []\T1/fi4/m/n/10 xmlFlatListTree(nodes = list(), parents = character(), childr
+en = list(), env = new.env(), n = 200)[] 
+[89]
+Overfull \hbox (3.29826pt too wide) in paragraph at lines 5904--5909
+[]\T1/ptm/m/n/10 An ob-ject of class XMLFlat-Tree which is spe-cial-ized to \T1
+/fi4/m/n/10 XMLFlatListTree \T1/ptm/m/n/10 by the \T1/fi4/m/n/10 xmlFlatListTre
+e
+[90] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [91] [92]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [93]
+Overfull \hbox (40.3587pt too wide) in paragraph at lines 6185--6189
+[]\T1/ptm/m/n/10 Objects of this type are cre-ated via [][]\T1/fi4/m/n/10 xmlTr
+eeParse[][][] \T1/ptm/m/n/10 and [][]\T1/fi4/m/n/10 htmlTreeParse[][][] \T1/ptm
+/m/n/10 with the ar-gu-ment \T1/fi4/m/n/10 useInternalNodes
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [94] [95]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [96]
+Overfull \hbox (50.28088pt too wide) in paragraph at lines 6389--6389
+ []   \T1/fi4/m/n/9 doc = xmlParse('<top xmlns:r="http://www.r-project.org"><bo
+b><code>a = 1:10</code></bob></top>')[] 
+
+Overfull \hbox (50.28088pt too wide) in paragraph at lines 6395--6395
+ []   \T1/fi4/m/n/9 doc = xmlParse('<top xmlns:r="http://www.r-project.org"><bo
+b><code>a = 1:10</code></bob></top>')[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (125.45811pt too wide) in paragraph at lines 6416--6422
+[]\T1/ptm/m/n/10 If the given node has any names-pace def-i-ni-tions de-clared 
+within it, i.e. of the form \T1/fi4/m/n/10 xmlns:myNamespace="http://www.myNS.o
+rg"\T1/ptm/m/n/10 ,
+
+Overfull \hbox (29.78088pt too wide) in paragraph at lines 6434--6434
+ []\T1/fi4/m/n/10 xmlNamespaceDefinitions(x, addNames = TRUE, recursive = FALSE
+, simplify = FALSE, ...)[] 
+[97] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [98]
+Overfull \hbox (84.78088pt too wide) in paragraph at lines 6532--6532
+ []\T1/fi4/m/n/10 xmlNode(name, ..., attrs=NULL, namespace="", namespaceDefinit
+ions = NULL, .children = list(...))[] 
+[99]
+Overfull \hbox (46.18103pt too wide) in paragraph at lines 6610--6617
+[][][]\T1/fi4/m/n/10 addChildren[][][] [][]xmlTreeParse[][][] [][]asXMLNode[][]
+[] [][]newXMLNode[][][] [][]newXMLPINode[][][] [][]newXMLCDataNode[][][] [][]ne
+wXMLCommentNode[][][] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [100]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [101pdfTeX warning
+ (ext4): destination with the same identifier (name{Rfn.XMLAbstractNode.Rdash.c
+lass}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.6752 \item[\code{attrs}]
+                           attributes for the top-level node, in the form of...
+] [102]
+Overfull \hbox (29.89848pt too wide) in paragraph at lines 6827--6831
+[][][]\T1/fi4/m/n/10 xmlTree[][][] \T1/ptm/m/n/10 for a na-tive/internal (C-lev
+el) rep-re-sen-ta-tion of the tree, [][]\T1/fi4/m/n/10 xmlNode[][][]\T1/ptm/m/n
+/10 , [][]\T1/fi4/m/n/10 xmlTextNode[][][]\T1/ptm/m/n/10 , [][]\T1/fi4/m/n/10 a
+ppend.xmlNode[][][] 
+[103] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [104]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (104.78088pt too wide) in paragraph at lines 7045--7045
+ []\T1/fi4/m/n/10 xmlParseDoc(file, options = 1L, encoding = character(), asTex
+t = !file.exists(file), baseURL = file)[] 
+[105] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [106]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [107]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [108]
+Overfull \hbox (59.72841pt too wide) in paragraph at lines 7267--7270
+[]\T1/ptm/m/n/10 an ob-ject of class \T1/fi4/m/n/10 xmlSchemaRef \T1/ptm/m/n/10
+ which is usu-ally the re-sult of a call to [][]\T1/fi4/m/n/10 xmlInternalTreeP
+arse[][][]
+[109]
+Overfull \hbox (14.28088pt too wide) in paragraph at lines 7312--7312
+ []  \T1/fi4/m/n/9 xsd = xmlParse(system.file("exampleData", "author.xsd", pack
+age = "XML"), isSchema =TRUE)[] 
+
+Overfull \hbox (0.78088pt too wide) in paragraph at lines 7313--7313
+ []  \T1/fi4/m/n/9 doc = xmlInternalTreeParse(system.file("exampleData", "autho
+r.xml",  package = "XML"))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [110]
+Overfull \hbox (11.87766pt too wide) in paragraph at lines 7384--7391
+[]\T1/ptm/m/n/10 These func-tions are used in calls to [][]\T1/fi4/m/n/10 saveR
+DS[][][] \T1/ptm/m/n/10 and [][]\T1/fi4/m/n/10 readRDS[][][] \T1/ptm/m/n/10 via
+ the \T1/fi4/m/n/10 refhook \T1/ptm/m/n/10 ar-gu-ment.  \T1/fi4/m/n/10 saveRDS(
+obj,
+
+Overfull \hbox (29.78088pt too wide) in paragraph at lines 7384--7391
+\T1/fi4/m/n/10 filename, refhook = xmlSerializeHook) readRDS(filename, refhook 
+= xmlDeserializeHook) 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [111]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [112] [113]
+Overfull \hbox (21.64818pt too wide) in paragraph at lines 7603--7610
+[]\T1/ptm/m/n/10 a char-ac-ter vec-tor. XML nodes con-tain-ing R code (e.g. \T1
+/fi4/m/n/10 r:code\T1/ptm/m/n/10 , \T1/fi4/m/n/10 r:init\T1/ptm/m/n/10 , \T1/fi
+4/m/n/10 r:function\T1/ptm/m/n/10 ,
+[114] [115] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+[116]
+Overfull \hbox (36.78088pt too wide) in paragraph at lines 7805--7805
+ []  \T1/fi4/m/n/9 xmlEventParse(fileName, handlers = list(startElement = start
+Element, endElement = endElement))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (15.49895pt too wide) in paragraph at lines 7820--7827
+\T1/ptm/m/n/10 used if \T1/fi4/m/n/10 NULL \T1/ptm/m/n/10 is spec-i-fied for th
+e \T1/fi4/m/n/10 error \T1/ptm/m/n/10 ar-gu-ment of [][]\T1/fi4/m/n/10 xmlTreeP
+arse[][][]\T1/ptm/m/n/10 , [][]\T1/fi4/m/n/10 xmlTreeParse[][][] \T1/ptm/m/n/10
+ and [][]\T1/fi4/m/n/10 htmlTreeParse[][][]\T1/ptm/m/n/10 . 
+[117] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [118]
+[119] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [120]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [121]
+Overfull \hbox (25.42009pt too wide) in paragraph at lines 8186--8191
+\T1/ptm/m/n/10 the cor-re-spond-ing URI, \ e.g \T1/fi4/m/n/10 c(shelp = "http:/
+/www.omegahat.org/XML/SHelp")
+[122] [123]
+Overfull \hbox (122.28088pt too wide) in paragraph at lines 8295--8295
+ []\T1/fi4/m/n/9 z$addNode("r:data",  namespace = c(r = "http://www.r-project.o
+rg", omg = "http://www.omegahat.org"), close = FALSE)[] 
+
+Overfull \hbox (45.78088pt too wide) in paragraph at lines 8321--8321
+ []\T1/fi4/m/n/9 zc = xmlTree("people", dtd = c("people", "//a//b//c//d", "http
+://www.omegahat.org/XML/types.dtd"))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [124]
+Overfull \hbox (19.78088pt too wide) in paragraph at lines 8374--8374
+ []\T1/fi4/m/n/10 xmlInternalTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, 
+replaceEntities=FALSE,[] 
+
+Overfull \hbox (9.78088pt too wide) in paragraph at lines 8382--8382
+ []\T1/fi4/m/n/10 xmlNativeTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, re
+placeEntities=FALSE,[] 
+
+Overfull \hbox (14.78088pt too wide) in paragraph at lines 8398--8398
+ []\T1/fi4/m/n/10 xmlSchemaParse(file, asText = FALSE, xinclude = TRUE, error =
+ xmlErrorCumulator())[] 
+[125] [126]
+Overfull \hbox (5.97972pt too wide) in paragraph at lines 8528--8538
+\T1/fi4/m/n/10 xmlns:xi="http://www.w3.org/2001/XInclude"> \T1/ptm/m/n/10 to in
+-sert con-tent from other
+
+Overfull \hbox (15.52872pt too wide) in paragraph at lines 8564--8567
+[]\T1/ptm/m/n/10 If this is \T1/fi4/m/n/10 NULL\T1/ptm/m/n/10 , the de-fault er
+-ror han-dler func-tion in the pack-age [][]\T1/fi4/m/n/10 xmlStructuredStop[][
+][]
+[127]
+Overfull \hbox (49.96924pt too wide) in paragraph at lines 8654--8657
+[]\T1/ptm/m/n/10 Some nodes spe-cial-iza-tions of \T1/fi4/m/n/10 XMLNode\T1/ptm
+/m/n/10 , such as \T1/fi4/m/n/10 XMLComment\T1/ptm/m/n/10 , \T1/fi4/m/n/10 XMLP
+rocessingInstruction\T1/ptm/m/n/10 ,
+[128]
+Overfull \hbox (43.6898pt too wide) in paragraph at lines 8684--8698
+\T1/ptm/m/n/10 con-tains only white space.  \T1/fi4/m/n/10 xmlChildren(node)[ !
+ xmlSApply(node, function(x)
+[129]
+Underfull \vbox (badness 10000) has occurred while \output is active [130]
+Underfull \vbox (badness 10000) has occurred while \output is active [131]
+Overfull \hbox (99.78088pt too wide) in paragraph at lines 8870--8870
+ [] \T1/fi4/m/n/9 htmlTreeParse(system.file("examples", "index.html", package =
+ "XML"), handlers = h2, useInternalNodes = TRUE)[] 
+
+Underfull \vbox (badness 10000) has occurred while \output is active [132]
+Overfull \hbox (63.78088pt too wide) in paragraph at lines 8914--8914
+ []                                                      \T1/fi4/m/n/9 cat("Err
+ors in XML document\n", e$message, "\n")[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [133]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [134]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [135] (./Rd2.ind
+[136] [137]
+
+LaTeX Font Warning: Font shape `T1/fi4/m/it' undefined
+(Font)              using `T1/fi4/m/n' instead on input line 129.
+
+
+Overfull \hbox (25.8567pt too wide) in paragraph at lines 167--169
+[]\T1/fi4/m/it/10 addAttributes,XMLInternalElementNode-method 
+
+Overfull \hbox (10.8567pt too wide) in paragraph at lines 210--212
+[]\T1/fi4/m/it/10 coerce,character,FormattedInteger-method 
+
+Overfull \hbox (5.8567pt too wide) in paragraph at lines 212--214
+[]\T1/fi4/m/it/10 coerce,character,FormattedNumber-method 
+
+Overfull \hbox (45.8567pt too wide) in paragraph at lines 220--222
+[]\T1/fi4/m/it/10 coerce,character,XMLNamespaceDefinitions-method 
+
+Overfull \hbox (20.8567pt too wide) in paragraph at lines 226--228
+[]\T1/fi4/m/it/10 coerce,NULL,XMLNamespaceDefinitions-method 
+[138]
+Overfull \hbox (55.8567pt too wide) in paragraph at lines 232--234
+[]\T1/fi4/m/it/10 coerce,XMLAbstractDocument,XMLAbstractNode-method 
+
+Overfull \hbox (5.8567pt too wide) in paragraph at lines 234--236
+[]\T1/fi4/m/it/10 coerce,XMLAbstractNode,character-method 
+
+Overfull \hbox (15.8567pt too wide) in paragraph at lines 250--252
+[]\T1/fi4/m/it/10 coerce,XMLHashTreeNode,XMLHashTree-method 
+
+Overfull \hbox (25.8567pt too wide) in paragraph at lines 252--254
+[]\T1/fi4/m/it/10 coerce,XMLInternalDocument,character-method 
+
+Overfull \hbox (35.8567pt too wide) in paragraph at lines 254--256
+[]\T1/fi4/m/it/10 coerce,XMLInternalDocument,XMLHashTree-method 
+
+Overfull \hbox (55.8567pt too wide) in paragraph at lines 256--258
+[]\T1/fi4/m/it/10 coerce,XMLInternalDocument,XMLInternalNode-method 
+
+Overfull \hbox (0.8567pt too wide) in paragraph at lines 258--260
+[]\T1/fi4/m/it/10 coerce,XMLInternalDOM,character-method 
+
+Overfull \hbox (5.8567pt too wide) in paragraph at lines 260--262
+[]\T1/fi4/m/it/10 coerce,XMLInternalNode,character-method 
+
+Overfull \hbox (15.8567pt too wide) in paragraph at lines 262--264
+[]\T1/fi4/m/it/10 coerce,XMLInternalNode,XMLHashTree-method 
+
+Overfull \hbox (55.8567pt too wide) in paragraph at lines 264--266
+[]\T1/fi4/m/it/10 coerce,XMLInternalNode,XMLInternalDocument-method 
+
+Overfull \hbox (25.8567pt too wide) in paragraph at lines 268--270
+[]\T1/fi4/m/it/10 coerce,XMLInternalTextNode,character-method 
+
+Overfull \hbox (40.8567pt too wide) in paragraph at lines 272--274
+[]\T1/fi4/m/it/10 coerce,XMLNamespaceDefinition,character-method 
+
+Overfull \hbox (45.8567pt too wide) in paragraph at lines 274--276
+[]\T1/fi4/m/it/10 coerce,XMLNamespaceDefinitions,character-method 
+
+Overfull \hbox (5.8567pt too wide) in paragraph at lines 276--278
+[]\T1/fi4/m/it/10 coerce,XMLNamespaceRef,character-method 
+
+Overfull \hbox (95.8567pt too wide) in paragraph at lines 350--352
+[]\T1/fi4/m/it/10 entityDeclaration.SAX,ANY,ANY,ANY,ANY,ANY,SAXState-method 
+[139]
+Overfull \hbox (0.8567pt too wide) in paragraph at lines 374--376
+[]\T1/fi4/m/it/10 getEncoding,XMLInternalDocument-method 
+[140]
+Overfull \hbox (55.8567pt too wide) in paragraph at lines 554--556
+[]\T1/fi4/m/it/10 processingInstruction.SAX,ANY,ANY,SAXState-method 
+
+Overfull \hbox (15.8567pt too wide) in paragraph at lines 564--566
+[]\T1/fi4/m/it/10 readHTMLTable,HTMLInternalDocument-method 
+
+Overfull \hbox (25.8567pt too wide) in paragraph at lines 566--568
+[]\T1/fi4/m/it/10 readHTMLTable,XMLInternalElementNode-method 
+
+Overfull \hbox (40.8567pt too wide) in paragraph at lines 574--576
+[]\T1/fi4/m/it/10 removeAttributes,XMLInternalElementNode-method 
+
+Overfull \hbox (40.8567pt too wide) in paragraph at lines 584--586
+[]\T1/fi4/m/it/10 removeXMLNamespaces,XMLInternalDocument-method 
+
+Overfull \hbox (55.8567pt too wide) in paragraph at lines 586--588
+[]\T1/fi4/m/it/10 removeXMLNamespaces,XMLInternalElementNode-method 
+
+Overfull \hbox (20.8567pt too wide) in paragraph at lines 588--590
+[]\T1/fi4/m/it/10 removeXMLNamespaces,XMLInternalNode-method 
+
+Overfull \hbox (0.8567pt too wide) in paragraph at lines 647--649
+[]\T1/fi4/m/it/10 show,XMLSchemaValidationResults-method 
+
+Overfull \hbox (10.8567pt too wide) in paragraph at lines 656--658
+[]\T1/fi4/m/it/10 startElement.SAX,ANY,ANY,SAXState-method 
+[141]
+Overfull \hbox (10.8567pt too wide) in paragraph at lines 714--716
+[]\T1/fi4/m/it/10 xmlAttrs<-,XMLInternalElementNode-method 
+
+Overfull \hbox (0.8567pt too wide) in paragraph at lines 856--858
+[]\T1/fi4/m/it/10 xmlNamespaces<-,XMLInternalNode-method 
+[142]
+Overfull \hbox (35.8567pt too wide) in paragraph at lines 950--952
+[]\T1/fi4/m/it/10 xmlSourceFunctions,XMLInternalDocument-method 
+
+Overfull \hbox (25.8567pt too wide) in paragraph at lines 956--958
+[]\T1/fi4/m/it/10 xmlSourceSection,XMLInternalDocument-method 
+
+Overfull \hbox (20.8567pt too wide) in paragraph at lines 964--966
+[]\T1/fi4/m/it/10 xmlSourceThread,XMLInternalDocument-method 
+
+Overfull \hbox (20.8567pt too wide) in paragraph at lines 978--980
+[]\T1/fi4/m/it/10 xmlToDataFrame,ANY,ANY,ANY,ANY,list-method 
+
+Overfull \hbox (95.8567pt too wide) in paragraph at lines 980--982
+[]\T1/fi4/m/it/10 xmlToDataFrame,ANY,ANY,ANY,ANY,XMLInternalNodeList-method 
+
+Overfull \hbox (50.8567pt too wide) in paragraph at lines 982--984
+[]\T1/fi4/m/it/10 xmlToDataFrame,ANY,ANY,ANY,ANY,XMLNodeSet-method 
+
+Overfull \hbox (45.8567pt too wide) in paragraph at lines 984--986
+[]\T1/fi4/m/it/10 xmlToDataFrame,character,ANY,ANY,ANY,ANY-method 
+
+Overfull \hbox (20.8567pt too wide) in paragraph at lines 986--988
+[]\T1/fi4/m/it/10 xmlToDataFrame,list,ANY,ANY,ANY,ANY-method 
+
+Overfull \hbox (115.8567pt too wide) in paragraph at lines 988--990
+[]\T1/fi4/m/it/10 xmlToDataFrame,XMLInternalDocument,ANY,ANY,ANY,missing-method
+ 
+
+Overfull \hbox (95.8567pt too wide) in paragraph at lines 990--992
+[]\T1/fi4/m/it/10 xmlToDataFrame,XMLInternalNodeList,ANY,ANY,ANY,ANY-method 
+
+Overfull \hbox (50.8567pt too wide) in paragraph at lines 992--994
+[]\T1/fi4/m/it/10 xmlToDataFrame,XMLNodeSet,ANY,ANY,ANY,ANY-method 
+[143] [144]) (./Rd2.aux)
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.scan} has been referenced but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grep} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.read.table} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.stop} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.simpleError} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.length} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.readRDS} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.saveRDS} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.oldClass.Rdash.class} has been referenced but d
+oes not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.list} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.names} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.readLines} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.vector.Rdash.class} has been referenced but doe
+s not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.character.Rdash.class} has been referenced but 
+does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.source} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.apply} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.as.data.frame} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.print} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.getNativeSymbolInfo} has been referenced but do
+es not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.sapply} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.Encoding} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.coerce} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.lapply} has been referenced but does not exist,
+ replaced by a fixed one
+
+{/usr/local/texlive/2011/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/tex
+live/2011/texmf-dist/fonts/enc/dvips/inconsolata/fi4-ec.enc}</usr/local/texlive
+/2011/texmf-dist/fonts/type1/public/inconsolata/Inconsolata.pfb></usr/local/tex
+live/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texl
+ive/2011/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/201
+1/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2011/texmf-di
+st/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/t
+ype1/urw/times/utmr8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/t
+imes/utmri8a.pfb>
+Output written on Rd2.pdf (144 pages, 434527 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.15 [TeX Live 2011] (kpathsea + Thai support).
+Scanning input file ./Rd2.idx....done (825 entries accepted, 0 rejected).
+Sorting entries.........done (8796 comparisons).
+Generating output file ./Rd2.ind....done (1062 lines written, 0 warnings).
+Output written in ./Rd2.ind.
+Transcript written in ./Rd2.ilg.
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011)
+ restricted \write18 enabled.
+entering extended mode
+
+(/private/var/folders/f8/2dd5rdyx1bjbw4jttt0x1hm80000gn/T/RtmpMBBlcM/Rd2pdf8744
+57ba67ae/Rd2.tex
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, ge
+rman-x-2009-06-19, ngerman-x-2009-06-19, afrikaans, ancientgreek, ibycus, arabi
+c, armenian, basque, bulgarian, catalan, pinyin, coptic, croatian, czech, danis
+h, dutch, ukenglish, usenglishmax, esperanto, estonian, ethiopic, farsi, finnis
+h, french, galician, german, ngerman, swissgerman, monogreek, greek, hungarian,
+ icelandic, assamese, bengali, gujarati, hindi, kannada, malayalam, marathi, or
+iya, panjabi, tamil, telugu, indonesian, interlingua, irish, italian, kurmanji,
+ lao, latin, latvian, lithuanian, mongolian, mongolianlmc, bokmal, nynorsk, pol
+ish, portuguese, romanian, russian, sanskrit, serbian, serbianc, slovak, sloven
+ian, spanish, swedish, turkish, turkmen, ukrainian, uppersorbian, welsh, loaded
+.
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/bk10.clo))
+(/Users/duncan/Projects/R-new-devel/share/texmf/tex/latex/Rd.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/url/url.sty) NOT loading ae
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/t1enc.def))
+(/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/times.sty)
+NOT loading lmodern
+(/usr/local/texlive/2011/texmf-dist/tex/latex/inconsolata/inconsolata.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/ts1enc.def))
+(/usr/local/texlive/2011/texmf-dist/tex/latex/graphics/keyval.sty))
+(/usr/local/texlive/2011/texmf-dist/tex/latex/graphics/color.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/latexconfig/color.cfg)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/pdftex-def/pdftex.def
+(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/infwarerr.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/ltxcmds.sty)))
+(/usr/local/texlive/2011/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/local/texlive/2011/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+
+Package hyperref Message: Driver (autodetected): hpdftex.
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/local/texlive/2011/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 342.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 342.
+
+) (/usr/local/texlive/2011/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/inputenc.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/t1enc.dfu)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/ot1enc.dfu)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/omsenc.dfu)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/ts1enc.dfu))
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/latin1.def))
+Writing index file Rd2.idx
+(./Rd2.aux) (/usr/local/texlive/2011/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/local/texlive/2011/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/local/texlive/2011/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(./Rd2.out) (./Rd2.out)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/inconsolata/t1fi4.fd)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/t1phv.fd) (./Rd2.toc
+[1{/usr/local/texlive/2011/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+[2]) (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [3]
+Overfull \hbox (54.78088pt too wide) in paragraph at lines 89--89
+ []               \T1/fi4/m/n/10 suppressNamespaceWarning = getOption("suppress
+XMLNamespaceWarning", FALSE),[] 
+
+Overfull \hbox (1.33824pt too wide) in paragraph at lines 136--141
+\T1/ptm/m/n/10 is passed on to the rel-e-vant func-tion that cre-ates the text 
+nodes, e.g. [][]\T1/fi4/m/n/10 xmlTextNode[][][]
+[4]
+Overfull \hbox (59.28088pt too wide) in paragraph at lines 223--223
+ []\T1/fi4/m/n/9 b = newXMLNode("bob", namespace = c(r = "http://www.r-project.
+org", omg = "http://www.omegahat.org"))[] 
+[5]
+Underfull \vbox (badness 10000) has occurred while \output is active [6]
+Overfull \hbox (9.78088pt too wide) in paragraph at lines 290--290
+ []                \T1/fi4/m/n/9 xmlNode("a", "a link", attrs = c(href = "http:
+//www.omegahat.org/RSXML")))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (34.23923pt too wide) in paragraph at lines 338--341
+\T1/ptm/m/n/10 ent types of trees/nodes. These can in-clude \T1/fi4/m/n/10 attr
+s\T1/ptm/m/n/10 , \T1/fi4/m/n/10 namespace\T1/ptm/m/n/10 , \T1/fi4/m/n/10 names
+paceDefinitions\T1/ptm/m/n/10 ,
+[7] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [8]
+Overfull \hbox (14.28088pt too wide) in paragraph at lines 454--454
+ [] \T1/fi4/m/n/9 n = append.xmlNode(n, xmlNode("varNames", xmlNode("string", "
+A"), xmlNode("string", "B")))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [9]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (109.78088pt too wide) in paragraph at lines 554--554
+ []\T1/fi4/m/n/10 asXMLTreeNode(node, env, id = get(".nodeIdGenerator", env)(xm
+lName(node)), className = "XMLTreeNode")[] 
+[10] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (12.16985pt too wide) in paragraph at lines 641--646
+[]\T1/ptm/m/n/10 More in-for-ma-tion can be found at [][]$\T1/fi4/m/n/10 http :
+ / / xmlsoft . org / catalog . html$[][] \T1/ptm/m/n/10 and [][]$\T1/fi4/m/n/10
+ http : / / www . sagehill .
+[11]
+Overfull \hbox (18.78088pt too wide) in paragraph at lines 717--717
+ []          \T1/fi4/m/n/9 catalogAdd(c("http://www.omegahat.org/XML" = system.
+file("XML", package = "XML")))[] 
+
+Overfull \hbox (0.78088pt too wide) in paragraph at lines 718--718
+ []          \T1/fi4/m/n/9 catalogAdd("http://www.omegahat.org/XML", system.fil
+e("XML", package = "XML"))[] 
+
+Overfull \hbox (86.28088pt too wide) in paragraph at lines 719--719
+ []          \T1/fi4/m/n/9 catalogAdd("http://www.r-project.org/doc/", paste(R.
+home(), "doc", "", sep = .Platform$file.sep))[] 
+[12]
+Overfull \hbox (5.28088pt too wide) in paragraph at lines 722--722
+ []     \T1/fi4/m/n/9 #          This shows how we can load a catalog and then 
+resolve a system identifier[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (42.85767pt too wide) in paragraph at lines 738--745
+\T1/ptm/m/n/10 tially dif-fer-ent re-mote files. We can use a cat-a-log to map 
+a ref-er-ence such as \T1/fi4/m/n/10 http://www.omegahat.org/XSL/
+[13]
+Overfull \hbox (18.78088pt too wide) in paragraph at lines 802--802
+ []\T1/fi4/m/n/9 Sys.setenv("XML_CATALOG_FILES" = system.file("exampleData", "c
+atalog.xml", package = "XML"))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [14] [15]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [16]
+Overfull \hbox (212.28088pt too wide) in paragraph at lines 1052--1052
+ []  \T1/fi4/m/n/9 d = Doctype(name = "section", public = c("-//OASIS//DTD DocB
+ook XML V4.2//EN", "http://oasis-open.org/docbook/xml/4.2/docbookx.dtd"))[] 
+
+Overfull \hbox (252.78088pt too wide) in paragraph at lines 1056--1056
+ []  \T1/fi4/m/n/9 d = Doctype(name = "section", public = c("-//OASIS//DTD DocB
+ook XML V4.2//EN"), system = "http://oasis-open.org/docbook/xml/4.2/docbookx.dt
+d")[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [17]
+Overfull \hbox (212.28088pt too wide) in paragraph at lines 1108--1108
+ []  \T1/fi4/m/n/9 d = Doctype(name = "section", public = c("-//OASIS//DTD DocB
+ook XML V4.2//EN", "http://oasis-open.org/docbook/xml/4.2/docbookx.dtd"))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [18] [19]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [20]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [21]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [22]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [23]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [24]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [25]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (7.3792pt too wide) in paragraph at lines 1666--1673
+[][][]\T1/fi4/m/n/10 xmlEventParse[][][] [][]startElement.SAX[][][] [][]endElem
+ent.SAX[][][] [][]comment.SAX[][][] [][]processingInstruction.SAX[][][]
+[26] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [27]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [28] [29]
+Overfull \hbox (9.78088pt too wide) in paragraph at lines 1889--1889
+ []\T1/fi4/m/n/10 getNodeSet(doc, path, namespaces = xmlNamespaceDefinitions(do
+c, simplify = TRUE),[] 
+
+Overfull \hbox (24.78088pt too wide) in paragraph at lines 1890--1890
+ []                    \T1/fi4/m/n/10 fun = NULL, sessionEncoding = CE_NATIVE, 
+addFinalizer = NA, ...)[] 
+
+Overfull \hbox (39.78088pt too wide) in paragraph at lines 1898--1898
+ []                               \T1/fi4/m/n/10 nsDefs = xmlNamespaceDefinitio
+ns(doc, recursive = TRUE),[] 
+[30]
+Overfull \hbox (50.56981pt too wide) in paragraph at lines 1961--1973
+\T1/ptm/m/n/10 we have an XML doc-u-ment \T1/fi4/m/n/10 <help xmlns="http://www
+.r-project.org/Rd"><topic>...</topic></help>
+
+Overfull \hbox (11.73862pt too wide) in paragraph at lines 1961--1973
+\T1/fi4/m/n/10 project.org/Rd \T1/ptm/m/n/10 cor-re-spond-ing to the one in the
+ XML doc-u-ment. So we would use \T1/fi4/m/n/10 getNodeSet(doc,
+[31]
+Overfull \hbox (9.78088pt too wide) in paragraph at lines 2073--2073
+ [] \T1/fi4/m/n/9 getNodeSet(z, "/a:Envelope/a:Body", c("a" = "http://schemas.x
+mlsoap.org/soap/envelope/"))[] 
+[32]
+Overfull \hbox (54.78088pt too wide) in paragraph at lines 2117--2117
+ [] \T1/fi4/m/n/9 rates = xpathApply(doc, "//ns:Cube[@currency='SIT']", xmlGetA
+ttr, "rate", namespaces = namespaces )[] 
+
+Overfull \hbox (99.78088pt too wide) in paragraph at lines 2121--2121
+ [] \T1/fi4/m/n/9 rates = xpathApply(doc, "//ns:Cube[@currency='SIT']", quote(x
+mlGetAttr(x, "rate")), namespaces = namespaces )[] 
+
+Overfull \hbox (9.78088pt too wide) in paragraph at lines 2130--2130
+ []  \T1/fi4/m/n/9 getNodeSet(d, "/o:a//c:c", c("o" = "http://www.omegahat.org"
+, "c" = "http://www.c.org"))[] 
+
+Underfull \vbox (badness 10000) has occurred while \output is active [33]
+Overfull \hbox (59.28088pt too wide) in paragraph at lines 2173--2173
+ []  \T1/fi4/m/n/9 doc = htmlTreeParse("http://finance.yahoo.com/bonds/composit
+e_bond_rates", useInternalNodes = TRUE)[] 
+
+Underfull \vbox (badness 10000) has occurred while \output is active [34]
+Overfull \hbox (81.78088pt too wide) in paragraph at lines 2224--2224
+ []    \T1/fi4/m/n/9 txt = '<top xmlns="http://www.r-project.org" xmlns:r="http
+://www.r-project.org"><r:a><b/></r:a></top>'[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [35]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [36]
+Overfull \hbox (32.28088pt too wide) in paragraph at lines 2378--2378
+ []     \T1/fi4/m/n/9 #           Here we read  a "censored" "database" of song
+s from Apple's  iTune application[] 
+[37] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [38]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [39]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [40]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (4.97928pt too wide) in paragraph at lines 2631--2644
+\T1/fi4/m/n/10 libxmlFeatures \T1/ptm/m/n/10 re-turns a log-i-cal vec-tor with 
+names given by:  \T1/fi4/m/n/10 [1] "THREAD" "TREE" "OUTPUT"
+
+Overfull \hbox (39.78088pt too wide) in paragraph at lines 2631--2644
+\T1/fi4/m/n/10 "PUSH" "READER" [6] "PATTERN" "WRITER" "SAX1" "FTP" "HTTP" [11] 
+"VALID" "HTML" "LEGACY"
+
+Overfull \hbox (9.78088pt too wide) in paragraph at lines 2631--2644
+\T1/fi4/m/n/10 "C14N" "CATALOG" [16] "XPATH" "XPTR" "XINCLUDE" "ICONV" "ISO8859
+X" [21] "UNICODE"
+
+Overfull \hbox (24.78088pt too wide) in paragraph at lines 2631--2644
+\T1/fi4/m/n/10 "REGEXP" "AUTOMATA" "EXPR" "SCHEMAS" [26] "SCHEMATRON" "MODULES"
+ "DEBUG" "DEBUG_MEM"
+[41] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [42]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [43] [44]
+Overfull \hbox (16.26955pt too wide) in paragraph at lines 2874--2879
+\T1/ptm/m/n/10 the XML doc-u-ment, \ e.g. \T1/fi4/m/n/10 c(shelp = "http://www.
+omegahat.org/XML/SHelp") 
+[45] [46] [47]
+Overfull \hbox (41.28088pt too wide) in paragraph at lines 3089--3089
+ []\T1/fi4/m/n/9 z = xmlTree("people", dtd = c("people", "//a//b//c//d", "http:
+//www.omegahat.org/XML/types.dtd"))[] 
+
+Overfull \hbox (122.28088pt too wide) in paragraph at lines 3106--3106
+ []\T1/fi4/m/n/9 z$addNode("r:data",  namespace = c(r = "http://www.r-project.o
+rg", omg = "http://www.omegahat.org"), close = FALSE)[] 
+
+Underfull \vbox (badness 10000) has occurred while \output is active [48]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [49]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (4.78088pt too wide) in paragraph at lines 3214--3214
+ []\T1/fi4/m/n/10 parseDTD(extId, asText=FALSE, name="", isURL=FALSE, error = x
+mlErrorCumulator())[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/ts1ptm.fd) [50] [51]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (15.2779pt too wide) in paragraph at lines 3369--3371
+[]\T1/ptm/m/n/10 a string giv-ing the name of the user, e.g. in FTP "ftp://dunc
+an@www.omegahat.org",
+
+Overfull \hbox (37.88806pt too wide) in paragraph at lines 3372--3374
+[]\T1/ptm/m/n/10 the CGI query part of the string, e.g. the bit af-ter '?' of t
+he form \T1/fi4/m/n/10 name=value&name=value 
+
+Overfull \hbox (23.28088pt too wide) in paragraph at lines 3391--3391
+ []  \T1/fi4/m/n/9 as(parseURI("http://duncan@www.omegahat.org:8080/RCurl/index
+.html#my_anchor"), "character")[] 
+
+Overfull \hbox (36.78088pt too wide) in paragraph at lines 3393--3393
+ []  \T1/fi4/m/n/9 as(parseURI("ftp://duncan@www.omegahat.org:8080/RCurl/index.
+html?foo=1&bar=axd"), "character")[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [52]
+Overfull \hbox (32.28088pt too wide) in paragraph at lines 3465--3465
+ []  \T1/fi4/m/n/9 txt = sprintf("<Placemark><Point><coordinates>%.3f,%.3f,0</c
+oordinates></Point></Placemark>",[] 
+[53] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [54] [55]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (10.71863pt too wide) in paragraph at lines 3634--3640
+[]\T1/ptm/m/n/10 These are only rel-e-vant for "in-ter-nal nodes" as gen-er-ate
+d via [][]\T1/fi4/m/n/10 xmlInternalTreeParse[][][] \T1/ptm/m/n/10 and [][]\T1/
+fi4/m/n/10 newXMLNode[][][]
+
+Overfull \hbox (12.97781pt too wide) in paragraph at lines 3634--3640
+\T1/ptm/m/n/10 and their re-lated func-tions. When deal-ing with XML doc-u-ment
+s via [][]\T1/fi4/m/n/10 xmlTreeParse[][][] \T1/ptm/m/n/10 or [][]\T1/fi4/m/n/1
+0 xmlEventParse[][][]\T1/ptm/m/n/10 ,
+[56] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (3.77963pt too wide) in paragraph at lines 3737--3741
+\T1/fi4/m/n/10 HTMLInternalDocument\T1/ptm/m/n/10 , or an HTML node of class \T
+1/fi4/m/n/10 XMLInternalElementNode\T1/ptm/m/n/10 ,
+[57]
+Overfull \hbox (28.77847pt too wide) in paragraph at lines 3784--3788
+[]\T1/ptm/m/n/10 currently ad-di-tional pa-ram-e-ters that are passed on to [][
+]\T1/fi4/m/n/10 as.data.frame[][][] \T1/ptm/m/n/10 if \T1/fi4/m/n/10 as.data.fr
+ame
+[58]
+Overfull \hbox (36.78088pt too wide) in paragraph at lines 3828--3828
+ []                      \T1/fi4/m/n/9 ncol(tmp)-1, byrow = TRUE, dimnames = li
+st(NULL, as.character(tmp[[1]]))))[] 
+
+Overfull \hbox (63.78088pt too wide) in paragraph at lines 3852--3852
+ []  \T1/fi4/m/n/9 zz = readHTMLTable("http://www.inflationdata.com/Inflation/C
+onsumer_Price_Index/HistoricalCPI.aspx")[] 
+
+Overfull \hbox (23.28088pt too wide) in paragraph at lines 3853--3853
+ []  \T1/fi4/m/n/9 if(any(i <- sapply(zz, ncol) == 14)) {  # guard against the 
+structure of the page changing.[] 
+
+Overfull \hbox (9.78088pt too wide) in paragraph at lines 3855--3855
+ []        \T1/fi4/m/n/9 # convert columns to numeric.  Could use colClasses in
+ the call to readHTMLTable()[] 
+[59]
+Overfull \hbox (23.28088pt too wide) in paragraph at lines 3877--3877
+ [] \T1/fi4/m/n/9 u = "http://tidesonline.nos.noaa.gov/data_read.shtml?station_
+info=9414290+San+Francisco,+CA"[] 
+
+Overfull \hbox (45.78088pt too wide) in paragraph at lines 3894--3894
+ []  \T1/fi4/m/n/9 tt =  getURL("http://www.omegahat.org/RCurl/testPassword/tab
+le.html",  userpwd = "bob:duncantl")[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [60]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (39.78088pt too wide) in paragraph at lines 3975--3975
+ []\T1/fi4/m/n/10 saveXML(doc, file=NULL, compression=0, indent=TRUE, prefix = 
+'<?xml version="1.0"?>\n',[] 
+
+Overfull \hbox (39.78088pt too wide) in paragraph at lines 3978--3978
+ []\T1/fi4/m/n/10 saveXML(doc, file=NULL, compression=0, indent=TRUE, prefix = 
+'<?xml version="1.0"?>\n',[] 
+
+Overfull \hbox (39.78088pt too wide) in paragraph at lines 3981--3981
+ []\T1/fi4/m/n/10 saveXML(doc, file=NULL, compression=0, indent=TRUE, prefix = 
+'<?xml version="1.0"?>\n',[] 
+
+Overfull \hbox (39.78088pt too wide) in paragraph at lines 3984--3984
+ []\T1/fi4/m/n/10 saveXML(doc, file=NULL, compression=0, indent=TRUE, prefix = 
+'<?xml version="1.0"?>\n',[] 
+
+Overfull \hbox (39.78088pt too wide) in paragraph at lines 3987--3987
+ []\T1/fi4/m/n/10 saveXML(doc, file=NULL, compression=0, indent=TRUE, prefix = 
+'<?xml version="1.0"?>\n',[] 
+[61] [62] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [63]
+Overfull \hbox (11.70992pt too wide) in paragraph at lines 4153--4154
+[]\T1/fi4/m/n/10 signature(name = "ANY", base = "ANY", sysId = "ANY", publicId
+
+Overfull \hbox (42.65938pt too wide) in paragraph at lines 4154--4155
+[]\T1/fi4/m/n/10 signature(target = "ANY", content = "ANY", .state = "SAXState"
+)\T1/ptm/m/n/10 :
+[64]
+Overfull \hbox (77.28088pt too wide) in paragraph at lines 4202--4202
+ [] \T1/fi4/m/n/9 z = xmlEventParse(filename, genericSAXHandlers(), state = new
+("ElementNameCounter"), addContext = FALSE)[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [65]
+Overfull \hbox (4.78088pt too wide) in paragraph at lines 4294--4294
+ []\T1/fi4/m/n/10 entityDeclaration.SAX(name, base, sysId, publicId, notationNa
+me,  .state = NULL)[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [66]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [67]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [68]
+Overfull \hbox (0.78088pt too wide) in paragraph at lines 4507--4507
+ [] \T1/fi4/m/n/9 x <- xmlRoot(xmlTreeParse(system.file("exampleData", "gnumeri
+c.xml", package = "XML")))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [69] [70]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [71]
+Overfull \hbox (189.78088pt too wide) in paragraph at lines 4663--4663
+ [] \T1/fi4/m/n/10 'xmlAttrs<-'(node, append = TRUE, suppressNamespaceWarning =
+ getOption("suppressXMLNamespaceWarning", FALSE), value)[] 
+[72] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [73]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [74]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [75]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [76]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [77]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [78]
+Overfull \hbox (7.36877pt too wide) in paragraph at lines 5153--5169
+[]\T1/ptm/m/n/10 The ad-di-tion of the \T1/fi4/m/n/10 recursive \T1/ptm/m/n/10 
+ar-gu-ment makes this func-tion be-have like the \T1/fi4/m/n/10 getElementsByTa
+gName
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [79]
+Overfull \hbox (5.28088pt too wide) in paragraph at lines 5255--5255
+ []  \T1/fi4/m/n/9 xmlElementSummary(system.file("exampleData", "eurofxref-hist
+.xml.gz", package = "XML"))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [80]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [81]
+Overfull \hbox (0.26694pt too wide) in paragraph at lines 5361--5366
+\T1/ptm/m/n/10 han-dler el-e-ments with the same name as the XML el-e-ment of i
+n-ter-est, i.e. \T1/fi4/m/n/10 "myTag" = function(x,
+[82]
+Overfull \hbox (52.63095pt too wide) in paragraph at lines 5440--5451
+\T1/fi4/m/n/10 entityDeclaration()\T1/ptm/m/n/10 , \T1/fi4/m/n/10 processingIns
+truction()\T1/ptm/m/n/10 , \T1/fi4/m/n/10 text()\T1/ptm/m/n/10 , \T1/fi4/m/n/10
+ cdata()\T1/ptm/m/n/10 , \T1/fi4/m/n/10 startDocument()\T1/ptm/m/n/10 ,
+
+Overfull \hbox (14.2404pt too wide) in paragraph at lines 5459--5478
+\T1/fi4/m/n/10 = "", system = "character", public = "character" ) name \T1/ptm/
+m/n/10 gives the name
+
+Overfull \hbox (28.59091pt too wide) in paragraph at lines 5459--5478
+\T1/fi4/m/n/10 "External_General_Unparsed"\T1/ptm/m/n/10 , \T1/fi4/m/n/10 "Inte
+rnal_Parameter"\T1/ptm/m/n/10 , \T1/fi4/m/n/10 "External_Parameter"\T1/ptm/m/n/
+10 ,
+[83] [84]
+Underfull \vbox (badness 2698) has occurred while \output is active [85]
+[86]
+Underfull \vbox (badness 10000) has occurred while \output is active [87]
+Overfull \hbox (77.28088pt too wide) in paragraph at lines 5804--5804
+ [] \T1/fi4/m/n/9 xmlEventParse(system.file("exampleData", "namespaces.xml", pa
+ckage="XML"), handlers = h, saxVersion = 2)[] 
+
+Overfull \hbox (27.78088pt too wide) in paragraph at lines 5826--5826
+ []  \T1/fi4/m/n/9 invisible(xmlEventParse(filename, branches = list(b = functi
+on(node) {print(names(node))})))[] 
+
+Overfull \hbox (117.78088pt too wide) in paragraph at lines 5827--5827
+ []  \T1/fi4/m/n/9 invisible(xmlEventParse(filename, branches = list(b = functi
+on(node) {print(xmlName(xmlChildren(node)[[1]]))})))[] 
+
+Underfull \vbox (badness 10000) has occurred while \output is active [88]
+Overfull \hbox (36.78088pt too wide) in paragraph at lines 5849--5849
+ []  \T1/fi4/m/n/9 xmlEventParse(fileName, handlers = list(startElement = start
+Element, endElement = endElement))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (99.78088pt too wide) in paragraph at lines 5881--5881
+ []\T1/fi4/m/n/10 xmlFlatListTree(nodes = list(), parents = character(), childr
+en = list(), env = new.env(), n = 200)[] 
+[89]
+Overfull \hbox (3.29826pt too wide) in paragraph at lines 5904--5909
+[]\T1/ptm/m/n/10 An ob-ject of class XMLFlat-Tree which is spe-cial-ized to \T1
+/fi4/m/n/10 XMLFlatListTree \T1/ptm/m/n/10 by the \T1/fi4/m/n/10 xmlFlatListTre
+e
+[90] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [91] [92]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [93]
+Overfull \hbox (40.3587pt too wide) in paragraph at lines 6185--6189
+[]\T1/ptm/m/n/10 Objects of this type are cre-ated via [][]\T1/fi4/m/n/10 xmlTr
+eeParse[][][] \T1/ptm/m/n/10 and [][]\T1/fi4/m/n/10 htmlTreeParse[][][] \T1/ptm
+/m/n/10 with the ar-gu-ment \T1/fi4/m/n/10 useInternalNodes
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [94] [95]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [96]
+Overfull \hbox (50.28088pt too wide) in paragraph at lines 6389--6389
+ []   \T1/fi4/m/n/9 doc = xmlParse('<top xmlns:r="http://www.r-project.org"><bo
+b><code>a = 1:10</code></bob></top>')[] 
+
+Overfull \hbox (50.28088pt too wide) in paragraph at lines 6395--6395
+ []   \T1/fi4/m/n/9 doc = xmlParse('<top xmlns:r="http://www.r-project.org"><bo
+b><code>a = 1:10</code></bob></top>')[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (125.45811pt too wide) in paragraph at lines 6416--6422
+[]\T1/ptm/m/n/10 If the given node has any names-pace def-i-ni-tions de-clared 
+within it, i.e. of the form \T1/fi4/m/n/10 xmlns:myNamespace="http://www.myNS.o
+rg"\T1/ptm/m/n/10 ,
+
+Overfull \hbox (29.78088pt too wide) in paragraph at lines 6434--6434
+ []\T1/fi4/m/n/10 xmlNamespaceDefinitions(x, addNames = TRUE, recursive = FALSE
+, simplify = FALSE, ...)[] 
+[97] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [98]
+Overfull \hbox (84.78088pt too wide) in paragraph at lines 6532--6532
+ []\T1/fi4/m/n/10 xmlNode(name, ..., attrs=NULL, namespace="", namespaceDefinit
+ions = NULL, .children = list(...))[] 
+[99]
+Overfull \hbox (46.18103pt too wide) in paragraph at lines 6610--6617
+[][][]\T1/fi4/m/n/10 addChildren[][][] [][]xmlTreeParse[][][] [][]asXMLNode[][]
+[] [][]newXMLNode[][][] [][]newXMLPINode[][][] [][]newXMLCDataNode[][][] [][]ne
+wXMLCommentNode[][][] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [100]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [101pdfTeX warning
+ (ext4): destination with the same identifier (name{Rfn.XMLAbstractNode.Rdash.c
+lass}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.6752 \item[\code{attrs}]
+                           attributes for the top-level node, in the form of...
+] [102]
+Overfull \hbox (29.89848pt too wide) in paragraph at lines 6827--6831
+[][][]\T1/fi4/m/n/10 xmlTree[][][] \T1/ptm/m/n/10 for a na-tive/internal (C-lev
+el) rep-re-sen-ta-tion of the tree, [][]\T1/fi4/m/n/10 xmlNode[][][]\T1/ptm/m/n
+/10 , [][]\T1/fi4/m/n/10 xmlTextNode[][][]\T1/ptm/m/n/10 , [][]\T1/fi4/m/n/10 a
+ppend.xmlNode[][][] 
+[103] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [104]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (104.78088pt too wide) in paragraph at lines 7045--7045
+ []\T1/fi4/m/n/10 xmlParseDoc(file, options = 1L, encoding = character(), asTex
+t = !file.exists(file), baseURL = file)[] 
+[105] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [106]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [107]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [108]
+Overfull \hbox (59.72841pt too wide) in paragraph at lines 7267--7270
+[]\T1/ptm/m/n/10 an ob-ject of class \T1/fi4/m/n/10 xmlSchemaRef \T1/ptm/m/n/10
+ which is usu-ally the re-sult of a call to [][]\T1/fi4/m/n/10 xmlInternalTreeP
+arse[][][]
+[109]
+Overfull \hbox (14.28088pt too wide) in paragraph at lines 7312--7312
+ []  \T1/fi4/m/n/9 xsd = xmlParse(system.file("exampleData", "author.xsd", pack
+age = "XML"), isSchema =TRUE)[] 
+
+Overfull \hbox (0.78088pt too wide) in paragraph at lines 7313--7313
+ []  \T1/fi4/m/n/9 doc = xmlInternalTreeParse(system.file("exampleData", "autho
+r.xml",  package = "XML"))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [110]
+Overfull \hbox (11.87766pt too wide) in paragraph at lines 7384--7391
+[]\T1/ptm/m/n/10 These func-tions are used in calls to [][]\T1/fi4/m/n/10 saveR
+DS[][][] \T1/ptm/m/n/10 and [][]\T1/fi4/m/n/10 readRDS[][][] \T1/ptm/m/n/10 via
+ the \T1/fi4/m/n/10 refhook \T1/ptm/m/n/10 ar-gu-ment.  \T1/fi4/m/n/10 saveRDS(
+obj,
+
+Overfull \hbox (29.78088pt too wide) in paragraph at lines 7384--7391
+\T1/fi4/m/n/10 filename, refhook = xmlSerializeHook) readRDS(filename, refhook 
+= xmlDeserializeHook) 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [111]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [112] [113]
+Overfull \hbox (21.64818pt too wide) in paragraph at lines 7603--7610
+[]\T1/ptm/m/n/10 a char-ac-ter vec-tor. XML nodes con-tain-ing R code (e.g. \T1
+/fi4/m/n/10 r:code\T1/ptm/m/n/10 , \T1/fi4/m/n/10 r:init\T1/ptm/m/n/10 , \T1/fi
+4/m/n/10 r:function\T1/ptm/m/n/10 ,
+[114] [115] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+[116]
+Overfull \hbox (36.78088pt too wide) in paragraph at lines 7805--7805
+ []  \T1/fi4/m/n/9 xmlEventParse(fileName, handlers = list(startElement = start
+Element, endElement = endElement))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (15.49895pt too wide) in paragraph at lines 7820--7827
+\T1/ptm/m/n/10 used if \T1/fi4/m/n/10 NULL \T1/ptm/m/n/10 is spec-i-fied for th
+e \T1/fi4/m/n/10 error \T1/ptm/m/n/10 ar-gu-ment of [][]\T1/fi4/m/n/10 xmlTreeP
+arse[][][]\T1/ptm/m/n/10 , [][]\T1/fi4/m/n/10 xmlTreeParse[][][] \T1/ptm/m/n/10
+ and [][]\T1/fi4/m/n/10 htmlTreeParse[][][]\T1/ptm/m/n/10 . 
+[117] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [118]
+[119] (/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [120]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [121]
+Overfull \hbox (25.42009pt too wide) in paragraph at lines 8186--8191
+\T1/ptm/m/n/10 the cor-re-spond-ing URI, \ e.g \T1/fi4/m/n/10 c(shelp = "http:/
+/www.omegahat.org/XML/SHelp")
+[122] [123]
+Overfull \hbox (122.28088pt too wide) in paragraph at lines 8295--8295
+ []\T1/fi4/m/n/9 z$addNode("r:data",  namespace = c(r = "http://www.r-project.o
+rg", omg = "http://www.omegahat.org"), close = FALSE)[] 
+
+Overfull \hbox (45.78088pt too wide) in paragraph at lines 8321--8321
+ []\T1/fi4/m/n/9 zc = xmlTree("people", dtd = c("people", "//a//b//c//d", "http
+://www.omegahat.org/XML/types.dtd"))[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [124]
+Overfull \hbox (19.78088pt too wide) in paragraph at lines 8374--8374
+ []\T1/fi4/m/n/10 xmlInternalTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, 
+replaceEntities=FALSE,[] 
+
+Overfull \hbox (9.78088pt too wide) in paragraph at lines 8382--8382
+ []\T1/fi4/m/n/10 xmlNativeTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, re
+placeEntities=FALSE,[] 
+
+Overfull \hbox (14.78088pt too wide) in paragraph at lines 8398--8398
+ []\T1/fi4/m/n/10 xmlSchemaParse(file, asText = FALSE, xinclude = TRUE, error =
+ xmlErrorCumulator())[] 
+[125] [126]
+Overfull \hbox (5.97972pt too wide) in paragraph at lines 8528--8538
+\T1/fi4/m/n/10 xmlns:xi="http://www.w3.org/2001/XInclude"> \T1/ptm/m/n/10 to in
+-sert con-tent from other
+
+Overfull \hbox (15.52872pt too wide) in paragraph at lines 8564--8567
+[]\T1/ptm/m/n/10 If this is \T1/fi4/m/n/10 NULL\T1/ptm/m/n/10 , the de-fault er
+-ror han-dler func-tion in the pack-age [][]\T1/fi4/m/n/10 xmlStructuredStop[][
+][]
+[127]
+Overfull \hbox (49.96924pt too wide) in paragraph at lines 8654--8657
+[]\T1/ptm/m/n/10 Some nodes spe-cial-iza-tions of \T1/fi4/m/n/10 XMLNode\T1/ptm
+/m/n/10 , such as \T1/fi4/m/n/10 XMLComment\T1/ptm/m/n/10 , \T1/fi4/m/n/10 XMLP
+rocessingInstruction\T1/ptm/m/n/10 ,
+[128]
+Overfull \hbox (43.6898pt too wide) in paragraph at lines 8684--8698
+\T1/ptm/m/n/10 con-tains only white space.  \T1/fi4/m/n/10 xmlChildren(node)[ !
+ xmlSApply(node, function(x)
+[129]
+Underfull \vbox (badness 10000) has occurred while \output is active [130]
+Underfull \vbox (badness 10000) has occurred while \output is active [131]
+Overfull \hbox (99.78088pt too wide) in paragraph at lines 8870--8870
+ [] \T1/fi4/m/n/9 htmlTreeParse(system.file("examples", "index.html", package =
+ "XML"), handlers = h2, useInternalNodes = TRUE)[] 
+
+Underfull \vbox (badness 10000) has occurred while \output is active [132]
+Overfull \hbox (63.78088pt too wide) in paragraph at lines 8914--8914
+ []                                                      \T1/fi4/m/n/9 cat("Err
+ors in XML document\n", e$message, "\n")[] 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [133]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [134]
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def) [135] (./Rd2.ind
+[136] [137]
+
+LaTeX Font Warning: Font shape `T1/fi4/m/it' undefined
+(Font)              using `T1/fi4/m/n' instead on input line 129.
+
+
+Overfull \hbox (25.8567pt too wide) in paragraph at lines 167--169
+[]\T1/fi4/m/it/10 addAttributes,XMLInternalElementNode-method 
+
+Overfull \hbox (10.8567pt too wide) in paragraph at lines 210--212
+[]\T1/fi4/m/it/10 coerce,character,FormattedInteger-method 
+
+Overfull \hbox (5.8567pt too wide) in paragraph at lines 212--214
+[]\T1/fi4/m/it/10 coerce,character,FormattedNumber-method 
+
+Overfull \hbox (45.8567pt too wide) in paragraph at lines 220--222
+[]\T1/fi4/m/it/10 coerce,character,XMLNamespaceDefinitions-method 
+
+Overfull \hbox (20.8567pt too wide) in paragraph at lines 226--228
+[]\T1/fi4/m/it/10 coerce,NULL,XMLNamespaceDefinitions-method 
+[138]
+Overfull \hbox (55.8567pt too wide) in paragraph at lines 232--234
+[]\T1/fi4/m/it/10 coerce,XMLAbstractDocument,XMLAbstractNode-method 
+
+Overfull \hbox (5.8567pt too wide) in paragraph at lines 234--236
+[]\T1/fi4/m/it/10 coerce,XMLAbstractNode,character-method 
+
+Overfull \hbox (15.8567pt too wide) in paragraph at lines 250--252
+[]\T1/fi4/m/it/10 coerce,XMLHashTreeNode,XMLHashTree-method 
+
+Overfull \hbox (25.8567pt too wide) in paragraph at lines 252--254
+[]\T1/fi4/m/it/10 coerce,XMLInternalDocument,character-method 
+
+Overfull \hbox (35.8567pt too wide) in paragraph at lines 254--256
+[]\T1/fi4/m/it/10 coerce,XMLInternalDocument,XMLHashTree-method 
+
+Overfull \hbox (55.8567pt too wide) in paragraph at lines 256--258
+[]\T1/fi4/m/it/10 coerce,XMLInternalDocument,XMLInternalNode-method 
+
+Overfull \hbox (0.8567pt too wide) in paragraph at lines 258--260
+[]\T1/fi4/m/it/10 coerce,XMLInternalDOM,character-method 
+
+Overfull \hbox (5.8567pt too wide) in paragraph at lines 260--262
+[]\T1/fi4/m/it/10 coerce,XMLInternalNode,character-method 
+
+Overfull \hbox (15.8567pt too wide) in paragraph at lines 262--264
+[]\T1/fi4/m/it/10 coerce,XMLInternalNode,XMLHashTree-method 
+
+Overfull \hbox (55.8567pt too wide) in paragraph at lines 264--266
+[]\T1/fi4/m/it/10 coerce,XMLInternalNode,XMLInternalDocument-method 
+
+Overfull \hbox (25.8567pt too wide) in paragraph at lines 268--270
+[]\T1/fi4/m/it/10 coerce,XMLInternalTextNode,character-method 
+
+Overfull \hbox (40.8567pt too wide) in paragraph at lines 272--274
+[]\T1/fi4/m/it/10 coerce,XMLNamespaceDefinition,character-method 
+
+Overfull \hbox (45.8567pt too wide) in paragraph at lines 274--276
+[]\T1/fi4/m/it/10 coerce,XMLNamespaceDefinitions,character-method 
+
+Overfull \hbox (5.8567pt too wide) in paragraph at lines 276--278
+[]\T1/fi4/m/it/10 coerce,XMLNamespaceRef,character-method 
+
+Overfull \hbox (95.8567pt too wide) in paragraph at lines 351--353
+[]\T1/fi4/m/it/10 entityDeclaration.SAX,ANY,ANY,ANY,ANY,ANY,SAXState-method 
+[139]
+Overfull \hbox (0.8567pt too wide) in paragraph at lines 375--377
+[]\T1/fi4/m/it/10 getEncoding,XMLInternalDocument-method 
+[140]
+Overfull \hbox (55.8567pt too wide) in paragraph at lines 557--559
+[]\T1/fi4/m/it/10 processingInstruction.SAX,ANY,ANY,SAXState-method 
+
+Overfull \hbox (15.8567pt too wide) in paragraph at lines 567--569
+[]\T1/fi4/m/it/10 readHTMLTable,HTMLInternalDocument-method 
+
+Overfull \hbox (25.8567pt too wide) in paragraph at lines 569--571
+[]\T1/fi4/m/it/10 readHTMLTable,XMLInternalElementNode-method 
+
+Overfull \hbox (40.8567pt too wide) in paragraph at lines 577--579
+[]\T1/fi4/m/it/10 removeAttributes,XMLInternalElementNode-method 
+
+Overfull \hbox (40.8567pt too wide) in paragraph at lines 587--589
+[]\T1/fi4/m/it/10 removeXMLNamespaces,XMLInternalDocument-method 
+
+Overfull \hbox (55.8567pt too wide) in paragraph at lines 589--591
+[]\T1/fi4/m/it/10 removeXMLNamespaces,XMLInternalElementNode-method 
+
+Overfull \hbox (20.8567pt too wide) in paragraph at lines 591--593
+[]\T1/fi4/m/it/10 removeXMLNamespaces,XMLInternalNode-method 
+
+Overfull \hbox (0.8567pt too wide) in paragraph at lines 650--652
+[]\T1/fi4/m/it/10 show,XMLSchemaValidationResults-method 
+
+Overfull \hbox (10.8567pt too wide) in paragraph at lines 659--661
+[]\T1/fi4/m/it/10 startElement.SAX,ANY,ANY,SAXState-method 
+[141]
+Overfull \hbox (10.8567pt too wide) in paragraph at lines 717--719
+[]\T1/fi4/m/it/10 xmlAttrs<-,XMLInternalElementNode-method 
+
+Overfull \hbox (0.8567pt too wide) in paragraph at lines 859--861
+[]\T1/fi4/m/it/10 xmlNamespaces<-,XMLInternalNode-method 
+[142]
+Overfull \hbox (35.8567pt too wide) in paragraph at lines 953--955
+[]\T1/fi4/m/it/10 xmlSourceFunctions,XMLInternalDocument-method 
+
+Overfull \hbox (25.8567pt too wide) in paragraph at lines 959--961
+[]\T1/fi4/m/it/10 xmlSourceSection,XMLInternalDocument-method 
+
+Overfull \hbox (20.8567pt too wide) in paragraph at lines 967--969
+[]\T1/fi4/m/it/10 xmlSourceThread,XMLInternalDocument-method 
+
+Overfull \hbox (20.8567pt too wide) in paragraph at lines 981--983
+[]\T1/fi4/m/it/10 xmlToDataFrame,ANY,ANY,ANY,ANY,list-method 
+
+Overfull \hbox (95.8567pt too wide) in paragraph at lines 983--985
+[]\T1/fi4/m/it/10 xmlToDataFrame,ANY,ANY,ANY,ANY,XMLInternalNodeList-method 
+
+Overfull \hbox (50.8567pt too wide) in paragraph at lines 985--987
+[]\T1/fi4/m/it/10 xmlToDataFrame,ANY,ANY,ANY,ANY,XMLNodeSet-method 
+
+Overfull \hbox (45.8567pt too wide) in paragraph at lines 987--989
+[]\T1/fi4/m/it/10 xmlToDataFrame,character,ANY,ANY,ANY,ANY-method 
+
+Overfull \hbox (20.8567pt too wide) in paragraph at lines 989--991
+[]\T1/fi4/m/it/10 xmlToDataFrame,list,ANY,ANY,ANY,ANY-method 
+
+Overfull \hbox (115.8567pt too wide) in paragraph at lines 991--993
+[]\T1/fi4/m/it/10 xmlToDataFrame,XMLInternalDocument,ANY,ANY,ANY,missing-method
+ 
+
+Overfull \hbox (95.8567pt too wide) in paragraph at lines 993--995
+[]\T1/fi4/m/it/10 xmlToDataFrame,XMLInternalNodeList,ANY,ANY,ANY,ANY-method 
+
+Overfull \hbox (50.8567pt too wide) in paragraph at lines 995--997
+[]\T1/fi4/m/it/10 xmlToDataFrame,XMLNodeSet,ANY,ANY,ANY,ANY-method 
+[143] [144]) (./Rd2.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.scan} has been referenced but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grep} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.read.table} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.stop} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.simpleError} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.length} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.readRDS} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.saveRDS} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.oldClass.Rdash.class} has been referenced but d
+oes not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.list} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.names} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.readLines} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.vector.Rdash.class} has been referenced but doe
+s not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.character.Rdash.class} has been referenced but 
+does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.source} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.apply} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.as.data.frame} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.print} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.getNativeSymbolInfo} has been referenced but do
+es not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.sapply} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.Encoding} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.coerce} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.lapply} has been referenced but does not exist,
+ replaced by a fixed one
+
+{/usr/local/texlive/2011/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/tex
+live/2011/texmf-dist/fonts/enc/dvips/inconsolata/fi4-ec.enc}</usr/local/texlive
+/2011/texmf-dist/fonts/type1/public/inconsolata/Inconsolata.pfb></usr/local/tex
+live/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texl
+ive/2011/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/201
+1/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2011/texmf-di
+st/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/t
+ype1/urw/times/utmr8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/t
+imes/utmri8a.pfb>
+Output written on Rd2.pdf (144 pages, 435158 bytes).
+Transcript written on Rd2.log.
+Saving output to 'XML-manual.pdf' ...
+Done
+You may want to clean up by 'rm -rf /var/folders/f8/2dd5rdyx1bjbw4jttt0x1hm80000gn/T//RtmpMBBlcM/Rd2pdf874457ba67ae'

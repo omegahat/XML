@@ -1,0 +1,246 @@
+\input{XMLMacros}
+\input{SMacros}
+
+@ The OOP class in Omegahat provides an single mechanism for creatin
+mutable objects in both R and S-Plus.  It is very natural to think of
+the handlers passed to \SFunction{xmlTreeParse} and
+\SFunction{xmlEventParse} as being mutable objects with methods for
+the different callbacks that the parser invokes.  These methods update
+the state of the object. And at the end the parsing, that object
+contains the result.  This is exactly what we do when we use closures
+in the XML parsing.  The benefits of using an OOP object include
+the use of inheritance and structured computations that we can analyze
+programmatically.
+
+While the SAX/event parsing model seems more complex than DOM parsing,
+it is easier to think about in relation to OOP.  The different
+callbacks are for the following events: entityDeclaration,
+startElement, endElement, comment, processingInstruction, text.  When
+using the regular \SFunction{xmlEventParse}, we provide handler
+functions for each of these events as named elements in a list where
+the names identify the event type associated with the handler.  These
+naturally map to methods in an OOP object.
+<<>>=
+saxObj <- defineClass("SAXObject")
+
+saxObj$defineMethod("text", function(x) {
+                                           
+                           })
+
+saxObj$defineMethod("processingInstruction", function(target, value) {
+                                           
+                           })
+
+saxObj$defineMethod("startElement", function(name, attrs) {
+
+                                    })
+
+saxObj$defineMethod("endElement", function(name) {
+
+                                    })
+
+saxObj$defineMethod("comment", function(value) {
+
+                                    })     
+
+
+saxObj$defineMethod("entityDeclaration", function(...) {
+
+                                    })     
+     
+
+@ Now we can extend this abstract class
+
+<<>>=
+countElements <- defineClass("XMLElementCounter", extends="SAXObject")
+countElements$defineFields(table = "numeric")
+
+countElements$defineMethod("startElement", function(name, attrs) {
+                                             if(is.na(match(name, names(table))))
+                                              table[[name]] <<- 1
+                                             else
+                                              table[[name]] <<- table[[name]] + 1
+
+                                           })
+
+@ 
+<<>>=
+o$startElement("foo", NULL)
+o$startElement("bar", NULL)
+o$startElement("foo", NULL)     
+
+
+@ We can use this class in the SAX parser.  First, we create an
+instance of this class.  
+<<>>=
+o <- XMLElementCounter$new()     
+
+@ 
+Then we pass a list of handlers of interest
+to the \SFunction{xmlEventParse} function
+that are methods for this object.
+<<>>=
+fileName <- system.file("exampleData", "gnumeric.xml", package = "XML")
+xmlEventParse(fileName, handlers = list(startElement = o$startElement))
+
+@ Finally, we can access the results of the parsing by retrieving
+the \SField{table} field.
+<<>>=
+o$get.table()
+
+
+@ A natural extension is to provide methods for different XML
+elements. For example, we may want to have different methods for
+elements such as \XMLTag{code} and \XMLTag{figure}.  However, this is
+not the way the SAX parser works. It merely reports structural events
+such as start-tag, end-tag, and so on.  If we want to dispatch to
+different methods, we can do so within the \SFunction{startElement},
+etc.  methods.
+For example, we can implement a specific version
+that handles known tag names something like the following.
+<<>>=
+
+myClass$defineMethod("startElement",
+                     function(x, attrs) {
+                       f <- switch(x,
+                                   code=function(x, attrs) {
+                                           ...
+                                        },
+                                   figure=function(x, attrs) {
+                                           ...
+                                          }
+                                   NULL
+                                  )
+
+                       if(!is.null(f))
+                           f(x, attrs)
+
+                       TRUE
+                     })
+
+@ This is of course not in the spirit of OOP.  Instead we can write a
+more general version that checks the OOP object to see if it has a
+method for the XML tag name and if so invokes that. 
+
+<<>>=
+myClass$defineMethod("startElement",
+                     function(x, attrs) {
+                        m <- findOOPMethod(OOPClassDef(obj), xmlName(node), mustFind = FALSE)
+                        name <- xmlName(node)                            
+
+                        if(!is.null(m)) {
+                          m <- completeForObject(obj, name, FALSE)
+                          m(node)
+                        } else
+                          super(startElement(node))
+                     })
+
+
+@ Note that we can implement this differently.  We can create a
+\SFunction{startElement} function (rather than a method) that has
+access to the OOP object.  This will look for the method corresponding
+to the name of the XML tag. If it exists, it calls it.  If not, it
+calls the object's \SFunction{startElement} method which it can
+inherit from the base \SClass{SAXObject} class.
+
+<<>>=
+oopXMLHandlers <-
+function(obj)
+{
+  startElement <-
+    function(node) {
+       m <- findOOPMethod(OOPClassDef(obj), xmlName(node), mustFind = FALSE)
+       
+       if(is.null(m)) {
+         m <- findOOPMethod(OOPClassDef(obj), "startElement", mustFind = FALSE)
+         name <- "startElement"
+       } else
+         name <- xmlName(node)
+
+
+       if(!is.null(m)) {
+         m <- completeForObject(obj, name, FALSE)
+         m(node)
+       } else
+         node
+    }
+
+  list(startElement = startElement, value = function() obj)
+}
+
+@
+A ``better'' way to do this ... ? (Was thinking of something here!)
+
+
+The same problem of dynamic method lookup arises for DOM parsing.
+Recall that for that, we provide named functions that correspond to
+the tag it can process.  Again, we have a generic callback
+(\Svariable{startElement}) that is invoked for abitrary XML nodes.  So
+we can use the same approach of having it look for a method in the OOP
+object that corresponds to the name of the node. 
+<<>>=
+k <- defineClass("AbstractDOMHandler")
+k$defineMethod("entity", function(node) {})
+k$defineMethod("startElement", function(node) {})
+k$defineMethod("processingInstruction", function(node) {})
+k$defineMethod("comment", function(node) {})
+k$defineMethod("text", function(node) {})
+k$defineMethod("cdata", function(node) {})
+
+
+@
+ The challenge is to
+find a convenient way to identify which methods are intended to be
+used as node processors and which are not.  It is possible that there
+will be a node that matches a method that is not written as part of
+the handlers.  In this case, we have to control the dispatch to the
+methods more carefully than simply looking to find a method by name.
+Instead, we might arm the class (or the instance) with a collection of
+node names which have a method.  Then the dispatch would only look for
+these methods.
+
+We keep the list of node methods in a field in the class.  And we
+provide a method for registering the name of a node for which there is
+a method.
+<<>>=
+
+k <- defineClass("DOMHandler", extends="AbstractDOMHandler")
+k$defineClassFields(nodeMethodNames = "character")     
+k$defineClassMethod("registerNode", 
+                       function(name) { 
+                        .this$set.nodeMethodNames(c(nodeMethodNames, name))
+                       })
+k$defineMethod("startElement", 
+                  function(node) {
+                    name <- xmlName(node)
+                    if(!is.na(match(name, nodeMethodNames))) {
+                      m <- completeForObject(.this, name)
+                      return(m(node))
+                    }                    
+                    node
+                  })
+
+@ 
+<<>>=     
+k$defineClassMethod("defineNodeMethod", 
+                      function(name, f, ...) {
+                        registerNode(name)
+                        defineMethod(name, f)
+                      })
+
+@ Now we can use this to define a class that handles \XMLTag{code} and
+\XMLTag{figure} nodes.
+<<>>=
+k <- defineClass("MyDOMHandler", extends="DOMHandler")
+k$defineMethod("code", function(node) { eval(parse(text=xmlValue(node))) })
+k$defineMethod("figure", function(node) {
+                           postscript(xmlAttrs(node)["file"])
+                           on.exit(dev.off())
+                           eval(parse(text=xmlValue(node)))
+                         })     
+
+k$registerNode(c("code", "figure"))
+
+@ 
+<<>>=     
+k$defineNodeMethod("foo", function(node) { eval(parse(text=xmlValue(node))) })

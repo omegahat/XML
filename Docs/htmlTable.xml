@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+
+<article xmlns:r='http://www.r-project.org'
+         xmlns:omg="http://www.omegahat.org">
+
+<articleinfo>
+<title>Reading an HTML table into a Data Frame using XPath</title>
+<author>
+<firstname>Duncan</firstname><surname>Temple Lang</surname>
+<affiliation>UC Davis</affiliation>
+</author>
+</articleinfo>
+
+<section>
+<!-- <title></title>  -->
+
+<para>This document describes some approaches to scraping data from an
+HTML table into an R data frame.  Let's take the example at <ulink
+url="http://www.bom.gov.au/climate/dwo/IDCJDW4036.latest.shtml">http://www.bom.gov.au/climate/dwo/IDCJDW4036.latest.shtml</ulink>
+<r:init>
+url = "http://www.bom.gov.au/climate/dwo/IDCJDW4036.latest.shtml"
+</r:init>
+Thanks to Bob Green for showing it to me.  And, yes we know in this
+case that we can get the data as a .csv file directly! We are using
+this so that we can compare the two more readily.
+</para>
+
+<para>
+We start by reading the HTML file into R.  We use
+<omg:func url="RSXML">htmlTreeParse</omg:func> as this is a more tolerant XML
+parser that knows about "sloppy"/malformed HTML.
+<r:code>
+doc = htmlTreeParse(url, useInternalNodes = TRUE)
+</r:code>
+Note the use of <r:arg>useInternalNodes</r:arg> as we
+want to be able to do XPath queries on this node.
+</para>
+
+<para>
+Next, we might find all the 'table' nodes
+with 
+<r:code used='0'>
+tables = doc["//table"]
+</r:code>
+This gives us 4 different tables.
+</para>
+
+<para>
+We can explore each of these and find out which we want
+in an interactive programmatic manner, but generally we 
+can see from the HTML display precisely what we want.
+In our case, we want the table which has a column name 
+of 'Date'.
+We can use another XPath expression to find this.
+We might match any node whose text matches 'Date'
+with
+<r:code used='0'>
+n = doc["//*[. = 'Date']"]
+</r:code>
+or alternatively, find any table which has a node
+th or td node whose content is 'Date'
+with
+<r:code>
+n = doc[["//table//th[. = 'Date']|//table//td[. = 'Date']"]]
+</r:code>
+<footnote><para>You need a version in excess of 1.9-1 to get the [[ operator
+on the node set. Otherwise, use [ and then access the first element.</para></footnote>
+Both of these return the actual th node. However,
+we want the table node.
+So we can walk back up the tree hierarchy one parent
+at a time until we find the enclosing parent.
+<r:code>
+n = n[[1]]
+while(xmlName(n) != "table")
+ n = xmlParent(n)
+</r:code>
+And now we are ready to get the cell contents.
+</para>
+
+<para>
+We can quickly get the contents of all the cells
+with the XPath expression
+<r:code>
+cells = xpathApply(n, "//th|//td", xmlValue)
+</r:code>
+The first row is quite complex. It has names that span columns
+and then other sub-names for each column and generally confuses matters.
+We could look for each row instead.
+<r:code>
+rows = getNodeSet(n, "//tr")
+</r:code>
+This too is complicated by the fact that the "second" of summary statistics
+is in fact part of this table (for purposes of alignment and presentation).
+We know this because a) there are 25 rows (<r:expr eval="false">length(rows)</r:expr>)
+and b) the contents of the, e.g., 23rd row are given by
+<r:code>
+xmlValue(rows[[23]])
+<r:output>[1] "Lowest5.517.70\302\240\302\240\302\240\302\240\302\24013.043\302\240#41007.717.333\302\240#71005.2"
+</r:output>
+</r:code>
+which we can see corresponds to the second row of the "second" table.
+The string is the simple concatenation (without spaces) of the contents of all the sub-nodes.
+</para>
+<para>
+But if we look at the second row:
+<r:code notrim="true">
+xmlValue(rows[[2]])
+<r:output>[1] "MinMaxDirSpdTimeTempRHCldDirSpdMSLPTempRHCldDirSpdMSLP"
+</r:output>
+</r:code>
+This is the second row that is part of the header.
+So we look at the 4th row, since there are 3 rows in the header.
+And sure enough this contains our data.
+So it would appear that rows 4 through 20 will contain
+days 1 through 17 inclusive.
+</para>
+
+<para>
+Now, for each row node, we want to loop over its children and extract
+its value. And we want to do this for each of the 17 rows.
+Again, this is relatively easy in R.
+<r:code>
+data = sapply(rows[4:20], function(x) xmlSApply(x, xmlValue))
+</r:code>
+This gives us a character matrix with 17 columns and 22 rows.
+So we need to transpose this.
+<r:code>
+data = t(data)
+</r:code>
+We are almost done. One thing we need  to do is handle the "empty"
+cells. These come across as strings of the form \302\240 on my terminal.
+So we replace these with NA before we do anything else.
+<r:code>
+data[data == "\302\240"] = NA
+</r:code>
+And then we convert the entire matrix to a data frame
+<r:code>
+data = as.data.frame(data)
+</r:code>
+We want to clean this up a lot to convert columns to numbers
+rather than factors and handle those columns that are legitimate
+factors, e.g. the Dir columns and also handle the Time fields.
+We can do this with contextual knowledge (i.e. the column numbers)
+or some more automated mechanism, e.g. attempting coercion and handling "errors".
+But this is not an HTML/XPath issue and so we leave it as an excercise for the reader
+to think about.
+But here is one way
+<r:code>
+dd = as.data.frame(lapply(data, 
+                          function(x) { 
+                            y = as.numeric(as.character(x))
+                            if(sum(is.na(x)) != sum(is.na(y))) 
+                                x 
+                            else 
+                                y
+                          }))
+</r:code>
+</para>
+</section>
+</article>

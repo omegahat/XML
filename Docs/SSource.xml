@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+
+<!-- Copyright the Omegahat Project for Statistical Computing, 2000 -->
+<!-- Author: Duncan Temple Lang -->
+
+<!DOCTYPE free>
+<free>
+<fileContents>
+<![CDATA[
+<?xml version="1.0"?>
+<!DOCTYPE functions>
+<functions>
+<functionDef access="protected">
+<name>as</name>
+<comments>
+ return a the version of this object coerced to be the given Class
+
+ If the corresponding `is' relation is true, it will be used.  In particular,
+ if the relation has a coerce method, the method will be invoked on `object'.
+
+ If the `is' relation is FALSE, and the coerceFlag is TRUE,
+ the coerce function will be called (which will throw an error if there is
+ no valid way to coerce the two objects).  Otherwise, NULL is returned.
+</comments>
+<def>
+<![CDATA[
+  function(object, Class, coerceFlag = T) {
+    thisClass <- Class(object)
+    if(thisClass == Class)
+      return(object)
+    if(is(object, Class)) {
+      ## look for coerce method or indirection
+      thisClass <- Class(object)
+      coe <- extendsCoerce(thisClass, Class)
+      coe(object)
+    }
+    else if(coerceFlag)
+      coerce(object, new(Class, force=T))
+    else
+      NULL
+  }
+]]>
+</def>
+</functionDef>
+<functionDef>
+<name>extendsCoerce</name>
+<comments>
+  the function to perform coercion based on the is relation
+  between two classes.  May be explicitly stored in the metadata or
+  inferred.  If the latter, the inferred result is stored in the session
+  metadata for fromClass, to save recomputation later.
+</comments>
+<def>
+<![CDATA[
+  function(fromClass, Class) {
+    ext <- findExtends(fromClass, Class)
+    f <- NULL
+    if(is.list(ext)) {
+      coe <- ext$coerce
+      if(is.function(coe))
+        return(coe)
+      by <- list$by
+      if(length(by) > 0)
+        f <- substitute(function(object)
+                        as(as(object, BY), CLASS), list(BY = by, CLASS=Class))
+      ## else, drop through
+    }
+    if(is.null(f)) {
+      ## Because `is' was TRUE, must be a direct extension.
+      ## Copy slots if the slots are a subset.  Else, just set the
+      ## class.  For VIRTUAL targets, never change the object.
+      virtual <- isVirtualClass(Class)
+      if(virtual)
+        f <- function(object)object
+      else {
+        fromSlots <- slotNames(fromClass)
+        toSlots <-  slotNames(Class)
+        sameSlots <- (length(toSlots) == 0
+            || (length(fromSlots) == length(toSlots) &&
+                !any(is.na(match(fromSlots, toSlots)))))
+      if(sameSlots)
+          f <- substitute(function(object){Class(object) <- CLASS; object},
+                          list(CLASS = Class))
+      else
+        f <- substitute(function(object) {
+          value <- new(CLASS)
+          for(what in TOSLOTS)
+            slot(value, what) <- slot(object, what)
+          value }, list(CLASS=Class, TOSLOTS = toSlots))
+      }
+      ## we dropped through because there was no coerce function in the
+      ## extends object.  Make one and save it back in the session metadata
+      ## so no further calls will require constructing the function
+      if(!is.list(ext))
+        ext <- list()
+      ext$coerce <- f
+      ClassDef <- getClass(fromClass)
+      allExt <- getExtends(ClassDef)
+      allExt$Class <- ext
+      setExtends(ClassDef, allExt)
+    }
+    f
+  }
+]]>
+</def>
+</functionDef>
+<?R   x <- 1:10?>
+</functions>
+]]>
+</fileContents>
+
+</free>

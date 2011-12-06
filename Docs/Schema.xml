@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<article>
+<section>
+<title>Schema, Compiled Code and R bindings</title>
+
+The following are some thoughts on how we can parse XML in a new way
+from within R, making use of various different tools.
+
+We start with a given XML schema describing a class of documents
+and the associated data types.
+We can read this ourselves in R or use 3rd party tools
+and then generate code to process such documents.
+This could produce S4 classes for representing objects
+from these data types.
+
+<para/>
+More interestingly however is to generate C++ code for parsing a
+document Suppose we have a C++ class that can parse the XML document
+and create the relevant objects.  Then we can create bindings to that
+C++ class using RGCCTranslationUnit.
+And we can create derived classes
+
+Look at
+<ulink url="http://codesynthesis.com/products/xsd/">http://codesynthesis.com/products/xsd/</ulink>
+  dependency on xerces.
+http://castor.codehaus.org/sourcegen.html
+Stigi associated with KDE.
+
+A list of software is available at
+http://www.w3.org/XML/Schema
+
+
+
+<sh:code>
+~/xsd-2.3.0-x86_64-linux-gnu/bin/xsd cxx-parser --morph-anonymous MIF253.xsd 
+</sh:code>
+
+
+</section>
+</article>

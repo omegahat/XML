@@ -1,0 +1,4 @@
+
+To go from an internal node to its parent document,
+use
+  doc = as(node, "XMLInternalDocument")

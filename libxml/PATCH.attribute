@@ -1,0 +1,53 @@
+*** SAX.c~	Thu Sep 23 17:55:27 1999
+--- SAX.c	Sun Dec 12 13:39:53 1999
+*************** endDocument(void *ctx)
+*** 507,513 ****
+   * the element.
+   */
+  void
+! attribute(void *ctx, const xmlChar *fullname, const xmlChar *value)
+  {
+      xmlParserCtxtPtr ctxt = (xmlParserCtxtPtr) ctx;
+      xmlAttrPtr ret;
+--- 507,513 ----
+   * the element.
+   */
+  void
+! Myxml_attribute(void *ctx, const xmlChar *fullname, const xmlChar *value)
+  {
+      xmlParserCtxtPtr ctxt = (xmlParserCtxtPtr) ctx;
+      xmlAttrPtr ret;
+*************** startElement(void *ctx, const xmlChar *f
+*** 678,684 ****
+  	value = atts[i++];
+          while ((att != NULL) && (value != NULL)) {
+  	    if ((att[0] == 'x') && (att[1] == 'm') && (att[2] == 'l'))
+! 		attribute(ctxt, att, value);
+  
+  	    att = atts[i++];
+  	    value = atts[i++];
+--- 678,684 ----
+  	value = atts[i++];
+          while ((att != NULL) && (value != NULL)) {
+  	    if ((att[0] == 'x') && (att[1] == 'm') && (att[2] == 'l'))
+! 		Myxml_attribute(ctxt, att, value);
+  
+  	    att = atts[i++];
+  	    value = atts[i++];
+*************** startElement(void *ctx, const xmlChar *f
+*** 694,700 ****
+  	value = atts[i++];
+          while ((att != NULL) && (value != NULL)) {
+  	    if ((att[0] != 'x') || (att[1] != 'm') || (att[2] != 'l'))
+! 		attribute(ctxt, att, value);
+  
+  	    /*
+  	     * Next ones
+--- 694,700 ----
+  	value = atts[i++];
+          while ((att != NULL) && (value != NULL)) {
+  	    if ((att[0] != 'x') || (att[1] != 'm') || (att[2] != 'l'))
+! 		Myxml_attribute(ctxt, att, value);
+  
+  	    /*
+  	     * Next ones

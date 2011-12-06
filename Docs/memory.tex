@@ -1,0 +1,158 @@
+\documentclass{article}
+\usepackage{times}
+\usepackage{fullpage}
+\def\Rvar#{\textsl{#1}}
+
+\author{Duncan Temple Lang}
+\title{Memory Management in the XML package\\
+internal C-level nodes}
+
+\begin{document}
+\maketitle
+
+\section{Background}
+There are several data types used in the XML package to represent an
+XML tree and also for representing XML nodes, i.e. elements within a
+tree.  One of the node representations is the C-level xmlNode
+structure provided by libxml2. We provide access to these as R
+variables using the external pointer (externalptr) type in R.
+In many uses of externalptr objects in R, we can provide
+a finalizer that releases the resources associated with the C-level
+object when it is no longer used. Typically we free the memory 
+associated with the C instance of the data type.
+
+This is more complicated in the context of trees.  When we retrieve a
+node within an XML tree as an R object, we create an external pointer.
+We might also add a finalizer to free the node.  However, when we
+discard the R variable and the externalptr is garbage collected, the
+memory for the C-level node would be freed.  However, it is still an
+active member of the XML tree/document. So freeing the memory would be
+an error.  If we have a finalizer on the XML tree object exposed as an
+externalptr in R, again we could garbage collect the entire tree and
+all its nodes.  But if we have an R object that is a reference to one
+of these C-level nodes within the tree, that would have been released.
+Any subsequent use of the memory associated with the node's
+externalptr would be an error.  So we have a problem.
+
+An example will hopefully be illustrative.
+The simplest one is the following:
+\begin{verbatim}
+x = xmlRoot(xmlParse(system.file("exampleData", "mtcars.xml", package = "XML")))
+\end{verbatim}
+We grab the top-level root node of the tree/document. However, the
+document is ready for garbage collection. When it is, the node would
+be freed to and the R variable x is an externalptr that points to
+memory that has been freed.
+
+\section{A strategy}
+One way to deal with this is to use reference counting on both the
+internal document and node.  When a document is returned to R via an
+externalptr we add 1 to its counter.  This counter is stored as an
+integer in the xmlDoc structure provided by libxml2 in its 
+\verb+_private+ field\footnote{There is a danger that
+another application may use this field, e.g. if we interface to
+another library also using the libxml2 library, e.g. libxslt,
+and that it uses the private \texttt{\_private} field for another purpose. Then
+we have to coordinate our uses of this single field.}.
+(We arrange to allocate the integer's memory when we first return the
+reference to the document, and we free it  when the document is
+finally being released.)
+
+We do the same thing for C-level xmlNode objects.  When we return a
+reference to an node, we increment its counter.  The first time we
+export a node to R, we allocate the counter integer and also increment
+the count on the document. This ensures that the document cannot be
+freed by us as we check its count is $0$.  When we garbage collect a
+node object in R (i.e. an externalptr object which points to an
+xmlNode object in C), we decrement the count. When this count reaches
+$0$, we decrement the counter on the associated document.
+Again, if this is $0$, we free the document.
+
+We can test this with the code above
+\begin{verbatim}
+gctorture()
+z = replicate(100, xmlRoot(xmlParse(system.file("exampleData", 
+                                                "mtcars.xml", 
+                                                package = "XML"))))
+sapply(z, print)
+\end{verbatim}
+We can also use XPath queriies to extract nodes from a document
+within a function and return only the nodes.
+\begin{verbatim}
+records =
+function(x)
+{
+  doc = xmlParse(x)
+  getNodeSet(doc, "//x:path", "x")
+}
+
+nodeList = replicate(100, records(system.file("exampleData", 
+                                              "boxplot.svg", 
+                                              package = "XML")))
+paths = sapply(nodeList, function(nodes)
+                            sapply(nodes, xmlGetAttr, "d"))
+\end{verbatim}
+\section{Text Nodes}
+The basic strategy described above works for almost all cases.
+However, there is an exception with which we have to deal.  In the
+very specific but common case of adding text as a child of a libxml2
+can free our node.  The idea is simple: when we add a text node as an
+adjacent sibling of another text node, the text of the new node is
+merged into the existing sibling and the new node is freed.  This
+means that if we 
+\begin{enumerate}
+\item create an XML text node in R and put a finalizer on
+it 
+\item and then add it to another node 
+\item and it is freed due to this concatenation of text nodes
+\end{enumerate}
+the R object is pointing at freed space and there is no way for it
+to know.
+
+One approach to solving this is to never allow libxml2 to free an xml
+text node node in this way.  When, in the C code for this R package,
+we add a text node as a child of a node we make an explicit copy of
+the node and add that new version.  If it is not freed by libxml2 (the
+xmlAddChild) node, we release it ourselves.
+
+This approach should ensure that an R internal text node object
+does not become invalid.
+
+\section{Nodes outside of a Document}
+The approach described above suffices for the case of nodes in a
+document.  However, when we create nodes outside of a document, we no
+longer have the centralized container (the document) to release.
+Consider the following scenario:
+\begin{verbatim}
+top = newXMLNode("a")
+newXMLCDataNode("x <- 1\n x > 2", parent = top)
+o = newXMLNode("ol", parent = top)
+rm(top)
+\end{verbatim}
+We create a new node outside of any document.  Then we add a CDATA
+node to it as a child.  We do not assign this node to an R variable,
+so while a reference to it is returned to R, that R variable is
+immediately available for garbage collection.  Next we create a second
+child of \Rvar{top} and this time we do assign it to an R value.
+Finally, we discard the variable \Rvar{top}.
+
+When we garbage collect \Rvar{top}, we must recognize that we cannot
+release the node and its children because there is still a reference
+to it.  We can check if any of the children or their children and so 
+are referenced in an R object (by testing whether the node's
+\verb+_private+ field is non-NULL).
+
+When \Rvar{o } is garbage collected by R
+
+
+\section{Benefits}
+These changes to the XML package (as of version 2.4-0)
+make programming with internal nodes easier.
+Specifically,
+\begin{enumerate}
+\item  we can discard documents when still holding onto nodes and  use
+  them reliably,
+\item store
+\end{enumerate}
+
+\end{document}

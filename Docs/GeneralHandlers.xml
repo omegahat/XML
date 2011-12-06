@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+
+<article>
+When I first implemented the XML package, I introduced
+the facility of having a collection of handler functions
+whose names identified the nodes on which they would
+operate. For example, if we were parsing
+an HTML file, one might define a function to
+process links - a href='...' - and 
+so have a handler function named 'a' in the collection.
+These are node-name-specific handlers, i.e. 
+they are applied to nodes with that name.
+
+<para/>
+There is an issue of dealing with nodes that have the same
+textual name, but are in different namespaces.
+But these can be dealt with in the R code 
+by creating a proxy handler function
+for node names that have multiple function handlers.
+For example, suppose the caller gives us handlers of the form
+<r:code>
+list( html:a = function(...) ...,
+      gml:a = function(...) ...)
+</r:code>
+Before passing the handlers to the C-level parser,
+we would identify this overlapping name 
+by looking at the node name without the prefix.
+Then, we would create a new local function 
+that handled all nodes named 'a'
+but that looked at the namespace definition for
+that particular node and dispatched to the appropriate
+user-supplied function.
+<r:code>
+a = function(node, ...)  {
+      ns = xmlNamespace(node)
+      f = originalHandlers[[paste(ns, "a",  sep = "")]]
+      f(node, ...)
+    }
+</r:code>
+<!--
+ sapply(strsplit(names(handlers), ":"), function(x) if(length(x) == 1) "" else x[1])
+-->
+The user need not handle this, and the C code need not be
+more elaborate to handle the namespaces.
+
+<para/>
+There is an issue about how we map the namespace prefix
+in the handler name to the URI declaration in the document.
+We could add this as an additional argument
+or insert it into the handler functions list,
+or even have the URI in the name of the
+element in the list, e.g.
+<r:code>
+"http://www.r-project.org:array"
+</r:code>
+(Yuck!)
+And we can test the namespace URI on a node
+in our general proxy handler
+as we can access the declaration using
+<r:func>xmlNamespaceDefinitions</r:func>.
+For example, if we have a handler
+for nodes name 'array' with the 
+name space  URI  http://www.r-project.org,
+we would check the URIs matched with the following code.
+<r:code>
+ nsDefs = xmlNamespaceDefinitions(node)
+ i = names(nsDefs) == xmlNamespace(node)
+ if(!any(i)) 
+    stop("No namespace prefix matches the declarations")
+
+ nsDefs[i][[1]]$uri == "http://www.r-project.org"
+</r:code>
+
+<para/>
+The other aspect that I also introduced is that one could define
+general handlers for different types of nodes, e.g. text nodes,
+comments, processing instructions, and any node that was not already
+handled by a more specific handler.  So, if the caller specified a
+handler for all 'a' nodes, but not for any others and also provided a
+generic node handler named 'startElement' in the list of functions,
+then that generic handler will be called for all but the 'a' nodes.
+This is quite convenient as it allows us to provide a single function
+for handling all nodes and we can handle the node processing
+ourselves.  And it allows us to deal with all nodes easily.
+
+<para/>
+Unfortunately, the choice of names in my setup allowed will cause
+problems.  startElement is used for the generic handler. But what if
+there is an element named startElement that we want to handle with a
+node-specific handler.  This is especially pertinent in the case of
+"text". This is the name I used for the general handler function that
+deals with the text segments in the XML stream.  In SVG - scalar
+vector graphics, one of the nodes is named text which places text on
+the plot.  So now there is a real ambiguity.  We have a general node
+handler named text, but we also have nodes with exactly the that name.
+And a problem is that the node handler and the general text handler
+functions are called with a different collection of arguments: a node
+handler s called with the name and the attributes whereas the text
+handler is called with just the text content.
+
+<para/>
+What we want is a way to deal with this ambiguity.
+We need two separate the
+functions into two different sets:
+node-specific handlers and general handlers.
+
+<para/>
+We can use a different form of the names for identifying general
+handlers.  We can require the names for such handlers to have a '.'
+prefix, e.g. .text, .startElement, etc.  This is a change in the
+interface and so will break existing code.  However, it does resolve
+the issue as XML node names cannot start with a .
+
+<para/>
+Another approach is to put classes on the individual
+handler functions
+to identify whether they are for nodes or 
+different element types.
+A simple version of this would be  to use the
+as-is function <r:func>I</r:func>, e.g.
+<r:code>
+<![CDATA[
+list( text = I(function(name, attrs, ...) {
+                 # handle <text> nodes
+               })
+]]>
+</r:code>
+Functions identified in this manner would not
+be interpreted as applying to general
+elements. They would only be used to match a
+node name.
+
+
+<para/>
+We can use two separate arguments
+to identify the sets of handlers.
+
+
+<para/>
+How do we support existing code of this form?
+
+If the document has a DTD or schema, we could check that and identify
+whether there are any nodes with these names.
+
+We can also examine the parameters/formal arguments for the handler
+functions that have these names and see if we can infer whether they
+are for a node or for a specific type of XML element, e.g. text or
+processing instructions.
+
+We can also introduce a new function.
+
+
+
+
+
+
+
+</article>

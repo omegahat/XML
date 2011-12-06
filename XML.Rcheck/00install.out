@@ -1,0 +1,298 @@
+* installing *source* package ‘XML’ ...
+checking for gcc... gcc
+checking for C compiler default output file name... a.out
+checking whether the C compiler works... yes
+checking whether we are cross compiling... no
+checking for suffix of executables... 
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... none needed
+checking how to run the C preprocessor... gcc -E
+No ability to remove finalizers on externalptr objects in this verison of R
+checking for sed... /usr/bin/sed
+checking for pkg-config... /usr/local/bin/pkg-config
+checking for xml2-config... /usr/local/bin/xml2-config
+USE_XML2 = yes
+SED_EXTENDED_ARG: -E
+Minor 7, Patch 8 for 2.7.8
+Located parser file -I/usr/local/include/libxml2/parser.h
+Checking for 1.8:  -I/usr/local/include/libxml2
+Using libxml2.*
+checking for gzopen in -lz... yes
+checking for xmlParseFile in -lxml2... yes
+checking for xmlHashSize in -lxml2... yes
+Using built-in xmlHashSize
+Checking DTD parsing (presence of externalSubset)...
+checking for xmlHashSize in -lxml2... yes
+Found xmlHashSize
+checking for xmlOutputBufferCreateBuffer in -lxml2... yes
+have xmlOutputBufferCreateBuffer()
+checking for xmlDocDumpFormatMemoryEnc in -lxml2... yes
+checking libxml/xmlversion.h usability... yes
+checking libxml/xmlversion.h presence... yes
+checking for libxml/xmlversion.h... yes
+Expat:  FALSE
+Checking for return type of xmlHashScan element routine.
+No return value for xmlHashScan
+xmlNs has a context field
+Checking for cetype_t enumeration
+Using recent version of R with cetype_t enumeration type for encoding
+checking for xmlsec1-config... no
+nodegc default 
+Version has XML_WITH_ZLIB
+Version has xmlHasFeature()
+
+****************************************
+Configuration information:
+
+Libxml settings
+
+libxml include directory: -I/usr/local/include/libxml2
+libxml library directory: -L/usr/local/lib -lxml2 -lz -lpthread -liconv -lm -lz  -lxml2
+libxml 2:                 -DLIBXML2=1
+
+Compilation flags:         -DLIBXML -I/usr/local/include/libxml2 -DUSE_EXTERNAL_SUBSET=1 -DROOT_HAS_DTD_NODE=1 -DDUMP_WITH_ENCODING=1 -DUSE_XML_VERSION_H=1 -DXML_ELEMENT_ETYPE=1 -DXML_ATTRIBUTE_ATYPE=1 -DNO_XML_HASH_SCANNER_RETURN=1 -DLIBXML_NAMESPACE_HAS_CONTEXT=1 -DHAVE_R_CETYPE_T=1 -DHAVE_XML_WITH_ZLIB=1 -DHAVE_XML_HAS_FEATURE=1 -DUSE_R=1 -D_R_=1  -DHAVE_VALIDITY=1 -DXML_REF_COUNT_NODES=1 
+Link flags:               -L/usr/local/lib -lxml2 -lz -lpthread -liconv -lm -lz  -lxml2
+
+****************************************
+configure: creating ./config.status
+config.status: creating NAMESPACE
+config.status: creating src/Makevars
+config.status: creating R/supports.R
+config.status: creating inst/scripts/RSXML.csh
+config.status: creating inst/scripts/RSXML.bsh
+** libs
+gcc -std=gnu99 -I/Users/duncan/Projects/R-new-devel/include -DNDEBUG -DLIBXML -I/usr/local/include/libxml2 -DUSE_EXTERNAL_SUBSET=1 -DROOT_HAS_DTD_NODE=1 -DDUMP_WITH_ENCODING=1 -DUSE_XML_VERSION_H=1 -DXML_ELEMENT_ETYPE=1 -DXML_ATTRIBUTE_ATYPE=1 -DNO_XML_HASH_SCANNER_RETURN=1 -DLIBXML_NAMESPACE_HAS_CONTEXT=1 -DHAVE_R_CETYPE_T=1 -DHAVE_XML_WITH_ZLIB=1 -DHAVE_XML_HAS_FEATURE=1 -DUSE_R=1 -D_R_=1  -DHAVE_VALIDITY=1 -DXML_REF_COUNT_NODES=1  -I. -DLIBXML2=1 -g -Wall    -fPIC  -g -Wall -c DocParse.c -o DocParse.o
+In file included from DocParse.c:13:
+Utils.h:228:2: warning: #warning "Redefining COPY_TO_USER_STRING to use encoding from XML parser"
+DocParse.c: In function ‘RS_XML_convertXMLDoc’:
+DocParse.c:362: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:370: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:371: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:391: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:396: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:353: warning: unused variable ‘encoding’
+DocParse.c: In function ‘processNamespaceDefinitions’:
+DocParse.c:424: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:410: warning: unused variable ‘encoding’
+DocParse.c: In function ‘RS_XML_createXMLNode’:
+DocParse.c:563: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:584: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:589: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:591: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:601: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:603: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:606: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:514: warning: unused variable ‘encoding’
+DocParse.c: In function ‘RS_XML_createNameSpaceIdentifier’:
+DocParse.c:740: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:743: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:754: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:762: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:735: warning: unused variable ‘encoding’
+DocParse.c: In function ‘RS_XML_createNodeChildren’:
+DocParse.c:949: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:917: warning: unused variable ‘encoding’
+DocParse.c: In function ‘RS_XML_xmlNodeName’:
+DocParse.c:1115: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:1111: warning: unused variable ‘encoding’
+DocParse.c: In function ‘RS_XML_xmlNodeNamespace’:
+DocParse.c:1135: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:1137: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:1127: warning: unused variable ‘encoding’
+DocParse.c: In function ‘RS_XML_xmlNodeChildrenReferences’:
+DocParse.c:1196: warning: unused variable ‘encoding’
+DocParse.c: In function ‘RS_XML_getDocumentName’:
+DocParse.c:1304: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c: In function ‘RS_XML_AttributeList’:
+DocParse.c:1426: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:1439: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:1441: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:1444: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:1446: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+DocParse.c:1390: warning: unused variable ‘encoding’
+gcc -std=gnu99 -I/Users/duncan/Projects/R-new-devel/include -DNDEBUG -DLIBXML -I/usr/local/include/libxml2 -DUSE_EXTERNAL_SUBSET=1 -DROOT_HAS_DTD_NODE=1 -DDUMP_WITH_ENCODING=1 -DUSE_XML_VERSION_H=1 -DXML_ELEMENT_ETYPE=1 -DXML_ATTRIBUTE_ATYPE=1 -DNO_XML_HASH_SCANNER_RETURN=1 -DLIBXML_NAMESPACE_HAS_CONTEXT=1 -DHAVE_R_CETYPE_T=1 -DHAVE_XML_WITH_ZLIB=1 -DHAVE_XML_HAS_FEATURE=1 -DUSE_R=1 -D_R_=1  -DHAVE_VALIDITY=1 -DXML_REF_COUNT_NODES=1  -I. -DLIBXML2=1 -g -Wall    -fPIC  -g -Wall -c EventParse.c -o EventParse.o
+In file included from EventParse.c:15:
+Utils.h:228:2: warning: #warning "Redefining COPY_TO_USER_STRING to use encoding from XML parser"
+EventParse.c: In function ‘RS_XML_createAttributesList’:
+EventParse.c:75: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+EventParse.c:76: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+EventParse.c: In function ‘RS_XML_entityDeclarationHandler’:
+EventParse.c:207: warning: unused variable ‘encoding’
+EventParse.c: In function ‘RS_XML_startElement’:
+EventParse.c:241: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+EventParse.c: In function ‘RS_XML_commentHandler’:
+EventParse.c:258: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+EventParse.c:254: warning: unused variable ‘encoding’
+EventParse.c: In function ‘RS_XML_endElement’:
+EventParse.c:296: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+EventParse.c:283: warning: unused variable ‘encoding’
+EventParse.c: In function ‘RS_XML_processingInstructionHandler’:
+EventParse.c:328: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+EventParse.c:330: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+EventParse.c:323: warning: unused variable ‘encoding’
+EventParse.c: In function ‘RS_XML_textHandler’:
+EventParse.c:405: warning: pointer targets in assignment differ in signedness
+EventParse.c:419: warning: cast from pointer to integer of different size
+EventParse.c:436: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+EventParse.c:386: warning: unused variable ‘encoding’
+gcc -std=gnu99 -I/Users/duncan/Projects/R-new-devel/include -DNDEBUG -DLIBXML -I/usr/local/include/libxml2 -DUSE_EXTERNAL_SUBSET=1 -DROOT_HAS_DTD_NODE=1 -DDUMP_WITH_ENCODING=1 -DUSE_XML_VERSION_H=1 -DXML_ELEMENT_ETYPE=1 -DXML_ATTRIBUTE_ATYPE=1 -DNO_XML_HASH_SCANNER_RETURN=1 -DLIBXML_NAMESPACE_HAS_CONTEXT=1 -DHAVE_R_CETYPE_T=1 -DHAVE_XML_WITH_ZLIB=1 -DHAVE_XML_HAS_FEATURE=1 -DUSE_R=1 -D_R_=1  -DHAVE_VALIDITY=1 -DXML_REF_COUNT_NODES=1  -I. -DLIBXML2=1 -g -Wall    -fPIC  -g -Wall -c ExpatParse.c -o ExpatParse.o
+gcc -std=gnu99 -I/Users/duncan/Projects/R-new-devel/include -DNDEBUG -DLIBXML -I/usr/local/include/libxml2 -DUSE_EXTERNAL_SUBSET=1 -DROOT_HAS_DTD_NODE=1 -DDUMP_WITH_ENCODING=1 -DUSE_XML_VERSION_H=1 -DXML_ELEMENT_ETYPE=1 -DXML_ATTRIBUTE_ATYPE=1 -DNO_XML_HASH_SCANNER_RETURN=1 -DLIBXML_NAMESPACE_HAS_CONTEXT=1 -DHAVE_R_CETYPE_T=1 -DHAVE_XML_WITH_ZLIB=1 -DHAVE_XML_HAS_FEATURE=1 -DUSE_R=1 -D_R_=1  -DHAVE_VALIDITY=1 -DXML_REF_COUNT_NODES=1  -I. -DLIBXML2=1 -g -Wall    -fPIC  -g -Wall -c HTMLParse.c -o HTMLParse.o
+HTMLParse.c: In function ‘RS_XML_dumpHTMLDoc’:
+HTMLParse.c:152: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+gcc -std=gnu99 -I/Users/duncan/Projects/R-new-devel/include -DNDEBUG -DLIBXML -I/usr/local/include/libxml2 -DUSE_EXTERNAL_SUBSET=1 -DROOT_HAS_DTD_NODE=1 -DDUMP_WITH_ENCODING=1 -DUSE_XML_VERSION_H=1 -DXML_ELEMENT_ETYPE=1 -DXML_ATTRIBUTE_ATYPE=1 -DNO_XML_HASH_SCANNER_RETURN=1 -DLIBXML_NAMESPACE_HAS_CONTEXT=1 -DHAVE_R_CETYPE_T=1 -DHAVE_XML_WITH_ZLIB=1 -DHAVE_XML_HAS_FEATURE=1 -DUSE_R=1 -D_R_=1  -DHAVE_VALIDITY=1 -DXML_REF_COUNT_NODES=1  -I. -DLIBXML2=1 -g -Wall    -fPIC  -g -Wall -c NodeGC.c -o NodeGC.o
+NodeGC.c: In function ‘R_xmlFreeDoc’:
+NodeGC.c:40: warning: cast from pointer to integer of different size
+NodeGC.c: In function ‘initDocRefCounter’:
+NodeGC.c:178: warning: assignment makes integer from pointer without a cast
+NodeGC.c: In function ‘incrementDocRefBy’:
+NodeGC.c:185: warning: cast from pointer to integer of different size
+NodeGC.c: In function ‘getNodeCount’:
+NodeGC.c:213: warning: cast from pointer to integer of different size
+NodeGC.c: In function ‘internal_incrementNodeRefCount’:
+NodeGC.c:229: warning: cast from pointer to integer of different size
+NodeGC.c: In function ‘R_getXMLRefCount’:
+NodeGC.c:240: warning: cast from pointer to integer of different size
+NodeGC.c: In function ‘checkDescendantsInR’:
+NodeGC.c:249: warning: cast from pointer to integer of different size
+NodeGC.c: In function ‘internal_decrementNodeRefCount’:
+NodeGC.c:269: warning: cast from pointer to integer of different size
+NodeGC.c:307: warning: cast from pointer to integer of different size
+NodeGC.c: In function ‘clearNodeMemoryManagement’:
+NodeGC.c:385: warning: cast from pointer to integer of different size
+gcc -std=gnu99 -I/Users/duncan/Projects/R-new-devel/include -DNDEBUG -DLIBXML -I/usr/local/include/libxml2 -DUSE_EXTERNAL_SUBSET=1 -DROOT_HAS_DTD_NODE=1 -DDUMP_WITH_ENCODING=1 -DUSE_XML_VERSION_H=1 -DXML_ELEMENT_ETYPE=1 -DXML_ATTRIBUTE_ATYPE=1 -DNO_XML_HASH_SCANNER_RETURN=1 -DLIBXML_NAMESPACE_HAS_CONTEXT=1 -DHAVE_R_CETYPE_T=1 -DHAVE_XML_WITH_ZLIB=1 -DHAVE_XML_HAS_FEATURE=1 -DUSE_R=1 -D_R_=1  -DHAVE_VALIDITY=1 -DXML_REF_COUNT_NODES=1  -I. -DLIBXML2=1 -g -Wall    -fPIC  -g -Wall -c RSDTD.c -o RSDTD.o
+gcc -std=gnu99 -I/Users/duncan/Projects/R-new-devel/include -DNDEBUG -DLIBXML -I/usr/local/include/libxml2 -DUSE_EXTERNAL_SUBSET=1 -DROOT_HAS_DTD_NODE=1 -DDUMP_WITH_ENCODING=1 -DUSE_XML_VERSION_H=1 -DXML_ELEMENT_ETYPE=1 -DXML_ATTRIBUTE_ATYPE=1 -DNO_XML_HASH_SCANNER_RETURN=1 -DLIBXML_NAMESPACE_HAS_CONTEXT=1 -DHAVE_R_CETYPE_T=1 -DHAVE_XML_WITH_ZLIB=1 -DHAVE_XML_HAS_FEATURE=1 -DUSE_R=1 -D_R_=1  -DHAVE_VALIDITY=1 -DXML_REF_COUNT_NODES=1  -I. -DLIBXML2=1 -g -Wall    -fPIC  -g -Wall -c RUtils.c -o RUtils.o
+RUtils.c: In function ‘CreateCharSexpWithEncoding’:
+RUtils.c:342: warning: pointer targets in passing argument 2 of ‘xmlStrcmp’ differ in signedness
+RUtils.c:342: warning: pointer targets in passing argument 2 of ‘xmlStrcmp’ differ in signedness
+RUtils.c:344: warning: pointer targets in passing argument 2 of ‘xmlStrcmp’ differ in signedness
+RUtils.c:344: warning: pointer targets in passing argument 2 of ‘xmlStrcmp’ differ in signedness
+RUtils.c:347: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+RUtils.c:347: warning: pointer targets in assignment differ in signedness
+RUtils.c:350: warning: pointer targets in passing argument 1 of ‘Rf_mkCharCE’ differ in signedness
+gcc -std=gnu99 -I/Users/duncan/Projects/R-new-devel/include -DNDEBUG -DLIBXML -I/usr/local/include/libxml2 -DUSE_EXTERNAL_SUBSET=1 -DROOT_HAS_DTD_NODE=1 -DDUMP_WITH_ENCODING=1 -DUSE_XML_VERSION_H=1 -DXML_ELEMENT_ETYPE=1 -DXML_ATTRIBUTE_ATYPE=1 -DNO_XML_HASH_SCANNER_RETURN=1 -DLIBXML_NAMESPACE_HAS_CONTEXT=1 -DHAVE_R_CETYPE_T=1 -DHAVE_XML_WITH_ZLIB=1 -DHAVE_XML_HAS_FEATURE=1 -DUSE_R=1 -D_R_=1  -DHAVE_VALIDITY=1 -DXML_REF_COUNT_NODES=1  -I. -DLIBXML2=1 -g -Wall    -fPIC  -g -Wall -c Rcatalog.c -o Rcatalog.o
+gcc -std=gnu99 -I/Users/duncan/Projects/R-new-devel/include -DNDEBUG -DLIBXML -I/usr/local/include/libxml2 -DUSE_EXTERNAL_SUBSET=1 -DROOT_HAS_DTD_NODE=1 -DDUMP_WITH_ENCODING=1 -DUSE_XML_VERSION_H=1 -DXML_ELEMENT_ETYPE=1 -DXML_ATTRIBUTE_ATYPE=1 -DNO_XML_HASH_SCANNER_RETURN=1 -DLIBXML_NAMESPACE_HAS_CONTEXT=1 -DHAVE_R_CETYPE_T=1 -DHAVE_XML_WITH_ZLIB=1 -DHAVE_XML_HAS_FEATURE=1 -DUSE_R=1 -D_R_=1  -DHAVE_VALIDITY=1 -DXML_REF_COUNT_NODES=1  -I. -DLIBXML2=1 -g -Wall    -fPIC  -g -Wall -c Utils.c -o Utils.o
+gcc -std=gnu99 -I/Users/duncan/Projects/R-new-devel/include -DNDEBUG -DLIBXML -I/usr/local/include/libxml2 -DUSE_EXTERNAL_SUBSET=1 -DROOT_HAS_DTD_NODE=1 -DDUMP_WITH_ENCODING=1 -DUSE_XML_VERSION_H=1 -DXML_ELEMENT_ETYPE=1 -DXML_ATTRIBUTE_ATYPE=1 -DNO_XML_HASH_SCANNER_RETURN=1 -DLIBXML_NAMESPACE_HAS_CONTEXT=1 -DHAVE_R_CETYPE_T=1 -DHAVE_XML_WITH_ZLIB=1 -DHAVE_XML_HAS_FEATURE=1 -DUSE_R=1 -D_R_=1  -DHAVE_VALIDITY=1 -DXML_REF_COUNT_NODES=1  -I. -DLIBXML2=1 -g -Wall    -fPIC  -g -Wall -c XMLEventParse.c -o XMLEventParse.o
+In file included from XMLEventParse.c:5:
+Utils.h:228:2: warning: #warning "Redefining COPY_TO_USER_STRING to use encoding from XML parser"
+XMLEventParse.c: In function ‘createSAX2AttributesList’:
+XMLEventParse.c:89: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLEventParse.c:92: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLEventParse.c:95: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLEventParse.c:97: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLEventParse.c: In function ‘R_processBranch’:
+XMLEventParse.c:349: warning: initialization from incompatible pointer type
+XMLEventParse.c:352: warning: pointer targets in passing argument 3 of ‘xmlSetProp’ differ in signedness
+XMLEventParse.c: In function ‘R_endBranch’:
+XMLEventParse.c:411: warning: pointer targets in passing argument 1 of ‘xmlNewDoc’ differ in signedness
+XMLEventParse.c: In function ‘RS_XML_xmlSAX2StartElementNs’:
+XMLEventParse.c:488: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLEventParse.c:496: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLEventParse.c:497: warning: pointer targets in passing argument 2 of ‘CreateCharSexpWithEncoding’ differ in signedness
+XMLEventParse.c:506: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLEventParse.c:508: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLEventParse.c: In function ‘RS_XML_xmlSAX2EndElementNs’:
+XMLEventParse.c:546: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLEventParse.c:550: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLEventParse.c:553: warning: pointer targets in passing argument 1 of ‘findEndElementFun’ differ in signedness
+XMLEventParse.c:538: warning: unused variable ‘encoding’
+XMLEventParse.c: In function ‘RS_XML_cdataBlockHandler’:
+XMLEventParse.c:681: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLEventParse.c:672: warning: unused variable ‘encoding’
+XMLEventParse.c: In function ‘RS_XML_entityDeclaration’:
+XMLEventParse.c:724: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLEventParse.c:729: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLEventParse.c:730: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLEventParse.c:731: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLEventParse.c:715: warning: unused variable ‘encoding’
+XMLEventParse.c: In function ‘do_getEntityHandler’:
+XMLEventParse.c:747: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLEventParse.c:744: warning: unused variable ‘encoding’
+XMLEventParse.c: At top level:
+XMLEventParse.c:567: warning: ‘RS_XML_xmlSAX2StartDocument’ defined but not used
+gcc -std=gnu99 -I/Users/duncan/Projects/R-new-devel/include -DNDEBUG -DLIBXML -I/usr/local/include/libxml2 -DUSE_EXTERNAL_SUBSET=1 -DROOT_HAS_DTD_NODE=1 -DDUMP_WITH_ENCODING=1 -DUSE_XML_VERSION_H=1 -DXML_ELEMENT_ETYPE=1 -DXML_ATTRIBUTE_ATYPE=1 -DNO_XML_HASH_SCANNER_RETURN=1 -DLIBXML_NAMESPACE_HAS_CONTEXT=1 -DHAVE_R_CETYPE_T=1 -DHAVE_XML_WITH_ZLIB=1 -DHAVE_XML_HAS_FEATURE=1 -DUSE_R=1 -D_R_=1  -DHAVE_VALIDITY=1 -DXML_REF_COUNT_NODES=1  -I. -DLIBXML2=1 -g -Wall    -fPIC  -g -Wall -c XMLHashTree.c -o XMLHashTree.o
+XMLHashTree.c: In function ‘makeHashNode’:
+XMLHashTree.c:87: warning: pointer targets in passing argument 1 of ‘Rf_mkString’ differ in signedness
+XMLHashTree.c:99: warning: pointer targets in passing argument 1 of ‘Rf_mkString’ differ in signedness
+XMLHashTree.c:74: warning: unused variable ‘encoding’
+XMLHashTree.c: In function ‘processNode’:
+XMLHashTree.c:185: warning: unused variable ‘i’
+XMLHashTree.c: In function ‘convertDOMToHashTree’:
+XMLHashTree.c:242: warning: unused variable ‘rnode’
+gcc -std=gnu99 -I/Users/duncan/Projects/R-new-devel/include -DNDEBUG -DLIBXML -I/usr/local/include/libxml2 -DUSE_EXTERNAL_SUBSET=1 -DROOT_HAS_DTD_NODE=1 -DDUMP_WITH_ENCODING=1 -DUSE_XML_VERSION_H=1 -DXML_ELEMENT_ETYPE=1 -DXML_ATTRIBUTE_ATYPE=1 -DNO_XML_HASH_SCANNER_RETURN=1 -DLIBXML_NAMESPACE_HAS_CONTEXT=1 -DHAVE_R_CETYPE_T=1 -DHAVE_XML_WITH_ZLIB=1 -DHAVE_XML_HAS_FEATURE=1 -DUSE_R=1 -D_R_=1  -DHAVE_VALIDITY=1 -DXML_REF_COUNT_NODES=1  -I. -DLIBXML2=1 -g -Wall    -fPIC  -g -Wall -c XMLTree.c -o XMLTree.o
+In file included from XMLTree.c:40:
+Utils.h:228:2: warning: #warning "Redefining COPY_TO_USER_STRING to use encoding from XML parser"
+XMLTree.c: In function ‘R_newXMLPINode’:
+XMLTree.c:116: warning: unused variable ‘doc’
+XMLTree.c: In function ‘removeNodeNamespaceByName’:
+XMLTree.c:219: warning: pointer targets in passing argument 1 of ‘strcmp’ differ in signedness
+XMLTree.c:228: warning: pointer targets in passing argument 1 of ‘strcmp’ differ in signedness
+XMLTree.c: In function ‘RS_XML_removeNodeNamespaces’:
+XMLTree.c:286: warning: pointer targets in passing argument 2 of ‘removeNodeNamespaceByName’ differ in signedness
+XMLTree.c:275: warning: unused variable ‘t’
+XMLTree.c:272: warning: unused variable ‘p’
+XMLTree.c: In function ‘RS_XML_getNsList’:
+XMLTree.c:369: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLTree.c:378: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLTree.c:380: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLTree.c:351: warning: unused variable ‘encoding’
+XMLTree.c: In function ‘R_insertXMLNode’:
+XMLTree.c:481: warning: pointer targets in passing argument 1 of ‘xmlNewText’ differ in signedness
+XMLTree.c: In function ‘R_convertXMLNsRef’:
+XMLTree.c:922: warning: pointer targets in passing argument 1 of ‘Rf_mkString’ differ in signedness
+XMLTree.c:912: warning: unused variable ‘ref’
+XMLTree.c: In function ‘R_createXMLNodeRefDirect’:
+XMLTree.c:1022: warning: cast from pointer to integer of different size
+XMLTree.c: In function ‘R_createXMLNodeRef’:
+XMLTree.c:1059: warning: cast from pointer to integer of different size
+XMLTree.c:1060: warning: cast from pointer to integer of different size
+XMLTree.c:1064: warning: assignment makes integer from pointer without a cast
+XMLTree.c: In function ‘R_addXMLNodeFinalizer’:
+XMLTree.c:1088: warning: unused variable ‘node’
+XMLTree.c: In function ‘R_saveXMLDOM’:
+XMLTree.c:1209: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLTree.c:1208: warning: unused variable ‘encoding’
+XMLTree.c: In function ‘RS_XML_printXMLNode’:
+XMLTree.c:1381: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLTree.c: In function ‘R_setXMLInternalTextNode_value’:
+XMLTree.c:1410: warning: unused variable ‘encoding’
+XMLTree.c:1407: warning: unused variable ‘tmp’
+XMLTree.c: In function ‘R_xmlNodeValue’:
+XMLTree.c:1463: warning: pointer targets in passing argument 1 of ‘Rf_mkCharCE’ differ in signedness
+XMLTree.c:1441: warning: unused variable ‘encoding’
+XMLTree.c: In function ‘R_xmlNsAsCharacter’:
+XMLTree.c:1493: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLTree.c:1495: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLTree.c: In function ‘R_XML_indexOfChild’:
+XMLTree.c:1545: warning: unused variable ‘parent’
+XMLTree.c: In function ‘R_xmlSearchNs’:
+XMLTree.c:1622: warning: comparison of distinct pointer types lacks a cast
+XMLTree.c:1630: warning: pointer targets in passing argument 3 of ‘xmlSearchNs’ differ in signedness
+XMLTree.c:1630: warning: pointer targets in passing argument 3 of ‘xmlSearchNsByHref’ differ in signedness
+XMLTree.c:1636: warning: pointer targets in passing argument 1 of ‘Rf_mkString’ differ in signedness
+gcc -std=gnu99 -I/Users/duncan/Projects/R-new-devel/include -DNDEBUG -DLIBXML -I/usr/local/include/libxml2 -DUSE_EXTERNAL_SUBSET=1 -DROOT_HAS_DTD_NODE=1 -DDUMP_WITH_ENCODING=1 -DUSE_XML_VERSION_H=1 -DXML_ELEMENT_ETYPE=1 -DXML_ATTRIBUTE_ATYPE=1 -DNO_XML_HASH_SCANNER_RETURN=1 -DLIBXML_NAMESPACE_HAS_CONTEXT=1 -DHAVE_R_CETYPE_T=1 -DHAVE_XML_WITH_ZLIB=1 -DHAVE_XML_HAS_FEATURE=1 -DUSE_R=1 -D_R_=1  -DHAVE_VALIDITY=1 -DXML_REF_COUNT_NODES=1  -I. -DLIBXML2=1 -g -Wall    -fPIC  -g -Wall -c libxmlFeatures.c -o libxmlFeatures.o
+gcc -std=gnu99 -I/Users/duncan/Projects/R-new-devel/include -DNDEBUG -DLIBXML -I/usr/local/include/libxml2 -DUSE_EXTERNAL_SUBSET=1 -DROOT_HAS_DTD_NODE=1 -DDUMP_WITH_ENCODING=1 -DUSE_XML_VERSION_H=1 -DXML_ELEMENT_ETYPE=1 -DXML_ATTRIBUTE_ATYPE=1 -DNO_XML_HASH_SCANNER_RETURN=1 -DLIBXML_NAMESPACE_HAS_CONTEXT=1 -DHAVE_R_CETYPE_T=1 -DHAVE_XML_WITH_ZLIB=1 -DHAVE_XML_HAS_FEATURE=1 -DUSE_R=1 -D_R_=1  -DHAVE_VALIDITY=1 -DXML_REF_COUNT_NODES=1  -I. -DLIBXML2=1 -g -Wall    -fPIC  -g -Wall -c schema.c -o schema.o
+schema.c: In function ‘getKeys’:
+schema.c:78: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+schema.c: In function ‘R_libxmlTypeTable_lookup’:
+schema.c:122: warning: pointer targets in passing argument 2 of ‘xmlHashLookup’ differ in signedness
+gcc -std=gnu99 -I/Users/duncan/Projects/R-new-devel/include -DNDEBUG -DLIBXML -I/usr/local/include/libxml2 -DUSE_EXTERNAL_SUBSET=1 -DROOT_HAS_DTD_NODE=1 -DDUMP_WITH_ENCODING=1 -DUSE_XML_VERSION_H=1 -DXML_ELEMENT_ETYPE=1 -DXML_ATTRIBUTE_ATYPE=1 -DNO_XML_HASH_SCANNER_RETURN=1 -DLIBXML_NAMESPACE_HAS_CONTEXT=1 -DHAVE_R_CETYPE_T=1 -DHAVE_XML_WITH_ZLIB=1 -DHAVE_XML_HAS_FEATURE=1 -DUSE_R=1 -D_R_=1  -DHAVE_VALIDITY=1 -DXML_REF_COUNT_NODES=1  -I. -DLIBXML2=1 -g -Wall    -fPIC  -g -Wall -c xmlsecurity.c -o xmlsecurity.o
+xmlsecurity.c:32: warning: ‘foo’ defined but not used
+gcc -std=gnu99 -I/Users/duncan/Projects/R-new-devel/include -DNDEBUG -DLIBXML -I/usr/local/include/libxml2 -DUSE_EXTERNAL_SUBSET=1 -DROOT_HAS_DTD_NODE=1 -DDUMP_WITH_ENCODING=1 -DUSE_XML_VERSION_H=1 -DXML_ELEMENT_ETYPE=1 -DXML_ATTRIBUTE_ATYPE=1 -DNO_XML_HASH_SCANNER_RETURN=1 -DLIBXML_NAMESPACE_HAS_CONTEXT=1 -DHAVE_R_CETYPE_T=1 -DHAVE_XML_WITH_ZLIB=1 -DHAVE_XML_HAS_FEATURE=1 -DUSE_R=1 -D_R_=1  -DHAVE_VALIDITY=1 -DXML_REF_COUNT_NODES=1  -I. -DLIBXML2=1 -g -Wall    -fPIC  -g -Wall -c xpath.c -o xpath.o
+xpath.c: In function ‘convertNodeSetToR’:
+xpath.c:36: warning: pointer targets in passing argument 1 of ‘Rf_mkCharCE’ differ in signedness
+gcc -std=gnu99 -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup -single_module -multiply_defined suppress -L/usr/local/lib -o XML.so DocParse.o EventParse.o ExpatParse.o HTMLParse.o NodeGC.o RSDTD.o RUtils.o Rcatalog.o Utils.o XMLEventParse.o XMLHashTree.o XMLTree.o libxmlFeatures.o schema.o xmlsecurity.o xpath.o -L/usr/local/lib -lxml2 -lz -lpthread -liconv -lm -lz -lxml2 -L/Users/duncan/Projects/R-new-devel/lib -lR -dylib_file libRblas.dylib:/Users/duncan/Projects/R-new-devel/lib/libRblas.dylib -Wl,-framework -Wl,CoreFoundation
+installing to /Users/duncan/Projects/org/omegahat/XML/RS/XML.Rcheck/XML/libs
+** R
+** inst
+** preparing package for lazy loading
+Creating a generic function for ‘source’ from package ‘base’ in package ‘XML’
+Warning in .NonstandardGenericTest(body(fdef), name, stdGenericBody) :
+  the supplied generic function definition for xmlClone does not seem to call 'standardGeneric'; no methods will be dispatched!
+** help
+*** installing help indices
+** building package indices ...
+** testing if installed package can be loaded
+
+* DONE (XML)

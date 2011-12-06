@@ -1,0 +1,19 @@
+<article xmlns:r="http://www.r-project.org">
+One needs the functions from \file{mathmlPlot} in \dir{examples}.
+<r:code>
+ inFile = system.file("data/mathmlQuadratic.xml","XML")
+ d = xmlTreeParse(inFile)
+ plot(1:10, type="n")
+ text(5,5, mathmlPlot(d))
+</r:code>
+
+<r:code><![CDATA[
+ u = xmlTreeParse("data/mathmlRoot.xml")
+ text(5,7,mathmlPlot(u))
+]]></r:code>
+
+<r:code>
+ u = xmlTreeParse("data/mathmlSet.xml")
+ text(5,9,mathmlPlot(u))
+</r:code>
+</article>

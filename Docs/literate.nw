@@ -1,0 +1,105 @@
+@
+\begin{abstract}
+  
+\end{abstract}
+
+
+Recursive fragment references.
+
+Language-specific fragments. Need id= and lang=
+but want the id to be unique?
+
+
+\begin{description}
+\item[Consistency]
+Keeps the code and the documentation closer together
+allowing one to document more dynamically
+rather than change, re-source, edit .Rd file.
+\item[Pre-processing Macros] 
+Allows one to do pre-processing macros (i.e. entities).
+\item[Partial Source]
+One can  read the entire file and then 
+only ``evaluate'' or instantiate specific
+functions.
+\item[Efficient Partial Parsing]
+One can use the SAX parser to do the partial
+sourcing on very large files, if this becomes an issue.
+\item[Two Escape Mechanisms]
+One can use entities or the CDATA construct
+to escape text from the XML parser.
+\item[Scoping of Fragments]
+One can potentially define fragments within other fragments
+and effectively hide them from top-level chunks.
+\end{description}
+
+
+
+
+
+\begin{description}
+\item[Line numbers]
+Need to be able to get the line numbers
+associated with each entry so that we
+can use it in debugging.
+Can we get this from libxml.
+Other parsers or translators
+\item[Escaping Characters]
+ CDATA or entities
+\item[XLink]
+ Resolving references to other chunks, including in other
+files.
+Using the nano-hhtp.
+\item[XPath]
+\item[XSL]
+\end{description}
+
+\file{literate.xml} parses with libxml-1.8.9,
+but not the libxml-2.2.0.7 parser.
+
+
+@
+Here, we read the document into R.
+<<>>=
+d <- xmlTreeParse("/home/duncan/Projects/org/omegahat/XML/RS/data/literate.xml")  
+
+eval(parse(text=d$doc[[3]][[1]][[2]][[2]] ))  
+
+
+@ %$
+
+Now, what if that chunk refers to other chunks.  
+
+
+@
+A simple way to read and source a file in the SSource
+that does not contain fragment references is
+<<>>=
+simpleSource <- function(file) {
+  r <- xmlRoot(xmlTreeParse(file))
+  for(i in r[names(r) == "function"]) {
+    name <- xmlValue(i[["name"]][[1]])   
+    def <- xmlValue(i[["def"]][[1]])
+    assign(name, eval(parse(text=def)), envir=globalenv())
+  }
+}
+
+@ Rather than having generic code chunks, we can mark these up to be C
+routine, R function, code snippet, etc.  This would facilitate
+extraction and improve semantic meaning over the regular web setup.
+
+
+@
+To process an XML document with a given XSL style, use the following.
+<<>>=
+
+setenv CLASSPATH /usr/local/src/xalan-j_2_0_D01/bin/xalan.jar:/usr/local/src/xalan-j_2_0_D01/bin/xerces.jar
+
+java org.apache.xalan.xslt.Process -in data/literate.xml -xsl data/literate.xsl
+
+
+
+@ We could try using entities for referring to chunks/fragments.
+
+
+@ 
+PSGML mode for emacs.

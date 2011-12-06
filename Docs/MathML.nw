@@ -1,0 +1,18 @@
+@  One needs the functions from \file{mathmlPlot} in \dir{examples}.
+<<*>>=
+ inFile <- system.file("data/mathmlQuadratic.xml","XML")
+ d <- xmlTreeParse(inFile)
+ plot(1:10, type="n")
+ text(5,5, mathmlPlot(d))
+
+
+@ 
+<<>>=
+ u <- xmlTreeParse("data/mathmlRoot.xml")
+ text(5,7,mathmlPlot(u))
+
+@ 
+<<>>=
+ u <- xmlTreeParse("data/mathmlSet.xml")
+ text(5,9,mathmlPlot(u))
+

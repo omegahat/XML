@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title></title>
+</head>
+
+<body>
+<h1></h1>
+<dl>
+  <dt>
+  <li> Namespaces need to be handled.
+  <dd>
+  <dt>
+  <li> Error message when a file doesn't exist  needs to be clearer
+  <dd>
+<pre>
+SOAPFault("fault3.xml")
+Error in xmlTreeParse(xmlSource) : error in creating parser for fault3.xml
+In addition: Warning message: 
+XML Parsing Error: Entity: line 1: Start tag expect, '<' not found 
+</pre>      
+  <dt> Check the return type for routines passed to xmlHashScan
+      whether they return void or void * and adjust accordingly.
+  <dd>
+</dl>
+
+
+<hr>
+<address><a href="http://www.stat.ucdavis.edu/~duncan">Duncan Temple Lang</a>
+<a href=mailto:duncan@wald.ucdavis.edu>&lt;duncan@wald.ucdavis.edu&gt;</a></address>
+<!-- hhmts start -->
+Last modified: Tue Oct  1 08:54:19 EDT 2002
+<!-- hhmts end -->
+</body> </html>

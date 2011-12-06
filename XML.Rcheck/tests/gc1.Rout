@@ -1,0 +1,52 @@
+
+R Under development (unstable) (2011-11-27 r57757)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-apple-darwin11.0.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(XML)
+> doc = xmlParse(system.file("exampleData", "mtcars.xml", package = "XML"))
+> nodes1 = getNodeSet(doc, "//record[@id='Mazda RX4']")
+> .Call("R_getXMLRefCount", nodes1[[1]])
+[1] 1
+> nodes2 = getNodeSet(doc, "//record[@id='Mazda RX4']")
+> .Call("R_getXMLRefCount", nodes2[[1]])
+[1] 2
+> .Call("R_getXMLRefCount", nodes1[[1]])
+[1] 2
+> 
+> rm(doc)
+> gc()
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 315141 16.9     467875   25   407500 21.8
+Vcells 442752  3.4     905753    7   904960  7.0
+> rm(nodes1)
+> gc()
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 315126 16.9     531268 28.4   407500 21.8
+Vcells 442731  3.4     905753  7.0   904960  7.0
+> .Call("R_getXMLRefCount", nodes2[[1]])
+[1] 1
+> gc()
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 315122 16.9     597831   32   407500 21.8
+Vcells 442723  3.4     905753    7   904960  7.0
+> 
+> rm(nodes2)
+> gc()
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 315117 16.9     597831   32   407500 21.8
+Vcells 442720  3.4     905753    7   904960  7.0
+> 

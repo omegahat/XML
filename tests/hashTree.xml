@@ -1,0 +1,9 @@
+<top xmlns:r="http://www.r-project.org" xmlns:omg="http://www.omegahat.org">
+ <a/>
+ <b r:abc="foo"  r:xyz="bar">
+  <c>Some text</c>
+  <d/>
+ </b>
+ <e abc="true" />
+</top>
+  

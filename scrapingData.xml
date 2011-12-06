@@ -1,0 +1,85 @@
+<article xmlns:r="http://www.r-project.org">
+<title>Scraping Data from the Web with R</title>
+
+<section>
+<title>Scraping Data from the Web with R</title>
+<para>
+It is becoming more common to need/want to access data from Web sites
+and this activity is likely to increase as services and data become
+more Web-based.  We have anticipated this for almost a decade and have
+developed the XML package (initial release in 2000) and the RCurl
+package (initial release in 2004).  On top of these, we have the
+SSOAP, XMLRPC and RHTMLForms packages.
+</para>
+<para>
+R provides some facilities for accessing data over the web,
+specifically making HTTP or FTP requests.  In many cases, these are
+sufficient.  One can use <r:func>download.file</r:func> to make an
+HTTP/FTP request and save the result to a file on disk. Then one can
+read the contents locally.
+</para>
+<para>
+<r:func>url</r:func> is a more  low-level, flexible mechanism
+that allows one to make an HTTP request and read the result
+as if it were a local connection.
+</para>
+<para>
+While these two built-in facilities will suffice for many, many
+situations (the majority at present), they will not work when
+<ul>
+<li>you need to use HTTPS, a secure HTTP request using SSL,</li>
+<li>you need to POST a form request rather than using a simple GET operation in HTTP</li>
+<li>you need to customize the request, e.g. to provide an authentication token</li>
+</ul>
+
+
+If you are dealing with a simple situation
+
+</para>
+
+<para>
+</para>
+
+<section>
+<title>Software</title>
+
+<dl>
+  <dt>
+  <li> <a href="RSXML">XML package</a></li>
+  </dt>
+  <dd>
+  </dd>
+
+  <dt>
+  <li> <a href="RCurl">RCurl package</a></li>
+  </dt>
+  <dd>
+  </dd>
+  <dt>
+  <li> <a href="SSOAP">SSOAP package</a></li>
+  </dt>
+  <dd>
+  </dd>
+  <dt>
+  <li> <a href="XMLRPC">SSOAP package</a></li>
+  </dt>
+  <dd>
+  </dd>
+  <dt>
+  <li> <a href="SSOAP">SSOAP package</a></li>
+  </dt>
+  <dd>      
+  </dd>
+
+  <dt>
+  <li> <a href="Rcompression">Rcompression package</a></li>
+  </dt>
+  <dd>      
+  </dd>
+</dl>
+
+
+
+</section>
+</section>
+</article>

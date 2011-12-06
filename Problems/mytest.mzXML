@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<mzXML xmlns="http://sashimi.sourceforge.net/schema_revision/mzXML_3.0"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://sashimi.sourceforge.net/schema_revision/mzXML_3.0 http://sashimi.sourceforge.net/schema_revision/mzXML_3.0/mzXML_idx_3.0.xsd" >
+ <msRun scanCount="18198" startTime="PT0.6175S" endTime="PT7923.72S" >
+  <parentFile fileName="20090331_Orbi1_JoGr_SA_VermeulenHeLaCE1-3_WBAThermo.raw" fileType="RAWData" fileSha1="6a6a3e18c958a7fb218018bc3448fd5591793b18" />
+  <msInstrument>
+   <msManufacturer category="msManufacturer" value="Thermo Scientific" />
+   <msModel category="msModel" value="LTQ Orbitrap" />
+   <msIonisation category="msIonisation" value="NSI" />
+   <msMassAnalyzer category="msMassAnalyzer" value="FTMS" />
+   <msDetector category="msDetector" value="unknown" />
+   <software type="acquisition" name="Xcalibur" version="2.5.5" />
+  </msInstrument>
+  <dataProcessing>
+   <software type="conversion" name="ReAdW" version="4.2.0(build Feb 19 2009 09:50:55)" />
+  </dataProcessing>
+  <scan num="1"
+   msLevel="1"
+   peaksCount="8914"
+   polarity="+"
+   scanType="Full"
+   filterLine="FTMS + p NSI Full ms [300.00-1700.00]"
+   retentionTime="PT0.6175S"
+   lowMz="300.001"
+   highMz="1706.64"
+   basePeakMz="445.119"
+   basePeakIntensity="22675.1"
+   totIonCurrent="1.05511e+006" >
+   <peaks precision="32"
+    byteOrder="network"
+    pairOrder="m/z-int" ></peaks>
+  </scan>
+  <scan num="2"
+   msLevel="1"
+   peaksCount="8466"
+   polarity="+"
+   scanType="Full"
+   filterLine="FTMS + p NSI Full ms [300.00-1700.00]"
+   retentionTime="PT2.0253S"
+   lowMz="300.001"
+   highMz="1706.64"
+   basePeakMz="391.284"
+   basePeakIntensity="177764"
+   totIonCurrent="1.78834e+006" >
+   <peaks precision="32"
+    byteOrder="network"
+    pairOrder="m/z-int" ></peaks>
+  </scan>
+  <scan num="3"
+   msLevel="1"
+   peaksCount="8779"
+   polarity="+"
+   scanType="Full"
+   filterLine="FTMS + p NSI Full ms [300.00-1700.00]"
+   retentionTime="PT3.2844S"
+   lowMz="300.001"
+   highMz="1706.64"
+   basePeakMz="347.883"
+   basePeakIntensity="25152.9"
+   totIonCurrent="913872" >
+   <peaks precision="32"
+    byteOrder="network"
+    pairOrder="m/z-int" ></peaks>
+  </scan>
+  <scan num="4"
+   msLevel="1"
+   peaksCount="8355"
+   polarity="+"
+   scanType="Full"
+   filterLine="FTMS + p NSI Full ms [300.00-1700.00]"
+   retentionTime="PT4.7353S"
+   lowMz="300.001"
+   highMz="1706.64"
+   basePeakMz="391.284"
+   basePeakIntensity="148587"
+   totIonCurrent="1.70923e+006" >
+   <peaks precision="32"
+    byteOrder="network"
+    pairOrder="m/z-int" ></peaks>
+   <scan num="5"
+    msLevel="2"
+    peaksCount="327"
+    polarity="+"
+    scanType="Full"
+    filterLine="ITMS + c NSI w Full ms2 347.88@cid35.00 [95.00-1045.00]"
+    retentionTime="PT5.923S"
+    lowMz="102.081"
+    highMz="753.412"
+    basePeakMz="287.088"
+    basePeakIntensity="345.218"
+    totIonCurrent="8416.97"
+    collisionEnergy="35" >
+    <precursorMz precursorIntensity="16231.3" activationMethod="CID" >347.88</precursorMz>
+    <peaks precision="32"
+     byteOrder="network"
+     pairOrder="m/z-int" ></peaks>
+   </scan>
+   <scan num="6"
+    msLevel="2"
+    peaksCount="222"
+    polarity="+"
+    scanType="Full"
+    filterLine="ITMS + c NSI w Full ms2 384.70@cid35.00 [105.00-770.00]"
+    retentionTime="PT6.3045S"
+    lowMz="110.033"
+    highMz="766.72"
+    basePeakMz="568.311"
+    basePeakIntensity="1692.72"
+    totIonCurrent="5921.31"
+    collisionEnergy="35" >
+    <precursorMz precursorIntensity="0" activationMethod="CID" >384.7</precursorMz>
+    <peaks precision="32"
+     byteOrder="network"
+     pairOrder="m/z-int" ></peaks>
+   </scan>
+ </msRun>
+ <index name="scan" >
+  <offset id="1" >1089</offset>
+  <offset id="2" >96564</offset>
+  <offset id="3" >187258</offset>
+  <offset id="4" >281287</offset>
+  <offset id="5" >370788</offset>
+  <offset id="6" >374810</offset>
+ </index>
+ <indexOffset>731462446</indexOffset>
+ <sha1>ce82585c0b6ec90bbf5354db41dba3192fd1302c</sha1>
+</mzXML>

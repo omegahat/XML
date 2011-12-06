@@ -1,0 +1,302 @@
+<article xmlns:r="http://www.r-project.org"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+
+<articleinfo>
+<author>
+<firstname>Duncan</firstname><surname>Temple Lang</surname>
+</author>
+</articleinfo>
+
+<section>
+<para>
+ Here we describe the basics of the XML parsing facilities in the
+Omegahat package for R and S.  There are two styles of parsing -- 
+document and event based. 
+</para>
+<formalpara><title>Document</title>
+<para>
+ The document approach reads an entire file
+into memory as a hierarchical tree (i.e. a lists of lists in R and S)
+of XML tags or nodes. These XML elements in the tree contain the 
+name of the XML tag, its attributes and a list of the sub-elements.
+</para>
+</formalpara>
+
+<formalpara><title>Event</title>
+<para>The event based style invokes handlers as each XML
+element (start of a tag, end of a tag, comment, text tag, etc.) is
+encountered in the parsing stream. The document approach is usually
+simpler to understand and use for standard situations, while the event
+driven style provides greater control and the potential for more
+efficient handling of very large XML data sources.
+</para>
+</formalpara>
+
+<para>
+We discuss R functions for the document based approach first and
+then outline the event-based approach.  In each of the two approaches,
+there is a single function that one calls to perform the parsing.
+</para>
+<para>
+As well as parsing regular XML documents, the facilities in the
+package allow one to read and manipulate (within R or S) DTDs --
+Document Type Definitions -- which define or provide a general
+template for different groups of documents.  This facility can be used
+to perform meta-programming on documents, both creating valid XML
+documents programmatically and also providing mappings between tags.
+</para>
+<para>
+This is more of a ``how to'' than a ``why'', or ``how does it work''
+document.
+</para>
+</section>
+
+<section><title>Basics Idea</title>
+<para>
+Each XML document is made up of XML tags organized
+hierarchically, where tags are nested within other tags
+and some tags just have text.
+</para>
+</section>
+
+<section>
+<title>Document-based Parsing</title>
+<para>
+The fuction for parsing an XML document and returning
+it as a list of nodes is 
+<r:func>xmlTreeParse</r:func>.
+</para>
+<para>
+We will consider the following Structure Vector Graphics (SVG) file
+(in data/svg.xml)
+and we will setup a mechanism to process and render it.
+<programlisting>
+<xi:include href="../data/svg.xml" parse="text"/> 
+</programlisting>
+</para>
+
+<section><title>Processing the Nodes</title>
+<para>
+When we build the R document tree having generated the internal DOM
+version in C, we create the different nodes by first creating the
+default version with classes <r:class>XMLNode</r:class>, <r:class>XMLComment</r:class>,
+<r:class>XMLEntity</r:class>, <r:class>XMLText</r:class>, etc.  However, the user can
+provide functions that post-process these nodes before they are added
+to the R document tree.  To do this, one provides a named list of
+functions as the value of the parameter <r:arg>handlers</r:arg>.  The C-level
+conversion takes each XML element, converts it to an <r:class>XMLNode</r:class>
+(or similar class) and then calls the appropriate function from this
+list.  These functions return either NULL indicating that the node
+should be discarded and not added to the document tree, or an object
+to be added to the tree.  Currently, the only argument to these
+functions is the node itself. (The parent may be added in the future.)
+This node contains its children nodes. (If this proves to be
+excessively expensive as many nodes are discarded or modified to
+discard their child information, one should consider event driven
+parsing.)
+</para>
+<para>
+How is the appropriate function selected?
+</para>
+<para>
+A simple example of utilizing these post-processing node handlers
+is to discard all comment elements.
+<r:code><![CDATA[
+ doc <- xmlTreeParse(system.file("exampleData", "mtcars.xml", package = "XML"),
+                       handlers = list(startElement =function(node) {
+                                                     if(inherits(node, "XMLComment")) 
+                                                        NULL 
+                                                     else 
+                                                        node
+                                                    }),
+                       asTree = TRUE
+                    )
+]]></r:code>
+</para>
+<para>
+A slightly more advanced version uses a closure
+to store a list of tag names that we wish to keep
+in the document tree, discarding all others.
+(Event driven parsing would be better for this application.)
+<r:code><![CDATA[
+ xmlKeepTags <- function(tagNamesToKeep) {
+                startElement <- function(node) {
+                    if(any(xmlName(node) == tagNamesToKeep)) {
+                      cat("Keeping",xmlName(node),"\n")
+                      return(node)
+                    }
+                    else {
+                      cat("Discarding",xmlName(node),"\n")
+                      return(NULL)
+                    }
+                 }
+                  return(list(startElement=startElement))
+               }
+
+ doc <- xmlTreeParse(system.file("exampleData", "mtcars.xml", package = "XML"),
+                     xmlKeepTags(c("variables","dataset")))
+]]></r:code>
+</para>
+
+<para>
+Note that the nodes are processed upwards (i.e. from leaf to root
+ node) rather than from the root down through the child nodes.  Thus,
+ if we discard the parent node of a node we are trying to preserve,
+ e.g <xml:tag>variables</xml:tag> when trying to preserve <xml:tag>variable</xml:tag>, we
+ will throw away the children nodes also and discard all
+the <xml:tag>variable</xml:tag> elements.
+</para>
+<para>
+One can query the DTD to find what nodes allow the ones in which we
+are interested as sub-elements.
+<r:code><![CDATA[
+ dtd <- parseDTD("DatasetByRecord.dtd")
+
+ which <- character()
+ for(i in names(dtd$elements)) {if(dtdValidElement("variable", i, dtd)) which <<- c(which, i)}
+]]></r:code>
+</para>
+</section>
+</section>
+
+<section><title>Event-based Parsing</title>
+<para>
+Processing each XML element as the parser occurs can be a very useful
+and more flexible approach than reading an entire document,
+maintaining an intermediate form in memory and then processing.
+Firstly, the amount of memory required is smaller, often
+significantly. In other cases, the source of the XML may not be a
+complete document, but may be a source that periodically generates
+more output. For example, one might be monitoring a device in a
+factory, etc.  where the data is an ``infinite'' stream.  By
+processing the XML units as they arrive, one can provide dynamic
+updating of the intermediate or current results.  This approach allows
+users to decide whether to continue, monitor for strange events,
+perform quality control procedures and generally perform statistical
+analysis on the process, not static data.  This is similar to the idea
+of triggers in databases.  A third case where the element-wise
+approach works well is when one wishes to extract rows or cells that
+fit particular criteria. Rather than reading all the data and then
+processing it, one can discard those records that do not satisfy the
+criteria.  This record-wise processing works well when a
+transformation of the record is required as the transformation can be
+done in-line before assigning the value(s) and hence avoids a copy of
+the data.
+</para>
+
+<para>
+We will look at an example of the dynamic event-driven processing
+which reads a data set and keeps certain records.  The first example
+will keep rows based on their order or index.  The second example
+examines the contents of the record to determine whether it should be
+discarded or kept. These are different in that in the first, we can
+determine this when we handle the <xml:tag>record</xml:tag> tag, whereas the
+second case waits for the text value within the <xml:tag>record</xml:tag> tag
+and must be done differently.  This uses the basic event handler in
+<filename>dataFrameEvent</filename> and provides alternative versions of the
+<r:func>record</r:func> and <r:func>text</r:func> functions in that closure.
+The <r:func>record</r:func> closure
+<r:code><![CDATA[
+  record <- function(x, atts) {
+   if(is.na(match(atts[["id"]], desiredRowNames))) {
+      # discard this entry
+     return()
+   }
+
+    processRow <<- 1
+      # advance the current record index.
+      # (Same as previous version).
+    currentRecord <<- currentRecord + 1
+    rowNames <<- c(rowNames, atts[["id"]])
+  }
+]]></r:code>
+</para>
+<para>
+The definition of the <r:func>text</r:func> changes so that it returns if
+we are expecting a record (i.e. not expecting a variable name) and
+<r:var>processRow</r:var> is <r:false/>.
+</para>
+<para>
+One other small changes relate to how we set the dimensions and the
+row names of the resulting dataframe.  Rather than using the number of
+records reported in the XML file, we use the length of the desired row
+names specified when creating the closure. This can be handled more
+dynamically if we cannot assume uniqueness, etc.
+</para>
+
+<section>
+<title>Filtering on a Record's Values</title>
+<para>
+We now make the filtering slightly more complicated.
+We will create an event filter to which the user
+supplies a function expecting the record as its only argument
+and returning a logical value indicating
+whether the record should be accepted or not.
+The argument is a named list of values.
+<r:code><![CDATA[
+ function(data) {
+   as.numeric(data["cyl"]) >= 6 & as.integer(data[2]) < 100
+]]></r:code>
+</para>
+
+<para>
+Here, we change the logic slightly from the way we read the entire
+dataframe.  Firstly, we do not want to allocate a matrix or data frame
+to store the number of records that the <xml:tag>dataset</xml:tag> tag
+indicates.  We are trying to be conservative in the amount of memory
+we use.  So, instead, we append each record that we accept to a list
+and at the conclusion of the XML stream, we convert the list of
+records to a dataframe.
+This involves changing the segment in the <r:func>text</r:func> function
+<r:code><![CDATA[
+      for(i in els) {
+        data[currentRecord, currentColumn] <<- as.numeric(i)
+        currentColumn <<- currentColumn + 1
+      }
+]]></r:code>
+to read
+<r:code><![CDATA[
+     data[[length(data)+1]] <<- els
+]]></r:code>
+</para>
+<para>
+
+Another change is how we handle the record <xml:attr>id</xml:attr>
+attribute.  We can discard the current record count
+(<r:var>currentRecord</r:var>) and change the definition of the
+<xml:tag>record</xml:tag> handler to store the record id.
+The <xml:tag>text</xml:tag> handler can then access this if
+it accepts the record, and append it to the <r:var>rowNames</r:var>
+vector.
+<r:code><![CDATA[
+      names(els) <- varNames
+      if(accept(els)) {
+        data[[length(data)+1]] <<- els
+        rowNames <<- c(rowNames, currentRowName)
+      }
+]]></r:code>
+</para>
+
+<para>
+And finally, the <r:func>endElement</r:func> function in the closure is
+changed to convert the list of records stored in <r:func>data</r:func> to
+a data frame.
+<r:code><![CDATA[
+if(x == "dataset") {
+  data <- data.frame(matrix(unlist(data),length(data),length(varNames), byrow=T))
+  names(data) <- varNames 
+  rownames(data) <- rowNames
+ }
+]]></r:code>
+After all this, we can use the filter 
+<r:code><![CDATA[
+ accept  <-  function(data) {
+                 as.numeric(data["cyl"]) >= 6 & as.integer(data[2]) < 100
+             }
+ myData <- xmlEventParse(system.file("exampleData", "mtcars.xml", package = "XML"),
+                         valueDataFrameFilter(accept))$data()
+]]></r:code>
+</para>
+</section>
+</section>
+</article>

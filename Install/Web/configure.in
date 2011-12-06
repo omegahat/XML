@@ -1,0 +1,15 @@
+AC_INIT(../../index.html.in)
+
+. ../VersionInfo
+
+DATE=`date`
+AC_SUBST(DATE)
+AC_SUBST(TAR_FILE)
+AC_SUBST(ZIP_FILE)
+AC_SUBST(MINOR_VERSION)
+AC_SUBST(MAJOR_VERSION)
+AC_SUBST(PATCH_LEVEL)
+AC_SUBST(PKG_NAME)
+
+
+AC_OUTPUT(../../index.html index.html)

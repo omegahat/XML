@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<article xmlns:r="http://www.r-project.org"
+	 xmlns:xlink="http://www.w3.org/1999/xlink"
+         xml:lang="en">
+ <articleinfo>
+  <title></title>
+  <subtitle></subtitle>
+    <author><personname>
+     <firstname>Duncan</firstname>
+     <surname>Temple Lang</surname>
+     </personname></author>
+   <address><email>duncan@wald.ucdavis.edu</email></address>
+ </articleinfo>
+
+<section>
+<title>The XML Package for R</title>
+
+<para>
+
+This document gives an overview of "an" XML package for R.  It is
+based on an interface to libxml2, Daniel Veillard's xml parsing, xpath
+facilities in C.  It provides a higher level, R-like interface to
+these facilities to the functionality in that library as well as some
+facilities implemented entirely in R.  Essentially what it does is to
+allow the R user to read XML and HTML documents and also to create XML
+documents entirely within R.  At the heart of the interface is the
+ability to manipulate XML node objects, fetching their names,
+namespaces and namespace definitions, attributes, and children.
+</para>
+
+<para>
+There are many approaches and techniques for reading XML/HTML
+documents.  One can read the entire document into R data structures
+via DOM (Document Object Model) and then work on that hierarchical
+structure to extract the desired information.  Alternatively, one can
+read the XML tree into internal nodes and work on that.  This allows
+more powerful navigation of the nodes (as it allows one to access
+parent nodes), but still typically involves recursively descending the
+tree if done with R functions.  Alternatively, one can use the
+powerful XPath expression language to find "node sets" of
+interest. Working this way however involves multiple passes over the
+XML tree.  A more efficient mechanism is to provide R handler
+functions that are invoked when the parsed tree is being converted to
+R.  One can specify functions for different XML elements which are
+invoked as each one is being converted from the leaves up to the root
+of the tree.  When dealing with very large documents, having the
+entire tree XML in memory may not be possible so we use a stream/event
+parser via SAX (Simple API for XML).  This is efficient but very
+low-level, working not at the level of XML elements, but calling
+separate functions for the start and end of each element or the
+presence of text elements, etc.  To simplify this, we use the notion
+of a branch or "twig" which mixes SAX and DOM which works with the
+document as a stream until it encounters the start of a node of
+interest. Then it builds that entire node and passes that to a
+user-specified function and then continues on with the rest of the
+document. The DOM-style parsing is done by
+<r:func>xmlTreeParse</r:func> and HTML documents can be read with
+<r:func>htmlTreeParse</r:func> as this does not require the HTML input
+to be correct XML.  The SAX-style parsing is done with
+<r:func>xmlEventParse</r:func>.
+</para>
+
+<para>
+As with reading XML documents, the package provides several approaches
+for creating XML documents within R.  One can create XML nodes as R
+lists or alternatively use low-level C data structures from libxml2.
+One can create entire trees of nodes by either connecting these nodes
+together or by using slightly higher-level interfaces which manage the
+collection of nodes and which ones are "active" or "open" and into
+which new nodes will be inserted.  To create internal/C-level nodes,
+one uses <r:func>newXMLNode</r:func>, <r:func>newXMLTextNode</r:func>,
+<r:func>newXMLComment</r:func>, <r:func>newXMLPINode</r:func> and so
+on. We add them as subnodes of existing nodes using
+<r:func>addChildren</r:func>.  The functions <r:func>xmlTree</r:func>
+and <r:func>xmlHashTree</r:func> are used to manage the creation of an
+entire tree/document stepwise.
+
+</para>
+<para>
+
+In addition to working with XML nodes programmatically in R, one can
+also use XSL to transform an XML document to another form,
+e.g. another XML document or an HTML document or regular text, even
+LaTeX.  And this can be done from within R using the
+<omg:package>Sxslt</omg:package> package.  And, further, one can use R
+functions and node manipulation and creation facilities within the XSL
+rules.
+
+
+</para>
+
+</section>
+
+</article>

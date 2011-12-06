@@ -1,0 +1,28 @@
+In some circumstances, it is convenient to be able to generate XML but
+to be able to add to previously created nodes. When writing on-the-fly
+to a file or buffer, this is not possible. The \SFunction{xmlOutputBuffer}
+mechanism writes tags on demand when it is instructed and therefore
+we cannot (easily) return and add an attribute to a node,
+insert a new child node, etc. without parsing the contents of the file
+or buffer (which may be incomplete and contain unclosed tags)
+In other words, ``random'' access to the structure of the DOM
+is problematic.
+
+We can overcome this problem by choosing to use the same interface as
+that provided by \SFunction{xmlOutputBuffer} but employ an
+implementation that maintains the DOM itself.  With additional
+functions which allow us to identify existing nodes, insert new
+elements into the tree and to reset the currently active element, we
+can then obtain the flexible, multi-directional access we need and
+overcome the problem of linear generation of the XML content.
+
+We can generate the DOM in S. However, S's functional nature does not
+make it ideal for creating tree-based structures.  We do use this
+approach when parsing XML. We also provide the
+\SFunction{xmlOutputDOM} which can be used for this very purpose.
+
+
+The function \SFunction{xmlTree} can be used to create a DOM at the
+C-level using the \textit{libxml} data structures and API and
+representing them in S.
+This has the same 

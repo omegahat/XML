@@ -1,0 +1,138 @@
+
+R Under development (unstable) (2011-11-27 r57757)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-apple-darwin11.0.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(XML)
+> 
+> gctorture(TRUE)
+> node = newXMLNode("top")
+> doc = newXMLDoc(node = node)
+> print(doc)
+<?xml version="1.0"?>
+<top/>
+ 
+> print(node)
+<top/> 
+> attr(node, "document") = doc
+> rm(doc)
+> gc()
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 315950 16.9     597831   32   407500 21.8
+Vcells 444158  3.4     905753    7   904960  7.0
+> 
+> 
+> 
+> # Node sets.
+> 
+> top = newXMLNode("top")
+> nodes = lapply(c("A", "B", "C"), newXMLNode, parent = top)
+> lapply(c("x", "y", "z"), newXMLNode, parent = nodes[[1]])
+[[1]]
+<x/> 
+
+[[2]]
+<y/> 
+
+[[3]]
+<z/> 
+
+> lapply(c("x", "y", "z"), newXMLNode, parent = nodes[[2]])
+[[1]]
+<x/> 
+
+[[2]]
+<y/> 
+
+[[3]]
+<z/> 
+
+> 
+> cat(saveXML(top))
+<top>
+  <A>
+    <x/>
+    <y/>
+    <z/>
+  </A>
+  <B>
+    <x/>
+    <y/>
+    <z/>
+  </B>
+  <C/>
+</top>> 
+> gctorture(TRUE)
+> z = xpathApply(top, "//y|//z")
+> rm(z)
+> 
+> a = xpathApply(top, "//A")
+> print(a)
+[[1]]
+<A>
+  <x/>
+  <y/>
+  <z/>
+</A> 
+
+> print(nodes[[1]])
+<A>
+  <x/>
+  <y/>
+  <z/>
+</A> 
+> 
+> x = xpathApply(a[[1]], "//x")
+> print(x)
+[[1]]
+<x/> 
+
+> rm(a)
+> gc()
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 317984 17.0     597831   32   407500 21.8
+Vcells 444750  3.4     905753    7   904960  7.0
+> rm(x)
+> gc()
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 317972 17.0     597831   32   407500 21.8
+Vcells 444731  3.4     905753    7   904960  7.0
+> 
+> 
+> # From Martin.
+> 
+> xml <- xmlTreeParse("<A><B></B></A>", useInternal=TRUE, asText=TRUE)
+> nds <- xpathApply(xml, "/*/*")
+> xpathApply(nds[[1]], "/*/*", xmlName)
+[[1]]
+[1] "B"
+
+> #[[1]]
+> #[1] "B"
+> 
+> #vs. in 1.93-2.2:
+> 
+> xml <- xmlTreeParse("<A><B></B></A>", useInternal=TRUE, asText=TRUE)
+> nds <- xpathApply(xml, "/*/*")
+> xpathApply(nds[[1]], "/*/*", xmlName)
+[[1]]
+[1] "B"
+
+> #list()
+> 
+> 
+> 
+> 

@@ -1,0 +1,15 @@
+supportsExpat <-
+function()
+{
+  @SUPPORTS_EXPAT@
+}
+
+supportsLibxml <-
+function()
+{
+  @SUPPORTS_LIBXML@
+}
+
+ADD_XML_OUTPUT_BUFFER = @ADD_XML_OUTPUT_BUFFER@ > 0
+
+

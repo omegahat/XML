@@ -1,0 +1,196 @@
+Issue 0:
+  I don't think I understand just what the useTagName argument to xmlTreeParse 
+is supposed to do.  
+
+  I assume this is xmlEventParse and not xmlTreeParse (as there is no
+  such parameter in my version of xmlTreeParse) ? 
+
+  The idea is similar to the handlers in xmlTreeParse() in
+  that when we look for a function to call to handle startElement,
+   we can either call the  generic event handler, i.e. startElement, 
+  or  we can use the name of the  node as the name of the function in our list of handlers.
+  This allows the author of the handler functions to write 
+  separate functions for the start of nodes with different names
+  rather than having them in a switch/if statement within a single
+  startElement function. It only applies to startElement.
+  If no function with that name is found in the set of handlers, we
+  use the startElement function, if it is available..
+  
+
+Here is what I have in the Rd file now.
+
+\item{useTagName}{ a logical value.
+ If this is \code{TRUE}, when the SAX parser signals an event for the
+ start of an XML element, it will first look for an element in the
+ list of handler functions whose name matches (exactly) the name of
+ the XML element.  If such an element is found, that function is
+ invoked.  Otherwise, the generic \code{startElement} handler function
+ is invoked.  The benefit of this is that the author of the handler
+ functions can write node-specific handlers for the different element
+ names in a document and not have to establish a mechanism to invoke
+ these functions within the \code{startElement} function. This is done
+ by the XML package directly.
+ 
+ If the value is \code{FALSE}, then the \code{startElement} handler
+ function will be called without any effort to find a node-specific
+ handler.  If there are no node-specific handlers, specifying
+ \code{FALSE} for this parameter will make the computations very
+ slightly faster.
+}
+
+ 
+
+Issue 1:
+
+The Value part of the xmlTreeParse documentation is not correct
+(?xmlTreeParse)
+> yeastIntAct <- xmlTreeParse(Yeastfn)
+> class(yeastIntAct)
+[1] "XMLDocument"
+> slotNames(yeastIntAct)
+character(0)
+> names(yeastIntAct)
+[1] "doc" "dtd"
+> names(yeastIntAct$doc)
+[1] "file"     "version"  "children"
+
+It says that the class is "XML Doc", which is not right, and then seems to 
+talk about the doc part, and ignore the dtd part.
+
+
+This is becoming increasingly messy as we have combinatorial explosion
+of the type of the return value because of the DOM, internal DOM, 
+the handlers, as a tree, ...
+
+I will soon create a separate function that will do 
+
+    xmlTreeParse(doc, useInternalNodes = TRUE)
+
+I haven't yet finalized the name, so suggestions welcome.
+Something like xmlInternalTreeParse(doc) or ixmlTreeParse()
+
+
+I am not sure that anyone has used the DTD part.
+
+There is an issue that I seem to return XMLDocument 
+whether we have a DTD or not in the answer so 
+two types of objects are given the same class.
+I'll fix this.
+
+In the mean time, here is the current contents of \value{}
+
+
+ By default ( when \code{useInternalNodes} is \code{FALSE}, 
+  \code{getDTD} is \code{TRUE},  and no
+ handler functions are provided), the return value is , an object of
+ (S3) class \code{XMLDocument}.
+ This has two fields named \code{doc} and \code{dtd}.
+
+ If \code{getDTD} is \code{FALSE},  only the \code{doc} object is returned.
+ 
+ The \code{doc} object has three fields of its own:
+  \code{file}, \code{version} and \code{children}.
+  \item{\code{file}}{The (expanded) name of the file  containing the XML.}
+  \item{\code{version}}{A string identifying the  version of XML used by the document.}
+  \item{\code{children}}{
+ A list of the XML nodes at the top of the document.
+ Each of these is of class \code{XMLNode}.
+ These are made up of 4 fields.
+   \item{\code{name}}{The name of the element.}
+   \item{\code{attributes}}{For regular elements, a named list
+     of XML attributes converted from the 
+       <tag x="1" y="abc">}
+   \item{\code{children}}{List of sub-nodes.}
+   \item{\code{value}}{Used only for text entries.}
+ Some nodes specializations of \code{XMLNode}, such as 
+ \code{XMLComment}, \code{XMLProcessingInstruction},
+ \code{XMLEntityRef} are used.
+
+ If the value of the argument getDTD is TRUE and the document refers
+ to a DTD via a top-level DOCTYPE element, the DTD and its information
+ will be available in the \code{dtd} field.  The second element is a
+ list containing the external and internal DTDs. Each of these
+ contains 2 lists - one for element definitions and another for entities. See
+ \code{\link{parseDTD}}. 
+
+
+ If a list of functions is given via \code{handlers}, 
+ this list is returned. Typically, these handler functions
+ share state via a closure and the resulting updated data structures
+ which contain the extracted and processed values from the XML
+ document can be retrieved via a function in this handler list.
+
+ If \code{asTree} is \code{TRUE}, then the converted tree is returned.
+ What form this takes depends on what the handler functions have
+ done to process the XML tree.
+
+ If \code{useInternalNodes} is \code{TRUE} and no handlers are
+ specified, an object of S3 class \code{XMLInternalDocument} is
+ returned. This can be used in much the same ways as an
+ \code{XMLDocument}, e.g. with \code{\link{xmlRoot}},
+ \code{\link{docName}} and so on to traverse the tree.
+  It can also be used with XPath queries via \code{\link{getNodeSet}},
+ \code{\link{xpathApply}} and \code{doc["xpath-expression"]}.
+
+ If internal nodes are used and the internal tree returned directly,
+ all the nodes are returned as-is and no attempt to 
+  trim white space, remove ``empty'' nodes (i.e. containing only white
+ space), etc. is done. This is potentially quite expensive and so is
+ not done generally, but should  be done during the processing
+ of the nodes.  When using XPath queries, such nodes are easily
+ identified and/or ignored and so do not cause any difficulties.
+ They do become an issue when dealing with a node's chidren
+ directly and so one can use simple filtering techniques such as
+ \code{ xmlChildren(node)[ ! xmlSApply(node, inherits,  "XMLInternalTextNode")]}
+ and even check the \code{\link{xmlValue}} to determine if it contains only
+ white space.
+ \code{ xmlChildren(node)[ ! xmlSApply(node, function(x) inherit(x,
+              "XMLInternalTextNode")] && trim(xmlValue(x)) == "")}
+  
+
+
+Glad you asked :-)
+
+
+
+Issue 2:
+
+This code still segfaults (I reported it a year or two ago)
+
+ ezURL <- "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
+ t1 = url(ezURL, open="r")
+ if( isOpen(t1) ) {
+    z <- xmlTreeParse(paste(ezURL, "einfo.fcgi", sep=""),
+     isURL=TRUE, handlers=NULL, asTree=TRUE) 
+
+    dbL <- xmlChildren(z[[1]]$children$eInfoResult)$DbList
+
+    dbNames<- xmlSApply(dbL, xmlValue)
+
+    length(dbNames)
+
+    dbNames[1:5]
+} 
+
+Seems to work with entrez and not entrez1 in the URL.
+
+Issue 3:
+ the example: from event.R
+
+ fails with:
+Error in .Call("RS_XML_Parse", file, handlers, as.logical(addContext),  : 
+  Error in the XML event driven parser for test.xml: Entity 'testEnt' not defined
+> 
+
+ unless I uncomment this line:
+        .getEntity = function(name) { cat("Getting entity", name, "\n") ; "x"}
+
+
+Thanks.   And I've added an entityDeclaration handler also.
+
+Getting by without handling entities is a little tricky, but I'll look
+into it more.
+
+
+
+

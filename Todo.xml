@@ -1,0 +1,737 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<?xml-stylesheet type="text/xsl" href="../../Docs/XSL/Todo.xsl" ?> 
+
+<!--<?xml-stylesheet type="text/xsl" href="file:///Users/duncan/Projects/org/omegahat/Docs/XSL/Todo.xsl" ?> -->
+<!-- <?xml-stylesheet type="text/xsl" href="http://www.omegahat.org/Todo.xsl" ?> -->
+
+<topics xmlns:r="http://www.r-project.org">
+<title>XML package</title>
+
+<ulink url="../XSL/S/libxslt/Todo.html">Sxslt Todo</ulink>
+<ulink url="../../../../../Books/RPackages/RXMLDoc/Todo.xml">RXMLDoc Todo</ulink>
+<ulink url="../../../../../Classes/StatComputing/XDynDocs/Todo.xml">IDynDocs Todo</ulink>
+<ulink url="Todo-orig.html">Original HTML Todo</ulink>
+<topic>
+<title>XML Internal Nodes</title>
+
+<items>
+
+<item>
+Why does event parsing not scale linearly. See eventParse.R in 
+Data/Wikipedia.
+
+<r:code>
+ f = h3(4000);  system.time(xmlEventParse("enwiki-20100130-pages-logging.xml", handlers = f))
+</r:code>
+
+</item>
+
+<item>
+xmlRoot&lt;- for an internal node needs to fix the reference counting.
+</item>
+
+<item>
+getNodeSet() and xpathSApply() should be able to work with a 
+node that has no document. i.e. just put the top node into a document,
+do the XPath query and then undo the doc.
+</item>
+
+<item>
+Document xmlParseString, xml, XMLString class.
+</item>
+
+<item>
+If we use clean = TRUE in xmlParseString, the name space on any of the
+sub-nodes disappears when we put it into the document.
+</item>
+
+<item>
+Check readHTMLTable() now that we have changed its value
+for one of the method's defaults for header.
+</item>
+
+<item>
+findXInclude is giving back the wrong file.
+See the XML book as an example.
+The percent function in XDocTools was giving back iTunes.xml
+when the node was actually in ParseXML.xml
+</item>
+
+<item>
+Define getXIncludeInfo
+</item>
+
+<item>
+Dependency/Imports for bitops
+</item>
+
+<item status="low">
+verifyNamespace needs to be fixed up. What does it try to do ?
+Not exported or used!
+</item>
+
+<item>
+Work on "XMLNamespaceRef" nodes.
+
+<r:code><![CDATA[
+xml <- xmlParse("~/Papers/RXMLXSL/Papers/ReusableDocuments/Sys.sleep.xml")
+getNodeSet(xml, "/*/namespace::*")
+]]></r:code>
+
+Want to be able to removeNodes, xmlName, 
+as(, "character")
+
+<br/>
+Code is there (R_convertXMLNsRef), but not getting proper nodes back in
+tests/removeNamespaces.R
+</item>
+
+
+<item>
+newXMLNode should guard against the parent not being an XMLInternalNode,
+e.g. a list() from getNodeSet().
+</item>
+<item>
+
+Allow addAttributes(node, v) where v is  c(name = value).
+In other words, don't make the caller specify .attrs = v
+</item>
+
+<item>
+Get an error when do something like
+newXMLNode("p:el", namespaceDefinitions = c("o" = "http://www.w.org"))
+</item>
+
+<item topic="xmlSource">
+Line numbers in xmlSource, e.g. if there is a syntax error, map it
+back to the XML file.
+</item>
+
+<item>
+<r:code>htmlTreeParse("http://www.fivethirtyeight.com", useInternal = TRUE)</r:code>
+causes an error about namespaces.
+</item>
+
+<item topic="xmlSource" status="low">
+Get 
+<r:code>
+xmlSource("~/Books/XMLTechnologies/Examples/Examples.xml", xpath = "//section[@id='xsl']", verbose = TRUE)
+</r:code>
+to work.
+<br/>
+Actually, we should use
+<r:code>
+xmlSource("~/Books/XMLTechnologies/Examples/Examples.xml", section = 'xsl', verbose = TRUE)
+</r:code>
+i.e. use the <r:arg>section</r:arg> parameter.
+</item>
+
+<item>
+Display line number information when there is an error in the XML
+parser about an entity, etc.
+See xmllint.
+</item>
+
+<item>
+Allow the warnings  from htmlTreeParse() to be silenced.
+See the Examples.xml in the Book/XMLTechnologies and the
+Flickr example.
+</item>
+
+<item> 
+Ability to identify the index of a node in its parent's children list
+or ability to add nodes to a sibling,
+i.e. insert them just after (or before) a particular sibling.
+<br/>
+addChildren(, at = siblingNode)
+</item>
+
+<item>
+Last example in xmlNamespace.Rd has no URI.
+</item>
+
+<item>
+comments and problems raised by Deb in the book chapters.
+</item>
+
+<item status="done">
+put classes on the document instances, up to XMLAbstractDocument
+</item>
+
+<item>
+Figure out what XMLTreeNode and XMLHashTreeNode have in common
+and what they are supposed to be
+</item>
+
+<item>
+xmlRoot&lt;-()  function and methods.
+</item>
+
+<item>
+Add a free() method for XMLInternalDocument, etc.
+<br/>
+Ideally check whether it has a finalizer.
+</item>
+<item id="xsl:includes" status="done">
+replaceNodes seems to be failing here.
+If we include an addFinalizer = FALSE for the 
+parsing of the imported documents, all seems well.
+So it seems like we are releasing something that
+is still in use.
+Is it the text from the dictionary of the sub-document?
+<r:code id="replace">
+db = xmlParse("~/docbook-xsl-1.74.0/fo/docbook.xsl")
+base = dirname(docName(db))
+#gctorture(TRUE)
+xsl.include =
+ function(x){ 
+       u = getRelativeURL(xmlGetAttr(x, "href"), base)
+       try({tmpDoc = xmlParse(u, addFinalizer = TRUE) ;  
+            print(xmlSize(xmlRoot(tmpDoc)));
+            replaceNodes(x, xmlRoot(tmpDoc));
+            tmpDoc
+           }) 
+ }
+docs = xpathApply(db, "//xsl:include", xsl.include)
+sel = unique(unlist(getNodeSet(db, "//@select")))
+</r:code>
+
+This version takes account of the fact that we
+are dying when freeing a DTD. One or more of
+the subdocuments has a DTD and that is the root 
+node. But we want the xsl:stylesheet node,
+not the DTD. So we fetch that explicitly
+and use that as the node to replace the 
+xsl:include with.
+This seems to cure the problem.
+<followup-question>
+So we want to find out why the DTD caused the problem.
+It might be the presence of an entity
+</followup-question>
+<r:code id="replace2">
+db = xmlParse("~/docbook-xsl-1.74.0/fo/docbook.xsl")
+base = dirname(docName(db))
+#gctorture(TRUE)
+xsl.include =
+ function(x){ 
+       u = getRelativeURL(xmlGetAttr(x, "href"), base)
+       try({tmpDoc = xmlParse(u, addFinalizer = TRUE) ;  
+            replaceNodes(x, tmpDoc[["//xsl:stylesheet"]]);
+            tmpDoc
+           }) 
+ }
+xpathApply(db, "//xsl:include", xsl.include)
+sel = unique(unlist(getNodeSet(db, "//@select")))
+</r:code>
+
+I run this with
+<r:code>
+replicate(100, xmlSource("Todo.xml", ids = "replace2"))
+</r:code>
+
+
+The following all seem to work.
+This one creates a new node outside of a document and
+tries to replace that.
+But it only processes the first xsl:include node.
+<r:code>
+db = xmlParse("~/docbook-xsl-1.74.0/fo/docbook.xsl")
+base = dirname(docName(db))
+n = db[["//xsl:include"]]
+replaceNodes(n, newXMLNode("bob"))
+saveXML(db)
+</r:code>
+
+This one replaces a brand new node,
+but for all nodes.
+<r:code>
+db = xmlParse("~/docbook-xsl-1.74.0/fo/docbook.xsl")
+base = dirname(docName(db))
+# gctorture(TRUE)
+n = xpathApply(db, "//xsl:include", 
+                function(node)
+                  replaceNodes(node, newXMLNode("bob")))
+saveXML(db)
+</r:code>
+
+This one parses a document and inserts the root
+<r:code>
+db = xmlParse("~/docbook-xsl-1.74.0/fo/docbook.xsl")
+base = dirname(docName(db))
+# gctorture(TRUE)
+n = xpathApply(db, "//xsl:include", 
+                function(node) {
+                  doc = xmlParse("<foo><bar/></foo>", asText = TRUE)
+                  replaceNodes(node, xmlRoot(doc))
+                })
+saveXML(db)
+</r:code>
+
+Let's try adding the root of the imported document to the
+import node.
+<r:code>
+db = xmlParse("~/docbook-xsl-1.74.0/fo/docbook.xsl")
+base = dirname(docName(db))
+xsl.include =
+ function(x){ 
+       u = getRelativeURL(xmlGetAttr(x, "href"), base)
+       try({tmpDoc = xmlParse(u) ; 
+print(xmlSize(xmlRoot(tmpDoc)))
+            addChildren(x, xmlRoot(tmpDoc))
+           }) 
+ }
+xpathApply(db, "//xsl:include", xsl.include)
+sel = unique(unlist(getNodeSet(db, "//@select")))
+   # Get rid of the variables
+i = grep("^\\$[a-zA-Z0-9.\\-]+$", sel)
+if(length(i))
+  sel = sel[-i]
+</r:code>
+</item>
+
+<item>
+Add a sep argument to xmlValue().  For XMLInternalNode, we would have
+to write the code slightly differently, in R and not a single call to
+a C routine in libxml2, xmlGetNodeContent().
+</item>
+
+<item status="done">
+Make xmlValue() for the different nodes return the same content.
+</item>
+
+
+<item status="done">
+Check we have methods for XMLNamespaceDefinitions nodes
+<r:code>
+d = xmlParse("data/job.xml")
+xmlNamespaceDefinitions(d)
+</r:code>
+<br/>
+See tests/attrNS.R
+</item>
+
+<item status="test">
+Problem with EntitiesEscape class on the XMLTextNode
+means is(xmlTextNode("bob"), "XMLAbstractNode")
+is FALSE.
+</item>
+
+<item status="done">
+Get the classes defined for PI nodes, comments, etc.
+for the different types so that they inherit from
+the correct base classes.
+I.e. find and fix all the class(x) = vector, not scalars!
+</item>
+
+<item status="test">
+Check for duplicates in xmlNamespaces&lt;-()
+</item>
+
+<item status="done">
+Consolidate the code in xmlNamespaces.XMLNode/XMLInternalNode.
+<br/>
+Not very much to consolidate, so not worth it.
+Added a setAs("XMLNamespace", "character") method which
+reduces the duplicated details.
+</item>
+
+<item status="done">
+test the xmlNamespaces() and move to xmlNamespaceDefinintions.
+<br/>
+See tests/attrNS.R
+<br/>
+Actually, leave it at xmlNamespaces and xmlNamespaces&lt;-
+for ease of typing.
+But we have xmlNamespaces as a synonym for xmlNamespaceDefinitions.
+<br/>
+Set the namespace definitions on an XMLInternalNode
+<r:code>
+z = newXMLNode("bob")
+xmlNamespaces(z, append = TRUE) = c(r = "http://www.r-project.org", omg = "http://www.omegahat.org")
+names(xmlNamespaces(z))
+</r:code>
+</item>
+
+<item status="test">
+change the name of XMLNameSpace to XMLNamespace or whatever.
+</item>
+
+<item status="done">
+Define an abstract class, e.g. RXMLNode, which is the 
+base class of XMLNode and XMLHashTreeNode.
+</item>
+
+<item status="done">
+Add methods for newXMLNamespace for the different types of nodes.
+<br/>
+Or use 
+<r:code>
+xmlNamespaceDefinitions(x) = c(r = "http://www.r-project.org", ...)
+</r:code>
+Prefer this.
+</item>
+
+<item status="done">
+Check we can pass a list of namespace definitions, e.g. from an XMLInternalNode
+to xmlNode(), in addition to a character vector.
+<br/>
+<pre>
+x = xmlNode("bob", namespaceDefinitions = c(r = "http://www.r-project.org", omg = "http://www.omegahat.org"))
+</pre>
+</item>
+
+<item status="done">
+Hash tree for data/job.xml and dealing with comments
+as first nodes.
+<r:code>
+tt = as(xmlParse("data/job.xml"), "XMLHashTree")
+table(unlist(eapply(tt, class)))
+xmlRoot(tt)
+xmlRoot(tt, skip = FALSE)
+</r:code>
+<br/>
+For the top-level nodes with no parents, we need to keep the order.
+We can add a .root and them sequentially.
+<br/>
+Add an argument to xmlRoot() to allow skipping over these.
+This is skip which is there already.
+<br/>
+Apply to XMLInternalDocument also.
+</item>
+
+<item status="done">
+Does XMLInternalDocument handle the comments as top-level nodes properly?
+Yes.
+<r:code>
+tt = xmlParse("data/job.xml")
+saveXML(xmlRoot(tt, skip = FALSE))
+saveXML(xmlRoot(tt))
+</r:code>
+</item>
+
+<item status="done">
+getSibling() for XMLHashTree nodes.
+</item>
+
+<item  topic="XMLInternalNodes and GC">
+Mechanism for taking xmlRoot() and not freeing the XMLInternalDocument
+and its nodes, but freeing it when none of them are referenced
+in R.
+<p>
+The problem is 
+<r:code>
+ top = xmlRoot(xmlInternalTreeParse(f)) 
+</r:code>
+assigns the node to top but arranges to free the document.  If the
+G.C. happens then, the doc is cleaned up, freeing the nodes at the
+same time.  If we could determine that xmlRoot() was called with the
+parsing command inlined, then we would know we had this situation.
+Then we could detach the document from the node and free the document,
+moving forward.  Of course, we can also avoid adding a finalizer via
+<r:code>addFinalizer = FALSE</r:code> in the call to
+<r:func>xmlInternalTreeParse</r:func>.  We could also put a finalizer
+on the node that says jump to the document and free it when we are
+GC'ing that variable.  But the general problem remains that we can
+extract sub-nodes at will and assign them to R variables.  If we free
+an ancestor node, the C-level data structure is freed too and the R
+variable will be pointing to garbage.
+</p>
+<p>
+We might also try to put <emphasis>the same</emphasis>
+reference to the document as an attribute on all extracted nodes.
+We could attach this SEXP to a userData in the tree.
+But how do we protect it - via R_PreserveObject() and that
+causes problems too.
+</p>
+<p>
+So how about we bring the libxml2 memory management under R's
+and try to handle the chains, etc. 
+It is not obvious how to do this and maintain
+the copy-on-modify semantics.
+</p>
+</item>
+
+<item status="done">
+Fill in the class names for xmlRoot.XMLHashTree in hashTree.R
+</item>
+
+<item status="low">
+Finish off xmlRoot.XMLFlatTree in tree.R
+<br/>
+Define an XMLAbstractFlatTree class and have
+XMLFlatTree and XMLHashTree extend this.
+<br/>
+Do we really want to make XMLFlatTree visible from the package?
+</item>
+
+
+<item status="done">
+Attributes on children 
+See tests/attrs.R or man/xmlNode.Rd
+<r:code>
+ d = xmlTreeParse("data/simple.xml")
+ b = xmlRoot(d)
+ xmlAttrs(b[[1]]) = c("class" = "character")
+ xmlAttrs(xmlChildren(b)[[1]]) = c("r:class" = "character") 
+
+
+ d = xmlParse("data/simple.xml")
+ b = xmlRoot(d)
+</r:code>
+Does it work for XMLNode objects? and not for XMLInternalNode ?
+Yes. So it is XMLInternalNode
+And  it looks like the reassignment back to a.
+The C-level node has been updated by the time the error occurs.
+The error message talks about an externalptr, but
+does this mean that we have lost the class?
+It seems to be the case.
+The error is in do_subassign2_dflt
+which is called by do_subassign2 which attempts to dispatch
+before calling do_subassign2_dflt.
+So 
+<br/>
+<!--- crap here!
+It turns out that when we use xmlTreeParse(), things work,
+but when we create the node ourselves (as in xmlNode.Rd), it does not.
+The nodes have different classes.
+-->
+</item>
+
+<item>
+Check the namespaces of the ancestors to see if it is valid before
+issuing a warning about it not being defined in 
+xmlAttrs(), e.g. the  example in tests/attrs.R
+<br/>
+Can we use XPath.
+
+<br/>
+For XMLNode objects, we can't check ancestors.
+But for XMLHashTree objects we can.
+Something like
+<r:code>
+getNodeSet(getNodeSet(doc, "//x:defaultNs", "x")[[1]], "./ancestor::namespace")
+</r:code>
+But we need to get the XPath query working at  a particular node.
+<br/>
+See getEffectiveNamespaces() which does the walk up the tree.
+</item>
+
+<item status="done">
+Assign function for xmlAttrs&lt;-.XMLInternalNode
+</item>
+
+
+
+<item status="done">
+End element handlers for SAX identified by /
+</item>
+
+<item>
+Handlers for DOM and SAX using name space identifiers.
+</item>
+
+<item>
+Access to the fields in the xmlParserCtxt object for XMLParserContextFunction.
+</item>
+
+<item status="done">
+Do we have as(node, "XMLNode") for XMLInternalNode and vice-versa
+</item>
+
+<item status="done">
+Implement xmlRoot() for which there is no XMLInternalDocument
+as a run up the ancestors to the top.
+<br/>
+See xmlRoot.XMLInternalNode in xmlTree.R
+</item>
+
+
+<item  topic="XMLInternalNodes and GC">
+Check into xmlSource example crashing for Deb.
+</item>
+
+<item topic="XMLInternalNodes and GC">
+Who frees the loose nodes or the nodes within a document with a finalizer which unlinks the nodes
+or no finalizer at all?
+</item>
+
+<item  topic="XMLInternalNodes and GC">
+See gc.R, xpathGC.R
+<br/>
+Protect nodes from gc'ing of the document.
+e.g.  getTemplate in Sxslt where we have to copy the contents of the node
+to XSLCopiedTemplateDescription objects.
+<br/>
+Perhaps put the document on the node as an attribute.
+</item>
+
+
+<item status="done">
+Fix the getNodeSet/xpathApply problem Martin and I found.
+</item>
+
+<item status="high">  
+Function like xmlSource() but which gets the code out and into character vector.
+</item>
+
+<item topic="hashtree">
+When coercing to a hash tree, allow the user to control
+the handling of the parserSettings, e.g. for namespace 
+conversion.
+</item>
+
+<item topic="hashtree">
+Get the encoding for the strings in the hashtree correct.
+</item>
+
+
+<item topic="hashtree" status="low">
+Finish conversion of unusual nodes,
+i.e. atypical nodes such as DTD nodes, etc.
+</item>
+
+<item topic="hashtree" status="done">
+Convert the DOM in R to an xmlHashTree().
+<br/>
+This will test the xmlHashTree() code.
+<br/>
+See XMLHashTree.c.
+Finish off the nodes.
+<br/>
+Deal with XInclude nodes. - Done
+</item>
+
+<item topic="hashtree">
+Hash tree conversion.
+<br/>
+Printing without spaces/new lines.
+<br/>
+Do we need to trim?
+<br/>
+Display of XMLHashTree has too many spaces.
+</item>
+
+<item topic="hashtree">
+Functions for adding different types of nodes to trees.
+</item>
+
+<item topic="hashtree" status="done">
+Put the name of the document source in the tree when parsing.
+</item>
+
+<item status="done">
+xmlStopParser() doesn't work. Fix it.
+</item>
+
+<item status="test">
+When setting the error handlers in C , do this from R
+and make certain we reset the existing ones.
+But this may not be possible as we don't seem to be able to
+see the user data variable.
+<br/>
+Seems to work.
+</item>
+
+<item status="done">
+at parameter for newXMLCommentNode.
+</item>
+
+<item status="low">
+at parameter for DTDNode?
+</item>
+
+<item status="done">
+Class XMLDocument when DTD or just the top-level node is the same!
+<br/>
+The top-level object is an XMLDocument.
+The doc field is an XMLDocumentContent.
+</item>
+
+<item status="done">
+Error handler for SAX parser.
+</item>
+
+<item status="done">
+Error handler
+<br/>
+.errorFun parameter and the default handler is xmlErrorCumulator.
+Can cumulate the errors one at a time and gets
+called at the end of a failed parse  with the empty message
+so that it knows it is complete.
+</item>
+
+<item status="done">
+Access to xmlStopParser
+<br/>
+We only need this in the SAX world as
+handlers may want to call a halt to the entire thing
+but successfully.
+</item>
+
+
+<item status="done">
+XMLParserContextFunction for handler functions
+to indicate that they will accept the context as the 
+first argument.
+</item>
+
+<item>
+saveXML()
+e.g. 
+<r:code>
+d = xmlParse("../SOAP/WSDLs/msnSearch.asmx")
+saveXML(d, "/tmp/foo.xml")
+xmlParse("/tmp/foo.xml")
+xmlParse(saveXML(d), asText = TRUE)
+</r:code>
+Seems okay now.
+But not if we just sink() and get the indentation
+then we can't read it back in!
+There is  unicode here
+</item>
+
+<item status="low">
+Make a function for xmlKeepBlanksDefault
+<br/>
+Only used in one place so far, so is it really necessary.
+</item>
+
+<item status="done">
+Add xmlKeepBlanksDefault support in xmlTreeParse and friends.
+<br/>
+Seems to be done.
+<br/>
+Is this done?
+</item>
+
+<item status="done">
+<issue>
+
+Make xmlAttrs()['ns:val'] = value warn about missing  definition for ns
+in the same way that newXMLNode() does.
+
+</issue>
+</item>
+
+<item status="done">
+<issue>
+<r:code>
+doc = xmlInternalTreeParse("dynDoc.xml")
+doc["//rh:arg"] 
+xpathApply(doc, "//rh:arg", xmlGetAttr, "id")
+</r:code>
+The first works, the second complains about undefined namespace prefix.
+</issue>
+</item>
+
+<xi:include xmlns:xi="http://www.w3.org/2003/XInclude"  href="../../../../../Books/RPackages/RXMLDoc/Todo.xml" xpointer="xpointer(//topic[./title/text()='Infrastructure']/items/item)"/>
+
+<item>
+Nested XInclude nodes don't seem to have their attributes.
+http://www.nabble.com/Identifying-the-source-file-for-an-xi-inclusion-td21736676.html
+</item>
+
+</items>
+</topic>
+</topics>

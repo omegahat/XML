@@ -1,0 +1,21 @@
+For libxml2.
+
+ DOCTYPE comes out as a tag with the top-level tag name (e.g. dataset in
+mtcars.xml)
+ Can we distinguish it.
+
+
+ Reading raw.xml doesn't work.
+
+
+ XML_ENTITY_DECL in createXMLNode needs to be handled carefully.
+
+ test.xml causes problems because of definition of entity referring
+ to an entity.
+
+> parseDTD("data/foo.dtd")
+  Error in parseDTD("data/foo.dtd") : error in DTD data/foo.dtd
+
+
+In libxml1.8.9, the processing instructions in raw.xml are not displayed.
+ It is in the value section.

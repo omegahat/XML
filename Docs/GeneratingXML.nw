@@ -1,0 +1,17 @@
+@
+
+In addition to being able to 
+newXMLDoc
+newXMLNode
+
+saveXML
+
+
+xmlOutputDOM
+xmlCDataNode
+xmlPINode
+xmlTextNode
+xmlCommentNode
+
+
+xmlOutputBuffer

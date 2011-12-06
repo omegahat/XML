@@ -1,0 +1,4 @@
+This is the location of the Web site material for the R/S-XML parsing
+interface. It is currently maintained separately from the main
+Omegahat web tree. It is installed into the same position on the Web
+server on www.omegahat.org, however, in the directory RSXML/.

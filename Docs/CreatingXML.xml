@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+
+<article xmlns:r="http://www.r-project.org"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+<articleinfo>
+<author>
+<firstname>Duncan</firstname><lastname>Temple Lang</lastname>
+<affiliation>Dept. of Statistics, UC Davis</affiliation>
+</author>
+<title>Modifying XML</title>
+</articleinfo>
+
+<section>
+<title>Overview</title> This short article shows how we can read an
+<para>
+XML document in R and modify it in place and then serialize it,
+e.g. to another file.  We'll take a somewhat realistic example.  We
+want to take an XML documentation file describing an R function and
+change the URL for the author and add an additional item to the see also list.
+Also, we will insert a new example.
+The document we consider is the file 
+treeParseHelp.xml.
+It is not a standard format, but comes from work we did 
+a long time ago in considering an XML format for the
+R documentation files.
+The contents of the document are given at the end of this document.
+</para>
+
+<para>
+As with most things dealing with XML, there are various alternative
+approaches, e.g. using XSL and so on.
+This is just one.
+</para>
+
+<para>
+We start by reading the document into R.
+We keep the tree at the C-level rather than creating 
+R representations of the nodes.
+<r:code>
+fileName = "~/Projects/org/omegahat/XML/RSHelp/examples/treeParseHelp.xml"
+doc = xmlTreeParse(fileName, useInternalNodes = TRUE)
+</r:code>
+The next thing we want to do is to find the author.
+We can do this by matching names or using an XPath query:
+<r:code>
+author = getNodeSet(doc, "//shelp:authors/shelp:author", namespace = c(shelp = 'http://www.omegahat.org/XML/RShelp'))[[1]]
+</r:code>
+If we want to see what this looks like, we can coerce it to a string
+<r:code>
+as(author, "character")
+</r:code>
+or alternatively we can query its name, attributes, children, etc.
+But we know that this has child named 'a' with an href attribute which
+we want to change.  We could have fetched this directly in the XPath
+query.
+But to change it we can do 
+<fix/>
+<r:code>
+xmlAttrs(author[[1]]) = c(href='http://www.stat.ucdavis.edu/~duncan')
+</r:code>
+</para>
+
+<para>
+Now to add an entry to the 'See also' section, we
+find the 'shelp:seealso' node.
+<r:code>
+xmlRoot(doc)
+</r:code>
+</para>
+
+
+</section>
+
+<section>
+<title>The Document</title>
+<programlisting>
+<xi:include href="../../RSHelp/examples/treeParseHelp.xml" parse="text" />
+</programlisting>
+</section>
+</article>

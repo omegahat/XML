@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+
+<a id="1">
+  <x>This is text with <b>bold</b></x>
+  <other>An other node</other>
+</a>

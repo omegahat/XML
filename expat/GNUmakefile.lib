@@ -1,0 +1,22 @@
+LIB=lib$(LIB_NAME).so
+
+install: $(LIB)
+	mv $(LIB) ../lib
+
+OBJS=$(SRC:%=%.o)
+
+lib$(LIB_NAME).so: $(OBJS)
+
+# Use with gcc.
+PIC_FLAG=-fpic
+PIC_LD_FLAG=-shared
+
+# Use with Solaris compilers.
+PIC_FLAG=-Kpic
+PIC_LD_FLAG=-G
+
+%.o: %.c
+	$(CC) -c -I../xmltok  $(PIC_FLAG) $<
+
+$(LIB):
+	$(CC) $(PIC_LD_FLAG) -o $@ $(OBJS)

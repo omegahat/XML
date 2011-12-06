@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+
+<description>
+<item><label>Link Checker</label>
+
+ Traverse an XML document and look at external links in &lt;a&gt;
+ tags.  Use the <sfunction>.Perl</sfunction> to get the link and see
+ if it is actually there.
+
+</item>
+
+</description>

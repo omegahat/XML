@@ -1,0 +1,1317 @@
+Version 3.6-1
+
+  *    Fix bug which caused XMLInternalUnknownNode in xmlParent() for HTML documents.
+
+  *    General improvements to support nodes of type XML_HTML_DOCUMENT_NODE.
+
+  *    removeNodes() method for XMLNodeSet.
+
+Version 3.6-0
+
+  *    xmlParent() is an S4 generic with methods.
+
+  *    xmlAncestors() has a count argument to limit the number of ancestors
+       returned.
+
+  *    removeNodes() is generic.
+
+  *    addChildren() now removes "internal" nodes from their current parent, if any.
+       Avoids memory corruption in XML tree.
+
+  *    ADD_XMLOUTPUT_BUFFER R variable for Windows.
+
+  *    Defined XMLTreeNode as an old-style class.
+
+Version 3.5-1
+
+  *    Additional workaround for libxml2 2.6.16 for printing HTML document.
+  
+  *    noMatchOk parameter for xpathApply.XMLInternalNode to suppress warnings about 
+       finding no nodes when there is a namespace in the query.
+
+  *    xmlNamespace<-() function and methods to allow one to set the namespace
+       on a node, e.g., by the namespace prefix.
+
+  *    readHTMLTable() allows "factor" as an entry in colClasses.
+
+
+Version 3.5-0
+
+  *    Addeds nsDef parameter for parseXMLAndAdd().
+
+  *    Minor addition to readHTMLTable() methods to handle malformed HTML 
+       with all the tr nodes in the thead. 
+
+Version 3.4-3
+
+  *    Set default of append parameter in xmlChildren<-() method for non-internal nodes
+       to FALSE so that we replace the existing nodes.
+
+Version 3.4-2
+
+Version 3.4-1
+   
+  *    Type in C code for method for xmlClone().
+
+  *    Minor fixes for formatting of 2 help/Rd files.
+
+  *    Removed definition of XPathNodeSet which is never used here but redefined in Sxslt.
+
+  *    Fix when adding a default namespace to a node in an HTML document.
+
+  *    Fix when adding a default namespace to a node in an HTML document.
+
+Version 3.4-0
+
+  *    Added xmlSearchNs() to aid looking for XML definitions by URL or prefix.
+
+  *    Support in readHTMLTable() for identifying values formatted as percents 
+       or numbers with commas. Use the classes FormattedInteger, FormattedNumber
+       and Percent in colClasses.
+
+Version 3.3-2
+
+  *    Better handling of namespace definitions and uses in newXMLNode
+       and separation of internal code into a separate function.
+
+Version 3.3-1
+
+  *    Configuration to conditionally compile code and export functions
+       for removing finalizers.  This relies on C routines tha will be 
+       added to the base R distribution, so not present in any released 
+       version of R as yet.
+
+Version 3.3-0
+
+  *    addFinalizer added as parameter to many functions and methods that 
+       can return a reference to an internal/C-level node.  This controls
+       whether a finalizer is added to the node and reference counting
+       is performed.  See MemoryManagement.pdf/.html for more details.
+
+  *    One can set the suppressXMLNamespaceWarning as either an XML option (via setOption())
+       or as a regular R option (via options(suppressXMLNamespaceWarning = ...)  )
+
+  *    Added methods for docName() for XMLHashTreeNode and XMLNode.
+
+  *    added docName when converting from an internal tree to an XMLHashTree.
+
+  *    xmlHashTree() uses an environment with no parent environment, by default.
+
+  *    Added an append parameter to addChildren().
+
+  *    Fixed coercion from XMLInternalNode to XMLNode.
+
+  *    Made the methods (e.g. xmlAttrs<-(), xmlParent(), ...) 
+       for XMLNode and XMLInternalNode consistent.
+
+  *    Made classes agree for xmlParse() and newXMLDoc()
+
+  *    fixed corner/end cases for getSibling for XMLHashTreeNode
+
+  *    Added xmlRoot<- methods for XMLInternalDocument and XMLHashTree.
+
+  *    Minor enhancement to xmlToDataFrame() so that one can pass
+       the value from getNodeSet() directly as the first argument to xmlToDataFrame()
+       without passing it via the nodes parameter.
+
+  *    Registered all of the native routines being invoked via .Call().
+
+Version 3.2-1
+
+  *    Turn reference counting on by default again.
+
+Version 3.2-0
+
+  *    Change to reference to normalizePath() which was moved from utils to base in R-devel/R-2.13
+
+Version 3.1-1
+
+  *   Minor change in readHTMLTable method to identify table header better.
+
+Version 3.1-0
+
+  *   Method for [[ for internal element nodes that is much faster (by avoiding
+      creating the list of children and then indexing that R list). 
+      Thanks to Stavros Mackracis for raising the issue.
+
+Version 3.0-0
+
+  *   This is not a major release, but an incremental numbering from 2.9-0 to 3.0-0, but with
+      one potentially significant change related to creating nodes.  newXMLNode() now uses
+      the namespace of the parent node if the namespace argument is not specified.
+
+  *   Refinments to improve the garbage counting and referencing counting on internal nodes.
+
+
+Version 2.9-0
+
+  *   xmlAttrs(, TRUE) for internal nodes returns the URL of each namespace definition
+      in the names of the attr(, "namespaces") vector.
+
+  *   Added parseXMLAndAdd() to parse XML from a string text and 
+      add the nodes to a parent node.  This facilitates creating
+      a large number of quite regular nodes using string processing
+      techniques (e.g. sprintf(), paste())
+
+  *   xmlEventParse() with branches now has garbage collecting activated.
+
+Version 2.8-1
+
+  *   Filled in missing documentation
+
+  *   Added missing init = TRUE for the parameters in one of the methods for xmlSource().
+
+Version 2.8-0
+
+  *   xmlClone() puts the original S3 classes on the new object.
+
+  *   Trivial fix to readHTMLTable() to get the header when the table header is inside
+      a tbody.
+
+  *   Garbage collection/Memory management re-enabled.
+ 
+Version 2.7-0
+ 
+  *   compareXMLDocs() function
+
+  *   Added xmlSourceFunctions() and xmlSourceSection()
+  
+  *   Support in saveXML() for XMLInternalDocument for the prefix parameter.
+
+  *   saveXML() and related methods can deal with NULL pointers in 
+      XMLInternalDocument objects.
+
+  *   fixed bug in catalogAdd().
+
+  *   docName() made an S4 generic with S4 methods (rather than S3 methods).
+
+  *   added catalogDump()
+
+  *   readHTMLTable() puts sensible names on the data frames if there is no header for the table.
+
+
+Version 2.6-0
+
+  *   When copying a node from one document to another, the node is explicitly
+      copied and not removed from the original document. This also fixes a problem
+      with the name space not being on the resulting node.
+
+  *   New functions for converting simple, shallow XML structure to an R data frame.
+      xmlToDataFrame() & xmlToList()
+
+  *   addChildren() can handle _copying_ a node from a different document.
+
+  *   as()/coerce() method for URI to character.
+
+  *   New functions to convert an XML tree to an S4 object and also to infer
+      S4 class definitions from XML. (makeClassTemplate(), xmlToS4())
+
+  *   Minor change to C code for compilation on Solaris and Sun Studio
+
+Version 2.5-3
+
+  *   Trivial change to an Rd file to add an omitted 
+
+Version 2.5-2
+ 
+  *   Configuration enhanced to handle very old (but standard on OS X) versions of libxml which do not have 
+      the xmlHasFeature() routine.
+      People with such an old version of libxml (i.e. 2.6.16) should consider upgrading. That is 5 years old.
+
+Version 2.5-1
+
+  *   Added a configuration check and compile time condition for the presence of XML_WITH_ZLIB.  This
+      allows installation with older versions of libxml2 such as 2.6.26.
+
+  *   Moved some old S3 classes to S4 class definitions to deal with recent changes to the methods package.
+
+Version 2.5-0
+
+  *   Added xmlParseDoc() and parser option constants. These allow one to parse a document
+      from a file, URL or string and specify any combination of 20 different options controlling
+      the parser, e.g. whether to replace entities, perform XInclude, add start and end XInclude nodes,
+      expand entities, load external DTDs, recover when there are errors.
+
+  *   Added libxmlFeatures() to dynamically determine which features were compiled into the version
+      of libxml2.
+
+  *   newXMLNode() has a new argument sibling which is used to add the new node as the sibling of this
+      node.  The parametr 'at' is used as the value for the 'after' parameter in addSibling().
+
+  *   saveXML() is now an S4 generic. (Changes in other packages, e.g. Sxslt, RXMLHelp.)
+
+  *   Added readHTMLTable() which is a reasonably robust and flexible way to read HTML tables.
+
+  *   Added runTime parameter for libxmlVersion() so we can get compile and run time version information.
+
+
+Version 2.4-0
+
+  *   Significant change to garbage collection facilities for internal/C-level nodes.
+      This works hard to ensure that XMLInternalDocument objects and XMLInternalNode objects
+      in R remain valid even when their "parent" container is released in R. See memory.pdf.
+      This can be disabled with configuration argument --enable-nodegc=no.
+
+  *   Configuration option to compile with xmlsec1 (or xmlsec1-openssl).  More to come on support for this.
+
+Version 2.3-0
+
+  *   Added getLineNumber() to be able to determine the line number of an XML node within 
+      its original document.
+
+  *   xmlApply() and xmlSApply() have a parameter to ignore the XInclude start and end nodes.
+
+  *   xmlChildren() also have an omitNodeTypes parameter and by default exclude XInclude nodes.
+
+  *   Added ensureNamespace() to add a namespace definition(s) if necessary.
+
+Version 2.2-1
+
+  *   source() method equivalent to xmlSource() and appropriate installation 
+      changes for older versions of R ( < 2.8.0).
+
+Version 2.2-0
+  *   Added xmlClone() and findXInclude() functions.
+
+  *   [Important] Bug fix regarding the error handling function for XML and HTML parsing.
+      Uncovered by Roger Koenker.   This manifested itself in R errors of the form
+      "attempt to apply non-function".
+
+Version 1.99-1
+  
+  *   addChildren() unconditionally unlinks nodes that already have a parent.
+
+  *   Typo bug in removeChildren.XMLNode code found and fixed by Kate Mullen.
+
+Version 1.99-0
+
+  *   Added recursive parameter to xmlValue() function to control whether to work on just the 
+      immediate nodes or also children.
+ 
+  *   Correction for xpathSApply() when returning an array/matrix which referred to a non-existent variable.
+
+  *   Faster creation of internal nodes via newXMLNode().
+
+  *   xmlRoot() for XMLHashTree works for empty trees.
+
+  *   Added xmlValue<-() function.
+
+  *   Fix for removeAttributes() with namespaces.
+
+  *   Addition to configure script of the argument --with-xml-output-buffer to force 
+      whether to compile and use our own "local" version of xmlOutputBufferCreateBuffer()
+      which is needed on unusual systems.  Supplied by Jim Bullard (UC Berkeley).
+
+
+Version 1.98-1
+ 
+  *   Deal with older S3-style classes with inheritance for 2.7.2 differently from the 2.8.0 
+      mechanism.
+
+  *   Changes to catch more cases of xmlChar * being treated as char * which causes the Sun compiler to 
+      fail to compile DocParse.c
+
+  *   Export class XMLNamespaceDefinitions which caused problems in the code in the caMassClass package.
+
+
+Version 1.98-0
+
+  *  The function XML:::xpathSubNodeApply() is the implementation of xpathApply() for an XMLInternalNode
+     from earlier versions of the package and which explicitly moves the node to a new document and performs
+     the XPath query and then re-parents the node.  Instead of using this, users can use xpathApply()/getNodeSet()
+     and simply change the XPath expression to be prefixed with ., e.g. instead of //tr, use .//tr to root the 
+     XPath query at the current node.
+
+  *  Minor patch to configure.in to allow for libxml2-2.7.*.
+ 
+  *  saveXML() for XMLInternalDocument now uses xmlDocFormatDump() ratehr than xmlSaveFile()
+     and so formatting is "better".
+
+  *  The [ and [[ operators for XMLInternalDocument support a 'namespaces' parameter
+     for ease of extracting nodes. This is syntactic sugar for getNodeSet()/xpathApply().
+
+  *  xmlParse() and htmlParse() return internal documents and nodes by default and are easier to type.
+     The results are amenable to XPath queries and so these are the most flexible representations.
+
+  *  xmlRoot() has a skip argument that controls whether to ignore comment and DTD nodes.
+     The default is TRUE.
+
+  *  Additional functionality for XMLHashTree and XMLHashTreeNode, including facilities for creating nodes
+     while adding them to the tree, copying sub-trees/nodes to separate trees.
+
+  *  Functionality to convert from an XMLInternalNode to an XMLHashTree - as(node, "XMLHashTree").
+     This is also an option in xmlTreeParse(, useHashTree = TRUE/FALSE)
+     [or xmlTreeParse(, treeType = "hashTree")]
+
+  *  Branch nodes from xmlEventParse(, branches = list(...)) are now garbage collected appropriately.
+
+  *  xmlAttrs.XMLInternalNode now does not add the namespace prefix to the name of the attribute, 
+     by default. Use xmlAttrs(node, addNamespace = TRUE) to get old behaviour.
+
+  *  xmlGetAttr() has a corresponding new parameter addNamespace that is passed through to the call to 
+     xmlGetAttr().
+
+  *  getRelativeURL() function available for getting URI of a document from a given attribute
+     relative to a base URL, e.g. an HTML <a href=""/> or a <schema:import schemaLocation=""/>.
+
+  *  xmlAttrs<- methods support an append (TRUE by default) to add values to the existing attributes,
+     or to replace the existing ones with the right-hand side of the assignment.
+
+  *  xmlAttrs<- checks for namespaces in all the ancestors for XMLInternalNode and XMLHashTreeNode.
+
+  *  Introduced the class XMLAbstractNode which is the parent for the XMLNode, XMLInternalNode and 
+     XMLHashTreeNode, which allows high-level methods that use the API to access the elements of the nodes
+     to be defined for a single type.
+
+  *  Changed name of XMLNameSpace class to XMLNamespace (lower-case 's').
+
+Version 1.97-1
+
+  *  Fix for configuration in detecting existence of encoding
+     enumerations in R.  So now encoding of strings is working again.
+  
+
+Version 1.97-0
+
+  *  Added xmlNativeTreeParse() as an alias for xmlInternalTreeParse()
+     and xmlTreeParse(, useInternalNodes = TRUE).
+
+  *  Assignment to attributes of an R-level XML node works again, e.g.
+          xmlAttrs(doc[[3]][[2]])['foo'] = "bar"
+
+  *  Subsetting ([[) for XMLHashNode behaves correctly.
+
+  *  Added .children parameter to addTag() function in xmlOutputDOM() objects.
+   
+  *  Thanks to Michael Lawrence, a significantly simpler and more
+     general  mechanism is used for getNodeSet()/xpathApply() when
+     applied to a node and not a document.  This allows xpath queries
+     that go back up the ancestor path for the node.
+
+
+Version 1.96-0
+
+  *  Functionality for working with XML Schema now incorporated.
+
+  *  xmlSchemaValidate() function for validating a document against a schema.
+
+  *  xmlSchemaValidate() using structured error handlers to give
+     information about line numbers, columns, domain, etc. as well as
+     the message.
+
+  *  xmlChildren() method for XMLInternalDocument
+
+  *  Recognize additional internal node types,
+     e.g. XMLXIncludeStartNode, ...
+
+  *  foo.dtd example now uses internal and external entities for illustration.
+
+
+Version 1.95-3
+
+  *  configuration change to support older versions of R that do not
+     have the C enumeration type cetype_t defined in Rinternals.h.
+
+Version 1.95-2
+
+  * Fix for xpathApply()/getNodeSet() on the top-level node of a document
+    which left the original document with no children!  Found by Martin Morgan.
+
+Version 1.95-1
+
+  *  Minor bug fixes regarding Encoding issues introduce in 1.95-0.
+
+  *  xmlEventParse() calls R_CheckUserInterrupt() when making callbacks to R functions
+     and so should make the GUI more responsive.
+
+  *  Test for older versions of libxml2 which did not have a context field in the xmlNs
+     data structure.
+
+Version 1.95-0
+
+  *  Use the encoding of the document in creating R character strings to identify 
+     the Encoding() in R. There are probably omissions and potential problems, so 
+     I would be very grateful for examples which fail, along with the file, the locale
+     and the R code used to manipulate these.
+
+
+Version 1.94-0
+
+  *  Fixed a bug in xpathApply()/getNodeSet() applied to an XMLInternalNode
+     which now ensures that the nodes emerge with the original internal document
+     as their top-level document.
+
+  *  Added processXInclude() for processing individual XInclude nodes
+     and determining what nodes they add.
+
+  * If asText is TRUE in xmlTreeParse(), xmlInternalTreeParse(), ...,
+     no call to file.exists() is made. This is both sensible and
+     overcomes a potential file name length limitation (at least on
+     Windows).
+
+  *  The trim parameter for xmlInternalTreeParse() and
+     xmlTreeParse(, useInternal = TRUE) causes simple text nodes
+     containing blank space to be discarded.  saveXML() will, by
+     default, put them back but not if text nodes are explicitly added.
+
+  *  xmlTreeParse(), xmlInternalTreeParse(), htmlTreeParser(),
+     parseDTD(), etc.  take an error handler function which defaults to
+     collecting all the errors and reporting them at the end of the
+     attempt to parse.
+
+  *  getXMLErrors() returns a list of errors from the XML/HTML parser
+     for help in correcting documents.
+
+  *  Added xmlStopParser() which can be used to terminate a parser from
+     R. This is useful in handler functions for SAX-style parsing via
+     xmlEventParse(). 
+
+  *  A handler function passed to xmlEventParse() can indicate that it
+     wants to be passed a reference to the internal xmlParserContext by 
+     having the class XMLParserContextFunction.  Such functions will be
+     called with the context object as the first argument and the usual
+     arguments displaced by 1, e.g. the name and attributes for a
+     startElement handler would then be in positions 2 and 3.
+   
+  *  When parsing with useInternalNodes= TRUE and trim = TRUE in
+     xmlTreeParse() or xmlInternalTreeParse(), blank nodes are discarded
+     so line breaks between nodes are not returned as part of the tree.
+     This makes pretty-printing/indenting work on the resulting
+     document but does not return the exact content of the original
+     XML. Use trim = FALSE to preserve the breaks.
+
+  *  Added xmlInternalTreeParse() which is a simple copy of xmlTreeParse()
+      with useInternalNodes defaulting to TRUE, so we get an internal C-level tree.
+
+  *  Added an xpathSApply() function that simplifies the result to a
+     vector/matrix, if possible.
+
+  *  Added replaceNode() function which allows one to insert an internal node
+     with another one. 
+
+  *  addChildren() has a new at parameter to specify where in the list
+     of children to add the new nodes.
+
+  *  newXMLNode(), etc. can compute the document (doc argument) from
+     the parent.
+
+  *  The subset operator applied to an XMLInternalDocument  and
+     getNodeSubset() and xpathApply() compute the namespaces from the
+     top-level of the document by default, so, e.g., doc[["//r:init"]] work.
+
+  *  section parameter added to xmlSource() to allow easy subsetting to
+     a particular <section> within a document.
+
+  *  added catalogLoad(), catalogAdd(), catalogClearTable() functions.
+
+  *  Added docName() function for querying the file name or URL of a
+     parsed XML document.
+
+  *  RS_XML_createDocFromNode() C routine adds root node
+     correctly via xmlAddChild().
+
+  *  Slightly improved identification of HTML content rather than a file or URL name.
+ 
+  * Added a simplify parameter to the xmlNamespaceDefinition()
+     function which, if TRUE, returns a character vector giving the
+     prefix = URI pairs which can be used directly in xpathApply() and
+     getNodeSet().
+
+
+Version 1.93-1
+
+  *  Method for xmlNamespace with a character is now exported!  Needed for cases that arise in
+     SSOAP.
+
+Version 1.93-0
+
+  *  The closeTag() function within an XMLInternalDOM object returned by xmlTree() provides
+     support for closing nodes by name or position in the stack of open nodes.
+
+  *  xmlRoot() method for an XMLInternalDOM tree.
+
+  *  Added a parent argument to the constructor functions for internal nodes, e.g. newXMLNode, 
+     newXMLPINode, newXMLCDataNode, etc.
+
+  *  doc argument for the constructor functions for internal nodes is now moved from second to third.
+     Calling 
+
+  *  Potentially changed the details about creating XML documents and nodes with namespaces. If these
+     negatively effect your code, please send me email (duncan@wald.ucdavis.edu).
+
+  *  Enhancements and fixes for creating XML nodes and trees, especially with name spaces.
+
+  *  Many minor changes to catch special cases in working with internal nodes.
+
+
+Version 1.92-1
+
+  *  Make addNode()/addTag() in XMLInternalDOM work with previously created XML nodes via newXMLNode().
+     Thanks to Seth Falcon for pointing out this omission. More improvements in the pipeline for generating
+     XML.
+
+  *  addChildren for an XMLInternalNode can be given a list of XMLInternalNodes and/or character strings.
+
+  *  xmlSource() handles r:codeIds better.
+
+Version 1.92-0
+
+  *  Added removeNodes function for unlinking XMLInternalNode objects directly by reference.
+
+  *  xmlRoot() handles empty documents. 
+
+  *  Documentation cleanups.
+
+Version 1.91-1
+
+  *  Remove output about "cleaning"/releasing an internal document pointer.
+
+  *  The warning from getNodeSet/xpathApply about using a prefix for the default namespace
+     now has a class/type of condition, specificall "XPathDefaultNamespace".
+
+Version 1.91-0
+
+  *  argument to add a finalizer for an XMLInternalDocument in xmlTreeParse()/htmlTreeParse() when 
+     useInternalNodes = TRUE.  If this is set, automatic garbage collection is done which will free
+     any sub-nodes. If you want to work with any of these nodes after the top-level tree variable
+     has been released, specify addFinalizer = FALSE and explicitly free the document yourself with the
+     free() function.
+
+  *  Sme improvements on namespace prefixes in internal nodes. See newXMLNode().
+
+  *  classes for additional XMLInternalNodes (e.g. XMLInternalCDataNode) now exported
+
+  *  removeAttributes() has a .all argument to easily remove all the attributes within a node.
+     Supported for both R and internal style nodes.
+
+  *  xmlAttrs<-() function for simply appending attributes to a node.
+
+  *  If xmlTreeParse() is called with asText = FALSE and the file is not found, an error of class
+     "FileNotFound" is raised.
+
+  *  [[ opertor for XMLInternalDocument to get the first/only entry in
+     the node set from an XPath query.  This is a convenience
+     mechansim for accessing the element when there is only one.
+
+
+Version 1.9-0
+
+  *  Added xmlAncestors() functions for finding chain of parent nodes, and optionally applying a 
+     function to each.
+
+  *  xmlDoc() allows one to create a new XML document by copying an existing internal node, allowing
+     for work with sub-trees as regular documents, e.g. XPath queries restricted to a subset of the 
+     tree.
+
+  *  Ability to do XPath searches on sub-nodes within a document.  getNodeSet() and xpathApply() 
+     can now operate on an XMLInternalNode by creating a copy of the node and its sub-nodes into a 
+     new document. However, these is memory leak associated with this and you should us xmlDoc()
+     to create a new document from the node and then perform the XPath query on that and free the
+     document.
+
+Version 1.8-0
+
+  *  Added xinclude argument to xmlTreeParse() and htmlTreeParse() to control whether 
+     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"> should be resolved and 
+     the appropriate nodes inserted and the actual <include> node discarded.
+
+  *  The namespaces argument of getNodeSet() (and implicitly of the [ method for an 
+     XMLInternalDocument object) can be a simple prefix name when referring to the 
+     default namespace of the document, e.g. 
+        getNodeSet(doc, "/r:help/r:keyword", "r")
+     when the document has a default namespace.
+
+  *  Added a 'recursive = FALSE' parameter to xmlNamespaceDefinitions() to be able to 
+     process all descendant nodes and so fetch the namespace definitions in an entire
+     sub-tree.  This can be used as input to getNodeSet(), for example.
+
+  *  as() method for converting an XMLInternalDocument to a node.
+
+  *  xmlNamespaceDefinitions() handles the case where the top-level element
+     is not the first node, e.g. when there is a DOCTYPE node and/or a comment.
+
+Version 1.7-3
+
+  *  addChildren() coerces a string to an internal text node before adding the child.
+     
+Version 1.7-2
+
+  *  Trivial error in free() for XMLInternalDocument objects fixed so the memory is released.
+
+Version 1.7-1
+
+  *  addition to configuration to detect whether the checked field of the xmlEntity structure is present.
+
+Version 1.7-0
+
+      This a quite comprehensive enhancement to the facilities in the XML package. A lot of work on
+      the tools for creating or authoring XML from within R were added and improved. Using internal
+      nodes directly with newXMLNode() and friends, or using xmlTree() is probably the simplest.
+      But xmlHashTree() creates them in R.
+
+
+  * IMPORTANT:  one can and should use the names .comment, .startElement, .processingInstruction,
+     .text, etc. when identifying general element handlers that apply to all elements of a particular type
+     in  an XML document rather than to nodes that have a particular name.  This differentiates between
+     a handler for a node named, say, text and a handler for all text elements found in the document.
+     To use this new approach, call xmlTreeParse() or xmlEventParse() with 
+          useDotNames = TRUE
+     This will become the default in future releases.
+
+  *  namespaceHandlers() function provided to deal with node handler functions with XML name spaces where
+     there may be multiple handlers for the same node name but which are in different XML name spaces.
+
+  *  signature for entityDeclaration function in SAX interface is changed so that the second argument
+     identifies the type of entity. Also, to query the value of an entity, the C code calls the 
+     getEntity() method of the handlers.
+
+  *  addChildren() & removeChildren() and addAttributes() & removeAttributes() for an existing node allows for 
+     post-creation modification of an XML node.
+
+  *  Improved support for name spaces on node attributes.
+
+  *  xmlName<-() methods for internal and R-level XML nodes to change the name of a node.
+
+  *  saveXML() and as(, "character") method for XMLInternalNode objects now to create a text representation of the  
+     internal nodes.
+
+  *  xmlTree() allows for creating a top-level node in the call to xmlTree() directly and does not 
+     ignore these arguments.
+
+  *  DTD and associated DOCTYPE can be created separately or directly in xmlTree().
+
+  *  xmlTree() now allows the caller to specify the doc object as an argument, including NULL
+     for when the nodes do not need to have a document object.
+
+  *  Better support in xmlTree() for namespaces and maintaining a default/active namespace prefix that is to be
+     inserted on each subsequent node.
+
+  *  new functions for creating different internal node types - newXMLCDataNode, newXMLPINode, newXMLCommentNode, newXMLDTDNode.
+
+  *  newXMLNode() handles text, using the new newXMLTextNode() and coerce methods.
+
+  *  xmlTree() supports an active/default name space prefix which is used for new nodes.
+
+  *  Resetting the state of the xmlSubstituteEntities variable is handled correctly in the case of an error.
+
+
+
+Version 1.6-4
+
+  *  xmlSize() method for an XMLInternalNode.
+
+Version 1.6-3
+
+  *  Handle change from Sys.putenv() to Sys.setenv().
+
+Version 1.6-2
+
+  *  Added a URI (old) class label to the result of parseURI, and exported that class for use in 
+     other packages (specifically SSOAP, at present).
+
+  *  For subsetting child nodes by name, there is a new all = FALSE parameter which allows the caller
+     to get the first element(s) that matches the name(s), or all of them with, e.g. 
+     node["bob", all = TRUE].  This allows us to avoid the equivalent idiom
+         node[ names(node) == "bob" ]
+     which is complicated when node is the result of an inline computation.
+
+  *  added method for setting names on an XMLNode (names<-.XMLNode), not just for retrieving them.
+
+Version 1.6-1
+
+  *  Added catalogResolve() function for looking up local files and aliases for URIs, and 
+     PUBLIC and SYSTEM identifiers, e.g. in DOCTYPE nodes.
+
+  *  saveXML method added for XMLFlatTree. (Identified by Alberto Monteiro.)
+
+  *  Fixed saveXML methods for various classes.
+
+  *  Doctype class:  added validity method, improved coercion to character, and slightly more flexible
+     constructor function.  Validates PUBLIC identifier. 
+
+Version 1.6-0
+
+  *  In saveXML() method for XMLInternalDocument, we "support" the encoding argument by passing it to 
+     xmlDocDumpFormatMemoryEnc() or xmlSaveFileEnc() in the libxml2 C code.
+     We could also use the xmlSave() API of libxml2.
+
+  *  htmlTreeParse() supports an encoding argument, e.g. htmlTreeParse("9003.html", encoding = "UTF-8").
+     This allows one to correctly process HTML documents that do not contain their encoding information in the
+     <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=..."/> tag.
+     The argument is also present in xmlTreeParse() but currently ignored.
+
+Version 1.5-1
+
+  *  updated documentation for the alias for free method for XMLInternalDocument.
+
+Version 1.5-0
+
+  *  added free() generic function and method for XMLInternalDocument
+
+Version 1.4-2
+
+  *  xmlTreeParse and htmlTreeParse will accept a character vector of length > 1
+     and treat it as the contents of the XML stream and so call
+     paste(file, collapse = "\n") before parsing.  The asText = TRUE is implied.
+     Thanks to Ingo Feinerer for prompting this addition.
+
+Version 1.4-1
+	
+  *  Fix to ensure a connection is closed in saveXML. Identified by Herve Pages
+
+  *  Update definition and documentation for xmlAttrs to take ... arguments.
+
+Version 1.4-0
+
+  *  Added fullNamespaceInfo parameter for xmlTreeParse() which, if TRUE,
+     provides the namespace for each node as a named character vector giving
+     the URI of the namespace and the prefix as the element name, i.e. c(prefix = uri)
+     The default is FALSE to preserve the earlier behavior. The namespace object
+     has a class XMLNamespacePrefix for the old-style, and XMLNamespace for the new 
+     style with c(name = uri) form.  
+     This information makes comparing namespaces a lot simpler, e.g. in SOAP.
+
+
+Version 1.3-2
+    Mainly fixes for internal nodes.
+
+  *  Export XMLNode, XMLInternalNode, XMLInternalElementNode classes
+
+  *  as() method for XMLInternalNode wasn't recognized properly because
+     the classes weren't exported.
+     Also, the internal function asRXMLNode() accepts trim and ignoreBlanks
+     arguments for cleaning up the XML node text elements that are created.
+
+  *  export coerce methods.
+
+Version 1.3-1
+
+  *  parseURI() sets the port to NA if the value is 0.
+
+Version 1.3-0
+
+  *  The SAX parser now has a branches argument that identifies XML elements
+     which are to be built into (internal) nodes and then the sub-tree/node
+     is passed to the handler function specified in the element of the branches
+     argument.  This mixes the efficient SAX event-driven parsing with the easier
+     programming tree-based model, i.e. DOM.
+
+  *  XMLInternalNode objects in R now have extra class information identifying them as
+     as regular element, text, CDATA, PI, ...
+
+Version 1.2-0
+
+  *  names() method for XMLInternalNode
+
+  *  [ method for XMLInternalDocument and string using XPath notation.
+
+  *  getNodeSet() has support for default namespaces in the XML document.
+     It is available, by default, to the XPath expression with the prefix 'd'.
+
+  *  Exported xmlNamespace() method for XMLInternalNode.
+
+  *  xmlNamespaceDefinitions() made generic (S3) and new method for
+     XMLInternalNode class.
+
+Version 1.1-1
+ 
+   *  Change to handling entities in printing of regular R-level XML text nodes 
+      created during xmlTreeParse() call. Identified by Ingo Feinerer.
+
+   *  saveXML for an XMLNode object will take a file name and write to the corresponding
+      file, overwriting it if it already exists.
+
+Version 1.1-0
+
+  *  xpathApply and getNodeSet take functions to be applied to nodes in a node
+     set resulting from an XPath query.
+
+Version 1.0-0
+
+  * Version skipped as it is not a milestone release, just ran out of numbers!
+
+Version 0.99-94
+   Changes from Russell Almond and suggestions from Franck Giolat for creating XML in R
+
+  * xmlNode() puts the names on children if omitted. Caller can use names other
+    than the XML element name (but this is not necessarily advisable).
+
+  * Added xmlChildren() method to set the children.
+
+  * Printing of an XML node to the console handles empty nodes and text nodes better.
+
+  * xmlTextNode() will replace reserved characters with their entity equivalent, e.g.
+    & with &amp; and < with &lt;.  One can specify the entity vector including providing
+    an empty one should one want to avoid replacement.
+
+Version 0.99-93
+   Changes from Martin Morgan
+
+  *  import normalizePath from utils.
+
+  *  Changes to configure.win to find 3rd party DLLs in bin/ directory, not lib/
+
+Version 0.99-92
+
+  *  Fix for setting DTD entity field uncovered by the strict type checking in R internals.
+
+Version 0.99-91
+
+  *  Added an encoding argument to saveXML(), initially for use in the Sxslt package.
+
+Version 0.99-9
+
+  * Example of using namespaces in getNodeSet()
+
+  * Examples for xmlHashTree().
+
+Version 0.99-8
+
+  * Introduced initial version of flat trees for storing the DOM in a
+    non-hierarchical data structure in R.  This allows us to work with
+    a mutable tree and to perform certain operations across all the
+    nodes more efficiently, i.e. non-recursively.  Importantly, one
+    can find the parent node of a given node in the tree which is not
+    possible with the list of list approach.  It does mean more
+    computation for some common operations, specifically parsing.
+    Indeed, it can be 25 times slower for a non-trivial file, i.e. one
+    with. However, for a file with 7700 nodes, it still only takes 2
+    1/2 seconds.  So there is a trade-off.  While there are a few
+    versions in the code, xmlHashTree() is the one to use for speed
+    reasons.  xmlFlatListTree() is another and xmlFlatTree() is
+    excruciatingly slow. See tests/timings.R for some comparisons.
+    xmlGetElementsByTagName and other facilities work on these types
+    of trees.
+
+    More functions and methods can and should be provided to work with
+    these trees if they turn out to be used in any significant way.
+
+  * add the R attribute 'namespaces' to an XML node's attributes
+    vector so that one can differentiate between conflicting attribute
+    names with different namespaces.
+
+  * added parseURI() to return the elements of a URI from a string. 
+
+
+Version 0.99-7
+
+  * Example of reading HTML tables using XPath and internal nodes in bondsTables.R
+
+  * Some additional methods for XMLInternalNode.
+
+Version 0.99-6
+ 
+  * configure does not require the GNU sed, but can use any version of sed now that the
+    use of + in the regular expression has been removed. 
+
+Version 0.99-5
+
+  * Added append.XMLNode and append.xmlNode to the exported symbols from the NAMESPACE 
+    file.
+
+Version 0.99-4
+
+  * Fix for addComment() in xmlOutputDOM().
+
+  * Removed all the compilation warnings about interchanging xmlChar* and char*.
+
+Version 0.99-3
+
+  * Added support in print methods for XML objects for indent = FALSE,
+    and tagSeparator, which defaults to "\n".  These can be used to print
+    a faithful representation of an original XML document, but only when
+    used in combination with 
+         xmlTreeParse( skipBlanks = FALSE, trim = FALSE)
+
+Version 0.99-2
+ 
+  * Problems compiling with libxml2-2.5.11 and libxml2-2.6.{1,2}, so 
+    we now test for a recent version of libxml. The test uses sed -r
+    which may cause problems. If one really wants to avoid the tests
+    set the environment variable FORCE_XML2 to any value before running
+    R CMD INSTALL XML.
+
+  * Documentation for getNodeSet() didn't refer to the new namespaces argument.
+
+
+Version 0.99-1
+
+  * getNodeSet() takes a namespaces argument which is named character vector of 
+    prefix = URI pairs of namespaces used in the XPath expression.
+ 
+  * Handlers for xmlEventParse() can include startDocument and endDocument elements
+    to catch those particular events. Useful for closing connections and general cleanup,
+    especially in the "pull" data source, i.e. connections or functions.
+
+  * xmlEventParse() when called with a function as the data source now doesn't have 
+    a new line appended to each string returned to the parser by the function.
+
+  * Passing a connection to xmlEventParse() now uses a regular R function to call
+    readLines(con, 1) and no longer does this via C code to call readLines().
+
+  * Fix to the example in xmlEventParse() using the state variable.
+
+Version 0.99-0
+
+  * Implementation for the endElement in the xmlEventParse() for saxVersion == 2.
+
+  * In xmlEventParse( , saxVersion = 2), the namespaces come as a named vector
+    in the fourth argument.
+
+Version 0.98-1
+
+  * Messages from errors are now more informative. Using saxVersion = 2 in xmlEventParse(), you get
+    get the line and column information about the error.  
+
+Version 0.98
+
+  * Added saxVersion parameter to xmlEventParse() to control which interface is used at the C level.
+    This changes the arguments to the startElement handler, adding the namespace for the 
+    element.
+
+  * Added xmlValidity() function to set the value of the default validity action.  This allows us to do the
+    setting in the R code. This is currently not exported.
+
+  * Added recursive parameter to xmlElementsByTagName() function. This provides functionality
+    similar to getElementsByTagName() in XML parsing APIs for other languages.
+
+  * xmlTreeParse() called with no handlers and useInternalNodes returns a reference to the 
+    C-level xmlDocPtr instance.  This is an object of class "XMLInternalDocument". This can be 
+    used in much the same way as the regular "XMLDocument" tree returned by xmlTreeParse,
+    e.g. xmlRoot, etc.
+
+  * Added getNodeSet() to evaluate XPath expressions on an XMLInternalDocument object.
+
+  * Added a validate parameter to the xmlEventParse() function.
+
+
+Version 0.97-8
+
+  *  Fix error where CDATA nodes and potentially other types of nodes (without element names) were being 
+     omitted from the R tree in a simple call to xmlTreeParse("filename") (i.e. with no handlers).
+
+Version 0.97-7
+
+  *  Documentation updates.
+
+Version 0.97-6
+
+  * useInternalNodes added to xmlTreeParse() and htmlTreeParse(). 
+    This allows one to avoid the overhead of converting the contents of nodes to 
+    R objects for each handler function call.  Also, can access parents, siblings,
+    etc. from within a handler function.
+
+  * Included parameterizations for Windows from Uwe Ligges to aid automated-building
+    and finding the libxml DLL at run time.
+
+Version 0.97-5
+
+  * Methods for accessing component of XMLInternalDocument and XMLInternalNode objects,
+    e.g. xmlName, xmlNamespace, xmlAttrs, xmlChildren
+
+  * saveXML.XMLInternalDOM now supports specification of a Doctype (see Doctype).
+ 
+  * saveXML uses NextMethod and arguments are transferred.   Identified by Vincent Carey.
+
+  * Suppress warnings from R CMD check.
+
+  * Change of the output file in saveXML() example to avoid  conflict with Microsoft
+    Windows use of name con.xml.
+
+Version 0.97-4
+
+  *  Quote URI values in namespace definitions in print.XMLNode.
+
+Version 0.97-3
+ 
+  * Added a method for xmlRoot for HTMLDocument
+
+  *  Changed the maintainer email address.
+
+Version 0.97-2
+
+  *  Added cdata to the collection of functions that are used in the handlers 
+     for xmlEventParse().  Omission identified by Jeff Gentry.
+
+  *  Fixed the maintainer email address to duncan@wald.ucdavis.edu
+
+Version 0.97-1
+
+  *  Put the correct S3method declarations in the NAMESPACE.
+
+Version 0.97-0
+
+  *  Using a NAMESPACE for the package
+
+Version 0.96-0
+
+  *  Using libxml2 by default rather than libxml.
+
+  *  Fixed typo. in PACKAGE when initializing the library.
+
+Version 0.95-7
+
+  *  When creating a namespace identifier, if the namespace doesn't have an href, then we put 
+     in an <NA> string.
+
+Version 0.95-6
+ 
+  *  Documentation updates for synchronization with the code.
+
+Version 0.95-5
+
+  *  Trivial bug of including extra arguments in call to UseMethod for
+     dtdElementValidEntry that generated warnings.
+
+Version 0.95-4
+
+  *  Configuration now tries to find libxml 1, then libxml 2 unless explicitly
+     instructed to find libxml 2 via --with-libxml2. So the change is to pick
+     up libxml 2 if libxml 1 is not found rather than signal an error.
+
+Version 0.95-3
+
+  *  Remove the need to define xmlParserError. Instead, set the value of the error
+     routine/function pointer to our error handler in the different default handlers
+     in libxml.  We now initialize these default objects when we load the library.  
+
+  *  When setting the environment variables LIBXML_INCDIR and LIBXML_LIBDIR, one
+     needs to specify the -I and -L prefixes for the compiler and linker respectively
+     in front of directory names.
+
+  *  Detect whether the routine for xmlHashScan (in libxml2) provides a return value
+     or not. This changed in version 2.4.21 of libxml2.
+
+Version 0.95-2
+
+  *  Configuration detects Darwin and handles multiplicity of xmlParserError 
+     symbol.
+
+Version 0.95-1
+
+  *  Configuration now supports the specification of the xml-config script
+     to use via the environment variable XML_CONFIG or the --with-xml-config
+     as in --with-xml-config=xml2-config
+
+  *  Recognize file:/// prefix as URL and not switch to treating file name as
+     XML text.
+
+Version 0.95-0
+
+  *  Event-driven parsing (SAX) can take a connection object or a function
+     that is called when the parser needs more input. See the documentation 
+     for xmlEventParse().
+
+  *  Classes and methods explicitly created during the installation.
+     This will cause problems with namespaces until the saving of the image
+     model works with namespaces.
+
+Version 0.94-1
+
+  *   Minor change to configuration script to avoid -L-L in specification of
+      directory for XML library (libxml).
+
+Version 0.94-0
+
+  *   Use registration of C routines
+
+  *   Added methods for saveXML for XMLNode and XMLOutputStream objects.
+
+Version 0.93-4
+
+  *   replaceEntities argument for xmlEventParse.
+
+  *   S4 SAX methods assigned to the correct database.
+
+Version 0.93-3
+ 
+  *   Correct support for DTDs and namespaces in the internal nodes
+      used in xmlTree().  Errors identified by Vincent Carey.
+  
+Version 0.93-2
+
+  *   Bug in trimming white space discovered by Ott Toomet.
+
+Version 0.93-1
+
+  *   Documentation updates. Included xmlGetAttr.Rd.
+
+Version 0.93-0
+
+  *   Added toString.XMLNode
+
+  *   Fixed the printing of degenerate namespaces in an XML node,
+      i.e. the spurious `:'.
+
+Version 0.92-2
+
+  *   Fixed C bug caused by using namespace without a suffix,
+      e.g. xmlns="http:...." assumed prefix was present.
+      Thanks to David Meyer.
+  
+Version 0.92-1
+  *   Display the namespace definitions when printing an XMLNode object.
+
+  *   New addAttributeNamespaces argument for xmlTreeParse() that controls whether
+      namespaces are included in attribute names.
+
+Version 0.92-0
+
+  *   XMLNode class now contains a field for namespace definitions
+      The `namespace' field is a character string identifying the prefix's 
+      namespace. The `namespaceDefinition' field contains the full definitions
+      of each of the namespaces defined within a node.
+     
+  *   Printing of XLM nodes displays the namespace.
+
+  *   xmlName() takes a `full' argument that controls whether the 
+      namespace prefix is prepended to the tag name.
+
+Version 0.91-0
+
+  *  Added a mechanism to the SAX parser to allow a state object
+     be passed between the callbacks and returned as the result of
+     the parsing. This avoids the need for closures. Also, works
+     with S4 classes and the genericSAXHandlers() methods by allowing
+     one to write methods for these generic callbacks that dispatch 
+     based on the type of the state object.
+
+  *  Fix to make work properly with S4 class system.
+
+Version 0.9-1
+
+  *  Formatting of the help files to avoid long lines
+     identified by Ott Toomet
+
+  *  Addition of `ignoreComments' argument for xmlValue()
+
+  *  Date in the DESCRIPTION file corrected (thanks to Doug Bates).
+
+Version 0.9-0
+
+  *  Added addCData() and addPI() to the handlers of the different 
+     XMLOutputStream classes.
+     Code for XMLInternalDOM (i.e. xmlTree()) from Byron Ellis.
+
+  *  print() method for XMLProcessingInstruction node has the terminating `?'
+     as in <?pi-name text ?>.
+
+Version 0.8-2
+
+  * Changes to support libxml2-2.4.21 (specifically the issues with
+    the headers and parse error regarding xmlValidCtxt). Thanks to 
+    Wolfgang Huber for identifying this.
+
+  * Ignoring R_VERSION now, so dependency is R >= 1.2.0
+
+Version 0.8-1
+
+  * Added an `attrs' argument to the xmlOutputBuffer and xmlTree
+    functions for specifying the top-level node.
+
+Version 0.8-0
+
+  * xmlValue() extended to work recursively if a node has
+    only one child. 
+
+  * T and F replaced by TRUE and FALSE
+
+Version 0.7-4
+
+  * Support for Windows
+
+Version 0.7-3
+
+  * Documents without <DOCTYPE ..> are handled correctly.
+
+  * Configuration tweak to set LD_LIBRARY_PATH to handle the case
+    that the user specifies LIBXML_LIBDIR and it is needed to run the 
+    version test.
+
+  * Keyword XML changed to IO.
+
+Version 0.7-2
+
+  * Fix for printing XMLNode objects  to handle comments and elements 
+    with name "text". Identified by Andrew Schuh.
+
+Version 0.7-1
+
+  * Minor fixes for passing R CMD check.
+
+Version 0.7-0
+
+  * Generating XML trees using internal libxml structures: 
+     xmlTree(), newXMLDoc(), newXMLNode(), saveXML().
+
+  * Support parsing HTML (htmlTreeParse()) using DOM.
+     Suggestion from Luis Torgo.
+
+  * Additional updates for libxml2, relating to DTDs.
+
+Version 0.6-3
+
+  * Installation using --with-xml2 now attempts to link against libxml2.so
+    and the appropriate header files.
+
+  * Use libxml's xml-config or xml2-config scripts if these are available.
+
+Version 0.6
+   
+  * xmlDOMApply for recursively applying a function to each node in a tree.
+
+Version 0.5-1
+
+  * simplification of xmlOutputBuffer so that it doesn't put
+    the namespace definition in each and every tag.
+
+  * configuration changes to support libxml2-2.3.6
+    (look for libxml2, check if xmlHashSize is available)
+
+  * now dropping nodes if the handler function returns NULL.
+    Updated documentation.
+
+  * spelling correction in the documentation
+
+Version 0.5
+ * xmlOutputBuffer now accepts a connection.   
+
+ * Fixes for using libxml2, specifically 2.2.12.
+   Also works for libxml2.2.8
+
+ * Enhanced configuration script to determine what features are available.
+   
+Version 0.4
+
+ * `namespace' handler in xmlTreeParse is called when a namespace
+   declaration is encountered. This is called before the child nodes
+   are processed.
+
+ * More documentation, in Tour.
+
+ * xmlValue, xmlApply, xmlSApply, xmlRoot, xmlNamespace, length, names
+
+ * Constructors for different types of nodes: XMLNode, XMLTextNode, XMLProcessingInstruction.
+
+ * Methods for print(), subsetting ([ and [[), accessing the fields
+   in an XMLNode object.
+
+ * New classes for the different node types (e.g. XMLTextNode)
+
+ * Event driven parsing available via libxml. Expat is not needed but
+   can be used.
+
+ * Document sources can be URLs (ftp and http) when using the libxml parser.
+
+ * Examples for processing MathML and SVG files. See examples/ directory.
+
+ * Examples for event driven parsing.
+
+
+
+ * Class of result from xmlTreeParse is XMLDocument.
+
+ * Comments, Entities, Text, etc. inherit from XMLNode
+   in addition to defining their own XML<type> class.
+
+ 

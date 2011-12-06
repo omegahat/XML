@@ -1,0 +1,339 @@
+<article xmlns:r="http://www.r-project.org"
+         xmlns:omg="http://www.omegahat.org"
+	 xmlns:xi="http://www.w3.org/2003/XInclude" >
+
+<title>A Short Introduction to the <r:pkg>XML</r:pkg> package for R</title>
+<articleinfo>
+<author>
+<firstname>Duncan</firstname><surname>Temple Lang</surname>
+<affiliation><orgname>UC Davis</orgname><orgdiv>Dept. of Statistics</orgdiv></affiliation>
+</author>
+</articleinfo>
+
+<section>
+<para>
+This is intended to be a short document that gets you started with the
+R package <omg:pkg>XML</omg:pkg>.  There are two main things that one
+does with the <omg:pkg>XML</omg:pkg> package: read XML documents and
+create XML documents.  We'll start with the first of these.
+</para>
+</section>
+<section>
+<title>Reading XML</title>
+<para>
+To parse an XML document, you can use
+<r:func>xmlInternalTreeParse</r:func> or <r:func>xmlTreeParse</r:func>
+(with <r:arg>useInternalNodes</r:arg> specified as <r:true/> or
+<r:false/>) or <r:func>xmlEventParse</r:func>.  If you are dealing
+with HTML content which is frequently malformed (i.e. nodes not
+terminated, attributes not quoted, etc.), you can use
+<r:func>htmlTreeParse</r:func>.  You can give these functions the name
+of a file, a URL (HTTP or FTP) or XML text that you have previously
+created or read from a file.
+</para>
+
+<section>
+<title>Tree/DOM-based parsing</title>
+<para>
+If you are working with small to moderately sized XML files, it is
+easiest to use <r:func>xmlInternalTreeParse</r:func> to first read the
+XML tree into memory.
+<r:code>
+#"http://www.omegahat.org/RSXML/index.html"
+doc = xmlInternalTreeParse("Install/Web/index.html.in")
+</r:code>
+Then you can traverse the tree looking for the
+information you want and putting it into different forms.  There are
+two ways to do this iteration.  One is to recursively "walk" the tree
+yourself by starting at the root node and processing it, and then
+process each child node in the same manner, working on its name and
+attributes and then its children, and so on.  In order to collect the
+information at different levels into an data structure, it is often
+convenient to use global variables. This works for interactive
+computations. When writing functions for this, make certain to use
+closures/lexical scoping to obtain non-local variables that are not
+truly global.
+</para>
+<para>
+Many people find recursion confusing, and when coupled with the need
+for non-local variables and mutable state, a different approach can be
+welcome.  If we know what parts of the tree that we are interested in,
+then it is convenient to just fetch them, process them and discard
+them to move on to the other pieces.  XPath is an XML technology that
+provides a language for accessing subsets of an XML tree.  It allows
+us to express things such as "find me all nodes named a" or "find me
+all nodes name a that have no attribute named b" or "nodes a that have
+an attribute b equal to 'bob'" or "find me all nodes a which have c as
+an ancestor node".  It has a similar feeling to R's subsetting
+capabilities and works for trees rather than vectors and data frames.
+It is also very powerful and efficient. But it takes a little time to learn.
+Some decent tutorials are available on the Web
+(e.g. <ulink url="http://www.zvon.org/xxl/XPathTutorial/General/examples.html">Zvon</ulink>
+and <ulink url="http://www.w3schools.com/xpath">w3schools</ulink>)
+and there are books that cover this subject,
+e.g. <biblioref linkend="XMLinNutshell"/>, 
+<biblioref linkend="XPathXPointer"/>.
+</para>
+<para>
+The XPath functions  in the <r:pkg>XML</r:pkg> package are 
+<r:func>getNodeSet</r:func> and  <r:func>xpathApply</r:func>.
+Basically, you specify the document
+returned from <r:func>xmlInternalTreeParse</r:func>
+and the XPath expression to identify the nodes.
+<r:func>getNodeSet</r:func> returns a list of the matching nodes.
+<r:func>xpathApply</r:func> is used to apply a function to each of those nodes,
+e.g. find  nodes named "a anywhere in the tree that have an "href"
+attribute and get the value of that attribute
+<r:code>
+src = xpathApply(doc, "//a[@href]", xmlGetAttr, "href")
+</r:code>
+</para>
+
+<para>
+Of course, once we have the nodes of interest, we need to be able to
+extract their information.  There are several functions to do this:
+<r:func>xmlName</r:func>, <r:func>xmlAttrs</r:func>, <r:func>xmlGetAttr</r:func>, 
+<r:func>xmlChildren</r:func> and <r:func>xmlValue</r:func>.  <r:func>xmlName</r:func>
+gets the name of the node/element.  <r:func>xmlAttrs</r:func> returns
+all the attribute name-value pairs as a character vector while
+<r:func>xmlGetAttr</r:func> is used to query the value of a single
+attribute with facilities for providing a default value if it is not
+present and converting it if it is.
+We tend to use <r:func>xmlGetAttr</r:func> as we typically know
+which attributes we are looking for. <r:func>xmlAttrs</r:func>
+is used when doing general/meta- computations.
+</para>
+<para>
+That's essentially all the information that is available directly from
+the node. 
+Other information is available from the child nodes.
+If you are dealing with a "simple" node that contains
+no XML child nodes but simply text, e.g.
+<programlisting><![CDATA[
+<emphasis>text to be emphasized</emphasis>
+]]></programlisting>
+then the text is actually a child node.
+We can deal with it in the way we deal with arbitrary children nodes,
+but the function <r:func>xmlValue</r:func> is convenient
+for retrieving the text value of a node.
+So we could get the string "text to be emphasized" via the call
+<r:code>
+ xmlValue(node)
+</r:code>
+assuming <r:var>node</r:var> referred to the node.
+<r:func>xmlValue</r:func> works on arbitrary nodes, not just simple text nodes
+and operates recursively.
+</para>
+<para>
+The child nodes are accessed by
+<r:func>xmlChildren</r:func> and each of these is also a node and so
+amenable to <r:func>xmlName</r:func>, <r:func>xmlAttrs</r:func> and
+<r:func>xmlGetAttr</r:func>.
+<r:func>xmlChildren</r:func> gives you a regular R
+list containing all of the child nodes.
+You can then access  individual elements or subsets
+of these using regular R subscripting.
+ For example,
+suppose we have a node with name "A" and it has children with node names
+"X", "Y" and "Z", and "X", "Y" and "Z",
+<invisible>
+<r:code id="make-nodes">
+node = newXMLNode("A")
+sapply(c("X", "Y", "Z", "X", "Y"), 
+        newXMLNode, parent = node)
+cat(saveXML(node))
+</r:code>
+</invisible>
+i.e.
+<programlisting id="XYZ-nodes" xreflabel="'simple tree'"><![CDATA[
+<A>
+  <X/>
+  <Y/>
+  <Z/>
+  <X/>
+  <Y/>
+</A>
+]]></programlisting>
+Then we can get the first or the last two children with 
+<r:code>
+xmlChildren(node)[[1]]
+xmlChildren(node)[2:3]
+</r:code>
+We can determine how many children a node has with
+<r:code>
+length(xmlChildren(node))
+</r:code>
+or
+<r:code>
+xmlSize(node)
+</r:code>
+</para>
+<para>
+
+You can also use names corresponding to the node names. 
+Then we could get all the nodes
+named "Y" and "Z" with
+<r:code>
+xmlChildren(node)[c("Y", "Z")]
+</r:code>
+</para>
+<para>
+
+You can also index the children directly without having to use
+<r:func>xmlChildren</r:func> to get the list first.
+For example, we can do the subsetting above more conveniently
+as 
+<r:code>
+node[1:3]
+</r:code>
+Similarly, we can use names directly
+<r:code>
+ node[c("Y", "Z")]
+</r:code>
+</para>
+<para>
+We frequently apply the same operation on all the children, 
+for example, get their class or get an attribute of each.
+We can do this as
+<r:code>
+sapply(xmlChildren(node), xmlGetAttr, "id")
+</r:code>
+but again, we can do it more tersely with
+either of the functions <r:func>xmlApply</r:func>
+and <r:func>xmlSApply</r:func>.
+So the above becomes
+<r:code>
+xmlSApply(node, xmlGetAttr, "id")
+</r:code>
+</para>
+
+<para>
+If you us <r:func>xmlInternalTreeParse</r:func> (or
+<r:expr>xmlTreeParse(.., useInternalNodes = TRUE)</r:expr>), you will
+end up with "internal" nodes that are references to the C data
+structures representing nodes. Otherwise, you will end up with XML
+nodes represented as lists of lists in R.  With the internal nodes,
+you can "walk" the tree by going up and sideways, not just down
+through the children.
+The function <r:func>xmlParent</r:func> gets the parent node
+of an XML node, or returns <r:null/>.
+You can use this to iteratively walk to the top of the tree
+<r:code>
+ while(!is.null(node)) {
+   node = xmlParent(node)
+ }
+</r:code>
+Given a node, we can also use <r:func>getSibling</r:func> to move
+sideways.  This gets the next sibling to right or left of a particular
+node in the list if children.
+</para>
+</section>
+
+<section>
+<title>SAX &amp; Event-driven parsing</title>
+<para>
+If you have a very large XML file, you probably want to use the
+<r:func>xmlEventParse</r:func> function to parse the file.  This is
+quite low-level and you have to provide functions that are invoked
+when the parser encounters events within the XML stream such as the
+start of a node, the end of a node, a text chunk, a processing
+instruction, and so on.  There is no tree so you can't find the
+children of a node directly but your code has to remember where it is
+based on the open and close node event so that one can understand the
+hierarchy.  This is a state machine and a quite different style of
+programming than that involved in pulling information out of a tree.
+</para>
+<para>
+If you are lucky enough to be interested in reasonably-sized subsets
+of the tree, then you can use "branches" to make things a little
+simpler. Otherwise, you have to define handler functions for
+processing start and end of nodes, and maintain the state of where the
+parser is to make sense of the information.  This is the most
+efficient way to read an XML file, but is not the simplest. So we tend
+to try to work with <r:func>xmlTreeParse</r:func> unless we know that
+we have to deal with large data files.
+</para>
+<para>
+SAX is very memory efficient as it doesn't build the tree.  However,
+for quick results, you can try use
+<r:func>xmlInternalTreeParse</r:func> and XPath queries to get results
+even on very large files.  If the tree can be read into memory, it can
+be queried efficiently. So it is always worth a try.
+</para>
+</section>
+</section>
+
+
+<section>
+<title>Creating XML</title>
+<para>
+We often want to generate XML.
+For example, we want to create an HTML document to view in a browser.
+Or we want to generate input  for Google Earth to display.
+Or we want to create XML nodes for dynamic documents.
+Again, the <omg:pkg>XML</omg:pkg> package provides several different
+ways to go about doing this.
+We'll focus on using internal nodes directly.
+There are higher-level functions to aid in this also,
+and alternative representations using R-level objects rather than C objects.
+</para>
+<para>
+To create a regular node, we use <r:func>newXMLNode</r:func>.  This
+takes the name of the XML element/node, e.g. "img" for an image in
+HTML.  Attributes are given by the <r:arg>attrs</r:arg> argument.  And
+children can be added via the <r:arg>...</r:arg> mechanism.
+So for example, we can create the tree we discussed <xref linkend="XYZ-nodes"/> above
+<xi:include xpointer="xmlns(r=http://www.r-project.org) xpointer(//r:code[@id='make-nodes'])"/>
+</para>
+<para>
+W can change a odes attributes using 
+<r:func>xmlAttrs</r:func> as in
+<r:code>
+xmlAttrs(node)["src"]  = "http://www.omegahat.org"
+</r:code>
+</para>
+
+</section>
+
+<section>
+<title>Further Topics</title>
+<para>We haven't mentioned name spaces, DTDs, schema,
+XSL or any of the advanced aspects of XPath.</para>
+</section>
+
+
+<bibliography>
+<biblioentry id="XMLinNutshell">
+<abbrev>XML in a Nutshell</abbrev>
+<biblioset relation="book">
+<title>XML in a Nutshell</title>
+<subtitle>A Desktop Quick Reference</subtitle>
+<publisher>
+      <publishername>O'Reilly &amp; Associates, Inc.</publishername>
+    </publisher>
+<author><firstname>Elliotte Rusty</firstname><surname>Harold</surname></author>
+<author><firstname>W. Scott</firstname><surname>Means</surname></author>
+<edition>third</edition>
+<date>2004</date>
+</biblioset>
+</biblioentry>
+
+
+<biblioentry id="XPathXPointer">
+<biblioset relation="book">
+<abbrev>XPath and XPointer</abbrev>
+<title>XPath and XPointer</title>
+<publisher>
+      <publishername>O'Reilly &amp; Associates, Inc.</publishername>
+    </publisher>
+<author><firstname>John E.</firstname><surname>Simpson</surname></author>
+</biblioset>
+</biblioentry>
+<date>2002</date>
+</bibliography>
+
+</article>
+
+
+
+

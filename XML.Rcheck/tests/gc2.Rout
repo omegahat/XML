@@ -1,0 +1,93 @@
+
+R Under development (unstable) (2011-11-27 r57757)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-apple-darwin11.0.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(XML)
+> 
+> getRefCount =
++ function(node)
++    .Call("R_getXMLRefCount", node)
+> 
+> doc = xmlParse(system.file("exampleData", "mtcars.xml", package = "XML"))
+> 
+> els = getNodeSet(doc, "//record")
+> sapply(els, getRefCount)
+ [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+> rm(els)
+> gc()
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 315293 16.9     467875   25   407500 21.8
+Vcells 443027  3.4     905753    7   904960  7.0
+> 
+> els = getNodeSet(doc, "//record", addFinalizer = FALSE)
+> sapply(els, getRefCount)
+ [1] -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[26] -1 -1 -1 -1 -1 -1 -1
+> 
+> 
+> r = xmlRoot(doc, addFinalizer = FALSE)
+> getRefCount(r)
+[1] -1
+> r = xmlRoot(doc, addFinalizer = NA)
+> getRefCount(r)
+[1] 1
+> rm(r); gc()
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 315234 16.9     531268 28.4   407500 21.8
+Vcells 442899  3.4     905753  7.0   904960  7.0
+> 
+> r = xmlRoot(doc, addFinalizer = FALSE)
+> kids = xmlChildren(r, addFinalizer = FALSE)
+> sapply(kids, getRefCount)
+variables    record    record    record    record    record    record    record 
+       -1        -1        -1        -1        -1        -1        -1        -1 
+   record    record    record    record    record    record    record    record 
+       -1        -1        -1        -1        -1        -1        -1        -1 
+   record    record    record    record    record    record    record    record 
+       -1        -1        -1        -1        -1        -1        -1        -1 
+   record    record    record    record    record    record    record    record 
+       -1        -1        -1        -1        -1        -1        -1        -1 
+   record 
+       -1 
+> rm(kids)
+> 
+> r = xmlRoot(doc, addFinalizer = FALSE)
+> kids = xmlChildren(r, addFinalizer = FALSE)
+> sapply(kids, getRefCount)
+variables    record    record    record    record    record    record    record 
+       -1        -1        -1        -1        -1        -1        -1        -1 
+   record    record    record    record    record    record    record    record 
+       -1        -1        -1        -1        -1        -1        -1        -1 
+   record    record    record    record    record    record    record    record 
+       -1        -1        -1        -1        -1        -1        -1        -1 
+   record    record    record    record    record    record    record    record 
+       -1        -1        -1        -1        -1        -1        -1        -1 
+   record 
+       -1 
+> 
+> a = kids[[1]]
+> b = getSibling(a, addFinalizer = FALSE)
+> getRefCount(b)
+[1] -1
+> 
+> xmlSize(b)
+[1] 1
+> 
+> 
+> 
+> 
+> 

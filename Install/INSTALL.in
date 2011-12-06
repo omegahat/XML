@@ -1,0 +1,137 @@
+Installing this package can be a little trickier than others for
+several reasons.  The package uses libxml, the XML parser that is
+frequently found as part of the Gnome system but also exists as a
+stand-alone library.  Many systems have a version of libxml installed,
+but in some cases, we do not want to use that. By-passing the system
+library, requires input from you, the installer/user. Also, there are
+now two distribution series of libxml -- 1.8.* and 2.* that we
+support.
+ The possiblity of picking up the system header (include) files and
+the wrong library, is complicated by the fact that these include files
+are found in different locations depending on whether we are using an
+installed on uninstalled version of libxml.  Oh, and yes, it can also
+be compiled to use expat, the XML parser by Jim Clark. These different
+possible combinations of these can make the installation and run-time
+behaviour tricky. It is further complicated by the fact the package
+works with both R and S-Plus 5 and S-Plus 6.  However, conceptually it
+is not difficult. It is only the different number of possible
+combinations that makes the logic complicated.
+
+
+The package can be configured to use either or both of Daniel
+Veillard's libxml library
+(ftp://ftp.gnome.org/pub/GNOME/stable/sources/libxml/) and Jim Clark's
+expat (http://www.jclark.com/xml) library for parsing XML documents.
+libxml is used for the tree-based (DOM) parsing and the event-driven
+(SAX) parsing.  Expat is used only for the event-driven parsing and is
+not necessary if one wishes to use libxml for both. The support for
+expat is older and less well maintained since we adpoted libxml's SAX
+parsing.
+
+
+Note that the descriptions here are for Unix systems.  See
+WindowsInstall for some details for Windows.
+
+
+If you don't want to use the libxml2 series, then the default
+installation should work without any additional work from you.
+You can use the regular R installation command
+  R INSTALL -c -l <directory/to/install> XML
+or directly from the tar file
+  R INSTALL -c -l <directory/to/install> @TAR_FILE@
+
+The -c (--clean) and -l (--library) flags are explained in the R
+documentation (see ?INSTALL within R, the FAQ and the R-intro
+documents in the distribution.)
+
+One reason for defaulting to the older 1.8.* versions of libxml is
+that some Gnome applications (e.g. Gnumeric) are compiled to use
+that. When we embed R in Gnumeric and a user loads this XML package
+into that embedded R session, there will be bizarre and silentaliases
+and conflicts that cause severe problems.
+
+
+Using libxml2
+=============
+If you want to use one of the libxml2 versions of the libxml
+library, the simplest thing to do is to first
+fully install that library and then specify the fully qualified
+name of the xml2-config script to the configure script of this 
+XML package.  One can do this by setting the environment
+variable XML_CONFIG, e.g.
+  setenv XML_CONFIG /home/me/XML/bin/xml2-config
+
+Alternatively, one can specify the value on the command 
+line of the R installation using 
+ 
+   R CMD INSTALL --configure-args='--with-xml-config=/home/me/XML/bin/xml2-config'
+
+
+
+Using a non-system version of libxml.
+========================
+
+If you want to use a version of libxml that is not installed in the
+regular location in your system, you will need to tell the configuration
+where to find the header files and the library. The simplest way to to 
+do this is again to specify the location of the xml-config script,
+be it xml-config or xml2-config, as explained in the section above.
+
+Alternatively, if this is an older (read very old) version of libxml,
+there may be no xml-config script. In that case, you can specify
+values for the environment variables that are used when compiling the
+C code and linking the object code.  Do this before invoking the R
+INSTALL command.
+
+The envirnment variable LIBXML_INCDIR is used to specify the location
+of any compilation flags needed to compile libxml source code.  It is
+is typically used to specify the directives to find include/header
+files.  Directories specified here should now be prefixed with a
+-I, e.g.
+
+  setenv LIBXML_INCDIR="-I/home/me/include/gnome-xml"
+
+One can also add pre-processor defines using -Dsymbol=value.
+
+In order to specify the location of the libxml library for linking
+purposes, one sets the environment variable LIBXML_LIBDIR.  Again,
+this should now have a -L preceeding the directory names.
+
+  setenv LIBXML_LIBDIR="-L/home/me/lib/gnome-xml"
+
+
+Typically, one sets these environment variables to the include/ and
+the .libs/ directory within the libxml distribution, respectively.
+For example, whe I install using version libxml2-2.2.12 which I have
+in my ~/XML/ directory, I set these to
+
+  LIBXML_INCDIR  ~/XML/libxml2-2.2.12/include
+and
+  LIBXML_LIBDIR  ~/XML/libxml2-2.2.12/.libs
+
+Then, run 
+  R INSTALL -c -l <whereve> XML
+and it should tell you where it is finding the include files.
+However, using the xml-config or xml2-config script is very much
+simpler.
+
+
+
+Other Sources of Information:
+=============================
+Far more information about the XML package and installing it and these
+other libraries is available from 
+
+     http://www.omegahat.org/RSXML
+
+
+Feedback:
+=========
+We would appreciate hearing about any bugs, comments, suggestions, etc.
+They can be submitted the Omegahat bug tracking system via the
+form at
+  http://www.omegahat.org/bugs
+or by sending mail to 
+   omega-bugs@www.omegahat.org
+Alternatively, send mail to the omegahat development list,
+  omega-devel@www.omegahat.org

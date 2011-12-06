@@ -1,0 +1,10 @@
+Each routine (except isBlank()) is declared, defined and invoked
+by enclosing its name in a call to the pre-processor macro RS_XML().
+This is used to provide a namespace for the routines so that they
+don't conflict. (This happened when combining the libxml with code
+which had a routine startElement() defined!)
+
+
+I chose not to use noweb for this package in order to simplify
+installation for others.
+

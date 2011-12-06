@@ -1,0 +1,12 @@
+xmlReadMemory & xmlReadFile need an addFinalizer potentially
+    Is it done in R code as these are docs?
+
+Need references?
+libxmlTypeTable_names
+libxmlTypeTable_lookup
+
+
+R_createXMLNode ?
+  No, should be in parser settings.
+
+R_getXMLNsRef ?

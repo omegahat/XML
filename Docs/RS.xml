@@ -1,0 +1,251 @@
+Points:
+
+ conventions and ambiguitiy in raw text files
+ Markup allows avoidance of ambiguities.
+ XML is a standard markup, so not inventing our own new one.
+   keep documentation and data in single file.
+   syntax neutral/standard.
+   efficiencies of single pass.
+   event driven parsing even more lean.
+ Way to read XML data, general parser.
+   Basic model and tools.
+     xmlTreeParse()
+     modify nodes as they are created via S functions
+ Package details: URL, etc.    
+
+ Other XML projects, CML, GML, MathML, SVG.
+ StatDataML, exchange with SPlus, etc.
+
+
+
+
+Writing and reading data written to text files as raw values relies on
+several conventions about separators, precision, missing values, and
+header and comment lines.  It requires that the reader of the data
+know the conventions used to create the file.  For example, the user
+must know how many lines to skip at the top of the file in order to
+ignore comments.  The value `1' contains no information about whether
+it was originally an integer or a real number.
+
+One can remove many of these ambiguities that must be resolved or
+understood by users by specifying more information about the structure
+of the contents of a data file.  For example, rather than assuming
+that all of the initial lines that start with `#' represent comments,
+we can identify the text of the comment explicitly as a comment
+region.  We can do this using a markup language which identifies
+structure rather than just content. Specifically, we can use XML --
+the Extensible Markup Language. 
+
+XML is emerging as a widely employed standard for structuring data. It
+is popular for many reasons.  It uses a simple text rather than binary
+format. It is similar to HTML and so familiar to many people.  It is
+not proprietary or being promoted by any single company.  Most
+programming languages and many applications provide support for
+reading and writing XML files. Indeed, XML is being used as a storage
+format for many Microsoft applications (e.g. Word).  These parsing
+tools are mainly independent of the content and can be easily
+customized to the application-specific data structures.
+
+
+XML is a general version of HTML. HTML provides a fixed set of
+elements (or tags) such as H1, H2, TABLE, B, A, I, etc.  The X in XML
+refers to its extensibility (!) and comes from the fact that one can
+define new tags. The focus of HTML controlling the way text is
+displayed in a browser. The intent of XML is to define content and
+structure of a document and data.  That content can then be displayed
+or processed in an application such as @R{} using other tools
+(e.g. XSL, the eXtensible stylesheet language) .
+
+
+Using XML, we can mark up a dataset our comment something like
+<verb>
+<![CDATA[
+ <comment>
+   The data comes from ....
+   It was collected by ....
+ </comment>
+ <data>
+                dist   sex   time
+James          2.5     1     16.083  
+ </data>
+]]>
+When reading this data, we would skip the comment section
+and parse only the contents of the data element.
+
+We can go further and provide more structure to the
+data section by separating the variable names
+and the values into different elements.
+<verb>
+<![CDATA[
+<data>
+<variableNames>
+           <name>dist</dist>   <name>climb</name>   <name>time</name>
+</variableNames>
+Greenmantle     2.5     650     16.083  
+ </data>
+]]>
+</verb>
+Now, when reading this file in @R{} we can check for the presence
+of the variableNames tag and automatically determine the form of the
+header argument.
+
+We can go further and markup each record/observation,
+and each value within each record.
+<verb>
+<![CDATA[
+<data>
+<variableNames>
+           <name>dist</dist>   <name>climb</name>   <name>time</name>
+</variableNames>
+<record id="Greenmantle">
+    <real>2.5</real>    <int>650</int>    <real>16.083</real>
+</record>
+ </data>
+]]>
+</verb>
+
+We can represent missing values via a dedicated tag <na/>, thus
+allowing the string NA to be used as a regular value.
+
+<p/>
+
+The ability to add structured information to the file
+means that we can add auxillary information that can be
+ignored when the data is read. For example, we can add
+textual descriptions about the dataset; when it was collected; 
+the authors;  un-observed levels for certain factor variables;
+and so on.
+
+A limitation of using raw text files for storing datasets is the
+inability to store non-primitive values.  Specifically, each cell in a
+data frame can be an integer, real number, string or logical value.
+However, if a variable is a time series, a table of attributes, a
+model, etc. they cannot be stored directly.
+XML does make this possible.
+For example, suppose we want to store a time series
+<record id="Greenmantle">
+    <real>2.5</real>    <object class="ts">
+                          <times length="4">1 2 4 10</times>
+                          <values>10.1 20.3 12.2 10</times>
+                        </object>    
+                       <real>16.083</real>
+</record>
+ </data>
+
+When this dataset is read, we must arrange to read the 
+object element and construct and appropriate representation
+in @R{}.
+
+Note how we are free to put values on different rows, etc.  and
+basically in free form because they are contained within a record tag.
+We can also represent sparse data easily by enclosing the value
+within a tag identifying the record and/or variable.
+
+
+
+None of the specifics are intended as proposals for a standard
+way to describe a document.
+Different efforts (StatDataML) are underway to define a suitable
+format for describing data frames that can be used in @R, @Sl, Octave,
+Matlab and other applications.
+
+
+There are several potential advantages to using XML.  One is that the
+document is ``self-describing''. This means that we don't have to know
+the conventions under which it was created. These are encoded in the
+document itself. Another potential advantage is that the data is
+application-neutral and can be read without any special tools in most
+programming languages. This is not true, for example, of the
+proprietary formats used by Matlab, SPlus, Microsoft, etc.  While
+there is a potential efficiency loss by using a general format, this
+tends not to be significant given the way that XML can be processed.
+Importantly, if one needs to share the same data across different
+applications (e.g. Matlab, SPlus, R, Excel, Gnumeric, etc.)  an XML
+file can be used directly by all, meaning that we need only maintain
+one source of the data. This simplifies propogating changes, reduces
+disk usage, and avoids potentially lengthy computations (both run and
+programming time) in creating the different application-specific
+forms.
+
+
+Another advantage to XML is that it is easy to add optional content to
+a document which can aid the processor reading it.  In the case of a
+dataset, we can add information about the number of variables and
+records. When @R{} reads this, it can immediately allocate exactly the
+correct amount of memory to hold the dataset. This avoids two passes
+of the data or periodic resizing of the memory pool.
+
+
+What sort of other information can be specified in XML?  Anything
+really. One just needs a way to write out the data in XML and ways to
+read it into the different systems that will use it.  XML is becoming
+very popular and is used in a multitude of projects and smaller
+applications
+
+\item MathML for specifying mathematical content in a TeX-like fashion,
+  but represented in XML. We will be using this to describe
+  formulae and models.
+
+\item Plots and graphs can be represented using the SVG - Scalable Vector Graphics -
+  format. This supports not only specifying lines, points, colors, etc.
+  but also images and even dynamic content such as animation, etc.
+
+\item @uref{http://www.w3.org/TR/SOAP/, SOAP} and
+@uref{http://www.xml-rpc.org, XML-RPC} are simple ways to send data
+from one application
+ to another to effect communication and remote method invocation. 
+
+\item Geographical Markup Language for specifying spatial data, maps, etc.
+
+\item Chemical Markup Language is used to describe .
+
+
+Marking up datasets and general data using XML allows these to be read
+by multiple applications. However, it is of little value if we cannot
+read it in @S{} if that was our original goal.  Well, the XML package
+for both R and SPlus provides general facilities for reading any XML
+file. Also, it provides a simple way to create XML documents.  In this
+section, we will outline these basic facilities provided by the XML
+package.
+
+We have seen that an XML document is effectively a tree whose nodes
+are XML tags which may have child nodes contained within them in the
+XML document. Each node may also have a list of attributes (name=value
+pairs).  Generally, there are two styles of parsing these types of
+documents and these two styles are referred to as DOM and SAX parsing.
+Using the DOM approach, the entire XML tree is read into memory and
+given to the user as a tree. 
+The difference is similar to using read.table or scan
+as described in R-data.texi. If one wants to avoid the overhead
+of processing all the data because only a small subset is of interest,
+SAX processing is a more appropriate approach.
+The DOM mechanism is 
+
+
+
+Event driven parsing even more efficient.  Useful when one does not
+want the entire structure or wants a very different transformation of
+it.  Avoids having the DOM tree and the target model.  Instead,
+incrementally build the target model bit-by-bit.
+
+
+The parser that we use in the XML package supports reading directly
+from URLs (using http or ftp), compressed files and strings as well as
+the more usual files.
+
+While it is far more common to read XML documents, one can also read
+DTDs and get access to the contents of a DTD as an &S; object.  One
+can use this to perform meta-computations on XML documents such as
+validating output, generating code to read XML documents, etc.
+
+
+Using the XML package
+
+  xmlTreeParse(fileName)
+
+
+
+
+One can also read DTDs and process their contents.
+This allows one to do some sophisticated meta-programming.
+

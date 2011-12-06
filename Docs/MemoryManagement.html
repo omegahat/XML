@@ -1,0 +1,412 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Memory Management in the the XML Package</title><link rel="stylesheet" type="text/css" href="/Users/duncan/Classes/StatComputing/XDynDocs/inst/CSS/OmegaTech.css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.76.1"></meta><meta name="description" content="We describe some of the complexities of memory management in the XML package. We outline various strategies that the R programmer can use with this package to make computations more efficient. We also explain how to reason about managing nodes and documents in this and related packages (e.g. Sxslt)."></meta>
+<link xmlns="" rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/tabview/assets/skins/sam/tabview.css">
+<script xmlns="" type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script xmlns="" type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/element/element-min.js"></script>
+<script xmlns="" type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/tabview/tabview-min.js"></script>
+<script xmlns="" type="text/javascript" src="/Users/duncan/Classes/StatComputing/XDynDocs/inst/JavaScript/yahooTabUtils.js"></script>
+<script xmlns="" type="text/javascript" src="http://www.omegahat.org/DynDocs/JavaScript/toggleHidden.js"></script>
+</head><body class="yui-skin-sam">
+<script xmlns="" type="text/javascript"><!--
+var toggleCodeIds = [
+ 
+   "id36292760", 
+   "id36292798", 
+   "id36292802", 
+   "id36292836", 
+   "id36292839", 
+   "id36292974"
+];
+--></script><p xmlns=""></p>
+<div class="article" title="Memory Management in the the XML Package"><div class="titlepage"><div><div><h2 class="title"><a id="id36046305"></a>Memory Management in the the <a xmlns:omg="http://www.omegahat.org" xmlns:rwx="http://www.omegahat.org/RwxWidgets" xmlns="" href="http://www.omegahat.org/RSXML">XML</a> Package</h2></div><div><div class="author"><h3 class="author"><span class="firstname">Duncan</span> <span class="surname">Temple Lang</span></h3><div class="affiliation"><span class="orgname">University of California at Davis<br></br></span> <span class="orgdiv">Department of Statistics<br></br></span></div></div></div><div><div class="abstract" title="Abstract"><p class="title"><strong>Abstract</strong></p><p>
+We describe some of the complexities of memory management in the XML
+package. We outline various strategies that the R programmer can use with
+this package to make computations more efficient.
+We also explain how to reason about managing nodes and documents in this
+and related packages (e.g. <a xmlns:omg="http://www.omegahat.org" xmlns:rwx="http://www.omegahat.org/RwxWidgets" xmlns="" href="http://www.omegahat.org/Sxslt">Sxslt</a>).
+</p></div></div></div><hr></hr></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id36292727"></a></h2></div></div></div><p>
+In R, garbage collection just works as the user expects - when
+an object is no longer referenced, it is available to be cleaned up and the 
+memory reused. 
+This is simple to understand in the case of variables.
+For example, when we assign a value to a variable <b xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns="" class="$">x</b>,
+the value is referenced and so cannot be garbage collected.
+If we assign another value to <b xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns="" class="$">x</b> or remove <b xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns="" class="$">x</b>,
+the original value is now no longer referenced and becomes available for
+collection.
+What about when we have an object in a list, e.g.
+<code xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns="" class="Sexpression">x$y = 1:10</code>. The vector from 1 through 10 is
+referenced. If we assign a new value to the element <b xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns="" class="$">y</b> in <b xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns="" class="$">x</b>,
+then it will be avalable for garbage collection.
+</p><p>
+Another more complex situation is when we have two or more R objects
+that reference a shared value, e.g.
+
+</p><div xmlns="" class="codeToggle"><div class="unhidden" id="id36292760"><div><pre class="rcode" title="R code">
+a = 1:10
+x = a
+y = a
+</pre></div></div></div>
+<div xmlns="" class="clearFloat"></div>
+<p>
+R's computational model is that when this happens, the assignment
+to <b xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns="" class="$">x</b> and <b xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns="" class="$">y</b> causes the right hand side (the value of <code xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns="" class="Sexpression">a</code>)
+to be copied. But R does not do this in an effort to be efficient with memory.
+R only copies the value when it is changed in a variable that references it.
+So if we change an element of <b xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns="" class="$">y</b>, then we force a copy of the entire vector
+and change just that. <b xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns="" class="$">a</b> and <b xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns="" class="$">x</b> will still point to the same R vector.
+</p><p>
+How does this relate to the <a xmlns:omg="http://www.omegahat.org" xmlns:rwx="http://www.omegahat.org/RwxWidgets" xmlns="" href="http://www.omegahat.org/RSXML">XML</a>  package ?
+The only thing of concern to us here is when we are dealing with
+internal/C-representations.
+The critical issue is simply this.
+Suppose we have an XML document created by either
+<i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//xmlParse.html">xmlParse()
+  </a></i> or <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//newXMLDoc.html">newXMLDoc()
+  </a></i>, e.g.
+
+</p><div xmlns="" class="codeToggle"><div class="unhidden" id="id36292798"><div><pre class="rcode" title="R code">
+doc = xmlParse("&lt;foo&gt;&lt;bar&gt;Some text&lt;/bar&gt;&lt;/foo&gt;", asText = TRUE)
+</pre></div></div></div>
+<div xmlns="" class="clearFloat"></div>
+<p>
+Then we use some mechanism (e.g. XPath or direct manipulation of the nodes)
+to get access to one or more nodes, e.g.
+
+</p><div xmlns="" class="codeToggle"><div class="unhidden" id="id36292802"><div><pre class="rcode" title="R code">
+nodes = getNodeSet(doc, "//bar")
+</pre></div></div></div>
+<div xmlns="" class="clearFloat"></div>
+<p>
+Now, if we remove <b xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns="" class="$">doc</b> or simply return <b xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns="" class="$">nodes</b> from
+a function that has <b xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns="" class="$">doc</b> as a local variable,
+we have a problem.
+We are referencing individual nodes in a XML tree, but
+are no longer referencing the document or overall tree. 
+What's the issue? 
+Well, since the document consumes memory, we must arrange
+to release it when we no longer need it.
+However, we do need part of the document, specifically the
+individual nodes for which we have a reference in an R variable.
+If we released the tree, we would release the  nodes along with it. 
+We cannot take a copy of the individual nodes as we need to be able
+to find, e.g., their ancestors, i.e. other parts of the tree.
+So we cannot free the memory associated with the document/entire tree
+while we still have references to the .
+</p><p>
+Now, while we have references to the individual nodes, all is well.
+But when we release all of these, we need to release the memory
+associated with the document. 
+When we release of these nodes, we must not release the document
+unless there are no other nodes in the document being referenced
+in R variables.
+</p><p>
+The situation is further complicated when we create nodes
+outside of a document, e.g. with <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//newXMLNode.html">newXMLNode()
+  </a></i>.
+We might have 
+
+</p><div xmlns="" class="codeToggle"><div class="unhidden" id="id36292836"><div><pre class="rcode" title="R code">
+makeRow = 
+function(tbl = newXMLNode("table"))
+{
+  newXMLNode("tr", parent = tbl)
+}
+</pre></div></div></div>
+<div xmlns="" class="clearFloat"></div>
+<p>
+and the call
+
+</p><div xmlns="" class="codeToggle"><div class="unhidden" id="id36292839"><div><pre class="rcode" title="R code">
+r = makeRow()
+</pre></div></div></div>
+<div xmlns="" class="clearFloat"></div>
+<p>
+causes the <font xmlns:xp="http://www.w3.org/TR/xpath" xmlns="" class="xmlTag">&lt;table&gt;</font> node to be unreachable 
+from R, but needed as we can reach its child <font xmlns:xp="http://www.w3.org/TR/xpath" xmlns="" class="xmlTag">&lt;tr&gt;</font>.
+Until <b xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns="" class="$">r</b> is released, we must ensure that <b xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns="" class="$">tbl</b>
+is not released. But when <b xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns="" class="$">tr</b> is released, <b xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns="" class="$">tbl</b>
+should be considered for release.
+</p><p>
+So we need a mechanism which can track these references to sub-nodes,
+determine when none exist and a document can be released.
+We must also be able to handle nodes which are not part of a document,
+but just a collection of related nodes that form a "virtual" document
+but have no C-level xmlDoc object associated with them. 
+</p><p>
+There is a yet more complicated issue. 
+While we may hold a reference to a node or a document in R,
+C code can chose to free the document (or a node). 
+We should be in control of this and in most cases we are.
+However, when we are using another package that uses these
+libxml2 nodes, those libraries can chose to free documents or nodes. 
+</p></div><div class="section" title="A solution"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id36292877"></a>A solution</h2></div></div></div><p>
+An approach that we have implemented to address this issue is as follows.
+Let's take the case where we have an actual XML document (i.e. a C-level
+xmlDoc object with associated nodes).
+This and all its nodes are C-level objects, initially unrelated to R.
+When we parse this document, we add a C-level finalizer for the
+external pointer representing the C-level data structure in R.
+The finalizer is charged with freeing the document (via a call
+to <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns=""><a href="c:routine(%22xmlFreeDoc%22)">xmlFreeDoc</a></i>) if that is "appropriate".
+This finalizer routine is invoked when R has no more references 
+to the pointer to this <b xmlns:c="http://www.C.org" xmlns:cpp="http://www.cplusplus.org" xmlns="" class="cstruct">xmlDoc</b> object.
+So when we explicitly remove the variable representing the
+parse document or it goes out of scope, this will be called
+during the next garbage collection R runs.
+</p><p>
+So when this finalizer is invoked, how can it determine whether it is
+"appropriate" to release the <b xmlns:c="http://www.C.org" xmlns:cpp="http://www.cplusplus.org" xmlns="" class="cstruct">xmlDoc</b>'s memory and
+hence all its nodes.  The answer is that it looks at a field in this
+structure that gives the count of the number of nodes in the tree that
+are currently referenced by R variables.  Each time we return a node
+from this document from C-level code back to R, we create a
+<span class="emphasis"><em>new</em></span> external pointer containing the address of
+the node.  Then we register a finalizer for that external pointer.
+The critical step is to increment the counter for this node and also
+for the document in which it is housed.  These counters are stored in
+the <i xmlns:c="http://www.C.org" xmlns:cpp="http://www.cplusplus.org" xmlns="" class="cfield">_private</i> field of the
+<b xmlns:c="http://www.C.org" xmlns:cpp="http://www.cplusplus.org" xmlns="" class="cstruct">xmlNode</b> and <b xmlns:c="http://www.C.org" xmlns:cpp="http://www.cplusplus.org" xmlns="" class="cstruct">xmlDoc</b>
+structures.  This is a pointer to a generic type and we allocate
+memory to store both the count and also a marker to allow us to
+identify that it is our private field and not one being used by
+another software layer on the nodes and documents.
+So three steps to return a node are
+</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>create an <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns=""><a href="Help/externalptr-class.html">externalptr</a></i> object</p></li><li class="listitem"><p>update the count (allocating space if necessary) in the node</p></li><li class="listitem"><p>update the count (allocating space if necessary) in the document</p></li><li class="listitem"><p>register the finalizer</p></li></ol></div><p>
+</p><p>
+The finalizer for a node decrements the counter for the node (if it exists),
+and decrements the counter for the document (if it exists).
+If the document has a zero count after this, the
+document can be freed.  If the document still has a positive count, then
+there must be other nodes that are referenced by R variables and so we cannot release
+the document. When the finalizers for those other nodes are invoked (when the references
+are removed in R), the document will be decremented. Eventually, when the final node is released,
+the document count will be 0 and the document will be freed.
+</p><p>
+When the count for a given node gets to 0, the <i xmlns:c="http://www.C.org" xmlns:cpp="http://www.cplusplus.org" xmlns="" class="cfield">_private</i> field is freed
+and set to <b xmlns:c="http://www.C.org" xmlns:cpp="http://www.cplusplus.org" xmlns="" class="cnull">NULL</b> so we recognize that R is no longer managing that node.
+</p><p>
+Note that if we never have any references to specific nodes in a document,
+then the finalizer for the document will guarantee that it is released when
+the final R reference to the document is removed.
+</p><p>
+
+</p><p>
+The following illustrates some of the aspects of this system.
+</p><div xmlns="" class="codeToggle"><div class="unhidden" id="id36292974"><div><pre class="rcode" title="R code">
+library(XML)
+doc = xmlParse("data/mtcars.xml")  # finalizer registered.
+nodes1 = getNodeSet(doc, "//record[@id='Mazda RX4']") # get one node - finalizer registered
+.Call("R_getXMLRefCount", nodes1[[1]])  # ask for its reference count
+nodes2 = getNodeSet(doc, "//record[@id='Mazda RX4']") # get the same node again, finalizer registered on new object
+.Call("R_getXMLRefCount", nodes2[[1]])
+.Call("R_getXMLRefCount", nodes1[[1]])
+
+rm(doc)
+gc()
+rm(nodes1)
+gc()
+.Call("R_getXMLRefCount", nodes2[[1]])
+rm(nodes2)
+gc()
+
+rm(nodes2)
+gc()
+</pre></div></div></div>
+<div xmlns="" class="clearFloat"></div>
+<p>
+
+</p></div><div class="section" title="Manging Nodes with No Document"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id36292984"></a>Manging Nodes with No Document</h2></div></div></div><p>
+We can create nodes without a document and add them as children, siblings
+and even the parent of other nodes.  In this case, we don't have a convenient
+central location to which all nodes have a reference, i.e. the <i xmlns:c="http://www.C.org" xmlns:cpp="http://www.cplusplus.org" xmlns="" class="cfield">doc</i>
+field which is part of each <b xmlns:c="http://www.C.org" xmlns:cpp="http://www.cplusplus.org" xmlns="" class="cstruct">xmlNode</b>.
+Instead, when we return a reference  to a node, we repeat the steps
+of creating the external pointer, incrementing the counter for that node, registering the finalizer,
+but do not of course increment the counter for the non existent document.
+</p><p>
+When we remove an R reference to a node, the
+finalizer is run for that unique <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns=""><a href="Help/externalptr-class.html">externalptr</a></i> object in 
+R. That decrements the count. If that results in the count being 0,
+then we remove the counter information (i.e. free the value of the <i xmlns:c="http://www.C.org" xmlns:cpp="http://www.cplusplus.org" xmlns="" class="cfield">_private</i> field and set it to 
+<b xmlns:c="http://www.C.org" xmlns:cpp="http://www.cplusplus.org" xmlns="" class="cnull">NULL</b>).
+Next we see if it is appropriate to free the node. 
+We determine this by seeing if 
+a) it has no parent, and b) if none of its descendants (children, their children, and their children, etc.)
+have a count that it is non-zero.
+(For large trees, this can involve traversing many nodes.)
+If there is no parent and no referenced node, then we can free that node.
+</p></div><div class="section" title="Problems"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="Problems"></a>Problems</h2></div></div></div><p>
+Reference counting can be problematic for garbage collection.  Most
+problematic is the potential for cycles where a variable
+<b xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns="" class="$">a</b> references <b xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns="" class="$">b</b> and <b xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns="" class="$">b</b>
+refers to <b xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns="" class="$">a</b> and neither is garbage collected eventhough
+neither is needed.  Fortunately, XML documents are trees and not
+graphs and cycles don't occur.
+</p><p>
+We can get into trouble with this management scheme in quite specific
+circumstances.  Because the reference counting mechanism is known only
+to the XML package (and R indirectly), other code may not honor the
+conditional freeing of the nodes and document.  For example, if we
+create an XML document (an <b xmlns:c="http://www.C.org" xmlns:cpp="http://www.cplusplus.org" xmlns="" class="cstruct">xmlDoc</b>) and return it to R as an
+<i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns=""><a href="Help/externalptr-class.html">externalptr</a></i> with a finalizer.  We can ignore the case that any nodes
+are referenced from R.  Suppose this document is explicitly freed (via
+<i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns=""><a href="c:routine(%22xmlFreeDoc%22)">xmlFreeDoc</a></i>) by some code. Later, when the R
+variable referencing the document goes out of scope, the <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns=""><a href="Help/externalptr-class.html">externalptr</a></i>
+will be garbage collected and the finalizer run.  This will check the
+count on the <b xmlns:c="http://www.C.org" xmlns:cpp="http://www.cplusplus.org" xmlns="" class="cstruct">xmlDoc</b> in its private field to
+determine if it should free the document.  Unfortunately, at this
+point, the memory pointed to by the <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns=""><a href="Help/externalptr-class.html">externalptr</a></i> will be made up of
+random content since it was freed.  So we will be interpreting
+nonsense.  There may be a (very small) memory leak as if we had
+allocated memory to hold the count in the <i xmlns:c="http://www.C.org" xmlns:cpp="http://www.cplusplus.org" xmlns="" class="cfield">_private</i>
+field, that won't have been released in the call to <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns=""><a href="c:routine(%22xmlFreeDoc%22)">xmlFreeDoc</a></i>.
+</p><p>
+The same issue arises for references in R to <b xmlns:c="http://www.C.org" xmlns:cpp="http://www.cplusplus.org" xmlns="" class="cstruct">xmlNode</b> objects.
+If we have such references and the document or node is explicitly freed
+by a 3rd party, the finalizer will be looking at random bits in memory and
+is likely to interpret them incorrectly and crash or seriously corrupt memory.
+</p><p>
+These disastrous situations only occur when we mix releasing memory
+across two regimes - the R garbage collector and another system.
+As long as this does not happen, the reference counting mechanism
+makes certain to avoid freeing memory still in use by R and
+does release memory that is not in use by R.
+</p><p>
+There is the possibility of using R's memory manager and garbage collector
+to allocated and manage memory in libxml2. This would put the two
+systems under one regime, including libxslt. This would avoid
+these problems.  We need to investigate the precise details of this.
+</p></div><div class="section" title="By-passing the Memory Management"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id36293109"></a>By-passing the Memory Management</h2></div></div></div><p>
+The reference counting memory management approach works well and removes
+the need for the R programmer to concern herself with any of the details
+of working with C-level/native/internal data structures.
+One issue that can arise however is efficiency. 
+Consider the worst case situation where we have nodes without a document.
+We might construct a top-level node first and assign it to an R variable.
+Then we would use <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//newXMLNode.html">newXMLNode()
+  </a></i> and related functions to create
+other nodes. 
+It is common to specify the <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rarg">parent</i>  argument in such calls
+to immediately add the newly created node as a child of the parent.
+Regardless, by default, each of these functions will  return an
+<i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns=""><a href="Help/externalptr-class.html">externalptr</a></i> and add a finalizer for the node.
+Then, as these are garbage collected, they will gradually reduce
+the counts to 0 for each node and finally the top-level node can be
+released.  There is a great deal of traversing of this sub-tree
+to determine if the top-most node can be released. 
+Yet this is often done in a context in which the R programmer
+knows that the top-most object is to be retained and
+the descendant nodes are of no direct interest outside the scope
+of the computation.  We may want the <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns=""><a href="Help/externalptr-class.html">externalptr</a></i>,
+but not the extra computations of the finalizers and garbage collection.
+Instead, we may just know that the top node will be added to a
+document and that there is no need for all this checking of reference
+counts. 
+</p><p>
+This same  concern arises when extracting nodes from a document
+with <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//getNodeSet.html">getNodeSet()
+  </a></i> when we know that the document
+reference in R will continue to exist after we have finished with the 
+nodes.
+Similarly, when we retrieve a list of child nodes via
+<i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//xmlChildren.html">xmlChildren()
+  </a></i>, we may not want to put these
+references under our reference counting scheme as we may know
+that the parent will not be released before we discard these
+references.
+So a function such as
+
+</p><pre xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunction">
+function(node)
+{
+   sapply(xmlChildren(node), xmlAttrs))
+}
+</pre>
+<p><br xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="">
+does not need to use reference counting for the child nodes returned
+by <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//xmlChildren.html">xmlChildren()
+  </a></i>.
+However,
+
+</p><pre xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunction">
+function(node, labels = c("book", "article"))
+{
+   xmlChildren(node)[ names(node) %in% labels ]
+}
+</pre>
+<p><br xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="">
+potentially does as we are returning child nodes
+which may persist pass the lifetime of their parent node.
+
+</p><p>
+In order to deal with this, many of the R functions that can
+return an <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns=""><a href="Help/externalptr-class.html">externalptr</a></i> referencing an
+<b xmlns:c="http://www.C.org" xmlns:cpp="http://www.cplusplus.org" xmlns="" class="cstruct">xmlNode</b> have a <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rarg">addFinalizer</i>
+parameter. This can take various different values:
+</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p> <i xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns=""><code>TRUE</code></i> to use reference counting on the node for this reference</p></li><li class="listitem"><p><i xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns=""><code>FALSE</code></i> to not use reference counting for this reference</p></li><li class="listitem"><p> <b xmlns:r="http://www.r-project.org" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns:py="http://www.python.org" xmlns:perl="http://www.perl.org" xmlns:c="http://www.C.org" xmlns:vb="http://www.visualbasic.com" xmlns:omegahat="http://www.omegahat.org" xmlns:bioc="http://www.bioconductor.org" xmlns:java="http://www.java.com" xmlns:sql="http://www.sql.org" xmlns=""><a href="library/base/html/NA.html">NA</a></b> to use the current default</p></li><li class="listitem"><p> a character string naming a C routine to use as the finalizer,
+or a <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns=""><a href="Help/NativeSymbolInfo-class.html">NativeSymbolInfo</a></i> object that contains
+the resolved C routine to use</p></li></ol></div><p>
+When we know that we don't need to put the returned references
+under reference counting control, we can explicitly specify
+<i xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns=""><code>FALSE</code></i>  for this argument.
+So we could write our first function above as
+
+</p><pre xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunction">
+function(node)
+{
+   sapply(xmlChildren(node, addFinalizer = FALSE), xmlAttrs))
+}
+</pre>
+<p><br xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="">
+
+</p><p>
+Basically, if you know when you are getting a reference
+to an XML node (an <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns=""><a href="Help/externalptr-class.html">externalptr</a></i>) that it is guaranteed not to be freed
+for the duration of its lifespan in R, then you can use
+<code xmlns:rs="http://www.omegahat.org/RS" xmlns:s="http://cm.bell-labs.com/stat/S4" xmlns="" class="Sexpression">addFinalizer = FALSE</code>.
+This saves a lot of (admittedly fast) computations.
+</p><p>
+When writing functions that manipulate XML nodes and documents,
+it is good practice to add an <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rarg">addFinalizer</i>
+parameter to the function and use this in the calls to the
+functions in the <a xmlns:omg="http://www.omegahat.org" xmlns:rwx="http://www.omegahat.org/RwxWidgets" xmlns="" href="http://www.omegahat.org/RSXML">XML</a> package that accept
+such a parameter. This allows callers of your functions to
+control how the references are managed and to make use of
+knowledge of their context about the lifespan of the references.
+</p><p>
+When in doubt, use the default memory management and do not override it.
+</p><div class="section" title="Removing Finalizers"><div class="titlepage"><div><div><h3 class="title"><a id="id36293257"></a>Removing Finalizers</h3></div></div></div><p>
+There are occasions when we have established reference counting
+and finalizers for <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns=""><a href="Help/externalptr-class.html">externalptr</a></i> objects
+referencing <b xmlns:c="http://www.C.org" xmlns:cpp="http://www.cplusplus.org" xmlns="" class="cstruct">xmlNode</b> or <b xmlns:c="http://www.C.org" xmlns:cpp="http://www.cplusplus.org" xmlns="" class="cstruct">xmlDoc</b>
+objects and need to remove these.
+This occurs when we are calling functions that use the
+reference counting approach and do not allow us to override it.
+After we use these functions, we might pass the document or node
+to software that simply frees it.  Then we have the situation
+discussed above in <a class="xref" href="#Problems" title="Problems">the section called &#8220;Problems&#8221;</a>.
+In some situations, one can clone the document or the nodes and pass those
+to the other software. However this is not always possible as we might
+have references to nodes within a document that is created earlier 
+by that other software and to which we have references via callbacks,
+e.g. Sxslt and processing an XML document with an XSL transformation
+involving callbacks to R functions that implement XSL extension functions.
+</p><p>
+So now that we know we can get into such a situation, we have a
+problem.  When the other software frees the document and its
+sub-nodes, our finalizers will be invoked subsequently and be
+interpreting random memory contents.
+The key to this situation is to remove the finalizers
+on these R <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns=""><a href="Help/externalptr-class.html">externalptr</a></i> objects.
+Prior to version 2.14.0 (or more to the point the development version of
+R post-dating 2.13.2), there was only a mechanism to add finalizers.
+We have added<sup>[<a id="id36293295" href="#ftn.id36293295" class="footnote">1</a>]</sup>
+routines in R to do this.  One can remove a finalizer by providing an
+<i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns=""><a href="Help/externalptr-class.html">externalptr</a></i> object or by providing
+an external pointer value (which has to be in a new <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns=""><a href="Help/externalptr-class.html">externalptr</a></i> object).
+We provide a routine (<i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns=""><a href="c:routine(%22R_xmlNode_removeFinalizers%22)">R_xmlNode_removeFinalizers</a></i>) in the XML package to use the latter approach to remove 
+finalizers, if they exist, for each of the nodes in an XML document or
+top-level node. This works recursively, removing finalizers on itself and each of the sub-nodes.
+</p></div></div><div class="footnotes"><br></br><hr width="100" align="left"></hr><div class="footnote"><p><sup>[<a id="ftn.id36293295" href="#id36293295" class="para">1</a>] </sup>Code has not been committed yet, Mar 24 2011</p></div></div></div></body></html>

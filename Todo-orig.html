@@ -1,0 +1,274 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>Todo list for R-level XML Parser</title>
+<link rel=stylesheet href="../../../Docs/OmegaTech.css" >
+</head>
+
+<body>
+<h1>Todo list for R-level XML Parser</h1>
+
+<dl>
+
+  <dt>
+  <li> insert into a node at a particular position
+  <dd>
+
+  <dt>
+  <li> creation of internal entities, PIs, etc.
+  <dd> PIs done.
+      
+  <dt>
+  <li> Connect the memory management with R's.
+  <dd>
+
+  <dt>
+  <li> Tidy up interface for add and remove nodes.
+  <dd>
+      <dl>
+	<dt>
+	<li> Add/append child to an XMLInternalNode
+	<dd>  addChildren() - document.
+      
+	<dt>
+	<li> Ability to remove a node from the children of a node.
+	<dd>
+      </dl>
+      
+  <dt>
+  <li> Add support for the pull data source for xmlTreeParse and htmlTreeParse.
+  <dd> Not particularly important as efficiency shouldn't be that
+      important.
+
+  <dt>
+  <li> Switch to putting the namespace as the name of the element name
+       at the S level.
+  <dd>
+
+  <dt>
+  <li> Avoid the handler functions having names that could conflict
+      with tag names.
+  <dd>  i.e. use .text, etc.
+
+  <dt>
+  <li> Fix the attributes in the event parsing.
+  <dd> They should have a method for xmlGetAttr.
+       There is a trailing "" element with no name.
+       And they have no class.
+
+
+  <dt>
+  <li> Strategies and actions
+  <dd> ???
+
+  <dt> "xmlValidNode" class
+      that "guarantees" children are valid XML nodes.
+  <dd> xmlTreeParse uses this if no handlers.
+      Otherwise, general non-validated XML node.
+       No constraint on children.
+  
+  <dt>
+  <li> S-level Exceptions from XML.
+  <dd> Errors, warnings, etc. collected and available
+      after parsing for structured/programmatic access.
+
+  <dt>
+      
+  <li> Add the base, etc. information to the Input buffer
+      when using a connection or function in the event parsing.
+  <dd>
+
+  <dt>
+  <li> Allow connections to be used when generating
+       an XML tree via libxml.
+  <dd> Works for SAX. Not likely to do it for DOM since
+       one can effectively read the entire document in
+       via a connection to a string and go from there.
+       It is not the same thing, but that's the way it is.
+
+      
+  <dt>
+  <li> When parsing a DTD as raw text (i.e. not from a file), 
+    getting warnings about subsets, etc.
+  <dd> lists
+
+      This happens in libxml 2 2.4.13, etc. but not 2.5.4
+  <dt>
+  <dd> Add DOCTYPE and DTD to <code>xmlTree()</code>
+  <dt>
+
+  <dt>
+  <li> Add handlers for different namespaces to <code>xmlTree()</code>
+  <dd>
+      A user can do this with an S-level handler
+      that maintains a list of lists of handler
+      functions grouped by namespace.
+
+  <dt>
+  <li> Finalizers for libxml nodes/docs.
+  <dd>
+      
+  <li>
+<pre>
+      dtdFile <- system.file("data/foo.dtd", pkg="XML") 
+> foo.dtd <- parseDTD(dtdFile) 
+> tmp <- dtdElement("variable", foo.dtd)   
+Error in dtd$elements[[name]] : object is not subsettable
+> foo.dtd$elements
+""ExternalDTD""
+</pre>      
+  <dd>
+  
+  <dt>
+  <li> Appears to be an oddity on Solaris with the event driven
+      parsing.
+      
+  <dd>
+<pre>
+      source("dataFrameHandler.R")
+      z <- xmlEventParse("../DTDs/Examples/mtcars.xml", handler=handler())
+</pre>
+      causes problems with an incorrect number of elements in the
+      third record. It reads the  22.8 as 2 and then 2.8
+      Removing some of the spaces before the 22.8 at the beginning of
+      the record makes this go away. Need to investigate further.
+<br>
+ Looks like simply multiple text fragments being passed in separate calls.
+
+  <dt>
+  <li> Develop DTDs for basic types.
+  <dd>
+      
+  <dt>
+  <li> Additional chapter/package to write XML
+  <dd> Handle standard types such as data frame, time series, factors,
+       graphics/plots, etc.
+      <p>
+
+      Can <code>cat()</code> output or <code>paste()</code>, but
+     can do more to ensure well-formed documents relative to a DTD.
+      Have a filter that knows what DTD, or collection of DTDs, to use
+      and how to ensure that individual calls do the correct thing in
+      the context. So basically keep a cursor.
+
+      <br>
+  Can read DTDs within this one. The filter can be built from this.
+      See <a href="WritingXML.html">Writing XML</a>.
+
+  <dt>
+  <li> Facility for dynamically modifying the user-level handler functions
+       for a parser from the body of one of these handlers.
+  <dd> For example, the document may contain its own functions for a
+      particular
+      language and we would see these in the preamble and switch to
+      using them.
+      
+  <dt>
+  <li> Add facility for stopping the parsing mid-way through via a
+      call to stop() or whatever, but that doesn't cause an error.
+  <dd> Exceptions may work when Robert finishes these.
+      
+  <dt>
+  <li> We can make this significantly more class-based,
+       i.e. object oriented.
+      
+  <dd>        
+      
+  <dt>
+  <li> Process external entities.
+  <dd> These are not currently being seen by the event
+      mechanism. Probably a switch needs to be turned on.
+      <br>
+    Fixed now!
+<br>
+ At present, internal references are substituted directly.
+      See test.xml in Docs directory.
+      <code>h <- .Call("R_XMLParse", "Docs/test.xml",xmlHandler(), F, F)</code>
+<br>
+ See replaceEntities in <code>xmlTreeParse()</code>.
+  <dt>
+  <li> We could kill off the children element in a node
+      if there aren't any.
+  <dd>
+  <dt>
+  <li> <code>[</code> and <code>[<-</code> methods for the different types of nodes.
+       And also functions such as those in the w3c spec
+      for nodes, getElementsByTagName, etc.
+  <dd>
+
+  <dt>
+  <li> Also add the <code>[[</code> for accessing children, avoiding
+      the need for <code>$children[[]]</code>.
+  <dd> Done.
+      
+  <dt>
+  <li> Could kill off the attributes and/or children for certain node types
+       such as comment, text node.
+  <dd>
+
+  <dt>
+  <li> Handle the namespaces.
+  <dd> Done, for libxml. Added a field to the XMLNode.
+
+  <dt>
+  <li> Support S, at least for the document/tree parser without the
+       callbacks. 
+  <dd> The callbacks require the driver mechanism used in the  CORBA
+      and Java interfaces to provide mutable state.
+<br>
+  All done, except mutable state. See the interface drivers in S4.
+  <dt>
+  <li> Add the contextual information to the function calls.
+  <dd> Depth, last node, node path, etc
+
+</dl>
+
+
+<h2>Done</h2>
+<dl>
+
+  <dt>
+  <li> Facilities in the XML package to create internal nodes
+  <dd> PI, comment, etc.
+
+  
+  <dt>
+  <li> as(XMLInternalNode, "character") method
+  <dd>  saveXML() but don't have a document object!
+       Can we put these into a document and then save and the undo
+      this document reference.
+      <br>
+        Done using xmlNodeDumpOutput()
+  
+  
+  <dt>
+  <li> Closing connections from a function or connection argument.
+  <dd>
+      Done in R.
+  
+  <dt>
+  <li> Allow XML text to be specified rather than treating it as a file.
+  <dd> Done for libxml parser.
+       Done for Expat.
+      
+      
+  <dt>
+  <li> Call the user level functions in the document parser.
+  <dd> Done.
+      <br>
+      If return <code>NULL</code>, remove from tree (or actually don't
+      add it).
+      <br>
+      Pass in additional information.
+  <dt>  
+</dl>
+
+<hr>
+<address><a href="http://www.stat.ucdavis.edu/~duncan">Duncan Temple Lang</a>
+<a href=mailto:duncan@wald.ucdavis.edu>&lt;duncan@wald.ucdavis.edu&gt;</a></address>
+<!-- hhmts start -->
+Last modified: Thu Jan 31 09:33:05 NZDT 2008
+<!-- hhmts end -->
+</body> </html>
+
+
+

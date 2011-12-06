@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>The XML package: Best Practices</title><link rel="stylesheet" type="text/css" href="../OmegaTech.css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.76.1"></meta>
+<link xmlns="" rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/tabview/assets/skins/sam/tabview.css">
+<script xmlns="" type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script xmlns="" type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/element/element-min.js"></script>
+<script xmlns="" type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/tabview/tabview-min.js"></script>
+<script xmlns="" type="text/javascript" src="/Users/duncan/Classes/StatComputing/XDynDocs/inst/JavaScript/yahooTabUtils.js"></script>
+<script xmlns="" type="text/javascript" src="http://www.omegahat.org/DynDocs/JavaScript/toggleHidden.js"></script>
+</head><body class="yui-skin-sam">
+<script xmlns="" type="text/javascript"><!--
+var toggleCodeIds = [
+ 
+];
+--></script><p xmlns=""></p>
+<div class="article" title="The XML package: Best Practices"><div class="titlepage"><div><div><h2 class="title"><a id="id36046311"></a>The <a xmlns:omg="http://www.omegahat.org" xmlns:rwx="http://www.omegahat.org/RwxWidgets" xmlns="" href="http://www.omegahat.org/RSXML">XML</a> package: Best Practices</h2></div><div><div class="author"><h3 class="author"><span class="firstname">Duncan</span> <span class="surname">Temple Lang</span></h3><div class="affiliation"><span class="orgname">University of California at Davis<br></br></span> <span class="orgdiv">Department of Statistics<br></br></span></div></div></div></div><hr></hr></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id36097555"></a></h2></div></div></div><p>
+I have received several emails recently (early 2011) asking me about
+aspects of the XML package that I no longer recommend. These
+questions were probably based on documentation for the package
+that dates back many, many years.  Those approaches still work and have
+advantages in certain cases, but I don't recommend them.
+</p><p>
+Basically, I recommend using the "internal" C-level representation for
+XML documents, trees, and nodes.  These involve using the
+<i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//xmlParse.html">xmlParse()
+  </a></i> function and the <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//newXMLDoc.html">newXMLDoc()
+  </a></i>
+and <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//newXMLNode.html">newXMLNode()
+  </a></i> (<i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//newXMLTextNode.html">newXMLTextNode()
+  </a></i>,
+<i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//newXMLCommentNode.html">newXMLCommentNode()
+  </a></i>, <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//newXMLPINode.html">newXMLPINode()
+  </a></i>,
+<i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//newXMLCDataNode.html">newXMLCDataNode()
+  </a></i>, <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//newXMLNamespace.html">newXMLNamespace()
+  </a></i>.)
+</p><p>
+The other approaches are to use "pure" R-level representations
+of the tree and nodes. There are two primary approaches to this 
+</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>list of lists of lists where each node is a list consisting of an element name,  
+   a character vector of attributes, </p></li><li class="listitem"><p>a collection of nodes and information associating nodes with their parents or their children</p></li></ol></div><p>
+While both can be readily used to represent a fixed tree,
+we use the second approach within an environment to facilitate
+modifying the tree, e.g. adding new nodes, changing existing nodes.
+The <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns=""><a href="Help/XMLHashTree-class.html">XMLHashTree</a></i> class is used for this.
+</p><p>
+Another advantage of the nodes and separate data structure that
+represents the relationships between the nodes (children of what node)
+is that we can traverse the tree in either direction, i.e. finding
+the parent of a node or its children. The
+list-of-lists approach does not allow this (without additional structures).
+</p><p>
+Why should you use the internal/libxml2/C representation?
+Two primary reasons: speed, and ease of manipulating and querying
+the resulting tree. Basically, using the internal representations
+avoid the time and memory involved in converting the 
+internal XML representation to R objects.
+Most importantly, we can only use the XPath language to query 
+an XML document if that document is represented as internal nodes.
+XPath is such a powerful and efficient means of extracting nodes
+in a tree that this wins the argument over representation for
+almost all cases.
+</p><p>
+Why <span class="emphasis"><em>not</em></span> use the internal/libxml2/C representation?
+One problem  is that when we serialize an R object that contains
+an XML tree or node in this form, by default, that will not be restored
+as the same R object when deserialized/load-ed back into an R session.
+This is because the R object is a pointer to an opaque data structure in memory rather than
+values that are known to R.
+If we use "pure" R-based representations of the tree, then they will be serialized
+and deserialized identically across R sessions.
+But why is this not a real concern?
+Firstly, we can serialize an XML document or node trivially be converting it to
+a string and write it to a file. See <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//saveXML.html">saveXML()
+  </a></i>.
+This does mean we have to explicitly serialize and deserialize XML content
+separately from other R objects.
+If we do want to handle regular R objects and XML objects together, we
+can use R's <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//serialize.html">serialize()
+  </a></i> or <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//saveRDS.html">saveRDS()
+  </a></i>
+functions and their <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rarg">refhook</i> parameter to specify a way to handle
+serializing these XML representations so that they can be faithfully restored.
+We can use <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//xmlSerializeHook.html">xmlSerializeHook()
+  </a></i> and <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//xmlDeserializeHook.html">xmlDeserializeHook()
+  </a></i>
+in the <a xmlns:omg="http://www.omegahat.org" xmlns:rwx="http://www.omegahat.org/RwxWidgets" xmlns="" href="http://www.omegahat.org/RSXML">XML</a> package to do this.
+</p></div><div class="section" title="Creating XML Content in R"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id36292835"></a>Creating XML Content in R</h2></div></div></div><p>
+There are two styles of creating XML (or HTML) content in R.
+The most common and obvious us to create the content by <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//paste.html">paste()
+  </a></i>ing
+and <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//sprintf.html">sprintf()
+  </a></i>ing strings together to represent the content.
+The other approach is to create node objects and piece the tree together in a more
+structured manner. 
+</p><p>
+The node approach is more flexible and a better programming approach. 
+It allows us to easily build individual pieces at different stages in our code
+without having to worry about putting the pieces together in a specific order. 
+The string approach is simple but a little brute-force and does 
+constrain the software development needed  to create the entire document.
+To add content to existing content requires the use of regular expressions
+or of parsing the XML content into an actual tree of nodes!
+A significant benefit of the string approach is that it can be vectorized, while
+the creation of nodes is not (and unlikely to be).
+</p><p>
+Creating nodes rather than using strings works very well when the 
+nodes being created are very different in structure/content and
+cannot easily be vectorized using string operations.  In this case,
+there is no benefit to using the string approach.
+When the nodes being created are very similar, use the string approach.
+But best of all, we can mix the two approaches.
+Often, a collection of sub-nodes within the tree are very similar,
+e.g. <font xmlns:xp="http://www.w3.org/TR/xpath" xmlns="" class="xmlTag">&lt;Placemark&gt;</font> elements in KML (the Keyhole Markup Language used for displays, e.g., 
+Google Earth).
+In this case, we can create the collection of these nodes easily using 
+</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>string methods to construct the text for the nodes</p></li><li class="listitem"><p>surround this text within a temporary, unused node</p></li><li class="listitem"><p>parse the string content as XML to create actual nodes</p></li><li class="listitem"><p>add these as children of the real XML node we constructed</p></li></ol></div><p>
+A good  example of this  is in the <a xmlns:omg="http://www.omegahat.org" xmlns:rwx="http://www.omegahat.org/RwxWidgets" xmlns="" href="http://www.omegahat.org/RKML">RKML</a> package.
+</p><p>
+This gives us the best of both worlds where we can write a function
+that returns actual XML nodes or adds those nodes to an existing parent node,
+but is capable of doing this using either approach and can chose whichever one is most appropriate.
+In this way, the implementation is encapsulated and the overall approach can use 
+the node approach rather than being forced to use the string approach throughout.
+</p><p>
+The <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//xmlOutputBuffer.html">xmlOutputBuffer()
+  </a></i> and <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//xmlOutputDOM.html">xmlOutputDOM()
+  </a></i> functions
+are means to creating an XML tree  with a higher-level  interface than strings
+made up functions for adding nodes.
+I suggest using the C-level internal nodes provided by 
+<i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//newXMLNode.html">newXMLNode()
+  </a></i> and friends.
+</p><p>
+
+</p></div><div class="section" title="JSON versus XML"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id36292921"></a>JSON versus XML</h2></div></div></div><p>
+Many REST-based Web Services are now offering to return
+results in either XML or JavaScript Object Notation (JSON)
+format.Which should you use?
+This is true when dealing with XML or JSON in an context, and not
+just Web Services. Which format should you prefer?
+In many cases, you won't have a choice and then the good news is that
+there are tools in R for both - <a xmlns:omg="http://www.omegahat.org" xmlns:rwx="http://www.omegahat.org/RwxWidgets" xmlns="" href="http://www.omegahat.org/RSXML">XML</a>, 
+<a xmlns:omg="http://www.omegahat.org" xmlns:rwx="http://www.omegahat.org/RwxWidgets" xmlns="" href="http://www.omegahat.org/RJSONIO">RJSONIO</a> and <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns=""><a href="http://cran.r-project.org/web/packages/rjson/index.html">rjson</a></i>.
+</p><p>
+The answer on which format to use depends on what you want to do with the content/document.
+If the result is large, the JSON representation is likely
+to be somewhat smaller than the XML representation and so 
+be transferred from the  server to your client machine faster.
+If the results are compressed, the size difference is not likely to be very larger.
+Furthermore, there has been a lot of silly comparisons of the size
+of JSON relative to XML by people (even on json.org) where the examples
+have used repetitious and silly XML representations.
+</p><p>
+JSON is very simple to read into R, e.g. using the
+<i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//fromJSON.html">fromJSON()
+  </a></i> function in either of the
+<a xmlns:omg="http://www.omegahat.org" xmlns:rwx="http://www.omegahat.org/RwxWidgets" xmlns="" href="http://www.omegahat.org/RJSONIO">RJSONIO</a> or <i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns=""><a href="http://cran.r-project.org/web/packages/rjson/index.html">rjson</a></i> packages.
+(<i xmlns:s3="http://www.r-project.org/S3" xmlns:cpp="http://www.cplusplus.org" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="" class="rfunc"><a href="Help//RJSONIO.html">RJSONIO()
+  </a></i> is faster as it uses a C-based parser.)
+This simplicity means less control over how the results are represented
+in R and one might need to rearrange the results in R in a second step.
+This can consume more memory than if one used XML directly, but often
+this is not an issue.
+</p><p>
+If the document is large (either in JSON or XML), and you do not want
+to extract it all but only a few fields from each record, then XML and
+XPath is likely to be more efficient in both speed and memory.
+There is no standard, widely implemented equivalent of XPath for JSON.
+(There are implementations of <a class="ulink" href="http://bluelinecity.com/software/jpath/" target="_top">JPath</a>
+but that is not a standard and is implemented only in JavaScript and so not easily brought
+into R (although we use <a xmlns:omg="http://www.omegahat.org" xmlns:rwx="http://www.omegahat.org/RwxWidgets" xmlns="" href="http://www.omegahat.org/SpiderMonkey">SpiderMonkey</a> to call JavaScript code from R).)
+</p><p>
+Basically, JSON is slightly more succinct than XML and that is good,
+but not as much as is touted by some people and compression can effectively remove 
+that distinction.  JSON is less complex, but less general.  It works very well
+for dealing with common, raw, basic data structures we use in much of computing. It
+does not deal well with structured aggregates and more complex, class-oriented structures.
+</p></div></div></body></html>

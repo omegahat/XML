@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# This cleans up after the auxillary files that were created when installing
+# the XML package. The R INSTALL command takes care of the others.
+#
+# This is a slightly modified version of Torsten Hothorn's original contribution
+# to work using the Bourne shell and for non-GNU versions of test.
+ 
+
+echo "  Cleaning up after installing the XML package"
+
+for f in config.log config.status config.cache ; do
+  if test -w $f ; then
+    rm -f $f
+  fi
+done
+
+for f in src/Makevars R/supports.R inst/scripts/RSXML.csh inst/scripts/RSXML.bsh src/Makevars ; do
+ if test -w $f ; then
+      rm -f $f
+ fi
+done
+
+
+exit 0   

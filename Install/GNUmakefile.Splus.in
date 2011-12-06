@@ -1,0 +1,9 @@
+
+compile:
+	(cd src ; @SPLUS@ make)
+	(cd src ; echo 'for(i in unix("ls ../R/*.R")){print(i); source(i)}' | @SPLUS@)
+
+install:
+
+libxmlpatch:
+	 (PWD=`pwd`; export PWD ; cd $(LIBXML) ; patch -f <  $(PWD)/libxml/PATCH.libxml)	

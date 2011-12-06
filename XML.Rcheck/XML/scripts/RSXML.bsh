@@ -1,0 +1,4 @@
+if test -n "-L/usr/local/lib -lxml2 -lz -lpthread -liconv -lm" ; then
+ LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:-L/usr/local/lib -lxml2 -lz -lpthread -liconv -lm
+ export LD_LIBRARY_PATH 
+fi

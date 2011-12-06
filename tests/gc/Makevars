@@ -1,0 +1,2 @@
+PKG_CPPFLAGS=$(shell pkg-config --cflags libxml-2.0)
+PKG_LIBS=$(shell pkg-config --libs libxml-2.0)

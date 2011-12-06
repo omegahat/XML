@@ -1,0 +1,37 @@
+[Done] 
+  xmlName
+  xmlAttrs
+  xmlGetAttr
+  xmlSize
+  xmlChildren<-
+  addChildren
+  xmlChildren
+coercion
+xmlParent
+
+xmlNamespace
+xmlNamespaces
+getSibling
+xmlNamespaceDefinitions
+xmlSApply/xmlApply
+xmlAncestors
+
+xmlValue
+
+
+addNode
+addSibling
+removeChildren
+removeNodes
+removeXMLNamespaces
+replaceNodes
+
+newXMLNamespace
+append
+
+docName & docName<-
+
+names
+
+getNodeSet
+xpathApply

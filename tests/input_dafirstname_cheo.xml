@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<functionlist>
+	<function name="doDAFirstName_bar">
+      <parametergroup name="actioncol">
+        <parameter>
+           <name>1</name>
+           <value>1</value>
+        </parameter>
+      </parametergroup>  	 
+      <parametergroup name="firstname">
+        <parameter>
+           <name>FIRSTNAME</name>
+           <value>cafèv</value>
+        </parameter>
+      </parametergroup>       
+      <parametergroup name="uniquevalue">
+        <parameter>
+           <name>GENDER</name>
+           <value></value>
+        </parameter>
+      </parametergroup>         
+      <parametergroup name="GENDER">
+        <parameter>
+           <name>male</name>
+           <value>Lefèvre</value>
+        </parameter>
+        <parameter>
+           <name>female</name>
+           <value>Lefè</value>
+        </parameter>
+      </parametergroup>  
+	    <inputfilelist>
+		   <file>
+		  	<name>xxx.csv</name>
+		  	<path>c:/mydoc/input/</path>
+	  		<type>T</type>
+		   </file>	
+	    </inputfilelist>     
+	    <outputfilelist>
+		   <file>
+		  	<name>outxxx.csv</name>
+		  	<path>c:/mydoc/input/</path>
+	  		<type>T</type>
+		   </file>	
+	    </outputfilelist>  	    
+	</function>
+</functionlist>

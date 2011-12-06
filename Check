@@ -1,0 +1,2 @@
+addFinalizer in RS_XML_ParseTree and xmlParse().
+  Applies to how we pass the node back to the R functions.

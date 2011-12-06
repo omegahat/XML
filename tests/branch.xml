@@ -1,0 +1,13 @@
+<top>
+
+<doit id="a">
+  <more>text</more>
+  <el id="a">bob</el>
+</doit>
+
+<doit id="b">
+  <more>more text</more>
+  <el id="b">jane</el>
+</doit>
+
+</top>

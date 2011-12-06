@@ -1,0 +1,223 @@
+R=1
+USE_NAMESPACE=1
+
+ifdef R
+createRPackage::
+else
+createSPackage::
+endif
+
+createSPackage:
+	$(MAKE) createPackage S=1
+
+include $(OMEGA_HOME)/Config/local.config
+include Install/VersionInfo
+
+R_WORK_PACKAGE=/tmp/R/$(PKG_NAME)
+S_WORK_PACKAGE=/tmp/S/$(PKG_NAME)
+
+R_PACKAGE_SUBDIRS=\
+  R man src \
+  inst/Docs inst/data inst/data/xinclude inst/examples inst/scripts \
+  inst/libxml 
+
+# inst/expat
+
+S_PACKAGE_SUBDIRS=\
+  src .Data .Data/__Help .Data/__Meta src \
+  Docs data examples scripts \
+  libxml expat
+
+
+R_PACKAGE_FILES=\
+  Install/DESCRIPTION \
+  INDEX \
+  Install/cleanup \
+  Install/INSTALL \
+  Install/configure \
+  Install/configure.in \
+  Install/configure.win \
+  Install/README \
+  Install/FAQ.html \
+  Changes \
+  Install/Changes.html\
+  Install/cleanup.in \
+
+
+S_PACKAGE_FILES=$(R_PACKAGE_FILES)
+MAN_FILES=$(shell find man -maxdepth 1 -name '*.Rd')
+
+TEX_DOC_FILES=Docs/MathML Docs/Outline Docs/description Docs/manual Docs/Tour
+
+XML_FILES=Docs/shortIntro examples/gettingStarted
+DOC_FILES= $(TEX_DOC_FILES:%=%.$(DEFAULT_TEX_TARGET)) Docs/WritingXML.html \
+        $(XML_FILES:%=%.pdf)         $(XML_FILES:%=%.html)
+
+DOC_FILES=
+
+%.pdf: %.nw
+	$(MAKE) -C $(@D) $(@F)
+
+
+EXAMPLE_FILES=$(shell find examples -name '*.[SR]')  examples/README examples/index.html
+
+# examples/Rhelp.dtd
+
+OTHER_DATA=$(shell find ../DTDs -name '*.dtd')
+
+DATA_FILES=$(shell find data -maxdepth 1 -not -type d  -not -name '*~') $(OTHER_DATA)
+
+data1:
+	@echo $(DATA_FILES)
+
+R_SRC_FILES=\
+   Src/xmlTreeParse.R \
+   Src/xmlEventParse.R \
+   Src/dynSupports.R \
+   Src/parseDTD.R \
+   Src/XMLClasses.R \
+   Src/First.lib \
+   Src/DTDClasses.R \
+   Src/DTD.R \
+   Src/supports.R.in  \
+   Src/xmlHandler.R \
+   Src/xmlEventHandler.R \
+   Src/nodeAccessors.R \
+   Src/createNode.R \
+   Src/assignChild.R \
+   Src/xmlOutputBuffer.R \
+   Src/xmlOutputDOM.R \
+   Src/applyDOM.R \
+   Src/xmlTree.R \
+   Src/htmlParse.R \
+   Src/version.R \
+   Src/SAXMethods.S \
+   Src/toString.S \
+   Src/DTDRef.R \
+   Src/tree.R Src/flatTree.R \
+   Src/catalog.R Src/xmlNodes.R \
+   Src/xmlInternalSource.R  Src/error.R \
+   Src/xmlErrorEnums.R \
+   Src/schema.S \
+   Src/summary.R \
+   Src/hashTree.R \
+   Src/AAA.R \
+   Src/tangle.R \
+   Src/parser.R \
+   Src/libxmlFeatures.R \
+   Src/xmlString.R \
+   Src/saveXML.R \
+   Src/readHTMLTable.R \
+   Src/namespaces.R \
+   Src/reflection.R \
+   Src/xmlToDataFrame.R \
+   Src/bitList.R \
+   Src/compare.R \
+   Src/encoding.R \
+   Src/fixNS.R \
+   Src/serialize.R \
+   Src/xmlRoot.R \
+   Src/xmlMemoryMgmt.R
+
+
+
+
+
+
+
+C_SRC_FILES=\
+  DocParse.c \
+  EventParse.c \
+  ExpatParse.c \
+  RSDTD.c \
+  Utils.c \
+  XMLEventParse.c \
+  DocParse.h \
+  EventParse.h \
+  ExpatParse.h \
+  RSDTD.h \
+  RS_XML.h \
+  Utils.h \
+  XMLTree.c \
+  HTMLParse.c \
+  xpath.c \
+  Rcatalog.c \
+  schema.c \
+  XMLHashTree.c \
+  xmlsecurity.c \
+  libxmlFeatures.c \
+  NodeGC.c NodeGC.h
+
+ifdef R
+  C_SRC_FILES+= RUtils.c 
+else
+  C_SRC_FILES+=  SUtils.c  SUtils.h 
+endif
+
+
+C_INCLUDE_FILES=\
+  $(OMEGA_HOME)/include/Corba/RSCommon.h
+
+
+CUR_DIR=$(shell pwd)
+
+DEPENDS=$(DOC_FILES) Install/configure Install/DESCRIPTION $(C_INCLUDE_FILES)
+
+NO_CREATE_PACKAGE_RULE=1
+
+Install/DESCRIPTION: Install/DESCRIPTION.in Install/configureInstall Install/VersionInfo
+#	(cd Install ; configureInstall )
+
+#Install/configureInstall: Install/configureInstall.in
+#	(cd Install ; autoconf configureInstall.in > configureInstall)
+
+createRPackage:: $(DEPENDS) 
+	if [ -d $(R_WORK_PACKAGE) ] ; then rm -fr $(R_WORK_PACKAGE) ; fi
+	mkdir -p $(R_PACKAGE_SUBDIRS:%=$(R_WORK_PACKAGE)/%)
+	for f in $(R_PACKAGE_FILES) ; do \
+	  if [ -f $$f ] ; then \
+	     cp $$f $(R_WORK_PACKAGE) ; \
+	  fi ; done
+	cp $(R_SRC_FILES) $(R_WORK_PACKAGE)/R
+	cp Install/RSXML.bsh.in Install/RSXML.csh.in $(R_WORK_PACKAGE)/inst/scripts
+	mv $(R_WORK_PACKAGE)/R/First.lib $(R_WORK_PACKAGE)/R/zzz.R
+	cp $(C_SRC_FILES) $(C_INCLUDE_FILES) $(R_WORK_PACKAGE)/src
+	chmod u+w  $(R_WORK_PACKAGE)/src/*
+	if test -n "$(DOC_FILES)" ; then cp $(DOC_FILES) $(R_WORK_PACKAGE)/inst/Docs ; fi
+	cp FAQ.html $(R_WORK_PACKAGE)/inst/Docs
+	if test -n "$(MAN_FILES)" ; then cp $(MAN_FILES) $(R_WORK_PACKAGE)/man ; fi
+	if test -n "$(EXAMPLE_FILES)" ; then cp $(EXAMPLE_FILES) $(R_WORK_PACKAGE)/inst/examples ; fi
+	if test -n "${DATA_FILES}" ; then cp $(DATA_FILES) $(R_WORK_PACKAGE)/inst/data ; fi
+	mv $(R_WORK_PACKAGE)/inst/data $(R_WORK_PACKAGE)/inst/exampleData 
+	cp -r data/xinclude $(R_WORK_PACKAGE)/inst/exampleData/
+	cp Install/Makevars.in $(R_WORK_PACKAGE)/src/Makevars.in
+	cp Install/GNUmakefile.Splus.in $(R_WORK_PACKAGE)/
+	cp INSTALL.S $(R_WORK_PACKAGE)/INSTALL_S
+	cp INSTALL.R $(R_WORK_PACKAGE)/INSTALL_R
+	cp README.windows $(R_WORK_PACKAGE)/inst
+#	touch $(R_WORK_PACKAGE)/install.R
+	mkdir $(R_WORK_PACKAGE)/libxml
+	cp Install/Makevars.win $(R_WORK_PACKAGE)/src
+	cp libxml/PATCH.attribute libxml/GNUmakefile $(R_WORK_PACKAGE)/libxml
+	mkdir $(R_WORK_PACKAGE)/tests
+	cp gc.R gc1.R gc2.R testNew.R toList.R parent.R tt.R $(R_WORK_PACKAGE)/tests
+# USE_NAMESPACE should
+ifdef USE_NAMESPACE
+	cp NAMESPACE.in $(R_WORK_PACKAGE)
+else
+	# temporarily don't use save image
+	touch $(R_WORK_PACKAGE)/install.R
+endif
+	cp Install/testRemoveFinalizers.c Install/testRemoveFinalizers.R $(R_WORK_PACKAGE)
+	-find $(R_WORK_PACKAGE) -name '.svn' -exec rm -fr {} \;
+
+#	$(R_BIN) CMD Rdindex $(R_WORK_PACKAGE) > $(R_WORK_PACKAGE)/INDEX
+
+
+include $(OMEGA_HOME)/Config/GNUmakefile.PackageRules
+
+src:
+	@echo "$(C_SRC_FILES)"
+
+#include $(DYN_DOCS)/inst/Make/Makefile
+

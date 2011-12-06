@@ -1,0 +1,3 @@
+DocParse.c 1262  xmlMemDisplay.
+
+XMLEventParse.c R_reportDocGC  fprintf()
