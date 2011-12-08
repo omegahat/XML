@@ -1,3 +1,11 @@
+Version 3.6-2
+
+  *    Changed URL in readHTMLTable() example to new page for population of 
+       countries
+
+  *    Changes to Rprintf() rather than stderr. Still some code that uses stderr
+       intentionally.
+
 Version 3.6-1
 
   *    Fix bug which caused XMLInternalUnknownNode in xmlParent() for HTML documents.

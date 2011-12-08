@@ -1507,7 +1507,8 @@ flush(stderr()); flush(stdout())
 
 ### ** Examples
 
- u = "http://en.wikipedia.org/wiki/World_population"
+# u = "http://en.wikipedia.org/wiki/World_population"
+ u = "http://en.wikipedia.org/wiki/List_of_countries_by_population"
  
  tables = readHTMLTable(u)
  names(tables)

@@ -503,7 +503,7 @@ s,@LIBS@,|#_!!_#|,g
 s,@build_alias@,|#_!!_#|,g
 s,@host_alias@,|#_!!_#|,g
 s,@target_alias@,|#_!!_#|,g
-s,@DATE@,|#_!!_#|Tue Nov 29 16:47:00 PST 2011,g
+s,@DATE@,|#_!!_#|Tue Dec  6 08:30:09 PST 2011,g
 s,@TAR_FILE@,|#_!!_#|XML_3.6-1.tar.gz,g
 s,@ZIP_FILE@,|#_!!_#|XML_3.6-1.zip,g
 s,@MINOR_VERSION@,|#_!!_#|6,g

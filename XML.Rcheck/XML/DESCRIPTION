@@ -30,4 +30,4 @@ Collate: AAA.R DTD.R DTDClasses.R DTDRef.R SAXMethods.S
        xmlString.R saveXML.R namespaces.R readHTMLTable.R
        reflection.R xmlToDataFrame.R bitList.R compare.R
        encoding.R fixNS.R xmlRoot.R serialize.R xmlMemoryMgmt.R
-Built: R 2.15.0; x86_64-apple-darwin11.0.0; 2011-11-30 00:25:41 UTC; unix
+Built: R 2.15.0; x86_64-apple-darwin11.0.0; 2011-12-08 00:49:02 UTC; unix

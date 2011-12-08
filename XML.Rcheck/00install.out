@@ -243,34 +243,34 @@ XMLTree.c: In function ‘R_convertXMLNsRef’:
 XMLTree.c:922: warning: pointer targets in passing argument 1 of ‘Rf_mkString’ differ in signedness
 XMLTree.c:912: warning: unused variable ‘ref’
 XMLTree.c: In function ‘R_createXMLNodeRefDirect’:
-XMLTree.c:1022: warning: cast from pointer to integer of different size
+XMLTree.c:1025: warning: cast from pointer to integer of different size
 XMLTree.c: In function ‘R_createXMLNodeRef’:
-XMLTree.c:1059: warning: cast from pointer to integer of different size
-XMLTree.c:1060: warning: cast from pointer to integer of different size
-XMLTree.c:1064: warning: assignment makes integer from pointer without a cast
+XMLTree.c:1062: warning: cast from pointer to integer of different size
+XMLTree.c:1063: warning: cast from pointer to integer of different size
+XMLTree.c:1067: warning: assignment makes integer from pointer without a cast
 XMLTree.c: In function ‘R_addXMLNodeFinalizer’:
-XMLTree.c:1088: warning: unused variable ‘node’
+XMLTree.c:1091: warning: unused variable ‘node’
 XMLTree.c: In function ‘R_saveXMLDOM’:
-XMLTree.c:1209: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
-XMLTree.c:1208: warning: unused variable ‘encoding’
+XMLTree.c:1212: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLTree.c:1211: warning: unused variable ‘encoding’
 XMLTree.c: In function ‘RS_XML_printXMLNode’:
-XMLTree.c:1381: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLTree.c:1384: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
 XMLTree.c: In function ‘R_setXMLInternalTextNode_value’:
-XMLTree.c:1410: warning: unused variable ‘encoding’
-XMLTree.c:1407: warning: unused variable ‘tmp’
+XMLTree.c:1413: warning: unused variable ‘encoding’
+XMLTree.c:1410: warning: unused variable ‘tmp’
 XMLTree.c: In function ‘R_xmlNodeValue’:
-XMLTree.c:1463: warning: pointer targets in passing argument 1 of ‘Rf_mkCharCE’ differ in signedness
-XMLTree.c:1441: warning: unused variable ‘encoding’
+XMLTree.c:1466: warning: pointer targets in passing argument 1 of ‘Rf_mkCharCE’ differ in signedness
+XMLTree.c:1444: warning: unused variable ‘encoding’
 XMLTree.c: In function ‘R_xmlNsAsCharacter’:
-XMLTree.c:1493: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
-XMLTree.c:1495: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLTree.c:1496: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
+XMLTree.c:1498: warning: pointer targets in passing argument 1 of ‘Rf_mkChar’ differ in signedness
 XMLTree.c: In function ‘R_XML_indexOfChild’:
-XMLTree.c:1545: warning: unused variable ‘parent’
+XMLTree.c:1548: warning: unused variable ‘parent’
 XMLTree.c: In function ‘R_xmlSearchNs’:
-XMLTree.c:1622: warning: comparison of distinct pointer types lacks a cast
-XMLTree.c:1630: warning: pointer targets in passing argument 3 of ‘xmlSearchNs’ differ in signedness
-XMLTree.c:1630: warning: pointer targets in passing argument 3 of ‘xmlSearchNsByHref’ differ in signedness
-XMLTree.c:1636: warning: pointer targets in passing argument 1 of ‘Rf_mkString’ differ in signedness
+XMLTree.c:1625: warning: comparison of distinct pointer types lacks a cast
+XMLTree.c:1633: warning: pointer targets in passing argument 3 of ‘xmlSearchNs’ differ in signedness
+XMLTree.c:1633: warning: pointer targets in passing argument 3 of ‘xmlSearchNsByHref’ differ in signedness
+XMLTree.c:1639: warning: pointer targets in passing argument 1 of ‘Rf_mkString’ differ in signedness
 gcc -std=gnu99 -I/Users/duncan/Projects/R-new-devel/include -DNDEBUG -DLIBXML -I/usr/local/include/libxml2 -DUSE_EXTERNAL_SUBSET=1 -DROOT_HAS_DTD_NODE=1 -DDUMP_WITH_ENCODING=1 -DUSE_XML_VERSION_H=1 -DXML_ELEMENT_ETYPE=1 -DXML_ATTRIBUTE_ATYPE=1 -DNO_XML_HASH_SCANNER_RETURN=1 -DLIBXML_NAMESPACE_HAS_CONTEXT=1 -DHAVE_R_CETYPE_T=1 -DHAVE_XML_WITH_ZLIB=1 -DHAVE_XML_HAS_FEATURE=1 -DUSE_R=1 -D_R_=1  -DHAVE_VALIDITY=1 -DXML_REF_COUNT_NODES=1  -I. -DLIBXML2=1 -g -Wall    -fPIC  -g -Wall -c libxmlFeatures.c -o libxmlFeatures.o
 gcc -std=gnu99 -I/Users/duncan/Projects/R-new-devel/include -DNDEBUG -DLIBXML -I/usr/local/include/libxml2 -DUSE_EXTERNAL_SUBSET=1 -DROOT_HAS_DTD_NODE=1 -DDUMP_WITH_ENCODING=1 -DUSE_XML_VERSION_H=1 -DXML_ELEMENT_ETYPE=1 -DXML_ATTRIBUTE_ATYPE=1 -DNO_XML_HASH_SCANNER_RETURN=1 -DLIBXML_NAMESPACE_HAS_CONTEXT=1 -DHAVE_R_CETYPE_T=1 -DHAVE_XML_WITH_ZLIB=1 -DHAVE_XML_HAS_FEATURE=1 -DUSE_R=1 -D_R_=1  -DHAVE_VALIDITY=1 -DXML_REF_COUNT_NODES=1  -I. -DLIBXML2=1 -g -Wall    -fPIC  -g -Wall -c schema.c -o schema.o
 schema.c: In function ‘getKeys’:

@@ -30,8 +30,8 @@ Kernel configured for up to 4 processors.
 Processor type: i486 (Intel 80486)
 Processors active: 0 1 2 3
 Primary memory available: 8.00 gigabytes
-Default processor set: 206 tasks, 869 threads, 4 processors
-Load average: 3.66, Mach factor: 1.18
+Default processor set: 242 tasks, 1034 threads, 4 processors
+Load average: 5.80, Mach factor: 0.56
 /bin/machine           = unknown
 /usr/bin/oslevel       = unknown
 /bin/universe          = unknown
@@ -101,7 +101,7 @@ ac_cv_env_target_alias_value=
 ## Output variables. ##
 ## ----------------- ##
 
-DATE='Tue Nov 29 16:47:00 PST 2011'
+DATE='Tue Dec  6 08:30:09 PST 2011'
 DEFS='-DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\"'
 ECHO_C=''
 ECHO_N='-n'

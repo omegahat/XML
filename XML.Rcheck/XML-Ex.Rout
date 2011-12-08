@@ -738,8 +738,6 @@ $c
 >       tt = as(xmlParse(f), "XMLHashTree")
 >        x = xmlRoot(tt, skip = FALSE)
 >        getSibling(x)
-<!-- Initial Comment -->
->        getSibling(getSibling(x), after = FALSE)
 <gjob:Helping xmlns:gjob="http://www.gnome.org/some-location">
  <gjob:Jobs>
   <gjob:Job>
@@ -775,6 +773,8 @@ $c
   </gjob:Job>
  </gjob:Jobs>
 </gjob:Helping>
+>        getSibling(getSibling(x), after = FALSE)
+<!-- Initial Comment -->
 > 
 > 
 > 
@@ -4222,91 +4222,722 @@ NULL
 > 
 > ### ** Examples
 > 
->  u = "http://en.wikipedia.org/wiki/World_population"
+> # u = "http://en.wikipedia.org/wiki/World_population"
+>  u = "http://en.wikipedia.org/wiki/List_of_countries_by_population"
 >  
 >  tables = readHTMLTable(u)
 >  names(tables)
- [1] "toc"                                                                                                                                                         
- [2] "NULL"                                                                                                                                                        
- [3] "NULL"                                                                                                                                                        
- [4] "World population milestones (USCB estimates)"                                                                                                                
- [5] "The 10 countries with the largest total population:"                                                                                                         
- [6] "The 10 most densely populated countries (with population above 1 million)"                                                                                   
- [7] "Countries ranking highly in terms of both total population (more than 15 million people) and population density (more than 250 people per square kilometer):"
- [8] "NULL"                                                                                                                                                        
- [9] "UN (medium variant, 2010 rev.) and US Census Bureau (December 2010) estimates[81][82]"                                                                       
-[10] "UN 2008 estimates and medium variant projections (in millions)[84]"                                                                                          
-[11] "World historical and predicted populations (in millions)[88][89][citation needed]"                                                                           
-[12] "World historical and predicted populations by percentage distribution [88][89][citation needed]"                                                             
-[13] "Estimated world population at various dates (in millions)[citation needed]"                                                                                  
-[14] "Starting at 500 million"                                                                                                                                     
-[15] "Starting at 375 million"                                                                                                                                     
-[16] "NULL"                                                                                                                                                        
-[17] "NULL"                                                                                                                                                        
-[18] "NULL"                                                                                                                                                        
-[19] "NULL"                                                                                                                                                        
+[1] "toc"  "NULL" "NULL" "NULL" "NULL"
 > 
 >  tables[[2]]
-                                                                                                                                                                                                                                                                                                                                                            World population (millions)[12]
-1                                                                                                                                                                                                                                                                                                                                                                                         #
-2                                                                                                                                                                                                                                                                                                                                                                                         1
-3                                                                                                                                                                                                                                                                                                                                                                                         2
-4                                                                                                                                                                                                                                                                                                                                                                                         3
-5                                                                                                                                                                                                                                                                                                                                                                                         4
-6                                                                                                                                                                                                                                                                                                                                                                                         5
-7                                                                                                                                                                                                                                                                                                                                                                                         6
-8                                                                                                                                                                                                                                                                                                                                                                                         7
-9                                                                                                                                                                                                                                                                                                                                                                                         8
-10                                                                                                                                                                                                                                                                                                                                                                                        9
-11                                                                                                                                                                                                                                                                                                                                                                                       10
-12                                                                                                                                                                                                                                                                                                                                                                                         
-13                                                                                                                                                                                                                                                                                                                                                                                         
-14                                                                                                                                                                                                                                                                                                                                                                                        1
-15                                                                                                                                                                                                                                                                                                                                                                                         
-16                                                                                                                                                                                                                                                                                                                                                                                         
-17                                                                                                                                                                                                                                                                                                                                                                                        2
-18                                                                                                                                                                                                                                                                                                                                                                                        3
-19                                                                                                                                                                                                                                                                                                                                                                                         
-20                                                                                                                                                                                                                                                                                                                                                                                         
-21                                                                                                                                                                                                                                                                                                                                                                                        4
-22                                                                                                                                                                                                                                                                                                                                                                                        5
-23                                                                                                                                                                                                                                                                                                                                                                                        6
-24                                                                                                                                                                                                                                                                                                                                                                                         
-25                                                                                                                                                                                                                                                                                                                                                                                         
-26                                                                                                                                                                                                                                                                                                                                                                                         
-27                                                                                                                                                                                                                                                                                                                                                                                         
-28                                                                                                                                                                                                                                                                                                                                                                                         
-29 Geographical definitions as in IEA Key Stats 2010 p.66\nNotes:\nEurope = OECD Europe + Non-OECD Europe and\nexcluding Russia and including Estonia, Latvia and Lithuania\nex Soviet Union (SU) = SU excluding Russia and Baltic states\nNorth America = US, Canada, Mexico\nOECD Pacific = Australia, Japan, Korea, New Zealand\n2025 = with constant annual 2007/2008 growth until 2025
-                           NA     NA     NA     NA
-1       Top ten most populous   1990   2008  2025*
-2                       China  1,141  1,333  1,458
-3                       India    849  1,140  1,398
-4                          US    250    304    352
-5                   Indonesia    178    228    273
-6                      Brazil    150    192    223
-7                    Pakistan    108    166    226
-8                  Bangladesh    116    160    198
-9                     Nigeria     94    151    208
-10                     Russia    148    142    137
-11                      Japan    124    128    126
-12                World total  5,265  6,688  8,004
-13  Top ten most populous (%) 60.0 % 58.9 % 57.5 %
-14                       Asia  1,613  2,183  2,693
-15                    + China  1,141  1,333  1,458
-16            + OECD Pacific*    187    202    210
-17                     Africa    634    984  1,365
-18                    Europe*    564    603    659
-19                   + Russia    148    142    137
-20         + ex Soviet Union*    133    136    146
-21              Latin America    355    462    550
-22             North America*    359    444    514
-23                Middle East    132    199    272
-24                       <NA>   <NA>   <NA>   <NA>
-25                  Australia     17     22     28
-26 European Union – 27 states    473    499    539
-27                US + Canada    278    338    392
-28            Ex Soviet Union    289    285    289
-29                       <NA>   <NA>   <NA>   <NA>
+    Rank                  Country (or dependent territory)    Population
+1      -                                             World 6,979,800,000
+2      1                                          China[4] 1,339,724,852
+3      2                                             India 1,210,193,422
+4      3                                     United States   312,737,000
+5      4                                         Indonesia   237,641,326
+6      5                                            Brazil   190,755,799
+7      6                                          Pakistan   178,025,000
+8      7                                           Nigeria   162,471,000
+9      8                                            Russia   142,914,136
+10     9                                        Bangladesh   142,319,000
+11    10                                             Japan   127,720,000
+12    11                                            Mexico   112,336,538
+13    12                                       Philippines    94,013,200
+14    13                                           Vietnam    85,846,997
+15    14                                          Ethiopia    82,101,998
+16    15                                           Germany    81,729,000
+17    16                                             Egypt    81,210,000
+18    17                                              Iran    75,895,000
+19    18                                            Turkey    73,722,988
+20    19                                          Thailand    69,519,000
+21    20                  Democratic Republic of the Congo    67,758,000
+22    21                                         France[5]    65,027,000
+23    22                                    United Kingdom    62,300,000
+24    23                                             Italy    60,705,991
+25    24                                      South Africa    50,586,757
+26    25                                           Myanmar    48,337,000
+27    26                                       South Korea    48,219,000
+28    27                                          Colombia    46,283,000
+29    28                                             Spain    46,162,024
+30    29                                           Ukraine    45,668,028
+31    30                                          Tanzania    43,188,000
+32    31                                         Argentina    40,117,096
+33    32                                             Kenya    38,610,097
+34    33                                            Poland    38,092,000
+35    34                                           Algeria    36,300,000
+36    35                                            Canada    34,482,779
+37    36                                            Uganda    32,939,800
+38    37                                           Morocco    32,398,900
+39    38                                       Afghanistan    32,358,000
+40    39                                              Iraq    32,105,000
+41    40                                          Sudan[6]    30,894,000
+42    41                                              Peru    29,797,694
+43    42                                         Venezuela    29,471,000
+44    43                                          Malaysia    28,334,135
+45    44                                        Uzbekistan    28,000,000
+46    45                                      Saudi Arabia    27,136,977
+47    46                                             Nepal    26,620,809
+48    47                                             Ghana    24,233,431
+49    48                                       North Korea    24,052,231
+50    49                                             Yemen    23,833,000
+51    50                                         Taiwan[7]    23,197,947
+52    51                                        Mozambique    23,049,621
+53    52                                         Australia    22,784,672
+54    53                                           Romania    21,436,000
+55    54                                     Côte d'Ivoire    21,395,000
+56    55                                             Syria    21,344,000
+57    56                                         Sri Lanka    20,653,000
+58    57                                            Angola    19,618,000
+59    58                                          Cameroon    19,406,100
+60    59                                        Madagascar    18,866,000
+61    60                                             Chile    17,248,450
+62    61                                       Netherlands    16,715,489
+63    62                                        Kazakhstan    16,615,000
+64    63                                      Burkina Faso    15,730,977
+65    64                                             Niger    15,730,754
+66    65                                         Guatemala    14,713,763
+67    66                                              Mali    14,517,176
+68    67                                           Ecuador    14,483,499
+69    68                                          Cambodia    13,395,682
+70    69                                            Malawi    13,077,160
+71    70                                            Zambia    13,046,508
+72    71                                           Senegal    12,855,153
+73    72                                          Zimbabwe    12,754,000
+74    73                                              Chad    11,274,106
+75    74                                              Cuba    11,241,161
+76    75                                           Belgium    10,839,905
+77    76                                            Greece    10,787,690
+78    77                                            Rwanda    10,718,379
+79    78                                           Tunisia    10,673,800
+80    79                                          Portugal    10,555,853
+81    80                                    Czech Republic    10,542,080
+82    81                                           Bolivia    10,426,154
+83    82                                            Guinea    10,217,591
+84    83                                             Haiti    10,085,214
+85    84                                           Hungary     9,985,722
+86    85                                        Somalia[8]     9,557,000
+87    86                                            Sweden     9,471,174
+88    87                                           Belarus     9,468,000
+89    88                                Dominican Republic     9,378,818
+90    89                                        Azerbaijan     9,111,100
+91    90                                             Benin     9,100,000
+92    91                                           Burundi     8,575,000
+93    92                                           Austria     8,419,776
+94    93                              United Arab Emirates     8,264,070
+95    94                                       South Sudan     8,260,490
+96    95                                          Honduras     8,215,313
+97    96                                       Switzerland     7,870,100
+98    97                                            Israel     7,798,600
+99    98                                        Tajikistan     7,616,000
+100   99                                          Bulgaria     7,364,570
+101  100                                         Serbia[9]     7,120,666
+102  101                             Hong Kong (China)[10]     7,108,100
+103  102                                  Papua New Guinea     7,014,000
+104  103                                             Libya     6,423,000
+105  104                                              Laos     6,348,800
+106  105                                          Paraguay     6,337,127
+107  106                                            Jordan     6,240,200
+108  107                                       El Salvador     6,227,000
+109  108                                      Sierra Leone     5,997,000
+110  109                                         Nicaragua     5,815,524
+111  110                                              Togo     5,753,324
+112  111                                           Denmark     5,579,204
+113  112                                        Kyrgyzstan     5,477,600
+114  113                                          Slovakia     5,437,126
+115  114                                           Eritrea     5,415,000
+116  115                                       Finland[11]     5,396,292
+117  116                                         Singapore     5,183,700
+118  117                                      Turkmenistan     5,105,000
+119  118                                            Norway     4,988,300
+120  119                                           Ireland     4,581,269
+121  120                                        Costa Rica     4,563,539
+122  121                          Central African Republic     4,487,000
+123  122                                       Georgia[12]     4,469,200
+124  123                                       New Zealand     4,431,100
+125  124                                           Croatia     4,290,612
+126  125                                           Lebanon     4,259,000
+127  126                       Palestinian territories[13]     4,168,858
+128  127                             Republic of the Congo     4,140,000
+129  128                            Bosnia and Herzegovina     3,843,126
+130  129                                       Puerto Rico     3,725,789
+131  130                                       Moldova[14]     3,560,400
+132  131                                           Liberia     3,476,608
+133  132                                            Panama     3,405,813
+134  133                                           Uruguay     3,368,595
+135  134                                        Mauritania     3,340,627
+136  135                                           Armenia     3,266,300
+137  136                                         Lithuania     3,207,100
+138  137                                           Albania     3,194,972
+139  138                                            Kuwait     2,818,000
+140  139                                              Oman     2,773,479
+141  140                                          Mongolia     2,736,800
+142  141                                           Jamaica     2,705,800
+143  142                                           Namibia     2,324,000
+144  143                                            Latvia     2,209,000
+145  144                                           Lesotho     2,194,000
+146  145                                         Macedonia     2,057,284
+147  146                                          Slovenia     2,055,380
+148  147                                          Botswana     2,031,000
+149  148                                            Gambia     1,776,000
+150  149                                             Qatar     1,699,435
+151  150                                             Gabon     1,534,000
+152  151                                     Guinea-Bissau     1,520,830
+153  152                                           Estonia     1,340,194
+154  153                               Trinidad and Tobago     1,317,714
+155  154                                     Mauritius[15]     1,280,924
+156  155                                           Bahrain     1,234,571
+157  156                                         Swaziland     1,203,000
+158  157                                       Timor-Leste     1,066,409
+159  158                                              Fiji       868,000
+160  159                                          Djibouti       818,159
+161  160                                  Réunion (France)       808,250
+162  161                                        Cyprus[16]       803,200
+163  162                                            Guyana       784,894
+164  163                                       Comoros[17]       754,000
+165  164                                 Equatorial Guinea       720,000
+166  165                                            Bhutan       708,265
+167  166                                        Montenegro       620,029
+168  167                                 Macau (China)[18]       560,100
+169  168                                    Western Sahara       548,000
+170  169                                   Solomon Islands       542,287
+171  170                                          Suriname       529,000
+172  171                                        Luxembourg       511,840
+173  172                                        Cape Verde       491,575
+174  173                                            Brunei       422,700
+175  174                                             Malta       417,617
+176  175                               Guadeloupe (France)       401,784
+177  176                               Martinique (France)       397,693
+178  177                                           Bahamas       353,658
+179  178                                           Iceland       318,452
+180  179                                          Maldives       317,280
+181  180                                            Belize       312,698
+182  181                                          Barbados       276,302
+183  182                                  French Polynesia       274,000
+184  183                            New Caledonia (France)       245,580
+185  184                                           Vanuatu       234,023
+186  185                                     French Guiana       219,266
+187  186                                  Mayotte (France)       211,000
+188  187                                             Samoa       184,032
+189  188                             São Tomé and Príncipe       169,000
+190  189                                       Saint Lucia       166,526
+191  190                                        Guam (USA)       159,358
+192  191                         Curaçao (the Netherlands)       142,180
+193  192                                           Grenada       110,821
+194  193                      United States Virgin Islands       106,405
+195  194                                             Tonga       105,000
+196  195                    Federated States of Micronesia       102,624
+197  196                           Aruba (the Netherlands)       101,484
+198  197                                          Kiribati       101,000
+199  198                  Saint Vincent and the Grenadines       100,892
+200  199                                       Jersey (UK)        92,500
+201  200                                        Seychelles        90,945
+202  201                               Antigua and Barbuda        89,138
+203  202                                           Andorra        85,015
+204  203                                  Isle of Man (UK)        83,000
+205  204                                          Dominica        71,685
+206  205                                      Bermuda (UK)        64,186
+207  206                                     Guernsey (UK)        62,431
+208  207                               Greenland (Denmark)        56,890
+209  208                                    American Samoa        55,519
+210  209                               Cayman Islands (UK)        54,878
+211  210                                  Marshall Islands        54,305
+212  211                    Northern Mariana Islands (USA)        53,883
+213  212                             Saint Kitts and Nevis        51,970
+214  213                           Faroe Islands (Denmark)        48,738
+215  214                     Turks and Caicos Islands (UK)        42,375
+216  215                             Saint Martin (France)        37,163
+217  216                                     Liechtenstein        36,157
+218  217                                            Monaco        35,881
+219  218                                        San Marino        32,093
+220  219                                Gibraltar (UK)[19]        29,441
+221  220                       British Virgin Islands (UK)        28,213
+222  221                                             Palau        21,000
+223  222                                     Anguilla (UK)        15,236
+224  223                        Wallis and Futuna (France)        13,445
+225  224                                 Cook Islands (NZ)        10,900
+226  225                                             Nauru        10,000
+227  226                                            Tuvalu        10,000
+228  227                         Saint Barthélemy (France)         8,823
+229  228                Saint Pierre and Miquelon (France)         6,290
+230  229                                   Montserrat (UK)         4,932
+231  230 Saint Helena, Ascension and Tristan da Cunha (UK)         4,255
+232  231                         Falkland Islands (UK)[20]         3,000
+233  232                                         Niue (NZ)         1,000
+234  233                                      Tokelau (NZ)         1,000
+235  234                                      Vatican City           800
+                  Date % of world\npopulation
+1     December 8, 2011                100.00%
+2     November 1, 2010                 19.19%
+3        March 1, 2011                 17.34%
+4     December 8, 2011                  4.48%
+5          May 1, 2010                   3.4%
+6       August 1, 2010                  2.73%
+7     December 8, 2011                  2.55%
+8         July 1, 2011                  2.33%
+9      January 1, 2011                  2.05%
+10      March 15, 2011                  2.04%
+11     October 1, 2011                  1.83%
+12       June 12, 2010                  1.61%
+13        July 1, 2010                  1.35%
+14       April 1, 2009                  1.23%
+15        July 1, 2011                  1.18%
+16      April 30, 2011                  1.17%
+17    December 8, 2011                  1.16%
+18    December 8, 2011                  1.09%
+19   December 31, 2010                  1.06%
+20        July 1, 2011                     1%
+21        July 1, 2011                  0.97%
+22     January 1, 2011                  0.94%
+23        July 1, 2010                  0.89%
+24        May 31, 2011                  0.87%
+25        July 1, 2011                  0.72%
+26        July 1, 2011                  0.69%
+27    November 1, 2010                  0.69%
+28    December 8, 2011                  0.66%
+29     October 1, 2011                  0.66%
+30   September 1, 2011                  0.65%
+31        July 1, 2010                  0.62%
+32    October 27, 2010                  0.57%
+33     August 24, 2009                  0.55%
+34        July 1, 2010                  0.55%
+35     January 1, 2011                  0.52%
+36        July 1, 2011                  0.49%
+37        July 1, 2011                  0.47%
+38    December 8, 2011                  0.46%
+39        July 1, 2011                  0.46%
+40        July 1, 2009                  0.46%
+41      April 22, 2008                  0.44%
+42       June 30, 2011                  0.43%
+43    December 8, 2011                  0.42%
+44        July 6, 2010                  0.41%
+45     January 1, 2010                   0.4%
+46      April 28, 2010                  0.39%
+47       June 22, 2011                  0.38%
+48  September 26, 2010                  0.35%
+49     October 1, 2008                  0.34%
+50        July 1, 2011                  0.34%
+51  September 30, 2011                  0.33%
+52        July 1, 2011                  0.33%
+53    December 8, 2011                  0.33%
+54        July 1, 2011                  0.31%
+55        July 1, 2009                  0.31%
+56    December 8, 2011                  0.31%
+57        July 1, 2010                   0.3%
+58        July 1, 2011                  0.28%
+59     January 1, 2010                  0.28%
+60        July 1, 2008                  0.27%
+61       June 30, 2011                  0.25%
+62   September 1, 2011                  0.24%
+63     October 1, 2011                  0.24%
+64        July 1, 2010                  0.23%
+65        July 1, 2011                  0.23%
+66        July 1, 2011                  0.21%
+67       April 1, 2009                  0.21%
+68   November 28, 2010                  0.21%
+69       March 3, 2008                  0.19%
+70        June 1, 2008                  0.19%
+71    October 16, 2010                  0.19%
+72        July 1, 2011                  0.18%
+73        July 1, 2011                  0.18%
+74        May 20, 2009                  0.16%
+75   December 31, 2010                  0.16%
+76     January 1, 2010                  0.16%
+77        June 1, 2011                  0.15%
+78        July 1, 2011                  0.15%
+79        July 1, 2011                  0.15%
+80      March 21, 2011                  0.15%
+81       June 30, 2011                  0.15%
+82        July 1, 2010                  0.15%
+83        July 1, 2009                  0.15%
+84        July 1, 2010                  0.14%
+85     January 1, 2011                  0.14%
+86        July 1, 2011                  0.14%
+87  September 30, 2011                  0.14%
+88     October 1, 2011                  0.14%
+89    December 1, 2010                  0.13%
+90     January 1, 2011                  0.13%
+91        July 1, 2011                  0.13%
+92        July 1, 2011                  0.12%
+93        July 1, 2011                  0.12%
+94        July 1, 2010                  0.12%
+95      April 22, 2008                  0.12%
+96        July 1, 2011                  0.12%
+97        July 1, 2010                  0.11%
+98  September 30, 2011                  0.11%
+99     January 1, 2011                  0.11%
+100   February 1, 2011                  0.11%
+101 September 31, 2011                   0.1%
+102       July 1, 2011                   0.1%
+103       July 1, 2011                   0.1%
+104       July 1, 2011                 0.092%
+105       July 1, 2011                 0.091%
+106       July 1, 2010                 0.091%
+107   December 8, 2011                  0.09%
+108       July 1, 2011                 0.089%
+109       July 1, 2011                 0.086%
+110       July 1, 2010                 0.083%
+111   November 6, 2010                 0.082%
+112    October 1, 2011                  0.08%
+113       July 1, 2011                 0.078%
+114     March 31, 2011                 0.078%
+115       July 1, 2011                 0.078%
+116   October 31, 2011                 0.077%
+117      June 30, 2011                 0.074%
+118       July 1, 2011                 0.073%
+119   December 8, 2011                 0.071%
+120     April 10, 2011                 0.066%
+121       July 1, 2010                 0.065%
+122       July 1, 2011                 0.064%
+123    January 1, 2011                 0.064%
+124   December 8, 2011                 0.063%
+125     March 31, 2011                 0.061%
+126       July 1, 2011                 0.061%
+127       July 1, 2011                  0.06%
+128       July 1, 2011                 0.059%
+129      June 30, 2010                 0.055%
+130      April 1, 2010                 0.053%
+131    January 1, 2011                 0.051%
+132      April 1, 2008                  0.05%
+133       May 16, 2010                 0.049%
+134      June 30, 2011                 0.048%
+135       July 1, 2011                 0.048%
+136  September 1, 2011                 0.047%
+137    October 1, 2011                 0.046%
+138    January 1, 2010                 0.046%
+139       July 1, 2011                  0.04%
+140  December 12, 2010                  0.04%
+141       July 1, 2010                 0.039%
+142  December 31, 2010                 0.039%
+143       July 1, 2011                 0.033%
+144    October 1, 2011                 0.032%
+145       July 1, 2011                 0.031%
+146  December 31, 2010                 0.029%
+147   December 8, 2011                 0.029%
+148       July 1, 2011                 0.029%
+149       July 1, 2011                 0.025%
+150     April 21, 2010                 0.024%
+151       July 1, 2011                 0.022%
+152      March 1, 2009                 0.022%
+153    January 1, 2011                 0.019%
+154       July 1, 2010                 0.019%
+155       July 1, 2010                 0.018%
+156     April 27, 2010                 0.018%
+157       July 1, 2011                 0.017%
+158      July 11, 2010                 0.015%
+159       July 1, 2011                 0.012%
+160       June 1, 2009                 0.012%
+161    January 1, 2008                 0.012%
+162  December 31, 2009                 0.012%
+163       July 1, 2010                 0.011%
+164       July 1, 2011                 0.011%
+165       July 1, 2011                  0.01%
+166       July 1, 2011                  0.01%
+167      April 1, 2011                0.0089%
+168  September 1, 2011                 0.008%
+169       July 1, 2011                0.0079%
+170       July 1, 2011                0.0078%
+171       July 1, 2011                0.0076%
+172    January 1, 2011                0.0073%
+173      June 16, 2010                 0.007%
+174       July 1, 2011                0.0061%
+175  December 31, 2010                 0.006%
+176    January 1, 2008                0.0058%
+177    January 1, 2008                0.0057%
+178        May 3, 2010                0.0051%
+179    January 1, 2011                0.0046%
+180       July 1, 2010                0.0045%
+181       May 12, 2010                0.0045%
+182  December 31, 2010                 0.004%
+183       July 1, 2011                0.0039%
+184      July 27, 2009                0.0035%
+185  November 16, 2009                0.0034%
+186    January 1, 2008                0.0031%
+187       July 1, 2011                 0.003%
+188       July 1, 2010                0.0026%
+189       July 1, 2011                0.0024%
+190       May 10, 2010                0.0024%
+191      April 1, 2010                0.0023%
+192    January 1, 2010                 0.002%
+193       July 1, 2009                0.0016%
+194      April 1, 2010                0.0015%
+195       July 1, 2011                0.0015%
+196      April 4, 2010                0.0015%
+197 September 29, 2010                0.0015%
+198       July 1, 2011                0.0014%
+199       July 1, 2009                0.0014%
+200  December 31, 2009                0.0013%
+201    August 26, 2010                0.0013%
+202       July 1, 2009                0.0013%
+203       July 1, 2010                0.0012%
+204       July 1, 2011                0.0012%
+205       July 1, 2009                 0.001%
+206       May 20, 2010               0.00092%
+207     March 31, 2010               0.00089%
+208       July 1, 2011               0.00082%
+209      April 1, 2010                0.0008%
+210   October 10, 2010               0.00079%
+211       July 1, 2010               0.00078%
+212      April 1, 2010               0.00077%
+213       July 1, 2009               0.00074%
+214       July 1, 2011                0.0007%
+215       July 1, 2011               0.00061%
+216    January 1, 2008               0.00053%
+217  December 31, 2010               0.00052%
+218               2010               0.00051%
+219    August 31, 2011               0.00046%
+220       July 1, 2010               0.00042%
+221       July 1, 2008                0.0004%
+222       July 1, 2011                0.0003%
+223       July 1, 2011               0.00022%
+224      July 21, 2008               0.00019%
+225      March 1, 2011               0.00016%
+226       July 1, 2011               0.00014%
+227       July 1, 2011               0.00014%
+228    January 1, 2008               0.00013%
+229    January 1, 2008               0.00006%
+230       July 1, 2009               0.00005%
+231  February 10, 2008               0.00004%
+232       July 1, 2011               0.00003%
+233       July 1, 2011               0.00001%
+234       July 1, 2011               0.00001%
+235      March 1, 2011               0.00001%
+                                       Source
+1   US Census Bureau's world population clock
+2                               Census result
+3                               Census result
+4                   Official population clock
+5                               Census result
+6                               Census result
+7                   Official population clock
+8                                 UN estimate
+9                           Official estimate
+10                              Census result
+11                  Monthly official estimate
+12                              Census result
+13                          Official estimate
+14                              Census result
+15                          Official estimate
+16                  Monthly official estimate
+17                  Official population clock
+18                  Official population clock
+19                          Official estimate
+20                                UN estimate
+21                                UN estimate
+22                          Official estimate
+23                          Official estimate
+24                  Monthly official estimate
+25                          Official estimate
+26                                UN estimate
+27                              Census result
+28                  Official population clock
+29                  Monthly official estimate
+30                  Monthly official estimate
+31                          Official estimate
+32                              Census result
+33                              Census result
+34                          Official estimate
+35                          Official estimate
+36                          Official estimate
+37                          Official estimate
+38                  Official population clock
+39                                UN estimate
+40                          Official estimate
+41                              Census result
+42                          Official estimate
+43                  Official population clock
+44                              Census result
+45                          Official estimate
+46                              Census result
+47                              Census result
+48                              Census result
+49                              Census result
+50                          Official estimate
+51                  Monthly official estimate
+52                          Official estimate
+53                  Official population clock
+54                                UN estimate
+55                          Official estimate
+56                  Official population clock
+57                          Official estimate
+58                                UN estimate
+59                          Official estimate
+60                          Official estimate
+61                          Official estimate
+62                  Monthly official estimate
+63                  Monthly official estimate
+64                          Official estimate
+65                          Official estimate
+66                          Official estimate
+67                              Census result
+68                              Census result
+69                              Census result
+70                              Census result
+71                              Census result
+72                          Official estimate
+73                                UN estimate
+74                              Census result
+75                          Official estimate
+76                          Official estimate
+77                              Census result
+78                          Official estimate
+79                          Official estimate
+80                              Census result
+81                          Official estimate
+82                          Official estimate
+83                          Official estimate
+84                          Official estimate
+85                          Official estimate
+86                                UN estimate
+87                  Monthly official estimate
+88                  Monthly official estimate
+89                              Census result
+90                          Official estimate
+91                                UN estimate
+92                                UN estimate
+93                          Official estimate
+94                          Official estimate
+95                              Census result
+96                          Official estimate
+97                          Official estimate
+98                  Monthly official estimate
+99                          Official estimate
+100                             Census result
+101                             Census result
+102                         Official estimate
+103                               UN estimate
+104                               UN estimate
+105                         Official estimate
+106                         Official estimate
+107                 Official population clock
+108                               UN estimate
+109                               UN estimate
+110                         Official estimate
+111                             Census result
+112                 Monthly official estimate
+113                         Official estimate
+114                         Official estimate
+115                               UN estimate
+116                 Monthly official estimate
+117                         Official estimate
+118                               UN estimate
+119                 Official population clock
+120                             Census result
+121                         Official estimate
+122                               UN estimate
+123                         Official estimate
+124                 Official population clock
+125                             Census result
+126                               UN estimate
+127                         Official estimate
+128                               UN estimate
+129                         Official estimate
+130                             Census result
+131                         Official estimate
+132                             Census result
+133                             Census result
+134                         Official estimate
+135                         Official estimate
+136                 Monthly official estimate
+137                 Monthly official estimate
+138                         Official estimate
+139                               UN estimate
+140                             Census result
+141                         Official estimate
+142                         Official estimate
+143                               UN estimate
+144                 Monthly official estimate
+145                               UN estimate
+146                         Official estimate
+147                 Official population clock
+148                               UN estimate
+149                               UN estimate
+150                             Census result
+151                               UN estimate
+152                             Census result
+153                         Official estimate
+154                         Official estimate
+155                         Official estimate
+156                             Census result
+157                               UN estimate
+158                             Census result
+159                               UN estimate
+160                             Census result
+161                         Official estimate
+162                         Official estimate
+163                         Official estimate
+164                               UN estimate
+165                               UN estimate
+166                         Official estimate
+167                             Census result
+168                         Official estimate
+169                               UN estimate
+170                         Official estimate
+171                               UN estimate
+172                         Official estimate
+173                             Census result
+174                         Official estimate
+175                         Official estimate
+176                         Official estimate
+177                         Official estimate
+178                             Census result
+179                         Official estimate
+180                         Official estimate
+181                             Census result
+182                         Official estimate
+183                               UN estimate
+184                             Census result
+185                             Census result
+186                         Official estimate
+187                               UN estimate
+188                         Official estimate
+189                               UN estimate
+190                             Census result
+191                             Census result
+192                         Official estimate
+193                         Official estimate
+194                             Census result
+195                               UN estimate
+196                             Census result
+197                             Census result
+198                               UN estimate
+199                         Official estimate
+200                         Official estimate
+201                             Census result
+202                         Official estimate
+203                         Official estimate
+204                               UN estimate
+205                         Official estimate
+206                             Census result
+207                         Official estimate
+208                         Official estimate
+209                             Census result
+210                             Census result
+211                         Official estimate
+212                             Census result
+213                         Official estimate
+214                 Monthly official estimate
+215                         Official estimate
+216                             Census result
+217                         Official estimate
+218                         Official estimate
+219                 Monthly official estimate
+220                         Official estimate
+221                         Official estimate
+222                               UN estimate
+223                         Official estimate
+224                             Census result
+225                 Monthly official estimate
+226                               UN estimate
+227                               UN estimate
+228                             Census result
+229                             Census result
+230                         Official estimate
+231                             Census result
+232                               UN estimate
+233                               UN estimate
+234                               UN estimate
+235                         Official estimate
 >   # Print the table. Note that the values are all characters
 >   # not numbers. Also the column names have a preceding X since
 >   # R doesn't allow the variable names to start with digits.
@@ -4317,8 +4948,12 @@ NULL
 >  vals = cbind(year = as.integer(gsub("X", "", names(tmp)[-1])),
 +               matrix(as.integer(gsub(",", "", as.character(unlist(tmp[-1])))),
 +                       ncol(tmp)-1, byrow = TRUE, dimnames = list(NULL, as.character(tmp[[1]]))))
+Warning in cbind(year = as.integer(gsub("X", "", names(tmp)[-1])), matrix(as.integer(gsub(",",  :
+  NAs introduced by coercion
 Warning in matrix(as.integer(gsub(",", "", as.character(unlist(tmp[-1])))),  :
   NAs introduced by coercion
+Warning in matrix(as.integer(gsub(",", "", as.character(unlist(tmp[-1])))),  :
+  inaccurate integer conversion in coercion
 > 
 >    # Let's just read the second table directly by itself.
 >  doc = htmlParse(u)
@@ -4337,6 +4972,914 @@ Warning in matrix(as.integer(gsub(",", "", as.character(unlist(tmp[-1])))),  :
 +                 }
 > 
 >  tb = readHTMLTable(tableNodes[[2]], elFun = tryAsInteger)
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : inaccurate integer conversion in coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
 Warning in function (node)  : NAs introduced by coercion
 Warning in function (node)  : NAs introduced by coercion
 Warning in function (node)  : NAs introduced by coercion
@@ -4373,6 +5916,914 @@ Warning in function (node)  : NAs introduced by coercion
 > 
 >  tb = readHTMLTable(tableNodes[[2]], elFun = tryAsInteger,
 +                        colClasses = c("character", rep("integer", 9)))
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : inaccurate integer conversion in coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
+Warning in function (node)  : NAs introduced by coercion
 Warning in function (node)  : NAs introduced by coercion
 Warning in function (node)  : NAs introduced by coercion
 Warning in function (node)  : NAs introduced by coercion
@@ -4499,7 +6950,7 @@ detaching ‘package:RCurl’, ‘package:bitops’
 > 
 >  f = tempfile()
 >  saveXML(b, f)
-[1] "/var/folders/f8/2dd5rdyx1bjbw4jttt0x1hm80000gn/T//RtmptuGCKQ/file8c4630036ee"
+[1] "/var/folders/f8/2dd5rdyx1bjbw4jttt0x1hm80000gn/T//Rtmp0LW1mv/file163ec4f39a2a"
 >  doc = xmlInternalTreeParse(f)
 >  saveXML(doc)
 [1] "<?xml version=\"1.0\"?>\n<bob/>\n"
@@ -4528,7 +6979,7 @@ Warning in names(ans) = names(con) :
 >  doc = xmlRoot(xmlTreeParse(f))
 >  outFile = tempfile()
 >  saveXML(doc, outFile)
-[1] "/var/folders/f8/2dd5rdyx1bjbw4jttt0x1hm80000gn/T//RtmptuGCKQ/file8c4631644cc"
+[1] "/var/folders/f8/2dd5rdyx1bjbw4jttt0x1hm80000gn/T//Rtmp0LW1mv/file163ec150e3df0"
 >  alt = xmlRoot(xmlTreeParse(outFile))
 >  if(! identical(doc, alt) )
 +   stop("Problems handling entities!")
@@ -4598,42 +7049,42 @@ function (name, atts, ...)
 {
     con$addTag(name, attrs = atts, close = FALSE)
 }
-<environment: 0x7fa8ed06c340>
+<environment: 0x7ff6a5f8d278>
 
 $endElement
 function (name) 
 {
     con$closeTag(name)
 }
-<environment: 0x7fa8ed06c340>
+<environment: 0x7ff6a5f8d278>
 
 $processingInstruction
 function (sys, value) 
 {
     con$addNode(xmlPINode(sys, value))
 }
-<environment: 0x7fa8ed06c340>
+<environment: 0x7ff6a5f8d278>
 
 $text
 function (x, ...) 
 {
     con$addNode(xmlTextNode(x))
 }
-<environment: 0x7fa8ed06c340>
+<environment: 0x7ff6a5f8d278>
 
 $comment
 function (x, ...) 
 {
     xmlCommentNode(x)
 }
-<environment: 0x7fa8ed06c340>
+<environment: 0x7ff6a5f8d278>
 
 $externalEntity
 function (ctxt, baseURI, sysId, publicId, ...) 
 {
     cat("externalEntity", ctxt, baseURI, sysId, publicId, "\n")
 }
-<environment: 0x7fa8ed06c340>
+<environment: 0x7ff6a5f8d278>
 
 $entityDeclaration
 function (name, baseURI, sysId, publicId, notation, ...) 
@@ -4641,14 +7092,14 @@ function (name, baseURI, sysId, publicId, notation, ...)
     cat("externalEntity", name, baseURI, sysId, publicId, notation, 
         "\n")
 }
-<environment: 0x7fa8ed06c340>
+<environment: 0x7ff6a5f8d278>
 
 $dom
 function () 
 {
     con
 }
-<environment: 0x7fa8ed06c340>
+<environment: 0x7ff6a5f8d278>
 
 > 
 > 
@@ -5064,42 +7515,42 @@ function (name, atts, ...)
 {
     con$addTag(name, attrs = atts, close = FALSE)
 }
-<environment: 0x7fa8f3043228>
+<environment: 0x7ff6a6365f58>
 
 $endElement
 function (name) 
 {
     con$closeTag(name)
 }
-<environment: 0x7fa8f3043228>
+<environment: 0x7ff6a6365f58>
 
 $processingInstruction
 function (sys, value) 
 {
     con$addNode(xmlPINode(sys, value))
 }
-<environment: 0x7fa8f3043228>
+<environment: 0x7ff6a6365f58>
 
 $text
 function (x, ...) 
 {
     con$addNode(xmlTextNode(x))
 }
-<environment: 0x7fa8f3043228>
+<environment: 0x7ff6a6365f58>
 
 $comment
 function (x, ...) 
 {
     xmlCommentNode(x)
 }
-<environment: 0x7fa8f3043228>
+<environment: 0x7ff6a6365f58>
 
 $externalEntity
 function (ctxt, baseURI, sysId, publicId, ...) 
 {
     cat("externalEntity", ctxt, baseURI, sysId, publicId, "\n")
 }
-<environment: 0x7fa8f3043228>
+<environment: 0x7ff6a6365f58>
 
 $entityDeclaration
 function (name, baseURI, sysId, publicId, notation, ...) 
@@ -5107,14 +7558,14 @@ function (name, baseURI, sysId, publicId, notation, ...)
     cat("externalEntity", name, baseURI, sysId, publicId, notation, 
         "\n")
 }
-<environment: 0x7fa8f3043228>
+<environment: 0x7ff6a6365f58>
 
 $dom
 function () 
 {
     con
 }
-<environment: 0x7fa8f3043228>
+<environment: 0x7ff6a6365f58>
 
 > 
 > 
@@ -5637,36 +8088,36 @@ Warning in names(ans) = names(con) :
 > 
 >   fileName = system.file("exampleData", "catalog.xml", package = "XML")
 >   xmlEventParse(fileName, handlers = list(startElement = startElement, endElement = endElement))
-<pointer: 0x7fa8f2d92ba0>
+<pointer: 0x7ff6aaec5920>
 attr(,"class")
 [1] "XMLParserContext"
 [1] "catalog"
-<pointer: 0x7fa8f2d92ba0>
+<pointer: 0x7ff6aaec5920>
 attr(,"class")
 [1] "XMLParserContext"
 [1] "group"
-<pointer: 0x7fa8f2d92ba0>
+<pointer: 0x7ff6aaec5920>
 attr(,"class")
 [1] "XMLParserContext"
 [1] "public"
 ending public 
-<pointer: 0x7fa8f2d92ba0>
+<pointer: 0x7ff6aaec5920>
 attr(,"class")
 [1] "XMLParserContext"
 [1] "system"
 ending system 
-<pointer: 0x7fa8f2d92ba0>
+<pointer: 0x7ff6aaec5920>
 attr(,"class")
 [1] "XMLParserContext"
 [1] "system"
 ending system 
 ending group 
-<pointer: 0x7fa8f2d92ba0>
+<pointer: 0x7ff6aaec5920>
 attr(,"class")
 [1] "XMLParserContext"
 [1] "uri"
 ending uri 
-<pointer: 0x7fa8f2d92ba0>
+<pointer: 0x7ff6aaec5920>
 attr(,"class")
 [1] "XMLParserContext"
 [1] "rewriteURI"
@@ -5737,7 +8188,7 @@ function (node, parent = character(), ..., attrs = NULL, namespace = NULL,
     }
     return(node)
 }
-<environment: 0x7fa8ed1f4d48>
+<environment: 0x7ff6a536d718>
 
 > 
 >  tr # print the tree on the screen
@@ -6024,28 +8475,28 @@ function (name, atts, ...)
         atts <- list()
     data[[name]] <<- atts
 }
-<environment: 0x7fa8edf5a5c0>
+<environment: 0x7ff6a5f71630>
 
 $getData
 function () 
 {
     data
 }
-<environment: 0x7fa8edf5a5c0>
+<environment: 0x7ff6a5f71630>
 
 $comment
 function (x, ...) 
 {
     cat("comment", x, "\n")
 }
-<environment: 0x7fa8edf5a5c0>
+<environment: 0x7ff6a5f71630>
 
 $externalEntity
 function (ctxt, baseURI, sysId, publicId, ...) 
 {
     cat("externalEntity", ctxt, baseURI, sysId, publicId, "\n")
 }
-<environment: 0x7fa8edf5a5c0>
+<environment: 0x7ff6a5f71630>
 
 $entityDeclaration
 function (name, baseURI, sysId, publicId, notation, ...) 
@@ -6053,21 +8504,21 @@ function (name, baseURI, sysId, publicId, notation, ...)
     cat("externalEntity", name, baseURI, sysId, publicId, notation, 
         "\n")
 }
-<environment: 0x7fa8edf5a5c0>
+<environment: 0x7ff6a5f71630>
 
 $text
 function (x, ...) 
 {
     cat("MyText:", x, "\n")
 }
-<environment: 0x7fa8edf5a5c0>
+<environment: 0x7ff6a5f71630>
 
 $foo
 function (x, attrs, ...) 
 {
     cat("In foo\n")
 }
-<environment: 0x7fa8edf5a5c0>
+<environment: 0x7ff6a5f71630>
 
 > 
 > 
@@ -6386,7 +8837,7 @@ attr(,"class")
 >  xmlAttrs(a) = c(a = 1, b = "a string", append = FALSE)
 > 
 >  newXMLNamespace(a, c("r" = "http://www.r-project.org"))
-<pointer: 0x7fa8f05b6230>
+<pointer: 0x7ff6aaea3a50>
 attr(,"class")
 [1] "XMLNamespaceRef"
 >  xmlAttrs(a) = c("r:class" = "character") 
@@ -6862,36 +9313,36 @@ r:code node with id bob
 > 
 >   fileName = system.file("exampleData", "catalog.xml", package = "XML")
 >   xmlEventParse(fileName, handlers = list(startElement = startElement, endElement = endElement))
-<pointer: 0x7fa8f2dbc850>
+<pointer: 0x7ff6aaeebdd0>
 attr(,"class")
 [1] "XMLParserContext"
 [1] "catalog"
-<pointer: 0x7fa8f2dbc850>
+<pointer: 0x7ff6aaeebdd0>
 attr(,"class")
 [1] "XMLParserContext"
 [1] "group"
-<pointer: 0x7fa8f2dbc850>
+<pointer: 0x7ff6aaeebdd0>
 attr(,"class")
 [1] "XMLParserContext"
 [1] "public"
 ending public 
-<pointer: 0x7fa8f2dbc850>
+<pointer: 0x7ff6aaeebdd0>
 attr(,"class")
 [1] "XMLParserContext"
 [1] "system"
 ending system 
-<pointer: 0x7fa8f2dbc850>
+<pointer: 0x7ff6aaeebdd0>
 attr(,"class")
 [1] "XMLParserContext"
 [1] "system"
 ending system 
 ending group 
-<pointer: 0x7fa8f2dbc850>
+<pointer: 0x7ff6aaeebdd0>
 attr(,"class")
 [1] "XMLParserContext"
 [1] "uri"
 ending uri 
-<pointer: 0x7fa8f2dbc850>
+<pointer: 0x7ff6aaeebdd0>
 attr(,"class")
 [1] "XMLParserContext"
 [1] "rewriteURI"
@@ -7217,7 +9668,7 @@ x[[2]]]]></top>
 > 
 >   f = tempfile()
 >   saveXML(tr, f, encoding = "UTF-8")
-[1] "/var/folders/f8/2dd5rdyx1bjbw4jttt0x1hm80000gn/T//RtmptuGCKQ/file8c462afeaea9"
+[1] "/var/folders/f8/2dd5rdyx1bjbw4jttt0x1hm80000gn/T//Rtmp0LW1mv/file163ec5a04625c"
 > 
 > 
 >   # Creating a node
@@ -8149,12 +10600,12 @@ function (node)
         counts[name] <<- counts[name] + 1
     else counts[name] <<- 1
 }
-<environment: 0x7fa8f350cb58>
+<environment: 0x7ff6a536dce8>
 
 $counts
 function () 
 counts
-<environment: 0x7fa8f350cb58>
+<environment: 0x7ff6a536dce8>
 
 >    h$counts()
  variable variables    record   dataset 
@@ -8571,12 +11022,12 @@ function (node, ...)
     links <<- c(links, xmlGetAttr(node, "href"))
     node
 }
-<environment: 0x7fa8ed2abf18>
+<environment: 0x7ff6a7066840>
 
 $links
 function () 
 links
-<environment: 0x7fa8ed2abf18>
+<environment: 0x7ff6a7066840>
 
 >  h1$links()
  [1] "XML_0.97-0.tar.gz"                   "XML_0.97-0.zip"                     
@@ -8595,12 +11046,12 @@ function (node, ...)
     links <<- c(links, xmlGetAttr(node, "href"))
     node
 }
-<environment: 0x7fa8ed19ca60>
+<environment: 0x7ff6a74abd48>
 
 $links
 function () 
 links
-<environment: 0x7fa8ed19ca60>
+<environment: 0x7ff6a74abd48>
 
 >  all(h1$links() == h2$links())
 [1] TRUE
@@ -8638,7 +11089,7 @@ function (node, parent = character(), ..., attrs = NULL, namespace = NULL,
     }
     return(node)
 }
-<environment: 0x7fa8ed16bb18>
+<environment: 0x7ff6a750b318>
 
 >  xmlRoot(tt)
 <variable/>
@@ -8822,7 +11273,7 @@ titles[[length(titles) + 1]] <<- x
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  30.984 0.634 81.575 0 0 
+Time elapsed:  27.962 0.306 36.117 0 0 
 > grDevices::dev.off()
 null device 
           1 
