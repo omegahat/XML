@@ -21,6 +21,9 @@
 #endif
 #endif
 
+#undef XML_REF_COUNT_NODES
+
+
 /* #define R_XML_DEBUG 1 */
 
 typedef enum {RS_XML_FILENAME, RS_XML_TEXT, RS_XML_CONNECTION, RS_XML_INVALID_CONTENT} RS_XML_ContentSourceType;

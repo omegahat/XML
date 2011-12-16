@@ -81,7 +81,7 @@ xmlSource(url, ...,
                      "//r:code[not(@eval='false')]",
                      "//r:plot[not(@eval='false')]"),
           namespaces = DefaultXPathNamespaces, section = character(),
-          eval = TRUE, init = TRUE)
+          eval = TRUE, init = TRUE, setNodeNames = FALSE)
 xmlSourceFunctions(doc, ids = character(), parse = TRUE, ...)
 xmlSourceSection(doc, ids = character(),
                  xnodes = c(".//r:function", ".//r:init[not(@eval='false')]", 
@@ -187,6 +187,10 @@ xmlSourceSection(doc, ids = character(),
  \item{parse}{a logical value that controls whether we parse the code or
    just return the text representation from the XML without parsing it.
    This allows us to get just the code.}
+ \item{setNodeNames}{a logical value that controls whether we compute
+    the name for each node (or result) by finding is id or name
+    attribute or enclosing task node.
+  }
 }
 \details{
   This evaluates the \code{code}, \code{function} and \code{example}

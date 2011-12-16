@@ -1,4 +1,4 @@
-setClass("XMLOutputStream", "list")
+setClass("XMLOutputStream", "namedList")
 
 setClass("XMLOutputDOM", contains = "XMLOutputStream")
 setClass("XMLOutputBuffer", contains = "XMLOutputStream")

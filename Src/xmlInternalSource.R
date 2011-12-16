@@ -41,7 +41,8 @@ function(url, ...,
           example = NA,
           fatal = TRUE, verbose = FALSE, echo = verbose, print = echo,
           xnodes = c("//r:function", "//r:init[not(@eval='false')]", "//r:code[not(@eval='false')]", "//r:plot[not(@eval='false')]"),         
-          namespaces = DefaultXPathNamespaces, section = character(), eval = TRUE, init = TRUE)
+          namespaces = DefaultXPathNamespaces, section = character(), eval = TRUE, init = TRUE,
+          setNodeNames = FALSE)
 {
 
   standardGeneric("xmlSource")
@@ -63,13 +64,13 @@ function(url, ...,
           fatal = TRUE, verbose = FALSE, echo = verbose, print = echo,
           xnodes = c("//r:function", "//r:init[not(@eval='false')]", "//r:code[not(@eval='false')]", "//r:plot[not(@eval='false')]"),
           namespaces = DefaultXPathNamespaces,
-          section = character(), eval = TRUE, init = TRUE)
+          section = character(), eval = TRUE, init = TRUE, setNodeNames = FALSE)
 {
   doc = xmlTreeParse(url, ..., useInternal = TRUE)
   xmlSource(doc, ..., envir = envir, xpath = xpath, ids = ids, omit = omit,
              ask = ask, example = example, fatal = fatal, verbose = verbose,
               print = print, xnodes = xnodes, namespaces = namespaces,
-               section = section, eval = eval, init = init)
+               section = section, eval = eval, init = init, setNodeNames = setNodeNames)
 })
 
 
@@ -84,7 +85,7 @@ function(url, ...,
           fatal = TRUE, verbose = FALSE, echo = verbose, print = echo,
           xnodes = c("//r:function", "//r:init[not(@eval='false')]", "//r:code[not(@eval='false')]", "//r:plot[not(@eval='false')]"),
           namespaces = DefaultXPathNamespaces,
-          section = character(), eval = TRUE, init = TRUE)
+          section = character(), eval = TRUE, init = TRUE, setNodeNames = FALSE)
 {
   doc = url
   if(inherits(verbose, "numeric"))
@@ -93,7 +94,7 @@ function(url, ...,
   if(!is.character(section))
     section = as.integer(section)
 
-  #XXX use section when processing the examples
+      #XXX use section when processing the examples
   if(length(example) && !all(is.na(example)))  {
     egs = getNodeSet(doc, "//r:example", namespaces)
     if(length(egs)) {
@@ -124,13 +125,14 @@ function(url, ...,
                           cat("Example", ids[x], "\n")
 
                              #XXX put the correct ids in her.
-                        xmlSource(nodes, envir = envir, omit = omit, verbose = verbose, namespaces = namespaces, eval = eval)
+                        xmlSource(nodes, envir = envir, omit = omit, verbose = verbose, namespaces = namespaces, eval = eval, setNodeNames = setNodeNames)
                         
                       })
       return(ans)
    }
   }
 
+  
 #  if(length(section) && is.character(section))
 #    section = paste("@id", ddQuote(section), sep = "=")
   
@@ -152,7 +154,7 @@ function(url, ...,
                              recursive = FALSE)
                   }), recursive = FALSE)
   } else {
-    functions = 
+
     functions = limitXPathToSection(section, "//r:function")
     xnodes = limitXPathToSection(section, xnodes)
         # Do we need to ensure the order for the functions first?
@@ -188,7 +190,7 @@ function(url, ...,
 
   xmlSource(v, ids = ids, omit = omit, ask = ask, fatal = fatal, verbose = verbose,  envir = envir,
             section = if(!is.character(section)) section else character(),
-            eval = eval)
+            eval = eval, setNodeNames = setNodeNames)
 })
 
 
@@ -223,7 +225,7 @@ function(url, ..., envir =globalenv(),
           example = NA,         
           fatal = TRUE, verbose = FALSE, echo = verbose, print = echo,
           xnodes = c("r:function", "r:init[not(@eval='false')]", "r:code[not(@eval='false')]", "//r:plot[not(@eval='false')]"),         
-          namespaces =  DefaultXPathNamespaces, section = character(), eval = TRUE, init = TRUE)
+          namespaces =  DefaultXPathNamespaces, section = character(), eval = TRUE, init = TRUE, setNodeNames = FALSE)
 {
   if(ask) {
      doc = as(url[[1]], "XMLInternalDocument")     #XXXX  no doc here now.
@@ -237,7 +239,10 @@ function(url, ..., envir =globalenv(),
   ans = sapply(url, evalNode, envir = envir, verbose = verbose, ids = ids,
                 omit = omit, echo = echo, print = print, ask = ask, eval = eval)
 
-  names(ans) = sapply(url, xmlName, full = TRUE)
+  if(setNodeNames)
+     names(ans) = sapply(url, getRCodeNodeName)
+  else
+     names(ans) = sapply(url, xmlName, full = TRUE)
   invisible(ans)
 })
 
@@ -461,7 +466,7 @@ setMethod("xmlSourceFunctions", "XMLInternalDocument",
   #
   # evaluate the r:function nodes, or restricted to @id from ids.
   #
-function(doc, ids = character(), parse = TRUE, ...)
+function(doc, ids = character(), parse = TRUE, setNodeNames = FALSE, ...)
 {
 
   if(length(ids))
@@ -472,8 +477,18 @@ function(doc, ids = character(), parse = TRUE, ...)
   if(parse == FALSE)
      return(nodes)
 
-  xmlSource(nodes, ...)
+  ans = xmlSource(nodes, ...)
+  if(setNodeNames)
+    names(ans) = sapply(nodes, getRCodeNodeName)
+  
+  ans
 })
+
+getRCodeNodeName =
+function(node)
+{
+   xmlGetAttr(node, "name", xmlGetAttr(node, "idx", getTaskId(node)))
+}
 
 
 ################
@@ -600,3 +615,13 @@ function(doc, file = stdout())
   file
 }
 
+
+
+getTaskId =
+function(node) {
+  els = getNodeSet(node, ".//ancestor::task")
+  if(length(els))
+    xmlGetAttr(els[[1]], "id")
+  else
+    ""
+}
