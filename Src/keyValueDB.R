@@ -1,5 +1,5 @@
 # All the possible names, empirically
-# unique(xpathSApply(it, "//*", xmlName))
+# table(xpathSApply(it, "//*", xmlName))
 
 # On a file that has 549,286 nodes (JasonLibrary.xml)
 # this took 37 seconds to process the entire file.
