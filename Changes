@@ -1,3 +1,7 @@
+  *    Added Currency as an option for colClass in readHTMLTable to
+       convert strings of the form $xxx,yyy,zzz, i.e. comma-separated
+       and preceeded by a $.  (No other currency supported yet.)
+
 Version 3.6-2
 
   *    Changed URL in readHTMLTable() example to new page for population of 

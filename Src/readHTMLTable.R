@@ -90,6 +90,11 @@ setClass("FormattedInteger", contains = "integer")
 setAs('character', 'FormattedNumber', function(from) as.numeric(gsub(",", "", from)))
 setAs('character', 'FormattedInteger', function(from) as.integer(gsub(",", "", from)))
 
+setClass("Currency", contains = "numeric")
+setAs("character", "Currency",
+       function(from)
+          as.numeric(gsub("[$,]", "", from)))
+
 setClass("Percent", contains = "numeric")
 setAs('character', 'Percent', function(from) as.numeric(gsub("%", "", from)))
 

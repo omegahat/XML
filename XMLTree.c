@@ -129,8 +129,12 @@ R_newXMLNode(USER_OBJECT_ name, USER_OBJECT_ attrs, USER_OBJECT_ nameSpace, USER
    xmlNsPtr ns = NULL;
    xmlNodePtr node;
 
-   if(GET_LENGTH(sdoc))
+   if(GET_LENGTH(sdoc)) {
        doc = (xmlDocPtr) R_ExternalPtrAddr(sdoc);
+
+       if(doc->type != XML_DOCUMENT_NODE) /*XXX HTML Document? */
+	   doc = doc->doc;
+   }
 
     
    if(GET_LENGTH(nameSpace) > 0) {
@@ -1029,6 +1033,10 @@ fprintf(stderr, "Creating reference with finalizer for %s (%p) '%s'\n",
 #endif
      R_RegisterCFinalizer(ref, decrementNodeRefCount);
   }
+/*
+#else
+#warning "no ref counting enabled"
+*/
 #endif
   PROTECT(tmp = NEW_CHARACTER(3));
   SET_STRING_ELT(tmp, 0, mkChar(R_getInternalNodeClass(node->type)));

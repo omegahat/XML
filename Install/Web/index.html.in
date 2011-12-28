@@ -1,5 +1,5 @@
 <html> <head>
-<title></title>
+<title>The XML Package</title>
 </head>
 
 <body>
@@ -133,11 +133,11 @@ o = readKeyValueDB("http://www.omegahat.org/RSXML/plist.xml")
 <lst name="info">
       <str name="ABC">A string</str>
       <int name="xyz">103</int>
-      <long name="big">1000012310303</int>
+      <long name="big">1000012310303</long>
       <bool>true</bool>
       <date name="lastModified">2011-02-10T11:29:03Z</date>
-</lst>      
-]]></pre>      
+</lst>]]>
+</pre>      
   <dd> <a href="solrDocs.R">solrDocs.R</a>
       <br/>
 <pre class="rcode">
@@ -153,6 +153,6 @@ o = readSolrDoc("http://www.omegahat.org/RSXML/solr.xml")
 <address><a href="http://www.stat.ucdavis.edu/~duncan">Duncan Temple Lang</a>
 <a href="mailto:duncan@wald.ucdavis.edu">&lt;duncan@wald.ucdavis.edu&gt;</a></address>
 <!-- hhmts start -->
-Last modified: Sun Dec 25 06:49:32 PST 2011
+Last modified: Sun Dec 25 09:52:10 PST 2011
 <!-- hhmts end -->
 </body> </html>
