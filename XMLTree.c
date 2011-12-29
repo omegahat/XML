@@ -132,7 +132,7 @@ R_newXMLNode(USER_OBJECT_ name, USER_OBJECT_ attrs, USER_OBJECT_ nameSpace, USER
    if(GET_LENGTH(sdoc)) {
        doc = (xmlDocPtr) R_ExternalPtrAddr(sdoc);
 
-       if(doc->type != XML_DOCUMENT_NODE) /*XXX HTML Document? */
+       if(doc->type != XML_DOCUMENT_NODE && doc->type != XML_HTML_DOCUMENT_NODE) 
 	   doc = doc->doc;
    }
 
