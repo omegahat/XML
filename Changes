@@ -1,3 +1,10 @@
+Version 3.7-1
+
+  *    Added an alias for the coerce method for Currency.
+
+  *    Added a C routine to query if reference counting is enabled.
+       See tests/checkRefCounts.R.
+
 Version 3.7-0
 
   *    Added Currency as an option for colClass in readHTMLTable to

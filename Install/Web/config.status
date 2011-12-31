@@ -503,12 +503,12 @@ s,@LIBS@,|#_!!_#|,g
 s,@build_alias@,|#_!!_#|,g
 s,@host_alias@,|#_!!_#|,g
 s,@target_alias@,|#_!!_#|,g
-s,@DATE@,|#_!!_#|Wed Dec 28 08:42:00 PST 2011,g
-s,@TAR_FILE@,|#_!!_#|XML_3.7-0.tar.gz,g
-s,@ZIP_FILE@,|#_!!_#|XML_3.7-0.zip,g
+s,@DATE@,|#_!!_#|Sat Dec 31 08:50:54 PST 2011,g
+s,@TAR_FILE@,|#_!!_#|XML_3.7-1.tar.gz,g
+s,@ZIP_FILE@,|#_!!_#|XML_3.7-1.zip,g
 s,@MINOR_VERSION@,|#_!!_#|7,g
 s,@MAJOR_VERSION@,|#_!!_#|3,g
-s,@PATCH_LEVEL@,|#_!!_#|0,g
+s,@PATCH_LEVEL@,|#_!!_#|1,g
 s,@PKG_NAME@,|#_!!_#|XML,g
 s,@LIBOBJS@,|#_!!_#|,g
 s,@LTLIBOBJS@,|#_!!_#|,g

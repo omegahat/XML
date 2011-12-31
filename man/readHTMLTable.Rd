@@ -6,6 +6,7 @@
 \alias{coerce,character,FormattedInteger-method}
 \alias{coerce,character,FormattedNumber-method}
 \alias{coerce,character,Percent-method}
+\alias{coerce,character,Currency-method}
 \alias{FormattedInteger-class}
 \alias{FormattedNumber-class}
 \alias{Percent-class}
