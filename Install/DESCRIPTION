@@ -1,10 +1,11 @@
 Package: XML
-Version: 3.7-1
-Date: 2011/12/31
+Version: 3.7-2
+Date: 2012/01/04
 Author:  Duncan Temple Lang (duncan@wald.ucdavis.edu)
 Maintainer: Duncan Temple Lang <duncan@wald.ucdavis.edu>
 Title: Tools for parsing and generating XML within R and S-Plus.
 Depends: R (>= 1.2.0), methods, utils
+Imports: methods
 Suggests: bitops
 SystemRequirements: libxml2 (>= 2.6.3)
 LazyLoad: yes

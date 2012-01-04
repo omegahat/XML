@@ -1,6 +1,7 @@
 # Avoided if we are using Windows so that we can specify the directory to find the libxml DLL.
 # useDynLib(XML)
 
+import(methods)
 
 export(
  append.xmlNode,

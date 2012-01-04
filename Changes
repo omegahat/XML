@@ -1,3 +1,7 @@
+Version 3.7-2
+
+  *    Import methods package explicitly.
+
 Version 3.7-1
 
   *    Added an alias for the coerce method for Currency.
