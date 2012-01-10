@@ -496,19 +496,19 @@ s,@libdir@,|#_!!_#|${exec_prefix}/lib,g
 s,@localedir@,|#_!!_#|${datarootdir}/locale,g
 s,@mandir@,|#_!!_#|${datarootdir}/man,g
 s,@DEFS@,|#_!!_#|-DPACKAGE_NAME=\\"\\" -DPACKAGE_TARNAME=\\"\\" -DPACKAGE_VERSION=\\"\\" -DPACKAGE_STRING=\\"\\" -DPACKAGE_BUGREPORT=\\"\\",g
-s,@ECHO_C@,|#_!!_#|,g
-s,@ECHO_N@,|#_!!_#|-n,g
+s,@ECHO_C@,|#_!!_#|\\c,g
+s,@ECHO_N@,|#_!!_#|,g
 s,@ECHO_T@,|#_!!_#|,g
 s,@LIBS@,|#_!!_#|,g
 s,@build_alias@,|#_!!_#|,g
 s,@host_alias@,|#_!!_#|,g
 s,@target_alias@,|#_!!_#|,g
-s,@DATE@,|#_!!_#|Wed Jan  4 12:34:22 PST 2012,g
-s,@TAR_FILE@,|#_!!_#|XML_3.7-2.tar.gz,g
-s,@ZIP_FILE@,|#_!!_#|XML_3.7-2.zip,g
+s,@DATE@,|#_!!_#|Tue Jan 10 14:03:45 PST 2012,g
+s,@TAR_FILE@,|#_!!_#|XML_3.7-3.tar.gz,g
+s,@ZIP_FILE@,|#_!!_#|XML_3.7-3.zip,g
 s,@MINOR_VERSION@,|#_!!_#|7,g
 s,@MAJOR_VERSION@,|#_!!_#|3,g
-s,@PATCH_LEVEL@,|#_!!_#|2,g
+s,@PATCH_LEVEL@,|#_!!_#|3,g
 s,@PKG_NAME@,|#_!!_#|XML,g
 s,@LIBOBJS@,|#_!!_#|,g
 s,@LTLIBOBJS@,|#_!!_#|,g

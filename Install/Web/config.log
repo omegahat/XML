@@ -30,8 +30,8 @@ Kernel configured for up to 4 processors.
 Processor type: i486 (Intel 80486)
 Processors active: 0 1 2 3
 Primary memory available: 8.00 gigabytes
-Default processor set: 233 tasks, 1137 threads, 4 processors
-Load average: 3.51, Mach factor: 1.06
+Default processor set: 271 tasks, 1138 threads, 4 processors
+Load average: 7.08, Mach factor: 0.81
 /bin/machine           = unknown
 /usr/bin/oslevel       = unknown
 /bin/universe          = unknown
@@ -101,10 +101,9 @@ ac_cv_env_target_alias_value=
 ## Output variables. ##
 ## ----------------- ##
 
-DATE='Wed Jan  4 12:34:22 PST 2012'
+DATE='Tue Jan 10 14:03:45 PST 2012'
 DEFS='-DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\"'
-ECHO_C=''
-ECHO_N='-n'
+ECHO_C='ECHO_N=''
 ECHO_T=''
 LIBOBJS=''
 LIBS=''
@@ -116,12 +115,12 @@ PACKAGE_NAME=''
 PACKAGE_STRING=''
 PACKAGE_TARNAME=''
 PACKAGE_VERSION=''
-PATCH_LEVEL='2'
+PATCH_LEVEL='3'
 PATH_SEPARATOR=':'
 PKG_NAME='XML'
 SHELL='/bin/sh'
-TAR_FILE='XML_3.7-2.tar.gz'
-ZIP_FILE='XML_3.7-2.zip'
+TAR_FILE='XML_3.7-3.tar.gz'
+ZIP_FILE='XML_3.7-3.zip'
 bindir='${exec_prefix}/bin'
 build_alias=''
 datadir='${datarootdir}'

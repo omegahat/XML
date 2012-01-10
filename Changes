@@ -1,3 +1,12 @@
+Version 3.7-3
+
+  *    Allow xmlTreeParse() and xmlParse() to process content starting with a BOM.
+       This works when the name of a file/URL is provided, but didn't when the content
+       was provided directly as a string.  Identified by Milan Bouchet-Valat.
+
+  *    error message when XML content is not XML or a file name now puts the content at the end
+       for improved readability. 
+
 Version 3.7-2
 
   *    Import methods package explicitly.
