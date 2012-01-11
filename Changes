@@ -1,3 +1,7 @@
+Version 3.7-4
+
+  *    saveXML() for XMLNode returns a character vector of length 1, i.e. a single string.
+
 Version 3.7-3
 
   *    Allow xmlTreeParse() and xmlParse() to process content starting with a BOM.
