@@ -71,5 +71,7 @@ Collate: AAA.R
         xmlRoot.R
         serialize.R
         xmlMemoryMgmt.R
+        keyValueDB.R solrDocs.R
+
 
 

@@ -486,3 +486,5 @@ export("xmlParent<-")
 export(xmlSearchNs)
 export("xmlNamespace<-")
 
+export(readKeyValueDB, readSolrDoc)
+

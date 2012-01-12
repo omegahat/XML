@@ -1,3 +1,7 @@
+Version 3.8-0
+
+  *     added readSolrDoc() and readKeyValueDB() functions to read Solr and Property list documents.
+
 Version 3.7-4
 
   *    saveXML() for XMLNode returns a character vector of length 1, i.e. a single string.
