@@ -1468,11 +1468,11 @@ R_xmlNodeValue(SEXP node, SEXP raw, SEXP r_encoding)
    }
 */
    if(tmp) {
-#if 0
-     ans = ScalarString(CreateCharSexpWithEncoding(encoding, tmp));
-#else
-     ans = ScalarString(mkCharCE(tmp, INTEGER(r_encoding)[0]));
-#endif
+     if(INTEGER(r_encoding)[0] == CE_NATIVE)
+        ans = ScalarString(CreateCharSexpWithEncoding(encoding, tmp));
+     else
+        ans = ScalarString(mkCharCE(tmp, INTEGER(r_encoding)[0]));
+
 
      free(tmp);
 //     ans = mkString(XMLCHAR_TO_CHAR(tmp));
