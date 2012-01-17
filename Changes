@@ -1,3 +1,10 @@
+Version 3.8-1
+
+  *     Corrected documentation for readHTMLTable() about stringsAsFactors behaviour.
+
+  *     Added parse = FALSE as parameter for xmlSource() to allow just returning the text from 
+        each node.
+
 Version 3.8-0
 
   *     added readSolrDoc() and readKeyValueDB() functions to read Solr and Property list documents.
