@@ -117,11 +117,8 @@ R_SRC_FILES=\
    Src/fixNS.R \
    Src/serialize.R \
    Src/xmlRoot.R \
-   Src/xmlMemoryMgmt.R
-
-
-
-
+   Src/xmlMemoryMgmt.R \
+   Src/keyValueDB.R Src/solrDocs.R
 
 
 

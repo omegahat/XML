@@ -416,3 +416,16 @@ R_clearNodeMemoryManagement(SEXP r_node)
    return(ScalarInteger(val));
 }
 
+
+
+SEXP
+R_xmlRefCountEnabled()
+{
+  int ans =
+#ifdef XML_REF_COUNT_NODES
+      1;
+#else 
+      0;
+#endif
+      return(ScalarLogical(ans));
+}

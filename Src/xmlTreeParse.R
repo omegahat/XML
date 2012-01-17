@@ -4,6 +4,8 @@ function(file, asText = FALSE, xinclude = TRUE, error = xmlErrorCumulator())
   xmlParse(file, asText = asText, isSchema = TRUE, xinclude = xinclude, error = error)
 }
 
+BOMRegExp = "(\\xEF\\xBB\\xBF|\\xFE\\xFF|\\xFF\\xFE)"
+
 xmlTreeParse <- 
    #
    # XML parser that reads the entire `document' tree into memory
@@ -65,8 +67,8 @@ function(file, ignoreBlanks = TRUE, handlers = NULL,
  on.exit(setEntitySubstitution(old), add = TRUE)
 
      # Look for a < in the string.
-  if(asText && length(grep("^\\s*<", file, perl = TRUE, useBytes = TRUE)) == 0) {  # !isXMLString(file) ?
-    e = simpleError(paste(file, " does not seem to be XML, nor to identify a file name"))
+  if(asText && length(grep(sprintf("^%s?\\s*<", BOMRegExp), file, perl = TRUE, useBytes = TRUE)) == 0) {  # !isXMLString(file) ?
+    e = simpleError(paste("XML content does not seem to be XML, nor to identify a file name", sQuote(file)))
     class(e) = c("XMLInputError", class(e))
     stop(e)
   }

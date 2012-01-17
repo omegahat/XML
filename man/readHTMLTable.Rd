@@ -6,6 +6,7 @@
 \alias{coerce,character,FormattedInteger-method}
 \alias{coerce,character,FormattedNumber-method}
 \alias{coerce,character,Percent-method}
+\alias{coerce,character,Currency-method}
 \alias{FormattedInteger-class}
 \alias{FormattedNumber-class}
 \alias{Percent-class}
@@ -51,7 +52,7 @@ readHTMLTable(doc, header = NA,
     vectors are converted to a data frame (if \code{as.data.frame} is
     \code{TRUE}).
     As a result, to ensure that character vectors remain as characters
-    and not factors, use \code{stringsAsFactors = TRUE}.
+    and not factors, use \code{stringsAsFactors = FALSE}.
     This typically applies only to an individual table and so for the
     method applied to a \code{XMLInternalElementNode} object.
 
@@ -60,6 +61,8 @@ readHTMLTable(doc, header = NA,
     "FormattedInteger", "FormattedNumber" and "Percent" to specify that
     format of the values are numbers possibly with commas (,) separating
     groups of digits or a number followed by a percent sign (\%).
+    This mechanism allows one to introduce new classes and specify these
+    as targets in \code{colClasses}.
    }
   \item{skip.rows}{an integer vector indicating which rows to ignore.}
   \item{trim}{a logical value indicating whether to remove leading and

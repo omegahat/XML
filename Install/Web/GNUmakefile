@@ -73,7 +73,7 @@ installDocs: all
 	scp -r $(PKG_TAR_FILE) doc man $(DOCS:%=pkg/$(PKG_NAME)/inst/Docs/%) man.pdf $(INDEX) Requirements.html $(OMEGA_HOME)/Docs/OmegaTech.css  $(FAQ) $(CHANGES) $(BUGS) $(TODO) examples $(TARGET_DIR)
 	scp ../../index.html $(TARGET_DIR)/Overview.html
 
-installBasicDocs: index.html
+aux installBasicDocs: index.html
 	scp -r  $(INDEX)  Requirements.html $(OMEGA_HOME)/Docs/OmegaTech.css  $(FAQ) $(CHANGES) $(BUGS) $(TODO) $(TARGET_DIR)
 	scp ../../index.html $(TARGET_DIR)/Overview.html
 

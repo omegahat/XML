@@ -118,7 +118,7 @@ function(doc, file = NULL, compression = 0, indent = TRUE, prefix = '<?xml versi
   print(doc)
 
   if(asString)
-    textConnectionValue(file)
+    paste(textConnectionValue(file), collapse = "\n")
   else
     file
 }

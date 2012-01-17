@@ -1,3 +1,38 @@
+Version 3.8-1
+
+  *     Corrected documentation for readHTMLTable() about stringsAsFactors behaviour.
+
+  *     Added parse = FALSE as parameter for xmlSource() to allow just returning the text from 
+        each node.
+
+Version 3.8-0
+
+  *     added readSolrDoc() and readKeyValueDB() functions to read Solr and Property list documents.
+
+Version 3.7-4
+
+  *    saveXML() for XMLNode returns a character vector of length 1, i.e. a single string.
+
+Version 3.7-3
+
+  *    Allow xmlTreeParse() and xmlParse() to process content starting with a BOM.
+       This works when the name of a file/URL is provided, but didn't when the content
+       was provided directly as a string.  Identified by Milan Bouchet-Valat.
+
+  *    error message when XML content is not XML or a file name now puts the content at the end
+       for improved readability. 
+
+Version 3.7-2
+
+  *    Import methods package explicitly.
+
+Version 3.7-1
+
+  *    Added an alias for the coerce method for Currency.
+
+  *    Added a C routine to query if reference counting is enabled.
+       See tests/checkRefCounts.R.
+
 Version 3.7-0
 
   *    Added Currency as an option for colClass in readHTMLTable to

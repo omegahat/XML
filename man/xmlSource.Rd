@@ -81,7 +81,7 @@ xmlSource(url, ...,
                      "//r:code[not(@eval='false')]",
                      "//r:plot[not(@eval='false')]"),
           namespaces = DefaultXPathNamespaces, section = character(),
-          eval = TRUE, init = TRUE, setNodeNames = FALSE)
+          eval = TRUE, init = TRUE, setNodeNames = FALSE, parse = FALSE)
 xmlSourceFunctions(doc, ids = character(), parse = TRUE, ...)
 xmlSourceSection(doc, ids = character(),
                  xnodes = c(".//r:function", ".//r:init[not(@eval='false')]", 
