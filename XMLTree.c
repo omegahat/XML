@@ -1,5 +1,4 @@
 /**
-
  The purpose of this file is to provide the C-level facilities
  to create, modify and manage internal XML DOM nodes at the S
  language level. We want to be able to use the interface defined
