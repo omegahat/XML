@@ -370,7 +370,7 @@ RS_XML_getNsList(USER_OBJECT_ s_node, USER_OBJECT_ asRef)
 	PROTECT(names = NEW_CHARACTER(n));    
 	for(i = 0; i < n ; i++, el = el->next) {
 	    if(el->prefix)
-		SET_STRING_ELT(names, i, COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(el->prefix)));
+		SET_STRING_ELT(names, i, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(el->prefix)));
 	    SET_VECTOR_ELT(ans, i, R_createXMLNsRef(el));
 	}
     } else {
@@ -379,9 +379,9 @@ RS_XML_getNsList(USER_OBJECT_ s_node, USER_OBJECT_ asRef)
 	PROTECT(names = NEW_CHARACTER(n));    
 	for(i = 0; i < n ; i++, el = el->next) {
 	    if(el->prefix)
-		SET_STRING_ELT(names, i, COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(el->prefix)));
+		SET_STRING_ELT(names, i, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(el->prefix)));
 	    if(el->href)
-   	        SET_STRING_ELT(ans, i, COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(el->href)));
+   	        SET_STRING_ELT(ans, i, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(el->href)));
 	}
     }
 
@@ -1217,7 +1217,7 @@ R_saveXMLDOM(USER_OBJECT_ sdoc, USER_OBJECT_ sfileName, USER_OBJECT_ compression
 
 	if(mem) {
 	    DECL_ENCODING_FROM_DOC(doc)
-	    SET_STRING_ELT(ans, 0, COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(mem))); 
+	    SET_STRING_ELT(ans, 0, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(mem))); 
 	    xmlFree(mem);
 	} else { 
                /*XXX get the error message from libxml2 */
@@ -1501,9 +1501,9 @@ R_xmlNsAsCharacter(USER_OBJECT_ s_ns)
   SET_STRING_ELT(names, 1, mkChar("href"));
 
   if(ns->prefix)
-      SET_STRING_ELT(ans, 0, COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(ns->prefix)));
+      SET_STRING_ELT(ans, 0, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(ns->prefix)));
   if(ns->href)
-      SET_STRING_ELT(ans, 1, COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(ns->href)));
+      SET_STRING_ELT(ans, 1, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(ns->href)));
 
   SET_NAMES(ans, names);
   UNPROTECT(2);

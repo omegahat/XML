@@ -1,3 +1,10 @@
+Version 3.9-0
+
+  *     Enabled additional encoding for element, attribute and namespace names, and 
+        in xmlValue().
+
+  *     Corrected default value in documentation for parse in xmlSource().
+
 Version 3.8-1
 
   *     Corrected documentation for readHTMLTable() about stringsAsFactors behaviour.

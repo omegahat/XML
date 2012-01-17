@@ -223,13 +223,16 @@ SEXP CreateCharSexpWithEncoding(const xmlChar *encoding, const xmlChar *str);
 #define DECL_ENCODING_FROM_DOC(doc)   const xmlChar *encoding = doc->encoding;
 #define DECL_ENCODING_FROM_EVENT_PARSER(parserData)   const xmlChar *encoding = parserData->ctx->encoding;
 
+#define R_USE_XML_ENCODING 1
+
 #ifdef R_USE_XML_ENCODING
 #undef COPY_TO_USER_STRING
 #warning "Redefining COPY_TO_USER_STRING to use encoding from XML parser"
 /*
 #define COPY_TO_USER_STRING(x)  CreateCharSexpWithEncoding(encoding, CHAR_TO_XMLCHAR (x))
 */
-#define COPY_TO_USER_STRING(x)  mkChar(CHAR_TO_XMLCHAR (x))
+#define COPY_TO_USER_STRING(x)  mkChar(CHAR_TO_XMLCHAR (x)) 
+#define ENC_COPY_TO_USER_STRING(x)  CreateCharSexpWithEncoding(encoding, CHAR_TO_XMLCHAR (x)) 
 #endif
 
 

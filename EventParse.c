@@ -72,8 +72,8 @@ RS_XML(createAttributesList)(const char **atts, const xmlChar *encoding)
   PROTECT(attr_names = NEW_CHARACTER(n));
      ptr = atts;
      for(i=0; i < n; i++, ptr+=2) {
-      SET_STRING_ELT(attr_values, i, COPY_TO_USER_STRING(ptr[1]));
-      SET_STRING_ELT(attr_names, i,  COPY_TO_USER_STRING(ptr[0]));
+      SET_STRING_ELT(attr_values, i, ENC_COPY_TO_USER_STRING(ptr[1]));
+      SET_STRING_ELT(attr_names, i,  ENC_COPY_TO_USER_STRING(ptr[0]));
      }
     SET_NAMES(attr_values, attr_names);
   UNPROTECT(2);
@@ -215,7 +215,7 @@ RS_XML(entityDeclarationHandler)(void *userData, const XML_Char *entityName,
   opArgs = NEW_LIST(num);
   for(i =0;i < num; i++) {
    SET_VECTOR_ELT(opArgs, i,  NEW_CHARACTER(1));
-   SET_STRING_ELT(VECTOR_ELT(opArgs, i), 0, COPY_TO_USER_STRING(xml_args[i] ? xml_args[i] :  "")); 
+   SET_STRING_ELT(VECTOR_ELT(opArgs, i), 0, ENC_COPY_TO_USER_STRING(xml_args[i] ? xml_args[i] :  "")); 
   }
 
   RS_XML(callUserFunction)(HANDLER_FUN_NAME(parserData, "entityDeclaration"), 
@@ -238,7 +238,7 @@ RS_XML(startElement)(void *userData, const char *name, const char **atts)
 
   PROTECT(opArgs = NEW_LIST(2));
   SET_VECTOR_ELT(opArgs, 0, NEW_CHARACTER(1));
-  SET_STRING_ELT(VECTOR_ELT(opArgs, 0), 0, COPY_TO_USER_STRING(name)); 
+  SET_STRING_ELT(VECTOR_ELT(opArgs, 0), 0, ENC_COPY_TO_USER_STRING(name)); 
 
   /* Now convert the attributes list. */
    SET_VECTOR_ELT(opArgs, 1, RS_XML(createAttributesList)(atts, encoding));
@@ -255,7 +255,7 @@ RS_XML(commentHandler)(void *userData, const XML_Char *data)
 
   PROTECT(opArgs);
   SET_VECTOR_ELT(opArgs, 0, NEW_CHARACTER(1));
-     SET_STRING_ELT(VECTOR_ELT(opArgs, 0), 0, COPY_TO_USER_STRING(data));
+     SET_STRING_ELT(VECTOR_ELT(opArgs, 0), 0, ENC_COPY_TO_USER_STRING(data));
      RS_XML(callUserFunction)(HANDLER_FUN_NAME(rinfo, "comment"), 
 			      (const char *)NULL, ((RS_XMLParserData*)userData), opArgs);
   UNPROTECT(1);
@@ -293,7 +293,7 @@ void RS_XML(endElement)(void *userData, const char *name)
 
   PROTECT(opArgs = NEW_LIST(1));
   SET_VECTOR_ELT(opArgs, 0, NEW_CHARACTER(1));
-     SET_STRING_ELT(VECTOR_ELT(opArgs, 0), 0, COPY_TO_USER_STRING(name));
+     SET_STRING_ELT(VECTOR_ELT(opArgs, 0), 0, ENC_COPY_TO_USER_STRING(name));
 
   fun = findEndElementFun(name, rinfo);
   if(fun)  {
@@ -325,9 +325,9 @@ RS_XML(processingInstructionHandler)(void *userData, const XML_Char *target, con
 
  PROTECT(opArgs = NEW_LIST(2));
  SET_VECTOR_ELT(opArgs, 0, NEW_CHARACTER(1));
-   SET_STRING_ELT(VECTOR_ELT(opArgs, 0), 0, COPY_TO_USER_STRING(target));
+   SET_STRING_ELT(VECTOR_ELT(opArgs, 0), 0, ENC_COPY_TO_USER_STRING(target));
  SET_VECTOR_ELT(opArgs, 1, NEW_CHARACTER(1));
-   SET_STRING_ELT(VECTOR_ELT(opArgs, 1), 0, COPY_TO_USER_STRING(data));
+   SET_STRING_ELT(VECTOR_ELT(opArgs, 1), 0, ENC_COPY_TO_USER_STRING(data));
    RS_XML(callUserFunction)(HANDLER_FUN_NAME(parserData, "processingInstruction"), 
                              (const char *)NULL, (RS_XMLParserData*)userData, opArgs);
  UNPROTECT(1);
@@ -433,7 +433,7 @@ RS_XML(textHandler)(void *userData,  const XML_Char *s, int len)
   if(len > 0 || parserData->ignoreBlankLines == 0 ) {
     PROTECT(opArgs = NEW_LIST(1));
      SET_VECTOR_ELT(opArgs, 0, NEW_CHARACTER(1));
-     SET_STRING_ELT(VECTOR_ELT(opArgs, 0), 0, COPY_TO_USER_STRING(tmpString));
+     SET_STRING_ELT(VECTOR_ELT(opArgs, 0), 0, ENC_COPY_TO_USER_STRING(tmpString));
   }
 
   free(tmp);

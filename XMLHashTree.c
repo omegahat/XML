@@ -90,7 +90,7 @@ makeHashNode(xmlNodePtr node, char *buf, SEXP env, R_XMLSettings *parserSettings
   UNPROTECT(1);
 
   SET_VECTOR_ELT(ans, i++, RS_XML(AttributeList)(node, parserSettings));
-  SET_VECTOR_ELT(ans, i++, mkString(node->ns && node->ns->prefix ? XMLCHAR_TO_CHAR(node->ns->prefix) : ""));
+  SET_VECTOR_ELT(ans, i++, ScalarString(ENC_COPY_TO_USER_STRING(node->ns && node->ns->prefix ? XMLCHAR_TO_CHAR(node->ns->prefix) : "")));
      /* skip the children */
   i = 4; 
   SET_VECTOR_ELT(ans, i++, mkString(buf));
@@ -104,7 +104,7 @@ makeHashNode(xmlNodePtr node, char *buf, SEXP env, R_XMLSettings *parserSettings
 
   PROTECT(names = NEW_CHARACTER(numEls));
   for(i = 0; i < sizeof(nodeElementNames)/sizeof(nodeElementNames[0]); i++) 
-      SET_STRING_ELT(names, i, COPY_TO_USER_STRING(nodeElementNames[i]));
+      SET_STRING_ELT(names, i, ENC_COPY_TO_USER_STRING(nodeElementNames[i]));
   if(hasValue)
       SET_STRING_ELT(names, i++, COPY_TO_USER_STRING("value"));
   if(node->nsDef)

@@ -86,15 +86,15 @@ createSAX2AttributesList(const xmlChar **attributes, int nb_attributes, int nb_d
       }
       memcpy(tmp, ptr[3], ptr[4] - ptr[3]);
       tmp[len-1] = '\0'; /*XXX*/
-      SET_STRING_ELT(attr_values, i,  COPY_TO_USER_STRING(tmp));
+      SET_STRING_ELT(attr_values, i,  ENC_COPY_TO_USER_STRING(tmp));
       free(tmp);
 
-      SET_STRING_ELT(attr_names, i, COPY_TO_USER_STRING(ptr[0]));
+      SET_STRING_ELT(attr_names, i, ENC_COPY_TO_USER_STRING(ptr[0]));
 
       if(ptr[2]) {
-         SET_STRING_ELT(nsURI, i,  COPY_TO_USER_STRING(ptr[2]));
+         SET_STRING_ELT(nsURI, i,  ENC_COPY_TO_USER_STRING(ptr[2]));
          if(ptr[1])
-            SET_STRING_ELT(nsNames, i,  COPY_TO_USER_STRING(ptr[1]));
+            SET_STRING_ELT(nsNames, i,  ENC_COPY_TO_USER_STRING(ptr[1]));
       }
   }
   SET_NAMES(nsURI, nsNames);
@@ -485,7 +485,7 @@ RS_XML(xmlSAX2StartElementNs)(void * userData,
 
   PROTECT(opArgs = NEW_LIST(4));
   SET_VECTOR_ELT(opArgs, 0, NEW_CHARACTER(1));
-  SET_STRING_ELT(VECTOR_ELT(opArgs, 0), 0, COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(localname))); 
+  SET_STRING_ELT(VECTOR_ELT(opArgs, 0), 0, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(localname))); 
 
       /* Now convert the attributes list. */
   SET_VECTOR_ELT(opArgs, 1, createSAX2AttributesList(attributes, nb_attributes, nb_defaulted, encoding));
@@ -493,7 +493,7 @@ RS_XML(xmlSAX2StartElementNs)(void * userData,
 
   PROTECT(tmp = NEW_CHARACTER(1));
   if(URI) {
-     SET_STRING_ELT(tmp, 0, COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(URI))); 
+     SET_STRING_ELT(tmp, 0, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(URI))); 
      SET_NAMES(tmp, ScalarString(CreateCharSexpWithEncoding(encoding,  ( (void*)prefix ? XMLCHAR_TO_CHAR(prefix) : "")))); 
   }
   SET_VECTOR_ELT(opArgs, 2, tmp);
@@ -503,9 +503,9 @@ RS_XML(xmlSAX2StartElementNs)(void * userData,
   PROTECT(tmp = NEW_CHARACTER(n));
   PROTECT(names = NEW_CHARACTER(n));
   for(i = 0, n = 0; n < nb_namespaces; n++, i+=2) {
-      SET_STRING_ELT(tmp, n, COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(namespaces[i+1])));
+      SET_STRING_ELT(tmp, n, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(namespaces[i+1])));
       if(namespaces[i])
-         SET_STRING_ELT(names, n, COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(namespaces[i])));
+         SET_STRING_ELT(names, n, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(namespaces[i])));
   }
   SET_NAMES(tmp, names);
   SET_VECTOR_ELT(opArgs, 3, tmp);
@@ -543,11 +543,11 @@ RS_XML(xmlSAX2EndElementNs)(void * ctx,
   }
 
   PROTECT(args = NEW_LIST(2));
-  SET_VECTOR_ELT(args, 0, ScalarString(COPY_TO_USER_STRING(localname)));
+  SET_VECTOR_ELT(args, 0, ScalarString(ENC_COPY_TO_USER_STRING(localname)));
 
-  PROTECT(tmp = ScalarString(COPY_TO_USER_STRING((XMLCHAR_TO_CHAR(URI)) ? XMLCHAR_TO_CHAR(URI) : ""))); 
+  PROTECT(tmp = ScalarString(ENC_COPY_TO_USER_STRING((XMLCHAR_TO_CHAR(URI)) ? XMLCHAR_TO_CHAR(URI) : ""))); 
   if(prefix)
-      SET_NAMES(tmp, ScalarString(COPY_TO_USER_STRING(prefix)));
+      SET_NAMES(tmp, ScalarString(ENC_COPY_TO_USER_STRING(prefix)));
   SET_VECTOR_ELT(args, 1, tmp);
 
   fun = findEndElementFun(localname, rinfo);
@@ -678,7 +678,7 @@ RS_XML(cdataBlockHandler)(void *ctx, const xmlChar *value, int len)
 
  PROTECT(opArgs = NEW_LIST(1));
  SET_VECTOR_ELT(opArgs, 0, NEW_CHARACTER(1));
-   SET_STRING_ELT(VECTOR_ELT(opArgs, 0), 0, COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(value)));
+   SET_STRING_ELT(VECTOR_ELT(opArgs, 0), 0, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(value)));
    RS_XML(callUserFunction)(HANDLER_FUN_NAME(parserData, "cdata"), (const char *)NULL, (RS_XMLParserData*)ctx, opArgs);
   UNPROTECT(1);
 }
@@ -692,7 +692,7 @@ RS_XML(piHandler)(void *ctx, const xmlChar *target, const xmlChar *data)
 
 
 //#define RString(x) (x ? mkString(XMLCHAR_TO_CHAR((x))) : NEW_CHARACTER(1))
-#define RString(x) (x ? ScalarString(COPY_TO_USER_STRING(XMLCHAR_TO_CHAR((x)))) : NEW_CHARACTER(1))
+#define RString(x) (x ? ScalarString(ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR((x)))) : NEW_CHARACTER(1))
 
 /* Relies on the order and numbering of xmlEntityType from entities.h */
 static const char * const EntityTypeNames[]  = {
@@ -744,7 +744,7 @@ do_getEntityHandler(void *userData, const xmlChar *name, const char * r_funName)
     DECL_ENCODING_FROM_EVENT_PARSER(parserData)
 
     PROTECT(opArgs = NEW_LIST(1)) ;
-    SET_VECTOR_ELT(opArgs, 0, ScalarString(COPY_TO_USER_STRING(name))); /*XXX should we encode this? Done now! */
+    SET_VECTOR_ELT(opArgs, 0, ScalarString(ENC_COPY_TO_USER_STRING(name))); /*XXX should we encode this? Done now! */
     r_ans = RS_XML(callUserFunction)(r_funName, NULL, (RS_XMLParserData *) userData, opArgs);
     
     PROTECT(r_ans) ;

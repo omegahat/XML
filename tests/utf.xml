@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doc xmlns:ø="http://www.omegahat.org" xmlns:r="http://www.r-project.org">
+ <ø:øxy/>
+ <〗/>							       <!-- \u3017 -->
+ <ý/>
+ <ж ø:ж="〗"/>
+ <झ r:ఆ="abc"  xyz="123"  bob="false"/>
+ <⼋/>
+ <text>⼋ж ø:ж=〗</text>
+<para>
+This explores using different characters
+</para>
+</doc>

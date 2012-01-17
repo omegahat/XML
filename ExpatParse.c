@@ -100,7 +100,7 @@ RS_XML(externalEntityHandler)(XML_Parser parser, const XML_Char *context,
   opArgs = NEW_LIST(num);
   for(i =0;i < num; i++) {
     RECURSIVE_DATA(opArgs)[i] = NEW_CHARACTER(1); 
-    CHARACTER_DATA(RECURSIVE_DATA(opArgs)[i])[0] = COPY_TO_USER_STRING(xml_args[i] ? xml_args[i] : "");
+    CHARACTER_DATA(RECURSIVE_DATA(opArgs)[i])[0] = ENC_COPY_TO_USER_STRING(xml_args[i] ? xml_args[i] : "");
   }
 
  RS_XML(callUserFunction)("externalEntity", NULL, parserData, opArgs);

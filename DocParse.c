@@ -358,7 +358,7 @@ RS_XML(convertXMLDoc)(const char *fileName, xmlDocPtr doc, USER_OBJECT_ converte
  
     /* Insert the name of the file being processed */
     SET_VECTOR_ELT(rdoc, FILE_ELEMENT_NAME, NEW_CHARACTER(1));
-    SET_STRING_ELT(VECTOR_ELT(rdoc, FILE_ELEMENT_NAME), 0, COPY_TO_USER_STRING(doc->name ? XMLCHAR_TO_CHAR(doc->name) : fileName));
+    SET_STRING_ELT(VECTOR_ELT(rdoc, FILE_ELEMENT_NAME), 0, ENC_COPY_TO_USER_STRING(doc->name ? XMLCHAR_TO_CHAR(doc->name) : fileName));
     SET_STRING_ELT(rdoc_el_names, FILE_ELEMENT_NAME, COPY_TO_USER_STRING("file"));
 
     /* Insert the XML version information */
@@ -421,7 +421,7 @@ processNamespaceDefinitions(xmlNs *ns, xmlNodePtr node, R_XMLSettings *parserSet
     (void) RS_XML(notifyNamespaceDefinition)(tmp, parserSettings);
     SET_VECTOR_ELT(ans, n, tmp);
     if(ptr->prefix)
-       SET_STRING_ELT(names, n, COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(ptr->prefix)));
+       SET_STRING_ELT(names, n, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(ptr->prefix)));
   }
 
   SET_NAMES(ans, names);
@@ -560,7 +560,7 @@ RS_XML(createXMLNode)(xmlNodePtr node, int recursive, int direction, R_XMLSettin
 
   SET_VECTOR_ELT(ans, NODE_NAME, NEW_CHARACTER(1));
   if(node->name)
-    SET_STRING_ELT(VECTOR_ELT(ans, NODE_NAME), 0, COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(node->name)));
+    SET_STRING_ELT(VECTOR_ELT(ans, NODE_NAME), 0, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(node->name)));
 
   SET_VECTOR_ELT(ans, NODE_ATTRIBUTES, RS_XML(AttributeList)(node, parserSettings));
 
@@ -581,14 +581,14 @@ RS_XML(createXMLNode)(xmlNodePtr node, int recursive, int direction, R_XMLSettin
     PROTECT(nsDef = NEW_CHARACTER(1));
     if(!parserSettings->fullNamespaceInfo) {
 	if(node->ns->prefix) {
-	    SET_STRING_ELT(nsDef, 0, COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(node->ns->prefix))); 
+	    SET_STRING_ELT(nsDef, 0, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(node->ns->prefix))); 
 	    SET_CLASS(nsDef, mkString("XMLNamespacePrefix"));
 	}
     } else {
 	if(node->ns->href)
-	    SET_STRING_ELT(nsDef, 0, COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(node->ns->href)));
+	    SET_STRING_ELT(nsDef, 0, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(node->ns->href)));
 	if(node->ns->prefix)
-		SET_NAMES(nsDef, ScalarString(COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(node->ns->prefix)))); /* XXX change! */
+		SET_NAMES(nsDef, ScalarString(ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(node->ns->prefix)))); /* XXX change! */
 	SET_CLASS(nsDef, mkString("XMLNamespace"));
     }
     SET_VECTOR_ELT(ans, NODE_NAMESPACE, nsDef);
@@ -600,10 +600,10 @@ RS_XML(createXMLNode)(xmlNodePtr node, int recursive, int direction, R_XMLSettin
   if(addValue) {
     SET_STRING_ELT(ans_el_names, NUM_NODE_ELEMENTS, COPY_TO_USER_STRING("value"));
     SET_VECTOR_ELT(ans, NUM_NODE_ELEMENTS, NEW_CHARACTER(1));
-    SET_STRING_ELT(VECTOR_ELT(ans, NUM_NODE_ELEMENTS), 0, COPY_TO_USER_STRING(contentValue));
+    SET_STRING_ELT(VECTOR_ELT(ans, NUM_NODE_ELEMENTS), 0, ENC_COPY_TO_USER_STRING(contentValue));
 
     if(node->type == XML_ENTITY_REF_NODE) 
-	    SET_NAMES(VECTOR_ELT(ans, NUM_NODE_ELEMENTS), ScalarString(COPY_TO_USER_STRING(node->name)));
+	    SET_NAMES(VECTOR_ELT(ans, NUM_NODE_ELEMENTS), ScalarString(ENC_COPY_TO_USER_STRING(node->name)));
   }
 
   SET_NAMES(ans, ans_el_names);
@@ -737,10 +737,10 @@ RS_XML(createNameSpaceIdentifier)(xmlNs *space, xmlNodePtr node)
  if(node->nsDef) {
    PROTECT(ans = NEW_LIST(3));
      SET_VECTOR_ELT(ans, NAMESPACE_PREFIX_SLOT, NEW_CHARACTER(1));
-     SET_STRING_ELT(VECTOR_ELT(ans, NAMESPACE_PREFIX_SLOT), 0, COPY_TO_USER_STRING(XMLCHAR_TO_CHAR( (space->prefix ? space->prefix : (xmlChar*)"")))); 
+     SET_STRING_ELT(VECTOR_ELT(ans, NAMESPACE_PREFIX_SLOT), 0, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR( (space->prefix ? space->prefix : (xmlChar*)"")))); 
 
      SET_VECTOR_ELT(ans, NAMESPACE_URI_SLOT, NEW_CHARACTER(1));
-     SET_STRING_ELT(VECTOR_ELT(ans, NAMESPACE_URI_SLOT), 0, space->href ? COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(space->href)) : NA_STRING); 
+     SET_STRING_ELT(VECTOR_ELT(ans, NAMESPACE_URI_SLOT), 0, space->href ? ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(space->href)) : NA_STRING); 
 
 
      SET_VECTOR_ELT(ans, NAMESPACE_TYPE_SLOT, NEW_LOGICAL(1));
@@ -759,7 +759,7 @@ RS_XML(createNameSpaceIdentifier)(xmlNs *space, xmlNodePtr node)
  } else {
    PROTECT(ans =  NEW_CHARACTER(1));
    if(space->prefix)
-      SET_STRING_ELT(ans, 0, COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(space->prefix)));
+      SET_STRING_ELT(ans, 0, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(space->prefix)));
    UNPROTECT(1);
  }
 
@@ -946,7 +946,7 @@ RS_XML(createNodeChildren)(xmlNodePtr node, int direction, R_XMLSettings *parser
 	if(tmp && tmp != NULL_USER_OBJECT) {
 	    SET_VECTOR_ELT(ans, count, tmp); 
 	    if(c->name)
-		SET_STRING_ELT(elNames, count, COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(c->name)));
+		SET_STRING_ELT(elNames, count, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(c->name)));
             count++;
 	}
     }
@@ -1112,7 +1112,7 @@ RS_XML_xmlNodeName(USER_OBJECT_ snode)
 
 
     PROTECT(ans = NEW_CHARACTER(1));
-    SET_STRING_ELT(ans, 0, node->name ? COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(node->name)) : R_NaString);
+    SET_STRING_ELT(ans, 0, node->name ? ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(node->name)) : R_NaString);
     UNPROTECT(1);    
     return(ans);
 }
@@ -1132,9 +1132,9 @@ RS_XML_xmlNodeNamespace(USER_OBJECT_ snode)
 
     PROTECT(ans = NEW_CHARACTER(1));
     if(ns->href)
-        SET_STRING_ELT(ans, 0, COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(ns->href)));
+        SET_STRING_ELT(ans, 0, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(ns->href)));
     if(ns->prefix)
-        SET_NAMES(ans, ScalarString(COPY_TO_USER_STRING(ns->prefix))); 
+        SET_NAMES(ans, ScalarString(ENC_COPY_TO_USER_STRING(ns->prefix))); 
 
     SET_CLASS(ans, mkString("XMLNamespace"));
     UNPROTECT(1);    
@@ -1209,7 +1209,7 @@ RS_XML_xmlNodeChildrenReferences(USER_OBJECT_ snode, USER_OBJECT_ r_addNames, US
     for(i = 0; i < count ; i++, ptr = ptr->next) {
 	SET_VECTOR_ELT(ans, i, R_createXMLNodeRef(ptr, manageMemory));
 	if(addNames)
-	    SET_STRING_ELT(names, i, COPY_TO_USER_STRING(ptr->name ? XMLCHAR_TO_CHAR(ptr->name) : ""));
+	    SET_STRING_ELT(names, i, ENC_COPY_TO_USER_STRING(ptr->name ? XMLCHAR_TO_CHAR(ptr->name) : ""));
     }
     if(addNames)
 	SET_NAMES(ans, names);
@@ -1301,7 +1301,7 @@ RS_XML_getDocumentName(USER_OBJECT_ sdoc)
     }
     encoding = doc->encoding;
     PROTECT(ans = NEW_CHARACTER(1));
-    SET_STRING_ELT(ans, 0, doc->URL ? COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(doc->URL)) : R_NaString);
+    SET_STRING_ELT(ans, 0, doc->URL ? ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(doc->URL)) : R_NaString);
     UNPROTECT(1);    
     return(ans);
 }
@@ -1414,7 +1414,6 @@ RS_XML(AttributeList)(xmlNodePtr node, R_XMLSettings *parserSettings)
             and the elements of the name vector.
           */
 
-
       atts = node->properties;
 
       for(i=0; i < n ; i++) {
@@ -1423,12 +1422,12 @@ RS_XML(AttributeList)(xmlNodePtr node, R_XMLSettings *parserSettings)
          */
 #ifdef LIBXML2
          SET_STRING_ELT(ans, i, 
-                         COPY_TO_USER_STRING(
+                         ENC_COPY_TO_USER_STRING(
                                        XMLCHAR_TO_CHAR(
                                           ((atts->xmlChildrenNode != (xmlNode*)NULL && atts->xmlChildrenNode->content != (xmlChar*)NULL )
                                                        ? atts->xmlChildrenNode->content : (xmlChar*)""))));
 #else
-         SET_STRING_ELT(ans, i, COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(((atts->val != (xmlNode*)NULL && atts->val->content != (xmlChar*)NULL )
+         SET_STRING_ELT(ans, i, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(((atts->val != (xmlNode*)NULL && atts->val->content != (xmlChar*)NULL )
                                                             ? atts->val->content : (xmlChar*)""))));
 
 #endif
@@ -1436,14 +1435,16 @@ RS_XML(AttributeList)(xmlNodePtr node, R_XMLSettings *parserSettings)
            if(addNSPrefix && atts->ns && atts->ns->prefix) {
              char buf[400];
              sprintf(buf, "%s:%s", atts->ns->prefix, atts->name);
-             SET_STRING_ELT(ans_names, i, COPY_TO_USER_STRING(buf));
+             SET_STRING_ELT(ans_names, i, ENC_COPY_TO_USER_STRING(buf));
 	   } else
-             SET_STRING_ELT(ans_names, i, COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(atts->name)));
+             SET_STRING_ELT(ans_names, i, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(atts->name)));
 
 	   if((addNSPrefix | retNSDefs) && atts->ns && atts->ns->prefix) {
-	     SET_STRING_ELT(ans_namespaces, i, COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(atts->ns->prefix)));
+	     SET_STRING_ELT(ans_namespaces, i, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(atts->ns->prefix)));
+
 	     if(retNSDefs)
-    	         SET_STRING_ELT(ans_namespaceDefs, i, COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(atts->ns->href)));
+    	         SET_STRING_ELT(ans_namespaceDefs, i, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(atts->ns->href)));
+
 	     nonTrivialAttrNamespaces++;
 	   }
 	 }
