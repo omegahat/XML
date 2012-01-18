@@ -1,3 +1,7 @@
+Version 3.9-1
+
+  *     Added method for removeNodes for XMLNodeList.
+
 Version 3.9-0
 
   *     Enabled additional encoding for element, attribute and namespace names, and 

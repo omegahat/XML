@@ -974,7 +974,7 @@ removeNodes.default =
 function(node, free = rep(FALSE, length(node)))
  NULL
 
-removeNodes.list =
+removeNodes.list = removeNodes.XMLNodeList = 
 function(node, free = rep(FALSE, length(node)))
 {
    if(!all(sapply(node, inherits, "XMLInternalNode"))) {

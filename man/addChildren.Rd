@@ -5,6 +5,7 @@
 \alias{removeNodes}
 \alias{removeNodes.list}
 \alias{removeNodes.XMLNodeSet}
+\alias{removeNodes.XMLNodeList}
 \alias{removeNodes.XMLInternalNode}
 \alias{replaceNodes}
 \alias{addAttributes}
