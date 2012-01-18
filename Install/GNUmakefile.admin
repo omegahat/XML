@@ -118,7 +118,8 @@ R_SRC_FILES=\
    Src/serialize.R \
    Src/xmlRoot.R \
    Src/xmlMemoryMgmt.R \
-   Src/keyValueDB.R Src/solrDocs.R
+   Src/keyValueDB.R Src/solrDocs.R \
+   Src/XMLRErrorInfo.R
 
 
 
