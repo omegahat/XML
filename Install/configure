@@ -6339,7 +6339,7 @@ fi
 
 
 
- ac_config_files="$ac_config_files NAMESPACE src/Makevars R/supports.R inst/scripts/RSXML.csh inst/scripts/RSXML.bsh ${SPLUS_MAKEFILE}"
+    ac_config_files="$ac_config_files src/Makevars R/supports.R inst/scripts/RSXML.csh inst/scripts/RSXML.bsh ${SPLUS_MAKEFILE}"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -6908,7 +6908,6 @@ cat >>$CONFIG_STATUS <<\_ACEOF
 for ac_config_target in $ac_config_targets
 do
   case $ac_config_target in
-    "NAMESPACE") CONFIG_FILES="$CONFIG_FILES NAMESPACE" ;;
     "src/Makevars") CONFIG_FILES="$CONFIG_FILES src/Makevars" ;;
     "R/supports.R") CONFIG_FILES="$CONFIG_FILES R/supports.R" ;;
     "inst/scripts/RSXML.csh") CONFIG_FILES="$CONFIG_FILES inst/scripts/RSXML.csh" ;;

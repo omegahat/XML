@@ -807,7 +807,10 @@ fi
 AC_SUBST(ADD_XML_OUTPUT_BUFFER)
 
  dnl create the different targets
-AC_OUTPUT(NAMESPACE src/Makevars R/supports.R inst/scripts/RSXML.csh inst/scripts/RSXML.bsh ${SPLUS_MAKEFILE})
+ dnl We had NAMESPACE here when were conditionally exporting the functions to 
+ dnl remove finalizers on a node or document.  Need to add NAMESPACE.in in 
+ dnl Install/GNUmakefile.admin
+AC_OUTPUT(src/Makevars R/supports.R inst/scripts/RSXML.csh inst/scripts/RSXML.bsh ${SPLUS_MAKEFILE})
 chmod +x cleanup
 
 

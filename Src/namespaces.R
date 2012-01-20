@@ -1,6 +1,6 @@
 setGeneric("simplifyNamespaces",
-function(doc, ...)
-  standardGeneric("simplifyNamespaces"))
+             function(doc, ...)
+                standardGeneric("simplifyNamespaces"))
 
 setMethod("simplifyNamespaces", "character",
             function(doc, ...) {

@@ -201,7 +201,7 @@ createRPackage:: $(DEPENDS)
 	cp gc.R gc1.R gc2.R testNew.R toList.R parent.R tt.R $(R_WORK_PACKAGE)/tests
 # USE_NAMESPACE should
 ifdef USE_NAMESPACE
-	cp NAMESPACE.in $(R_WORK_PACKAGE)
+	cp NAMESPACE $(R_WORK_PACKAGE)
 else
 	# temporarily don't use save image
 	touch $(R_WORK_PACKAGE)/install.R

@@ -1,6 +1,6 @@
 Package: @PKG_NAME@
 Version: @MAJOR_VERSION@.@MINOR_VERSION@-@PATCH_LEVEL@
-Date: @DATE@
+ReleaseDate: @DATE@
 Author:  Duncan Temple Lang (duncan@wald.ucdavis.edu)
 Maintainer: Duncan Temple Lang <duncan@wald.ucdavis.edu>
 Title: Tools for parsing and generating XML within R and S-Plus.
@@ -8,7 +8,7 @@ Depends: R (>= 1.2.0), methods, utils
 Imports: methods
 Suggests: bitops
 SystemRequirements: libxml2 (>= 2.6.3)
-LazyLoad: yes
+xxxLazyLoad: yes
 Description: This package provides many approaches for both reading and creating XML (and HTML)
       documents (including DTDs), both local and accessible via HTTP or FTP.  It also offers
       access to an XPath "interpreter".
@@ -16,9 +16,9 @@ Note: In version 2.4.0 of this package, a new approach to garbage collection has
       and it is experimental. You can disable it via the configuration option --enable-nodegc=no.
       However, you are encouraged to use this and report problems as the results are beneficial 
       and being able to produce any errors should they occur will be very helpful.
-Note: The versions numbers 1.0 and 2.0 do not have any special significance, but are merely
-    the result of incrementing the minor count by 1 for each release.  
-    Specifically, there is no change in the interface.
+      The versions numbers 1.0 and 2.0 do not have any special significance, but are merely
+      the result of incrementing the minor count by 1 for each release.  
+      Specifically, there is no change in the interface.
 URL:  http://www.omegahat.org/RSXML
 License: BSD
 Collate: AAA.R

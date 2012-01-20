@@ -477,7 +477,7 @@ export(parseXMLAndAdd)
 
 export(xmlSerializeHook, xmlDeserializeHook)
 
-if(@EXPORT_MEMORY_MANAGEMENT@) {
+if(FALSE) {
 export(clearMemoryManagement)
 exportMethods(clearMemoryManagement)
 }
