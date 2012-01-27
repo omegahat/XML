@@ -1486,7 +1486,7 @@ R_getDocEncoding(SEXP r_doc)
 
     encoding = doc->encoding;
     PROTECT(ans = NEW_CHARACTER(1));
-    SET_STRING_ELT(ans, 0, CreateCharSexpWithEncoding(doc->encoding, doc->encoding));
+    SET_STRING_ELT(ans, 0, encoding ? CreateCharSexpWithEncoding(doc->encoding, doc->encoding) : R_NaString);
     UNPROTECT(1);
 
     return(ans);
