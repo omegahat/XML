@@ -1,7 +1,7 @@
 if(FALSE) {
 saveXML <-
 function(doc, file=NULL, compression=0, indent=TRUE, prefix = '<?xml version="1.0"?>\n',
-         doctype = NULL, encoding = "", ...)
+         doctype = NULL, encoding = getEncoding(doc), ...)
 {
  UseMethod("saveXML")
 }
@@ -10,12 +10,13 @@ function(doc, file=NULL, compression=0, indent=TRUE, prefix = '<?xml version="1.
 
 saveXML.XMLInternalNode <-
 function(doc, file = NULL, compression = 0, indent = TRUE, prefix = '<?xml version="1.0"?>\n',
-         doctype = NULL, encoding = "", ...)  
+         doctype = NULL, encoding = getEncoding(doc), ...)  
 {
   if(encoding == "")
     encoding = character()
 
-  ans = .Call("RS_XML_printXMLNode", doc, as.integer(0), as.integer(indent), as.logical(indent), as.character(encoding), PACKAGE = "XML")
+  ans = .Call("RS_XML_printXMLNode", doc, as.integer(0), as.integer(indent),
+                 as.logical(indent), as.character(encoding), PACKAGE = "XML")
 
   if(length(file)) {
     cat(ans, file = file)
@@ -28,7 +29,7 @@ function(doc, file = NULL, compression = 0, indent = TRUE, prefix = '<?xml versi
 
 saveXML.XMLInternalDocument <-
 function(doc, file = NULL, compression = 0, indent = TRUE,
-          prefix = '<?xml version="1.0"?>\n',  doctype = NULL, encoding = "", ...)
+          prefix = '<?xml version="1.0"?>\n',  doctype = NULL, encoding = getEncoding(doc), ...)
 {
   havePrefix = !missing(prefix)
 
@@ -77,7 +78,7 @@ function(doc, file = NULL, compression = 0, indent = TRUE,
 
 saveXML.XMLInternalDOM <-
 function(doc, file=NULL, compression=0, indent=TRUE, prefix = '<?xml version="1.0"?>\n',
-         doctype = NULL, encoding = "", ...)
+         doctype = NULL, encoding = getEncodong(doc), ...)
 {
   saveXML(doc$value(), file, compression, indent, prefix, doctype, encoding)
 }
@@ -85,7 +86,7 @@ function(doc, file=NULL, compression=0, indent=TRUE, prefix = '<?xml version="1.
 
 saveXML.XMLOutputStream =
 function(doc, file = NULL, compression = 0, indent = TRUE, prefix = '<?xml version="1.0"?>\n',
-         doctype = NULL, encoding = "", ...)
+         doctype = NULL, encoding = getEncoding(doc), ...)
 {
   saveXML(doc$value(), file, compression, indent, prefix, doctype, encoding)  
 }
@@ -96,7 +97,7 @@ saveXML.sink =
 # Need to handle a DTD here as the prefix argument..
 #
 function(doc, file = NULL, compression = 0, indent = TRUE, prefix = '<?xml version="1.0"?>\n',
-         doctype = NULL, encoding = "", ...)
+         doctype = NULL, encoding = getEncoding(x), ...)
 {
   asString = is.null(file)
   if(asString)
@@ -132,7 +133,7 @@ saveXML.XMLFlatTree = saveXML.sink
 
 setGeneric("saveXML",
 function(doc, file=NULL, compression=0, indent=TRUE, prefix = '<?xml version="1.0"?>\n',
-         doctype = NULL, encoding = "", ...)
+         doctype = NULL, encoding = getEncoding(doc), ...)
            standardGeneric("saveXML"))
 
 setMethod("saveXML", "XMLInternalNode", saveXML.XMLInternalNode)

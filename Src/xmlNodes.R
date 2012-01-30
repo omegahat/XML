@@ -197,7 +197,7 @@ function(x, i, j, ..., addFinalizer = NA)
 
 
 xmlValue.XMLInternalNode =
-function(x, ignoreComments = FALSE, recursive = TRUE, encoding = CE_NATIVE)
+function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x)) #CE_NATIVE)
 {
 
   encoding = if(is.integer(encoding)) 

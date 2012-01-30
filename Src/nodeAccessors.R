@@ -91,18 +91,18 @@ function(X, FUN, ...)
 
 
 xmlValue <- 
-function(x, ignoreComments = FALSE, recursive = TRUE, encoding = CE_NATIVE)
+function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x))
 {
  UseMethod("xmlValue")
 }
 
 if(useS4)
-  setGeneric("xmlValue", function(x, ignoreComments = FALSE, recursive = TRUE, encoding = CE_NATIVE) 
+  setGeneric("xmlValue", function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x))
         standardGeneric("xmlValue"))
 
 
 xmlValue.XMLNode <- 
-function(x, ignoreComments = FALSE, recursive = TRUE, encoding = CE_NATIVE)
+function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x))
 {
  if(recursive && xmlSize(x) > 0) {
    kids = xmlChildren(x)
@@ -128,7 +128,7 @@ function(x, ignoreComments = FALSE, recursive = TRUE, encoding = CE_NATIVE)
 setS3Method("xmlValue", "XMLNode")
 
 xmlValue.XMLTextNode <- 
-function(x, ignoreComments = FALSE, recursive = TRUE, encoding = CE_NATIVE)
+function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x))
 {
   if(!is.null(x$value))
      x$value
@@ -139,7 +139,7 @@ function(x, ignoreComments = FALSE, recursive = TRUE, encoding = CE_NATIVE)
 setS3Method("xmlValue", "XMLTextNode")
 
 xmlValue.XMLComment <-  xmlValue.XMLCommentNode <-
-function(x, ignoreComments = FALSE, recursive = TRUE, encoding = CE_NATIVE)
+function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x))
 {
  if(ignoreComments)
    return("")
@@ -153,7 +153,7 @@ function(x, ignoreComments = FALSE, recursive = TRUE, encoding = CE_NATIVE)
 setS3Method("xmlValue", "XMLCommentNode")
 
 xmlValue.XMLCDataNode <- 
-function(x, ignoreComments = FALSE, recursive = TRUE, encoding = CE_NATIVE)
+function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x))
 {
  x$value
 }
@@ -161,7 +161,7 @@ function(x, ignoreComments = FALSE, recursive = TRUE, encoding = CE_NATIVE)
 setS3Method("xmlValue", "XMLCDataNode")
 
 xmlValue.XMLProcessingInstruction <- 
-function(x, ignoreComments = FALSE, recursive = TRUE, encoding = CE_NATIVE)
+function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x))
 {
  x$value
 }
@@ -169,7 +169,7 @@ function(x, ignoreComments = FALSE, recursive = TRUE, encoding = CE_NATIVE)
 setS3Method("xmlValue", "XMLProcessingInstruction")
 
 "xmlValue.NULL" =
-function(x, ignoreComments = FALSE, recursive = TRUE, encoding = CE_NATIVE)
+function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x))
           as.character(NA)
 
 #setS3Method("xmlValue", "NULL")
