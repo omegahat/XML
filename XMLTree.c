@@ -1353,7 +1353,8 @@ Test:
   .Call("RS_XML_printXMLNode", a, as.integer(1), as.integer(1), character())
 */
 USER_OBJECT_
-RS_XML_printXMLNode(USER_OBJECT_ r_node, USER_OBJECT_ level, USER_OBJECT_ format, USER_OBJECT_ indent, USER_OBJECT_ r_encoding)
+RS_XML_printXMLNode(USER_OBJECT_ r_node, USER_OBJECT_ level, USER_OBJECT_ format, 
+		    USER_OBJECT_ indent, USER_OBJECT_ r_encoding, USER_OBJECT_ r_encoding_int)
 {
     USER_OBJECT_ ans;
     xmlNodePtr node;
@@ -1383,12 +1384,10 @@ RS_XML_printXMLNode(USER_OBJECT_ r_node, USER_OBJECT_ level, USER_OBJECT_ format
 
     if(xbuf->use > 0) {
         /*XXX this const char * in CHARSXP means we have to make multiple copies. */
-#if 0
-	char *rbuf = R_alloc(sizeof(char) * (xbuf->use + 1));
-	memcpy(rbuf, xbuf->content, xbuf->use + 1);
-	PROTECT(tmp = mkChar(rbuf));
-#endif
-	ans = ScalarString(mkChar(xbuf->content));
+     if(INTEGER(r_encoding_int)[0] == CE_NATIVE)
+        ans = ScalarString(CreateCharSexpWithEncoding(encoding, xbuf->content));
+     else
+        ans = ScalarString(mkCharCE(xbuf->content, INTEGER(r_encoding_int)[0]));
     } else
       ans = NEW_CHARACTER(1);
 

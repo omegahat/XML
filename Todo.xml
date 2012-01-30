@@ -16,6 +16,9 @@
 <title>XML Internal Nodes</title>
 
 <items>
+<item>
+getEncoding() methods for different types of nodes and trees.
+</item>
 
 <item>
 Why does event parsing not scale linearly. See eventParse.R in 

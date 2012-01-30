@@ -12,11 +12,11 @@ saveXML.XMLInternalNode <-
 function(doc, file = NULL, compression = 0, indent = TRUE, prefix = '<?xml version="1.0"?>\n',
          doctype = NULL, encoding = getEncoding(doc), ...)  
 {
-  if(encoding == "")
+  if(is.na(encoding) || length(encoding) == 0 || encoding == "")
     encoding = character()
 
-  ans = .Call("RS_XML_printXMLNode", doc, as.integer(0), as.integer(indent),
-                 as.logical(indent), as.character(encoding), PACKAGE = "XML")
+  ans = .Call("RS_XML_printXMLNode", doc, as.integer(0), as.integer(indent), as.logical(indent),
+                as.character(encoding), getEncodingREnum(as.character(encoding)), PACKAGE = "XML")
 
   if(length(file)) {
     cat(ans, file = file)
@@ -50,10 +50,14 @@ function(doc, file = NULL, compression = 0, indent = TRUE,
 
   if(length(file))
     file = path.expand(file)
+
+  if(is.na(encoding))
+     encoding = "" #character()
   
   ans = .Call("R_saveXMLDOM", doc, file, as.integer(compression), as.logical(indent),
-                               if(is.character(prefix)) prefix else character(), 
-                                as.character(encoding), PACKAGE = "XML")
+                               if(is.character(prefix)) prefix else character(),
+                               as.character(encoding), # getEncodingREnum(as.character(encoding)),
+                               PACKAGE = "XML")
 
   if(!isDocType && havePrefix) {
 
@@ -78,7 +82,7 @@ function(doc, file = NULL, compression = 0, indent = TRUE,
 
 saveXML.XMLInternalDOM <-
 function(doc, file=NULL, compression=0, indent=TRUE, prefix = '<?xml version="1.0"?>\n',
-         doctype = NULL, encoding = getEncodong(doc), ...)
+         doctype = NULL, encoding = getEncoding(doc), ...)
 {
   saveXML(doc$value(), file, compression, indent, prefix, doctype, encoding)
 }
@@ -97,7 +101,7 @@ saveXML.sink =
 # Need to handle a DTD here as the prefix argument..
 #
 function(doc, file = NULL, compression = 0, indent = TRUE, prefix = '<?xml version="1.0"?>\n',
-         doctype = NULL, encoding = getEncoding(x), ...)
+         doctype = NULL, encoding = getEncoding(doc), ...)
 {
   asString = is.null(file)
   if(asString)

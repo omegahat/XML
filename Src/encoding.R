@@ -17,6 +17,9 @@ setMethod("getEncodingREnum", "XMLInternalElementNode", # was XMLInternalElement
 
 setMethod("getEncodingREnum", "character",
            function(doc, ...) {
+             if(length(doc) == 0 || is.na(doc))
+               return(CE_NATIVE)
+             
              str = tolower(doc)
              if(any(str == c("utf8", "utf-8")))
                  CE_UTF8

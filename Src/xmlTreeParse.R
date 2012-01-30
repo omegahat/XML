@@ -160,6 +160,8 @@ function(obj, ...)
   standardGeneric("getEncoding")
 })
 
+setMethod("getEncoding", "ANY", function(obj, ...) NA)
+
 setMethod("getEncoding", "XMLInternalDocument",
             function(obj, ...) {
               .Call("R_getDocEncoding", obj, PACKAGE = "XML")
@@ -171,8 +173,12 @@ setMethod("getEncoding", "XMLInternalNode",
             })
 
 
-
-
+if(FALSE) {
+setMethod("getEncoding", "XMLInternalDOM",
+            function(obj, ...) {
+               getEncoding(obj)
+            })
+}
 
 xmlValidity =
 function(val = integer(0))

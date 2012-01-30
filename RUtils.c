@@ -178,7 +178,7 @@ static R_CallMethodDef callMethods[] = {
 	ENTRY(R_xmlCatalogResolve, 3),
 	ENTRY(RS_XML_xmlNodeNumChildren, 1),
         ENTRY(RS_XML_unsetDoc, 4),
-        ENTRY(RS_XML_printXMLNode, 5),
+        ENTRY(RS_XML_printXMLNode, 6),
         ENTRY(RS_XML_dumpHTMLDoc, 5),
         ENTRY(RS_XML_removeChildren, 3),
         ENTRY(RS_XML_clone, 3),
@@ -346,7 +346,7 @@ CreateCharSexpWithEncoding(const xmlChar *encoding, const xmlChar *str)
     else {
 	str = translateChar(mkChar(str));
     }
-
+// REprintf("encoding: %d\n", enc);
     ans = mkCharCE(str, enc);
 #else
     ans = mkChar(str);

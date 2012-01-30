@@ -38,15 +38,15 @@
 }
 \usage{
 saveXML(doc, file=NULL, compression=0, indent=TRUE, prefix = '<?xml version="1.0"?>\n',
-        doctype = NULL, encoding = "", ...)
+        doctype = NULL, encoding = getEncoding(doc), ...)
 \method{saveXML}{XMLInternalDocument}(doc, file=NULL, compression=0, indent=TRUE, prefix = '<?xml version="1.0"?>\n',
-                            doctype = NULL, encoding = "", ...)
+                            doctype = NULL, encoding =  getEncoding(doc), ...)
 \method{saveXML}{XMLInternalDOM}(doc, file=NULL, compression=0, indent=TRUE, prefix = '<?xml version="1.0"?>\n',
-                       doctype = NULL, encoding = "", ...)
+                       doctype = NULL, encoding =  getEncoding(doc), ...)
 \method{saveXML}{XMLNode}(doc, file=NULL, compression=0, indent=TRUE, prefix = '<?xml version="1.0"?>\n',
-                 doctype = NULL, encoding = "", ...)
+                 doctype = NULL, encoding = getEncoding(doc), ...)
 \method{saveXML}{XMLOutputStream}(doc, file=NULL, compression=0, indent=TRUE, prefix = '<?xml version="1.0"?>\n',
-                         doctype = NULL, encoding = "", ...)
+                         doctype = NULL, encoding = getEncoding(doc), ...)
 }
 \arguments{
   \item{doc}{the document object representing the XML document.}

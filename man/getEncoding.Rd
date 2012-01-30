@@ -3,6 +3,7 @@
 \alias{getEncoding}
 \alias{getEncoding,XMLInternalDocument-method}
 \alias{getEncoding,XMLInternalNode-method}
+\alias{getEncoding,ANY-method}
 \title{Determines the encoding for an XML document or node}
 \description{
  This function and its methods are intended to return the

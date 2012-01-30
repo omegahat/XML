@@ -19,7 +19,7 @@
   that contain a single text node.
 }
 \usage{
-xmlValue(x, ignoreComments = FALSE, recursive = TRUE, encoding = CE_NATIVE)
+xmlValue(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x))
 }
 \arguments{
   \item{x}{the \code{XMLNode} object whose

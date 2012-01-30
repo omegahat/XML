@@ -149,7 +149,9 @@ RS_XML_dumpHTMLDoc(USER_OBJECT_ r_node, USER_OBJECT_ format, USER_OBJECT_ r_enco
 	memcpy(rbuf, xbuf->content, xbuf->use + 1);
 	PROTECT(tmp = mkChar(rbuf));
 #endif
-	ans = ScalarString(mkChar(xbuf->content));
+	// ans = ScalarString(mkChar(xbuf->content));
+	DECL_ENCODING_FROM_DOC(node)
+	ans = ScalarString(ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(xbuf->content)));
     } else
       ans = NEW_CHARACTER(1);
 
