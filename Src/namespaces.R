@@ -51,7 +51,15 @@ getNodeNamespace =
 function(ns, nsDefs, node, namespace, noNamespace, namespaceDefinitions = NULL, parent = NULL,
           suppressNamespaceWarning = FALSE)
 {
-  if((is.list(namespace) || is.character(namespace)) && length(namespace) > 0) {
+  if(noNamespace)
+    return(NULL)
+
+ if(is.character(namespace) && length(namespace) && !is.na(namespace) && namespace == "") {
+   if(length(namespaceDefinitions) == 0)
+       return(findNamespaceDefinition(node, ""))
+ }
+  
+ if((is.list(namespace) || is.character(namespace)) && length(namespace) > 0) {
            # a single element with no name so this is the prefix.
     if(length(namespace) == 1 && length(names(namespace)) == 0) {
       if(namespace %in% namespaceDefinitions) {
