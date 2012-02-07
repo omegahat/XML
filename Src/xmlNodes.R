@@ -164,6 +164,16 @@ function(x, i, j, ..., addFinalizer = NA)
     return(getNodeSet(x, i, if(missing(j)) character() else j, addFinalizer = addFinalizer, ...)[[1]])
   }
   
+  if(is.na(i))
+     return(NULL)
+     # Get the individual elements rather than all the children and then subset those
+  return(
+       if(is(i, "numeric"))
+          .Call("R_getChildByIndex", x, as.integer(i), as.logical(addFinalizer))
+       else
+          .Call("R_getChildByName", x, as.character(i), as.logical(addFinalizer))
+       )
+  
   kids = xmlChildren(x, addFinalizer = addFinalizer)
   if(length(kids) == 0)
     return(NULL)

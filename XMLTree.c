@@ -1648,3 +1648,40 @@ R_xmlSearchNs(SEXP r_doc, SEXP r_node, SEXP r_ns, SEXP r_asPrefix)
 	return(r_ans);
     }
 }
+
+
+USER_OBJECT_
+R_getChildByIndex(USER_OBJECT_ r_node, USER_OBJECT_ r_index, USER_OBJECT_ r_addFinalizer)
+{
+    xmlNodePtr node, parent, ptr;
+    int i = 0, idx;
+    node = (xmlNodePtr) R_ExternalPtrAddr(r_node);    
+    ptr = node->children;
+    idx = INTEGER(r_index)[0];
+
+    while(ptr && i < idx) {
+	ptr = ptr->next;
+	i++;
+    }
+
+    return(R_createXMLNodeRef(ptr, r_addFinalizer));
+}
+
+
+USER_OBJECT_
+R_getChildByName(USER_OBJECT_ r_node, USER_OBJECT_ r_index, USER_OBJECT_ r_addFinalizer)
+{
+    xmlNodePtr node, parent, ptr;
+    int i = 0, idx;
+    node = (xmlNodePtr) R_ExternalPtrAddr(r_node);    
+    ptr = node->children;
+    const char *name = CHAR_DEREF(STRING_ELT(r_index, 0));
+
+    while(ptr) {
+	if(ptr->name && strcmp(name, ptr->name) == 0)
+	    break;
+	ptr = ptr->next;
+    }
+
+    return(R_createXMLNodeRef(ptr, r_addFinalizer));
+}
