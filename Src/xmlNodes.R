@@ -509,6 +509,9 @@ function(name, ..., attrs = NULL,
    addChildren(node, kids = .children, cdata = cdata, addFinalizer = addFinalizer)
  }
 
+ if(!is.null(parent))
+   fixDummyNS(node, suppressNamespaceWarning)
+
  node
 }
 

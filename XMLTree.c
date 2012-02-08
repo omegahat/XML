@@ -241,6 +241,16 @@ removeNodeNamespaceByName(xmlNodePtr node, const char * const id)
     return(0);
 }
 
+SEXP
+R_replaceDummyNS(USER_OBJECT_ s_node, USER_OBJECT_ newNS, USER_OBJECT_ prefix)
+{
+    xmlNodePtr node = (xmlNodePtr) R_ExternalPtrAddr(s_node);
+    removeNodeNamespaceByName(node, CHAR(STRING_ELT(prefix, 0)));
+    return(R_xmlSetNs(s_node, newNS, ScalarLogical(0))); 
+//    return(newNS);
+}
+
+
 SEXP 
 RS_XML_removeAllNodeNamespaces(SEXP s_node)
 {
@@ -762,7 +772,7 @@ R_newXMLDtd(USER_OBJECT_ sdoc, USER_OBJECT_ sdtdName, USER_OBJECT_ sexternalID, 
 
 
 /*
-  The append section here is irrelevant!
+
  */
 USER_OBJECT_
 R_xmlSetNs(USER_OBJECT_ s_node, USER_OBJECT_ s_ns, USER_OBJECT_ append)
@@ -799,12 +809,13 @@ RS_XML_setNS(SEXP s_node, SEXP r_ns)
 #endif
 
 
+static const char *DummyNamespaceHREF = "<dummy>";
 
 USER_OBJECT_
 R_xmlNewNs(USER_OBJECT_ sdoc, USER_OBJECT_ shref, USER_OBJECT_ sprefix)
 {
   xmlNodePtr doc = (xmlNodePtr) R_ExternalPtrAddr(sdoc);
-  const char *href = CHAR_DEREF(STRING_ELT(shref, 0));
+  const char *href = Rf_length(shref) == 0 ? DummyNamespaceHREF : CHAR_DEREF(STRING_ELT(shref, 0));
   const char *prefix = NULL;
   xmlNsPtr ns;
 

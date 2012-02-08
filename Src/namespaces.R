@@ -105,16 +105,10 @@ function(ns, nsDefs, node, namespace, noNamespace, namespaceDefinitions = NULL, 
          if(!is.null(parent)) 
            ns = findNamespaceDefinition(node, ns)
          else {
-            if(is.character(suppressNamespaceWarning))
-               f = get(suppressNamespaceWarning, mode = "function")
-            else if(is.logical(suppressNamespaceWarning) && !suppressNamespaceWarning) {
-               f = warning 
-            } else
-               f = function(...) {}
-                
-            f("cannot find namespace definition for '", ns, "' because the node is not in a document and there are no matching local namespace definitions for this node")
-            attr(node, "xml:namespace") = ns
-            ns = NULL
+#	     raiseNsWarning(ns, suppressNamespaceWarning)
+#            attr(node, "xml:namespace") = ns
+#            ns = NULL
+   	    ns = newNamespace(node, character(), ns)
           }
           if(!inherits(ns, "XMLNamespaceRef"))
              ns <- newNamespace(node, ns, "")
@@ -134,4 +128,46 @@ function(ns, nsDefs, node, namespace, noNamespace, namespaceDefinitions = NULL, 
     }
 
    ns
+}
+
+raiseNsWarning = 
+function(ns, suppressNamespaceWarning)
+{
+   if(is.character(suppressNamespaceWarning))
+       f = get(suppressNamespaceWarning, mode = "function")
+   else if(is.logical(suppressNamespaceWarning)) {
+     if(!suppressNamespaceWarning) 
+        f = warning 
+     else
+        return(NULL)
+ } else
+    f = function(...) {}
+                
+    f("cannot find namespace definition for '", ns, "' because the node is not in a document and there are no matching local namespace definitions for this node")
+}
+
+
+fixDummyNS = 
+function(node, suppressNamespaceWarning = getOption('suppressXMLNamespaceWarning', FALSE))
+{
+   nodes = getNodeSet(node, "//*[./namespace::*[. = '<dummy>']]")
+   lapply(nodes, completeDummyNS, suppressNamespaceWarning = suppressNamespaceWarning)
+}
+
+completeDummyNS = 
+function(node, suppressNamespaceWarning = getOption('suppressXMLNamespaceWarning', FALSE))
+{
+  if(is.null(xmlParent(node)))
+     return(FALSE)
+
+  prefix = names(xmlNamespace(node))
+  ns = findNamespaceDefinition(xmlParent(node), prefix, error = FALSE)
+  if(is.null(ns))
+    raiseNsWarning(prefix, suppressNamespaceWarning)
+#    (if(suppressNamespaceWarning) warning else stop)("can't find namespace definition for prefix ", prefix)
+  else {
+      # remove the current namespace definition and kill it.
+    .Call("R_replaceDummyNS", node, ns, prefix)
+    # setXMLNamespace(node, ns)
+  }
 }
