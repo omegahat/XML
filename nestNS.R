@@ -3,25 +3,33 @@ tp = newXMLNode("top", namespaceDefinitions = c(r = "http://www.r-project.org",
                                                 omg = "http://www.omegahat.org")
                )
 
+gctorture()
+cat("Doing two\n")
 newXMLNode("two", 
               newXMLNode("three", namespace = "r",
                           newXMLNode("omg:zz")), 
             parent = tp)
 
-
+cat("Doing wo\n")
 newXMLNode("wo", 
               newXMLNode("tee", namespace = "rr",
                           newXMLNode("om:zz")), 
             parent = tp)
 
-newXMLNode("wo", 
-              newXMLNode("tee", namespace = "rr",
-                          newXMLNode("om:zz")), 
+print(tp)
+
+
+cat("Doing xwo\n")
+newXMLNode("xwo", 
+              newXMLNode("xtee", namespace = "rr",
+                          newXMLNode("om:xzz")), 
             parent = tp, suppressNamespaceWarning = TRUE)
 
 gc()
+print(tp)
 
-replicate(10, {print(getNodeSet(tp, "//namespace::*"))})
+cat("Finished creating nodes\n")
+#replicate(10, {print(getNodeSet(tp, "//namespace::*"))})
 
 replicate(1000, {
 print(xmlNamespace(tp[[1]][[1]]))
