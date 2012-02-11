@@ -22,7 +22,7 @@ function(file, ignoreBlanks = TRUE, handlers = NULL,
            useInternalNodes = FALSE, isSchema = FALSE,
            fullNamespaceInfo = FALSE, encoding = character(),
            useDotNames = length(grep("^\\.", names(handlers))) > 0,  # will be switched to TRUE in the future.
-           xinclude = TRUE, addFinalizer = TRUE, error = xmlErrorCumulator())
+           xinclude = TRUE, addFinalizer = TRUE, error = xmlErrorCumulator(), isHTML = FALSE)
 {
   if(length(file) > 1) {
     file = paste(file, collapse = "\n")
@@ -35,6 +35,12 @@ function(file, ignoreBlanks = TRUE, handlers = NULL,
   if(missing(isURL) && !asText) 
     isURL <- length(grep("^(http|ftp|file)://", file, useBytes = TRUE, perl = TRUE))
 
+
+  if(isHTML) {
+    validate = FALSE
+    getDTD = FALSE
+    isSchema = FALSE
+  }
 
   checkHandlerNames(handlers, "DOM")
 
@@ -96,7 +102,7 @@ function(file, ignoreBlanks = TRUE, handlers = NULL,
               as.logical(ignoreBlanks), as.logical(replaceEntities),
               as.logical(asText), as.logical(trim), as.logical(validate), as.logical(getDTD),
               as.logical(isURL), as.logical(addAttributeNamespaces),
-              as.logical(useInternalNodes), FALSE, as.logical(isSchema),
+              as.logical(useInternalNodes), as.logical(isHTML), as.logical(isSchema),
               as.logical(fullNamespaceInfo), as.character(encoding), as.logical(useDotNames),
               xinclude, error, addFinalizer, PACKAGE = "XML")
 
