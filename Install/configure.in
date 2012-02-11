@@ -713,6 +713,15 @@ AC_ARG_ENABLE(nodegc, [  --enable-nodegc  enable node garbage collection],
                  [echo "nodegc default $enableval"; LANGUAGE_DEFS="${LANGUAGE_DEFS} -DXML_REF_COUNT_NODES=1"])
 
 
+
+AC_ARG_ENABLE(xml-debug, [  --enable-xml-debug  enable debugging information, primarily for memory management], 
+               [ if test "${enableval}" = "yes" || test "${enableval}" = "default" ; then
+                     LANGUAGE_DEFS="${LANGUAGE_DEFS} -DR_XML_DEBUG=1"
+                 fi;
+                 echo "enabling xml-debug? ${enableval}"],
+                 [echo "xml-debug default $enableval"; LANGUAGE_DEFS="${LANGUAGE_DEFS}"])
+
+
 dnl  ---------------------------------------------------
 
 AC_DEFUN([CHECK_ENUM], [
