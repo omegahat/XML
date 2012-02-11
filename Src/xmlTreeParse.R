@@ -101,10 +101,6 @@ function(file, ignoreBlanks = TRUE, handlers = NULL,
               xinclude, error, addFinalizer, PACKAGE = "XML")
 
 
-
-#  if(inherits(ans, "XMLParseError"))
-#    stop(ans)
-  
   if(!missing(handlers) & !as.logical(asTree))
     return(handlers)
 
