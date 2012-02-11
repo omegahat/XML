@@ -236,6 +236,9 @@ return type.
     package  \code{\link{xmlStructuredStop}} is invoked and this will 
     raise an error in R at that time in R.
 }
+\item{isHTML}{a logical value that allows this function to be used for parsing HTML documents.
+  This causes validation and processing of a DTD to be turned off.
+  This is currently experimental so that we can implement \code{htmlParse} with this same function.}
 }
 \details{
  The \code{handlers} argument is used similarly
