@@ -169,9 +169,9 @@ function(x, i, j, ..., addFinalizer = NA)
      # Get the individual elements rather than all the children and then subset those
   return(
        if(is(i, "numeric"))
-          .Call("R_getChildByIndex", x, as.integer(i), as.logical(addFinalizer))
+          .Call("R_getChildByIndex", x, as.integer(i), as.logical(addFinalizer), PACKAGE = "XML")
        else
-          .Call("R_getChildByName", x, as.character(i), as.logical(addFinalizer))
+          .Call("R_getChildByName", x, as.character(i), as.logical(addFinalizer), PACKAGE = "XML")
        )
   
   kids = xmlChildren(x, addFinalizer = addFinalizer)

@@ -167,7 +167,7 @@ function(node, suppressNamespaceWarning = getOption('suppressXMLNamespaceWarning
 #    (if(suppressNamespaceWarning) warning else stop)("can't find namespace definition for prefix ", prefix)
   else {
       # remove the current namespace definition and kill it.
-    .Call("R_replaceDummyNS", node, ns, prefix)
+    .Call("R_replaceDummyNS", node, ns, prefix, PACKAGE = "XML")
     # setXMLNamespace(node, ns)
   }
 }
