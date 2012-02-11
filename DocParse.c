@@ -287,10 +287,6 @@ RS_XML(ParseTree)(USER_OBJECT_ fileName, USER_OBJECT_ converterFunctions,
      return(R_createXMLDocRef(doc));
   }
 
-#if 0   /* Now garbage collected by R.*/
-  xmlFreeDoc(doc);
-  R_numXMLDocsFreed++;
-#endif
 
   if(!parserSettings.internalNodeReferences) {
      /* Set the class for the document. */
