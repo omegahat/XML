@@ -244,10 +244,17 @@ removeNodeNamespaceByName(xmlNodePtr node, const char * const id)
 SEXP
 R_replaceDummyNS(USER_OBJECT_ s_node, USER_OBJECT_ newNS, USER_OBJECT_ prefix)
 {
-    xmlNodePtr node = (xmlNodePtr) R_ExternalPtrAddr(s_node);
+    xmlNodePtr node;
+    if(TYPEOF(s_node) != EXTPTRSXP) {
+	PROBLEM "non external pointer passed to R_replaceDummyNS"
+	    ERROR;
+    }
+	
+    node = (xmlNodePtr) R_ExternalPtrAddr(s_node);
     removeNodeNamespaceByName(node, CHAR(STRING_ELT(prefix, 0)));
-    return(R_xmlSetNs(s_node, newNS, ScalarLogical(0))); 
-//    return(newNS);
+    
+//    return(R_xmlSetNs(s_node, newNS, ScalarLogical(0))); 
+    return(newNS);
 }
 
 

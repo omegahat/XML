@@ -39,7 +39,8 @@ xmlTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, replaceEntities=FALSE,
              useInternalNodes = FALSE, isSchema = FALSE,
              fullNamespaceInfo = FALSE, encoding = character(),
              useDotNames = length(grep("^\\\\.", names(handlers))) > 0,
-             xinclude = TRUE, addFinalizer = TRUE, error = xmlErrorCumulator())
+             xinclude = TRUE, addFinalizer = TRUE, error = xmlErrorCumulator(),
+             isHTML = FALSE)
 
 xmlInternalTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, replaceEntities=FALSE,
              asText=FALSE, trim=TRUE, validate=FALSE, getDTD=TRUE,
@@ -47,7 +48,8 @@ xmlInternalTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, replaceEntities=FAL
              useInternalNodes = TRUE, isSchema = FALSE,
              fullNamespaceInfo = FALSE, encoding = character(),
              useDotNames = length(grep("^\\\\.", names(handlers))) > 0,
-             xinclude = TRUE, addFinalizer = TRUE, error = xmlErrorCumulator())
+             xinclude = TRUE, addFinalizer = TRUE, error = xmlErrorCumulator(),
+             isHTML = FALSE)
 
 xmlNativeTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, replaceEntities=FALSE,
              asText=FALSE, trim=TRUE, validate=FALSE, getDTD=TRUE,
@@ -55,7 +57,8 @@ xmlNativeTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, replaceEntities=FALSE
              useInternalNodes = TRUE, isSchema = FALSE,
              fullNamespaceInfo = FALSE, encoding = character(),
              useDotNames = length(grep("^\\\\.", names(handlers))) > 0,
-             xinclude = TRUE, addFinalizer = TRUE, error = xmlErrorCumulator())
+             xinclude = TRUE, addFinalizer = TRUE, error = xmlErrorCumulator(),
+             isHTML = FALSE)
 
 htmlTreeParse(file, ignoreBlanks = TRUE, handlers = NULL,
               replaceEntities = FALSE, asText = FALSE, trim = TRUE,
