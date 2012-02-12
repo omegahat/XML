@@ -34,7 +34,6 @@ Collate: AAA.R
 	dynSupports.R
 	error.R
 	flatTree.R
-	htmlParse.R
 	nodeAccessors.R
 	parseDTD.R
 	schema.S
@@ -53,6 +52,7 @@ Collate: AAA.R
 	xmlOutputBuffer.R
 	xmlTree.R
 	xmlTreeParse.R
+	htmlParse.R
 	hashTree.R
 	zzz.R
         supports.R

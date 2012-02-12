@@ -21,7 +21,7 @@ function(file, ignoreBlanks = TRUE, handlers = NULL,
            isURL = FALSE, asTree = FALSE, addAttributeNamespaces = FALSE,
            useInternalNodes = FALSE, isSchema = FALSE,
            fullNamespaceInfo = FALSE, encoding = character(),
-           useDotNames = length(grep("^\\.", names(handlers))) > 0,  # will be switched to TRUE in the future.
+           useDotNames = length(grep("^\\.", names(handlers))) > 0, 
            xinclude = TRUE, addFinalizer = TRUE, error = xmlErrorCumulator(), isHTML = FALSE)
 {
   if(length(file) > 1) {
@@ -40,7 +40,9 @@ function(file, ignoreBlanks = TRUE, handlers = NULL,
     validate = FALSE
     getDTD = FALSE
     isSchema = FALSE
-  }
+    docClass = "HTMLInternalDocument"
+  } else
+    docClass = character()
 
   checkHandlerNames(handlers, "DOM")
 
@@ -107,17 +109,17 @@ function(file, ignoreBlanks = TRUE, handlers = NULL,
               xinclude, error, addFinalizer, PACKAGE = "XML")
 
 
-  if(!missing(handlers) & !as.logical(asTree))
+  if(!missing(handlers) && length(handlers) && !as.logical(asTree))
     return(handlers)
 
   if(!isSchema && length(class(ans)))
-    class(ans) = oldClass(class(ans))
+    class(ans) = c(docClass, oldClass(class(ans)))
 
   if(inherits(ans, "XMLInternalDocument"))
     addDocFinalizer(ans, addFinalizer)
   else if(!getDTD && !isSchema) {
        #??? is this a good idea.
-     class(ans) = oldClass("XMLDocumentContent")
+     class(ans) =  oldClass("XMLDocumentContent")
   } 
 
   ans

@@ -60,13 +60,15 @@ xmlNativeTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, replaceEntities=FALSE
              xinclude = TRUE, addFinalizer = TRUE, error = xmlErrorCumulator(),
              isHTML = FALSE)
 
-htmlTreeParse(file, ignoreBlanks = TRUE, handlers = NULL,
-              replaceEntities = FALSE, asText = FALSE, trim = TRUE,
-              isURL = FALSE, asTree = FALSE, 
-              useInternalNodes = FALSE, encoding = character(),
-              useDotNames = length(grep("^\\\\.", names(handlers))) > 0,
-              xinclude = FALSE, addFinalizer = TRUE, 
-              error = function(...){}) 
+
+htmlTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, replaceEntities=FALSE,
+             asText=FALSE, trim=TRUE, validate=FALSE, getDTD=TRUE,
+             isURL=FALSE, asTree = FALSE, addAttributeNamespaces = FALSE,
+             useInternalNodes = FALSE, isSchema = FALSE,
+             fullNamespaceInfo = FALSE, encoding = character(),
+             useDotNames = length(grep("^\\\\.", names(handlers))) > 0,
+             xinclude = TRUE, addFinalizer = TRUE, error = xmlErrorCumulator(),
+             isHTML = TRUE)
 
 xmlSchemaParse(file, asText = FALSE, xinclude = TRUE, error = xmlErrorCumulator())
 }

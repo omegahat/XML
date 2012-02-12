@@ -1,6 +1,6 @@
 Package: XML
 Version: 3.91-0
-ReleaseDate: 2012/02/09
+ReleaseDate: 2012/02/12
 Author:  Duncan Temple Lang (duncan@wald.ucdavis.edu)
 Maintainer: Duncan Temple Lang <duncan@wald.ucdavis.edu>
 Title: Tools for parsing and generating XML within R and S-Plus.
@@ -34,7 +34,6 @@ Collate: AAA.R
 	dynSupports.R
 	error.R
 	flatTree.R
-	htmlParse.R
 	nodeAccessors.R
 	parseDTD.R
 	schema.S
@@ -53,6 +52,7 @@ Collate: AAA.R
 	xmlOutputBuffer.R
 	xmlTree.R
 	xmlTreeParse.R
+	htmlParse.R
 	hashTree.R
 	zzz.R
         supports.R

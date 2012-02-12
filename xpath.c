@@ -131,12 +131,34 @@ R_namespaceArray(SEXP namespaces, xmlXPathContextPtr ctxt)
 }
 
 
+#if R_XML_DEBUG_WEAK_REFS
+SEXP LastDoc = NULL;
+
+SEXP
+R_isWeakRef(SEXP sdoc)
+{
+   void *ptr;
+   if(sdoc == R_NilValue) {
+       if(LastDoc == NULL)
+	   return(R_NilValue);
+       sdoc = LastDoc;
+   }
+
+   ptr = R_ExternalPtrAddr(sdoc);
+
+
+   return(ScalarLogical(R_findExtPtrWeakRef(ptr)));
+}
+#endif
 
 SEXP
 R_addXMLInternalDocument_finalizer(SEXP sdoc, SEXP fun)
 {
     R_CFinalizer_t action;
-
+#if R_XML_DEBUG_WEAK_REFS
+    LastDoc = sdoc;
+#endif
+    void *ptr = R_ExternalPtrAddr(sdoc);
     if(TYPEOF(fun) == CLOSXP) {
 	R_RegisterFinalizer(sdoc, fun);	
 	return(sdoc);
@@ -148,6 +170,10 @@ R_addXMLInternalDocument_finalizer(SEXP sdoc, SEXP fun)
 	action = (R_CFinalizer_t) R_ExternalPtrAddr(fun);
 
     R_RegisterCFinalizer(sdoc, action);
+#ifdef R_XML_DEBUG_WEAK_REFS
+    int status = R_findExtPtrWeakRef(ptr);
+    fprintf(stderr, "is weak ref %d\n", status);
+#endif
     return(sdoc);
 }
 

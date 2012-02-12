@@ -1,3 +1,13 @@
+isURL = 
+function(file)
+{
+  is.character(file) && grepl("^(http|ftp)", file)
+}
+
+
+############
+#XXXXXXXXX
+# This is now replaced by copying xmlTreeParse.
 htmlTreeParse <- 
 #
 # HTML parser that reads the entire `document' tree into memory
@@ -9,12 +19,24 @@ htmlTreeParse <-
 # See also xml
 #
 function(file, ignoreBlanks = TRUE, handlers = NULL,
-           replaceEntities = FALSE, asText = FALSE, trim = TRUE, 
-            isURL = FALSE, asTree = FALSE, useInternalNodes = FALSE,
+           replaceEntities = FALSE, asText = inherits(file, "AsIs") || !isURL && grepl("^<", file), # could have a BOM
+            trim = TRUE, 
+            isURL = is.character(file) && grepl("^(http|ftp)", file),
+            asTree = FALSE, useInternalNodes = FALSE,
             encoding = character(),
             useDotNames = length(grep("^\\.", names(handlers))) > 0,
             xinclude = FALSE, addFinalizer = TRUE, error = function(...){})
 {
+if(TRUE) 
+  {
+     doc = xmlTreeParse(file, ignoreBlanks, handlers, replaceEntities, asText, trim, validate = FALSE,
+                      getDTD = FALSE, isURL, asTree, addAttributeNamespaces = FALSE, 
+                       useInternalNodes, isSchema = FALSE, fullNamespaceInfo = FALSE,
+                        encoding, useDotNames, xinclude, addFinalizer, error, isHTML = TRUE)
+     class(doc) = c("HTMLInternalDocument", class(doc)[1])
+     return(doc)
+  }
+ 
 
   if(length(file) > 1) {
    file = paste(file, collapse = "\n")
@@ -73,6 +95,34 @@ function(file, ignoreBlanks = TRUE, handlers = NULL,
 
  ans
 }
+
+#XXXXXX
+# This is another version that doesn't seem to release the document. Weird. I can't seem to find
+# out who is holding onto it.
+myHTMLParse = 
+function(file, ignoreBlanks = TRUE, handlers = NULL,
+           replaceEntities = FALSE, asText = inherits(file, "AsIs") || !isURL && grepl("^<", file), # could have a BOM
+            trim = TRUE, 
+            isURL = is.character(file) && grepl("^(http|ftp)", file),
+            asTree = FALSE, useInternalNodes = FALSE,
+            encoding = character(),
+            useDotNames = length(grep("^\\.", names(handlers))) > 0,
+            xinclude = FALSE, addFinalizer = TRUE, error = function(...){})
+{
+     doc = xmlTreeParse(file, ignoreBlanks, handlers, replaceEntities, asText, trim, validate = FALSE,
+                         getDTD = FALSE, isURL, asTree, addAttributeNamespaces = FALSE, 
+                           useInternalNodes, isSchema = FALSE, fullNamespaceInfo = FALSE,
+                            encoding, useDotNames, xinclude, addFinalizer, error, isHTML = TRUE)
+     class(doc) = c("HTMLInternalDocument", class(doc)[2])
+     return(doc)
+}
+ 
+
+
+
+
+htmlTreeParse = xmlTreeParse
+formals(htmlTreeParse)$isHTML = TRUE
 
 htmlParse = htmlTreeParse
 formals(htmlParse)$useInternalNodes = TRUE
