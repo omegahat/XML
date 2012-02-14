@@ -121,11 +121,13 @@ logical indicating whether to use a validating parser or not, or in other words
 check the contents against the DTD specification. If this is true, warning
 messages will be displayed about errors in the DTD and/or document, but the parsing 
 will proceed except for the presence of terminal errors.
+This is ignored when parsing an HTML document.
 }
 \item{getDTD}{
 logical flag indicating whether the DTD (both internal and external)
 should be returned along with the document nodes. This changes the 
 return type.
+This is ignored when parsing an HTML document.
 }
  \item{isURL}{
    indicates whether the \code{file}  argument refers to a URL
@@ -162,6 +164,8 @@ return type.
   return value is a reference to the internal C-level document pointer.
   This can be used to do post-processing via XPath expressions using
   \code{\link{getNodeSet}}.
+
+  This is ignored when parsing an HTML document.
 }
 \item{isSchema}{a logical value indicating whether the document
   is an XML schema (\code{TRUE}) and should be parsed as such using
@@ -173,6 +177,8 @@ return type.
   package behaved.   However, using
   \code{TRUE} is more informative and we will make this
   the default in the future.
+
+  This is ignored when parsing an HTML document.
 }
 \item{encoding}{ a character string (scalar) giving the encoding for the
   document.  This is optional as the document should contain its own

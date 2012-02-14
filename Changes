@@ -1,3 +1,24 @@
+Version 3.92-0
+
+  *    Added --enable-xml-debug option for the configure script and this activates
+       the debugging diagnostic reporting, mainly for the garbage collection and node
+       reference counts.
+
+  *    Work-around for HTML documents not being freed (but XML documents are!)
+
+  *    Added an isHTML parameter for xmlTreeParse.
+
+  *    Merge htmlTreeParse/htmlParse with xmlTreeParse.
+
+  *    Implemented some diagnostic facilities to determine if an external pointer
+       is in R's weak references list.   This needs support within R. (Ask for code if 
+       you want.)
+
+Version 3.91-0
+
+  *    Start of implementation to allow nested calls to newXMLNode() to use namespace prefixes
+       defined in ancestor nodes.  Disabled at present.
+
 Version 3.9-4
 
   *    readHTMLTable() passes the encoding to the cell function.
