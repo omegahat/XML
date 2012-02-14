@@ -71,8 +71,8 @@ function(dtd = NULL, nameSpace = NULL, buf = NULL, nsURI = NULL,
   addOpenTag <- function(tag, ns, xmlns) {
     lastTag <<- lastTag+1
     if( lastTag == 1 ) {
-      rval <- matrix(c(tag,ifelse(is.null(ns),"",ns),ifelse(is.null(xmlns),"",xmlns)), nr=1,
-                     dimnames=list(NULL, c("tagname","nsprefix", "nsURI")) )
+      rval <- matrix(c(tag,ifelse(is.null(ns),"",ns),ifelse(is.null(xmlns),"",xmlns)), 
+                     nrow = 1, dimnames=list(NULL, c("tagname","nsprefix", "nsURI")) )
     } else
       rval <- rbind(openTags, c(tag, ifelse(is.null(ns),openTags[lastTag-1,2], ns), ifelse(is.null(xmlns),"",xmlns)))
     openTags <<- rval

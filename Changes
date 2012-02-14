@@ -1,3 +1,15 @@
+Version 3.92-1
+
+  *    Restore original error handler function for htmlParse() and htmlTreeParse()
+
+  *    Fixed a reference counting problem caused by not adding a finalizer in the
+       as() method for coercing an XMLInternalNode to an XMLInternalDocument.
+       Example from Janko Thyson.
+
+  *    Fixed up some partial argument names found by R CMD check!
+
+  *    
+
 Version 3.92-0
 
   *    Added --enable-xml-debug option for the configure script and this activates

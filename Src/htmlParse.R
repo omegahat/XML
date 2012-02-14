@@ -118,14 +118,18 @@ function(file, ignoreBlanks = TRUE, handlers = NULL,
 }
  
 
-
+hideParseErrors = function (...) NULL
 
 
 htmlTreeParse = xmlTreeParse
+
+
+formals(htmlTreeParse)$error = as.name("hideParseErrors")
 formals(htmlTreeParse)$isHTML = TRUE
 
 htmlParse = htmlTreeParse
 formals(htmlParse)$useInternalNodes = TRUE
+
 
 
 parseURI =

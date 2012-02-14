@@ -28,9 +28,11 @@ setAs("XMLInternalDocument", "XMLInternalNode",
 
 
 setAs("XMLInternalNode", "XMLInternalDocument",
-        function(from)
-           .Call("R_getXMLNodeDocument", from, PACKAGE = "XML")
-      )
+        function(from) {
+           doc = .Call("R_getXMLNodeDocument", from, PACKAGE = "XML")
+           addDocFinalizer(doc, TRUE)
+	   doc
+      })
 
 
 

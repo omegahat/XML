@@ -80,7 +80,7 @@ function(nodes = list(), parents = character(), children = list(),
         parent = parent$id     
 
     if(length(parent)) {
-        assign(id, parent, env = .parents)
+        assign(id, parent, envir = .parents)
         if(exists(parent, .children, inherits = FALSE))
            tmp = c(get(parent, .children), id)
         else

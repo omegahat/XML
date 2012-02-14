@@ -18,7 +18,7 @@ function(doc = "~/v75_step6.wsp", ..., .namespaces = list(...))
      return(doc)
 
      # find the ones that refer to prefixes that are not defined
-  ns = grep("^Namespace prefix .* not defined", unique(environment(e)$messages), val = TRUE)
+  ns = grep("^Namespace prefix .* not defined", unique(environment(e)$messages), value = TRUE)
   ns = unique(gsub("Namespace prefix ([^ ]+) .*", "\\1", ns))
 
     # now set those name spaces on the root of the document
