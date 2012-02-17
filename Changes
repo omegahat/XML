@@ -1,3 +1,7 @@
+Version 3.92-2
+
+  *     Synchronized compilation flags for Windows with those on OSX & Linux.
+
 Version 3.92-1
 
   *    Restore original error handler function for htmlParse() and htmlTreeParse()
