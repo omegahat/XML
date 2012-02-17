@@ -3,7 +3,7 @@ tp = newXMLNode("top", namespaceDefinitions = c(r = "http://www.r-project.org",
                                                 omg = "http://www.omegahat.org")
                )
 
-#gctorture()
+gctorture()
 cat("Doing two\n")
 newXMLNode("two", 
               newXMLNode("three", namespace = "r",

@@ -511,8 +511,10 @@ function(name, ..., attrs = NULL,
    addChildren(node, kids = .children, cdata = cdata, addFinalizer = addFinalizer)
  }
 
- if(!is.null(parent))
-   fixDummyNS(node, suppressNamespaceWarning)
+ if(!is.null(parent)) {
+   xmlApply(node, function(x) .Call("R_fixDummyNS", x, TRUE, PACKAGE = "XML"))
+   # fixDummyNS(node, suppressNamespaceWarning)
+ }
 
  node
 }

@@ -150,6 +150,7 @@ function(ns, suppressNamespaceWarning)
 fixDummyNS = 
 function(node, suppressNamespaceWarning = getOption('suppressXMLNamespaceWarning', FALSE))
 {
+
 return(NULL)
    nodes = getNodeSet(node, "//*[./namespace::*[. = '<dummy>']]", addFinalizer = FALSE)
    lapply(nodes, completeDummyNS, suppressNamespaceWarning = suppressNamespaceWarning)

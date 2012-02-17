@@ -29,7 +29,7 @@ fixDummyNS(xmlNodePtr node, int recursive)
     xmlNs *ns = node->ns;
     int count = 0;
 
-    if(strcmp(ns->href, "<dummy>") == 0)
+    if(ns && strcmp(ns->href, "<dummy>") == 0)
 	count = setDummyNS(node, ns->prefix);
 
     if(recursive)  {
@@ -51,9 +51,14 @@ setDummyNS(xmlNodePtr node, const xmlChar *prefix)
 	xmlNs *ns;
 	ns = findNSByPrefix(a, prefix);
 	if(ns) {
+#ifdef R_XML_DEBUG
+	    fprintf(stderr, "mapping %s to %s\n", prefix, ns->href);fflush(stderr);
+#endif
+	    node->nsDef = node->nsDef->next;
 	    xmlSetNs(node, ns);
 	    return(1);
 	}
+	a = a->parent;
     }
     return(0);
 }
