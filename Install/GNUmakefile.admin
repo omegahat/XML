@@ -144,7 +144,9 @@ C_SRC_FILES=\
   XMLHashTree.c \
   xmlsecurity.c \
   libxmlFeatures.c \
-  NodeGC.c NodeGC.h
+  NodeGC.c NodeGC.h \
+  fixNS.c
+
 
 ifdef R
   C_SRC_FILES+= RUtils.c 
