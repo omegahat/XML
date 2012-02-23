@@ -1465,9 +1465,8 @@ function(node, recursive = TRUE, addFinalizer = FALSE, ...)
 
 
 
-if(FALSE)  # see below
-findXInclude =
-function(x, asNode = FALSE)
+oldfindXInclude =
+function(x, asNode = FALSE, recursive = FALSE)
 {
   while(!is.null(x)) {
     tmp = getSiblingXIncludeStart(x, asNode)
@@ -1481,7 +1480,9 @@ function(x, asNode = FALSE)
      x = xmlParent(x)
   }
 
-  NULL
+  fixFindXInclude(x, asNode, recursive)
+
+#  NULL
 }
 
 findXInclude = 
@@ -1499,6 +1500,12 @@ function(x, asNode = FALSE, recursive = FALSE)
      x = xmlParent(x)
   }
 
+  fixFindXInclude(ans, asNode, recursive)
+}
+
+fixFindXInclude = 
+function(ans, asNode = FALSE, recursive = FALSE)
+{
   if(is.null(ans))
     return(NULL)
 
