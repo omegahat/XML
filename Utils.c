@@ -340,7 +340,7 @@ RSXML_structuredStop(SEXP errorFun, xmlErrorPtr err)
     if(!err)
        n = 2;
 
-    PROTECT(e = allocVector(LANGSXP, 8));
+    PROTECT(e = allocVector(LANGSXP, n));
 
     SETCAR(e, errorFun != NULL && errorFun != R_NilValue ? errorFun :  Rf_install("xmlStructuredStop")); 
     ptr = CDR(e);

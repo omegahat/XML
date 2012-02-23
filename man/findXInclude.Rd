@@ -18,13 +18,16 @@
   containing the attribute via \code{"./ancestor::*[@xml:base]"}.
 }
 \usage{
-findXInclude(x, asNode = FALSE)
+findXInclude(x, asNode = FALSE, recursive = FALSE)
 }
 \arguments{
   \item{x}{the node whose XInclude "ancestor" is to be found}
   \item{asNode}{a logical value indicating whether to return the node itself or
        the attributes of the node which are typically the immediately interesting 
        aspect of the node.}
+  \item{recursive}{a logical value that controls whether the 
+    full path of the nested includes is returned or just the
+    path in the immediate XInclude element.}  
 }
 \value{
   Either \code{NULL} if there was no node of class XMLXIncludeStartNode

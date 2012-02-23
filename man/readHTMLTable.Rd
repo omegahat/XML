@@ -172,15 +172,23 @@ if(FALSE) {
 }
 
    # header as a logical vector
- tt = readHTMLTable("http://www.sfgate.com/weather/rainfall.shtml",
-                     header = c(FALSE, FALSE, TRUE, FALSE, FALSE))
+ tt = tryCatch(readHTMLTable("http://www.sfgate.com/weather/rainfall.shtml",
+                               header = c(FALSE, FALSE, TRUE, FALSE, FALSE)),
+                "XML_IO_LOAD_ERROR"= function(err, ...) {
+                                         cat("cannot connect to sfgate.com\n")
+                                         NULL
+                                     })
 
    #
- tt = readHTMLTable("http://www.sfgate.com/weather/rainfall.shtml",
-                        which = 3, header = TRUE)
+ tt = tryCatch(readHTMLTable("http://www.sfgate.com/weather/rainfall.shtml",
+                               which = 3, header = TRUE),
+                "XML_IO_LOAD_ERROR"= function(err, ...) {
+                                         cat("cannot connect to sfgate.com\n")
+                                         NULL
+                                     })
 
 
-if(require(RCurl)) {
+if(require(RCurl) && url.exists("http://www.omegahat.org/RCurl/testPassword/table.html")) {
   tt =  getURL("http://www.omegahat.org/RCurl/testPassword/table.html",  userpwd = "bob:duncantl")
   readHTMLTable(tt)
 }
