@@ -15,11 +15,14 @@
 }
 \usage{
 getLineNumber(node, ...)
-getNodeLocation(node)
+getNodeLocation(node, recursive = TRUE)
 }
 \arguments{
   \item{node}{the node whose location or line number is of interest}
   \item{\dots}{additional parameters for methods should they be defined.}
+  \item{recursive}{a logical value that controls whether the 
+    full path of the nested includes is returned or just the
+    path in the immediate XInclude element.}
 }
 
 \value{

@@ -124,7 +124,7 @@ hideParseErrors = function (...) NULL
 htmlTreeParse = xmlTreeParse
 
 
-formals(htmlTreeParse)$error = as.name("hideParseErrors")
+formals(htmlTreeParse)$error = as.name("htmlErrorHandler") # as.name("hideParseErrors")
 formals(htmlTreeParse)$isHTML = TRUE
 
 htmlParse = htmlTreeParse

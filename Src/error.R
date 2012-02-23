@@ -34,19 +34,38 @@ function(msg, class = "XMLParserError")
   stop(err)
 }
 
+makeXMLError = 
+function(msg, code, domain, line, col, level, filename, class = "XMLError")
+{
+  err = simpleError(msg)
+  err$code = getEnumValue(code, xmlParserErrors)
+  err$domain = getEnumValue(domain, xmlErrorDomain)
+  err$line = line
+  err$col = col
+  err$level = getEnumValue(level, xmlErrorLevel)
+  err$filename = filename
+  
+  class(err) = c(class, class(err))
+  err
+}
+
+htmlErrorHandler = 
+function(msg, code, domain, line, col, level, filename, class = "XMLError")
+{
+  e = makeXMLError(msg, code, domain, line, col, level, filename, class)
+  dom = names(e$domain)
+  class(e) = c(names(e$code),
+               sprintf("%s_Error", gsub("_FROM_", "_", dom)), 
+               class(e))
+
+  if(e$code == xmlParserErrors["XML_IO_LOAD_ERROR"])
+    stop(e)
+}
 
 xmlStructuredStop =
 function(msg, code, domain, line, col, level, filename, class = "XMLError")
 {
-  err = simpleError(msg)
-  err$code = code
-  err$domain = domain
-  err$line = line
-  err$col = col
-  err$level = level
-  err$filename = filename
-  
-  class(err) = c(class, class(err))
+  err = makeXMLError(msg, code, domain, line, col, level, filename, class)
 
   stop(err)
 }  

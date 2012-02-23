@@ -67,7 +67,7 @@ htmlTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, replaceEntities=FALSE,
              useInternalNodes = FALSE, isSchema = FALSE,
              fullNamespaceInfo = FALSE, encoding = character(),
              useDotNames = length(grep("^\\\\.", names(handlers))) > 0,
-             xinclude = TRUE, addFinalizer = TRUE, error = hideParseErrors,
+             xinclude = TRUE, addFinalizer = TRUE, error = htmlErrorHandler,
              isHTML = TRUE)
 
 htmlParse(file, ignoreBlanks = TRUE, handlers = NULL, replaceEntities = FALSE, 
@@ -77,7 +77,7 @@ htmlParse(file, ignoreBlanks = TRUE, handlers = NULL, replaceEntities = FALSE,
              encoding = character(), 
              useDotNames = length(grep("^\\\\.", names(handlers))) > 0, 
               xinclude = TRUE, addFinalizer = TRUE, 
-               error = hideParseErrors, isHTML = TRUE) 
+               error = htmlErrorHandler, isHTML = TRUE) 
 
 xmlSchemaParse(file, asText = FALSE, xinclude = TRUE, error = xmlErrorCumulator())
 }

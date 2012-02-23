@@ -1465,6 +1465,7 @@ function(node, recursive = TRUE, addFinalizer = FALSE, ...)
 
 
 
+if(FALSE)  # see below
 findXInclude =
 function(x, asNode = FALSE)
 {
@@ -1483,6 +1484,47 @@ function(x, asNode = FALSE)
   NULL
 }
 
+findXInclude = 
+ # This version just looks in the left sibling, not all siblings to the left.
+function(x, asNode = FALSE, recursive = FALSE)
+{
+  ans = NULL
+  while(!is.null(x)) {
+     prev = getSibling(x, FALSE)
+     if(inherits(prev, "XMLXIncludeStartNode")) {
+        ans = prev
+        break
+     }
+
+     x = xmlParent(x)
+  }
+
+  if(is.null(ans))
+    return(NULL)
+
+  if(recursive) {
+    tmp = getXIncludePath(ans)
+    sprintf("%s%s%s",
+             paste(dirname(tmp), collapse = .Platform$file.sep),
+             .Platform$file.sep,
+             xmlAttrs(ans))
+  } else
+    if(asNode) ans else xmlAttrs(ans)
+}
+
+getXIncludePath =
+function(node)
+{
+  x = xmlParent(node)
+  ans = character()
+  while(!is.null(x)) {
+    ans = c(ans, findXInclude(x))
+    prev = x
+    x = xmlParent(x)
+  }
+  c(docName(prev), ans)
+}
+
 getSiblingXIncludeStart =
 function(x, asNode = FALSE)
 {
@@ -1498,9 +1540,9 @@ function(x, asNode = FALSE)
 
 
 getNodeLocation =
-function(node)
+function(node, recursive = TRUE)
 {
-   fil = findXInclude(node)
+   fil = findXInclude(node, recursive = recursive)
    if(is.null(fil))
      fil = docName(node)
 

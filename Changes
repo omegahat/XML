@@ -1,3 +1,16 @@
+Version 3.93-1
+
+  *     Fixed bug in findXInclude() that sometimes got the wrong XMLXIncludeStartNode.
+        Hence getNodeLocation() might report the wrong file, but correct line number!
+
+  *     findXInclude() now has a recursive parameter that resolves the chain of XIncludes.
+        This returns the full path to the file, relative to the base/top-level document,
+        not just the parent document.
+
+  *     Change to the default value of the error parameter in htmlParse() and htmlTreeParse() 
+        which will generate a structured R error if there is an IO error.
+        The set of issues that will raise an error will be broadened in the future.
+
 Version 3.93-0
 
   *    Enabled the fixing of <dummy> namespaces by finding the definition o
@@ -17,7 +30,6 @@ Version 3.92-1
 
   *    Fixed up some partial argument names found by R CMD check!
 
-  *    
 
 Version 3.92-0
 
