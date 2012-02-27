@@ -1465,33 +1465,31 @@ function(node, recursive = TRUE, addFinalizer = FALSE, ...)
 
 
 
-oldfindXInclude =
+findXInclude =
 function(x, asNode = FALSE, recursive = FALSE)
 {
   while(!is.null(x)) {
-    tmp = getSiblingXIncludeStart(x, asNode)
+    tmp = getSiblingXIncludeStart(x, TRUE)
     if(!is.null(tmp))
-      return(tmp)
+      return(fixFindXInclude(tmp, asNode, recursive))
 
      sib = x
      if(is(sib, "XMLXIncludeStartNode"))
-        return(if(asNode) sib else xmlAttrs(sib))
+        return(fixFindXInclude(sib, asNode, recursive)) # if(asNode) sib else xmlAttrs(sib))
 
      x = xmlParent(x)
   }
 
   fixFindXInclude(x, asNode, recursive)
-
-#  NULL
 }
 
-findXInclude = 
+bad.findXInclude = 
  # This version just looks in the left sibling, not all siblings to the left.
 function(x, asNode = FALSE, recursive = FALSE)
 {
   ans = NULL
   while(!is.null(x)) {
-     prev = getSibling(x, FALSE)
+     prev = getSiblingXIncludeStart(x, FALSE)
      if(inherits(prev, "XMLXIncludeStartNode")) {
         ans = prev
         break
@@ -1537,8 +1535,12 @@ function(x, asNode = FALSE)
 {
      sib = x
      while(!is.null(sib)) {
+       if(inherits(sib, "XMLXIncludeEndNode"))
+         return(NULL)
+       
        if(inherits(sib, "XMLXIncludeStartNode"))
-         return(if(asNode) sib else xmlAttrs(sib))         
+         return(if(asNode) sib else xmlAttrs(sib))
+       
        sib <- getSibling(sib, FALSE)
      }
 

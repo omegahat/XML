@@ -3,7 +3,7 @@
 void
 foo()
 {
- void *p;
+ void *p = NULL;
  R_RemoveExtPtrWeakRef_direct(p);
 }
 
