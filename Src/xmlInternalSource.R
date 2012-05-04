@@ -318,7 +318,7 @@ function(node, namespaces = c(r = "http://www.r-project.org"), recursive = TRUE)
   if(inherits(x, c("XMLInternalCommentNode", "XMLInternalPINode"))) {
 
   } else if(inherits(x, "XMLInternalElementNode") && xmlName(x, full = TRUE) %in% c("r:code", "r:frag")) {
-     ref = xmlGetAttr(x, "ref")
+     ref = xmlGetAttr(x, "ref", NA)
      if(!is.na(ref)) {
          v = getNodeSet(as(x, "XMLInternalDocument"),
                         paste(sapply(c("code", "frag"),

@@ -1,3 +1,8 @@
+Version 3.93-2
+
+  *     Update for readHTMLTable() method so that we look at just the final <tr> node 
+        in a <thead>.
+
 Version 3.93-1
 
   *     Fixed bug in findXInclude() that sometimes got the wrong XMLXIncludeStartNode.
