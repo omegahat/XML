@@ -132,8 +132,9 @@ function(doc, header = NA ,
 
   
      # check if we have a header
-  if(length(header) ==1 && is.na(header))                                                                   # this node was doc
-      header = (xmlName(doc) %in% c("table", "tbody") && ("thead" %in% names(doc) || length(getNodeSet(node, "./tr[1]/th")) > 0))
+  if(length(header) ==1 && is.na(header))                                     # this node was doc
+      header = (xmlName(doc) %in% c("table", "tbody") &&
+                      ("thead" %in% names(doc) || length(getNodeSet(node, "./tr[1]/th")) > 0))
 
   if(is.logical(header) && (is.na(header) || header) &&  xmlName(node) == "table") {
     if("thead" %in% names(node))
@@ -152,7 +153,15 @@ function(doc, header = NA ,
      node = tbody[[1]]  
 
   if(is(header, "XMLInternalElementNode"))   {
-     header = as.character(xpathSApply(header, "./*/th|./*/td", elFun, encoding = encoding))
+      # get the last tr in the thead
+     if(xmlName(header) == "thead") {
+        i = which(names(header) == "tr")
+        header = header[[ i [ length(i) ] ]]
+        xpath = "./th | ./td"
+     } else
+        xpath = "./*/th | ./*/td"
+
+     header = as.character(xpathSApply(header, xpath, elFun, encoding = encoding))
      headerFromTable = TRUE
 
      if(xmlName(node) == "table" && "tbody" %in% names(node))
