@@ -22,7 +22,7 @@ function(file, ignoreBlanks = TRUE, handlers = NULL,
            useInternalNodes = FALSE, isSchema = FALSE,
            fullNamespaceInfo = FALSE, encoding = character(),
            useDotNames = length(grep("^\\.", names(handlers))) > 0, 
-           xinclude = TRUE, addFinalizer = TRUE, error = xmlErrorCumulator(), isHTML = FALSE)
+           xinclude = TRUE, addFinalizer = TRUE, error = xmlErrorCumulator(), isHTML = FALSE, options = integer())
 {
   if(length(file) > 1) {
     file = paste(file, collapse = "\n")
@@ -99,6 +99,9 @@ function(file, ignoreBlanks = TRUE, handlers = NULL,
 
   .oldErrorHandler = setXMLErrorHandler(error)
   on.exit(.Call("RS_XML_setStructuredErrorHandler", .oldErrorHandler, PACKAGE = "XML"), add = TRUE)
+
+  if(length(options))
+     options = sum(options)  #XXX coerce to parser options
   
  ans <- .Call("RS_XML_ParseTree", as.character(file), handlers, 
               as.logical(ignoreBlanks), as.logical(replaceEntities),
@@ -106,7 +109,7 @@ function(file, ignoreBlanks = TRUE, handlers = NULL,
               as.logical(isURL), as.logical(addAttributeNamespaces),
               as.logical(useInternalNodes), as.logical(isHTML), as.logical(isSchema),
               as.logical(fullNamespaceInfo), as.character(encoding), as.logical(useDotNames),
-              xinclude, error, addFinalizer, PACKAGE = "XML")
+              xinclude, error, addFinalizer, as.integer(options), PACKAGE = "XML")
 
 
   if(!missing(handlers) && length(handlers) && !as.logical(asTree))

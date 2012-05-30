@@ -1,4 +1,10 @@
-Version 3.93-2
+Version 3.94-0
+
+  *     options parameter for xmlParse() and htmlParse() for controlling the parser.
+        (Currently only used when encoding is explicitly specified.)
+
+  *     encoding parameter for xmlParse() and xmlTreeParse() now works for XML documents,
+        not just HTML documents.
 
   *     Update for readHTMLTable() method so that we look at just the final <tr> node 
         in a <thead>.

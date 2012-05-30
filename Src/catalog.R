@@ -74,7 +74,7 @@ function(fileName = tempfile(), asText = TRUE)
   xmlInitializeCatalog()
   ans = .Call("RS_XML_catalogDump", as.character(fileName), PACKAGE = "XML")
   if(missing(fileName)) {
-    ans = xmlTreeParse(fileName, useInternal = TRUE)
+    ans = xmlParse(fileName)
     if(asText)
       ans = saveXML(ans)
     unlink(fileName)

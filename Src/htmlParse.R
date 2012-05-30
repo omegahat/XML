@@ -25,14 +25,15 @@ function(file, ignoreBlanks = TRUE, handlers = NULL,
             asTree = FALSE, useInternalNodes = FALSE,
             encoding = character(),
             useDotNames = length(grep("^\\.", names(handlers))) > 0,
-            xinclude = FALSE, addFinalizer = TRUE, error = function(...){})
+            xinclude = FALSE, addFinalizer = TRUE, error = function(...){},
+            options = integer())
 {
 if(TRUE) 
   {
      doc = xmlTreeParse(file, ignoreBlanks, handlers, replaceEntities, asText, trim, validate = FALSE,
                       getDTD = FALSE, isURL, asTree, addAttributeNamespaces = FALSE, 
                        useInternalNodes, isSchema = FALSE, fullNamespaceInfo = FALSE,
-                        encoding, useDotNames, xinclude, addFinalizer, error, isHTML = TRUE)
+                        encoding, useDotNames, xinclude, addFinalizer, error, isHTML = TRUE, options = options)
      class(doc) = c("HTMLInternalDocument", class(doc)[1])
      return(doc)
   }
@@ -83,7 +84,7 @@ if(TRUE)
            FALSE, FALSE, 
            as.logical(isURL), FALSE, 
            as.logical(useInternalNodes), TRUE, FALSE, FALSE, as.character(encoding),
-           as.logical(useDotNames), xinclude, error, addFinalizer, PACKAGE = "XML")
+           as.logical(useDotNames), xinclude, error, addFinalizer, options, PACKAGE = "XML")
 
  if(!missing(handlers) & !as.logical(asTree))
    return(handlers)

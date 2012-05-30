@@ -113,7 +113,7 @@ RS_XML(ParseTree)(USER_OBJECT_ fileName, USER_OBJECT_ converterFunctions,
 		        USER_OBJECT_ fullNamespaceInfo, USER_OBJECT_ r_encoding,
 		        USER_OBJECT_ useDotNames,
       		         USER_OBJECT_ xinclude, USER_OBJECT_ errorFun,
-                         USER_OBJECT_ manageMemory)
+		           USER_OBJECT_ manageMemory, USER_OBJECT_ r_parserOptions)
 {
 
   const char *name;
@@ -129,9 +129,16 @@ RS_XML(ParseTree)(USER_OBJECT_ fileName, USER_OBJECT_ converterFunctions,
 
   const char *encoding = NULL;
   int freeName = 0;
+  int parserOptions = 0;
 
-  if(GET_LENGTH(r_encoding))
+  if(GET_LENGTH(r_encoding)) {
       encoding = CHAR(STRING_ELT(r_encoding, 0));
+      if(!encoding[0])
+	  encoding = NULL;
+  }
+
+  if(Rf_length(r_parserOptions))
+     parserOptions = INTEGER(r_parserOptions)[0];
 
   parserSettings.skipBlankLines = LOGICAL_DATA(skipBlankLines)[0];
   parserSettings.converters = converterFunctions;
@@ -189,13 +196,15 @@ RS_XML(ParseTree)(USER_OBJECT_ fileName, USER_OBJECT_ converterFunctions,
 #endif
 
   if(asTextBuffer) {
-      doc = useHTML ? htmlParseDoc(CHAR_TO_XMLCHAR(name), encoding) : xmlParseMemory(name, strlen(name)); 
+      doc = useHTML ? htmlParseDoc(CHAR_TO_XMLCHAR(name), encoding) : 
+	  (encoding || 1) ? xmlReadMemory(name, strlen(name), NULL, encoding, parserOptions) : xmlParseMemory(name, strlen(name)); 
 
       if(doc != NULL) 
          doc->name = (char *) xmlStrdup(CHAR_TO_XMLCHAR("<buffer>"));
 
   } else {
-      doc = useHTML ? htmlParseFile(XMLCHAR_TO_CHAR(name), encoding) : xmlParseFile(name);
+      doc = useHTML ? htmlParseFile(XMLCHAR_TO_CHAR(name), encoding) : 
+       	              (encoding || 1) ? xmlReadFile(name, encoding, parserOptions) : xmlParseFile(name);
   }
 
 #ifdef RS_XML_SET_STRUCTURED_ERROR 

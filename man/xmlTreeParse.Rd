@@ -40,7 +40,7 @@ xmlTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, replaceEntities=FALSE,
              fullNamespaceInfo = FALSE, encoding = character(),
              useDotNames = length(grep("^\\\\.", names(handlers))) > 0,
              xinclude = TRUE, addFinalizer = TRUE, error = xmlErrorCumulator(),
-             isHTML = FALSE)
+             isHTML = FALSE, options = integer())
 
 xmlInternalTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, replaceEntities=FALSE,
              asText=FALSE, trim=TRUE, validate=FALSE, getDTD=TRUE,
@@ -49,7 +49,7 @@ xmlInternalTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, replaceEntities=FAL
              fullNamespaceInfo = FALSE, encoding = character(),
              useDotNames = length(grep("^\\\\.", names(handlers))) > 0,
              xinclude = TRUE, addFinalizer = TRUE, error = xmlErrorCumulator(),
-             isHTML = FALSE)
+             isHTML = FALSE, options = integer())
 
 xmlNativeTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, replaceEntities=FALSE,
              asText=FALSE, trim=TRUE, validate=FALSE, getDTD=TRUE,
@@ -58,7 +58,7 @@ xmlNativeTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, replaceEntities=FALSE
              fullNamespaceInfo = FALSE, encoding = character(),
              useDotNames = length(grep("^\\\\.", names(handlers))) > 0,
              xinclude = TRUE, addFinalizer = TRUE, error = xmlErrorCumulator(),
-             isHTML = FALSE)
+             isHTML = FALSE, options = integer())
 
 
 htmlTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, replaceEntities=FALSE,
@@ -68,7 +68,7 @@ htmlTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, replaceEntities=FALSE,
              fullNamespaceInfo = FALSE, encoding = character(),
              useDotNames = length(grep("^\\\\.", names(handlers))) > 0,
              xinclude = TRUE, addFinalizer = TRUE, error = htmlErrorHandler,
-             isHTML = TRUE)
+             isHTML = TRUE, options = integer())
 
 htmlParse(file, ignoreBlanks = TRUE, handlers = NULL, replaceEntities = FALSE, 
           asText = FALSE, trim = TRUE, validate = FALSE, getDTD = TRUE, 
@@ -77,7 +77,7 @@ htmlParse(file, ignoreBlanks = TRUE, handlers = NULL, replaceEntities = FALSE,
              encoding = character(), 
              useDotNames = length(grep("^\\\\.", names(handlers))) > 0, 
               xinclude = TRUE, addFinalizer = TRUE, 
-               error = htmlErrorHandler, isHTML = TRUE) 
+               error = htmlErrorHandler, isHTML = TRUE, options = integer()) 
 
 xmlSchemaParse(file, asText = FALSE, xinclude = TRUE, error = xmlErrorCumulator())
 }
@@ -255,7 +255,13 @@ This is ignored when parsing an HTML document.
 }
 \item{isHTML}{a logical value that allows this function to be used for parsing HTML documents.
   This causes validation and processing of a DTD to be turned off.
-  This is currently experimental so that we can implement \code{htmlParse} with this same function.}
+  This is currently experimental so that we can implement
+  \code{htmlParse} with this same function.}
+\item{options}{an integer value or vector of values that are combined
+  (OR'ed) together
+    to specify options for the XML parser. This is the same as the
+    \code{options} parameter for \code{\link{xmlParseDoc}}.
+   }
 }
 \details{
  The \code{handlers} argument is used similarly
