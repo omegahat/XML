@@ -1,6 +1,6 @@
 Package: XML
-Version: 3.93-1
-ReleaseDate: 2012/02/22
+Version: 3.94-0
+ReleaseDate: 2012/05/29
 Author:  Duncan Temple Lang (duncan@wald.ucdavis.edu)
 Maintainer: Duncan Temple Lang <duncan@wald.ucdavis.edu>
 Title: Tools for parsing and generating XML within R and S-Plus.

@@ -197,14 +197,15 @@ RS_XML(ParseTree)(USER_OBJECT_ fileName, USER_OBJECT_ converterFunctions,
 
   if(asTextBuffer) {
       doc = useHTML ? htmlParseDoc(CHAR_TO_XMLCHAR(name), encoding) : 
-	  (encoding || 1) ? xmlReadMemory(name, strlen(name), NULL, encoding, parserOptions) : xmlParseMemory(name, strlen(name)); 
+	              xmlReadMemory(name, strlen(name), NULL, encoding, parserOptions) ;
+                	  /* xmlParseMemory(name, strlen(name)) */ 
 
       if(doc != NULL) 
          doc->name = (char *) xmlStrdup(CHAR_TO_XMLCHAR("<buffer>"));
 
   } else {
       doc = useHTML ? htmlParseFile(XMLCHAR_TO_CHAR(name), encoding) : 
-       	              (encoding || 1) ? xmlReadFile(name, encoding, parserOptions) : xmlParseFile(name);
+	              xmlReadFile(name, encoding, parserOptions) /* xmlParseFile(name) */ ;
   }
 
 #ifdef RS_XML_SET_STRUCTURED_ERROR 

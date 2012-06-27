@@ -1,5 +1,9 @@
 Version 3.94-0
 
+  *     getChildrenStrings() is a function that implements the equivalent of
+        xmlApply(node, xmlValue) but faster because we avoid the function call
+        for each element.
+
   *     options parameter for xmlParse() and htmlParse() for controlling the parser.
         (Currently only used when encoding is explicitly specified.)
 

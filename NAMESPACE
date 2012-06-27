@@ -489,3 +489,5 @@ export("xmlNamespace<-")
 
 export(readKeyValueDB, readSolrDoc)
 
+export(getChildrenStrings)
+

@@ -289,6 +289,12 @@ function(X, FUN, ..., omitNodeTypes = c("XMLXIncludeStartNode", "XMLXIncludeEndN
 }  
 
 
+getChildrenStrings =
+function(node, encoding = getEncoding(node), asVector = TRUE, len = xmlSize(node))
+{
+   encoding = getEncodingREnum(encoding)
+   .Call("R_childStringValues", node, as.integer(len), as.logical(asVector), as.integer(encoding))
+}
 
 
 setMethod("xmlParent", "XMLInternalNode",
@@ -408,7 +414,8 @@ function(name, ..., attrs = NULL,
          cdata = FALSE,
          suppressNamespaceWarning = getOption('suppressXMLNamespaceWarning', FALSE), #  i.e. warn.
          sibling = NULL, addFinalizer = NA,
-         noNamespace = length(namespace) == 0 && !missing(namespace)
+         noNamespace = length(namespace) == 0 && !missing(namespace),
+         fixNamespaces = TRUE
         )
 {
    # determine whether we know now that there is definitely no namespace.
@@ -511,7 +518,7 @@ function(name, ..., attrs = NULL,
    addChildren(node, kids = .children, cdata = cdata, addFinalizer = addFinalizer)
  }
 
- if(!is.null(parent)) {
+ if(fixNamespaces) { # !is.null(parent)) {
    xmlApply(node, function(x) .Call("R_fixDummyNS", x, TRUE, PACKAGE = "XML"))
    # fixDummyNS(node, suppressNamespaceWarning)
  }
