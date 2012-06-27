@@ -63,15 +63,63 @@ setDummyNS(xmlNodePtr node, const xmlChar *prefix)
     return(0);
 }
 
+
 xmlNs *
 findNSByPrefix(xmlNodePtr node, const xmlChar *prefix)
 {
     xmlNs *ptr = node->nsDef;
     while(ptr) {
-	if(strcmp(ptr->prefix, prefix) == 0)
+	if((!prefix || !prefix[0]) && !ptr->prefix)
+	    return(ptr);
+
+	if(ptr->prefix && strcmp(ptr->prefix, prefix) == 0)
 	    return(ptr);
 	ptr = ptr->next;
     }
 
     return(NULL);
 }
+
+
+void
+setDefaultNs(xmlNodePtr node, xmlNsPtr ns, int recursive)
+{
+    if(!node->ns)
+	xmlSetNs(node, ns);
+    if(recursive) {
+	xmlNodePtr cur = node->children;
+	while(cur) {
+	    setDefaultNs(cur, ns, 1);
+	    cur = cur->next;
+	}
+    }
+}
+
+
+SEXP
+R_getAncestorDefaultNSDef(SEXP r_node, SEXP r_recursive)
+{
+   xmlNodePtr cur, node;
+   xmlNs *ans = NULL;
+   cur = (xmlNodePtr) R_ExternalPtrAddr(r_node);
+
+   node = cur->parent;
+
+   while(node) {  /* Need to check for HTML_DOC or XML_DOC ?*/
+       ans = findNSByPrefix(node, NULL);
+       if(ans)
+	   break;
+       node = node->parent;
+   }
+
+   if(ans) {
+       xmlSetNs(cur, ans);
+       if(LOGICAL(r_recursive)[0]) {
+	   setDefaultNs(cur, ans, 1);
+       }
+       return(ScalarLogical(1)); // R_createXMLNsRef(ans));
+   }
+
+   return(R_NilValue);
+}
+

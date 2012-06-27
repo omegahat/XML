@@ -415,11 +415,16 @@ function(name, ..., attrs = NULL,
          suppressNamespaceWarning = getOption('suppressXMLNamespaceWarning', FALSE), #  i.e. warn.
          sibling = NULL, addFinalizer = NA,
          noNamespace = length(namespace) == 0 && !missing(namespace),
-         fixNamespaces = TRUE
+         fixNamespaces = c(dummy = TRUE, default = TRUE)
         )
 {
    # determine whether we know now that there is definitely no namespace.
 
+  if(length(fixNamespaces) == 1)
+      fixNamespaces = structure(rep(fixNamespaces, 2), names = c("dummy", "default"))
+
+  if(length(names(fixNamespaces)) == 0)
+     names(fixNamespaces)  = c("dummy", "default")
  
     # make certain we have a character vector for the attributes.
  if(length(attrs)) {
@@ -501,7 +506,8 @@ function(name, ..., attrs = NULL,
  } else if(is.na(noNamespace) || !noNamespace)  {
     ns = getNodeNamespace(ns, nsDefs, node, namespace, noNamespace, namespaceDefinitions, parent, suppressNamespaceWarning)
     if(is.null(ns))
-       .Call("R_setNamespaceFromAncestors", node, PACKAGE = "XML")
+       !.Call("R_setNamespaceFromAncestors", node, PACKAGE = "XML")
+#          .Call("R_getAncestorDefaultNSDef", node, TRUE, PACKAGE = "XML")
  }
 
 
@@ -518,13 +524,19 @@ function(name, ..., attrs = NULL,
    addChildren(node, kids = .children, cdata = cdata, addFinalizer = addFinalizer)
  }
 
- if(fixNamespaces) { # !is.null(parent)) {
-   xmlApply(node, function(x) .Call("R_fixDummyNS", x, TRUE, PACKAGE = "XML"))
+ if(any(fixNamespaces)) { # !is.null(parent)) {
+   if(fixNamespaces["dummy"])
+      xmlApply(node, function(x) .Call("R_fixDummyNS", x, TRUE, PACKAGE = "XML"))
+   if(fixNamespaces["default"])
+     .Call("R_getAncestorDefaultNSDef", node, TRUE, PACKAGE = "XML")
    # fixDummyNS(node, suppressNamespaceWarning)
  }
 
  node
 }
+
+FixDummyNS = 2L
+FixDefaultNS = 4L
 
 
 xmlNamespaceRef =
