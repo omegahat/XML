@@ -32,7 +32,7 @@
 #else
 #include <libxml/parserInternals.h>
 #include <libxml/xmlmemory.h>
-#include <libxml/HTMLTree.h>
+#include <libxml/HTMLtree.h>
 #endif
 
 
