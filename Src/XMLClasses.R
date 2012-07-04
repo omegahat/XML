@@ -539,11 +539,18 @@ getDefaultNamespace =
 function(doc)
 {
   ns = xmlNamespaceDefinitions(doc)
-  val = unlist(sapply(ns, function(x) if(x$id == "") x$uri))
-  if(length(val))
-     val[1]
-  else   
+  if(length(ns) == 0)
+      return(character())
+  i = which(names(ns) == "")
+  if(length(i))
+     ns[i]
+  else
      character()
+#  val = unlist(sapply(ns, function(x) if(x$id == "") x$uri))
+#  if(length(val))
+#     val[1]
+#  else   
+#     character()
 }  
 
 matchNamespaces =

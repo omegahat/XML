@@ -72,7 +72,7 @@ findNSByPrefix(xmlNodePtr node, const xmlChar *prefix)
 	if((!prefix || !prefix[0]) && !ptr->prefix)
 	    return(ptr);
 
-	if(ptr->prefix && strcmp(ptr->prefix, prefix) == 0)
+	if(prefix && ptr->prefix && strcmp(ptr->prefix, prefix) == 0)
 	    return(ptr);
 	ptr = ptr->next;
     }
@@ -105,7 +105,8 @@ R_getAncestorDefaultNSDef(SEXP r_node, SEXP r_recursive)
 
    node = cur->parent;
 
-   while(node) {  /* Need to check for HTML_DOC or XML_DOC ?*/
+   while(node && (node->type != XML_DOCUMENT_NODE && 
+		  node->type != XML_HTML_DOCUMENT_NODE)) {  /* Need to check for HTML_DOC or XML_DOC ?*/
        ans = findNSByPrefix(node, NULL);
        if(ans)
 	   break;

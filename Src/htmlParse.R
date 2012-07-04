@@ -165,3 +165,17 @@ setAs("URI", "character",
                    )
       })
 
+
+
+getHTMLLinks =
+function(doc, externalOnly = TRUE, xpquery = "//a/@href")
+{
+  if(is.character(doc))
+     doc = htmlParse(doc)
+
+  links = as.character(getNodeSet(doc, xpquery))
+  if(externalOnly)
+    grep("^#", links, value = TRUE, invert = TRUE)
+  else
+    links
+}

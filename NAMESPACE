@@ -23,6 +23,7 @@ export(
  htmlParse,       
  libxmlVersion,
  xmlDoc,
+ newHTMLDoc,
  newXMLDoc,
  newXMLNode,
  newXMLNamespace,
@@ -246,6 +247,11 @@ S3method("[<-", XMLNode)
 S3method("[[<-", XMLNode)
 
 S3method("[[<-", XMLInternalNode)
+
+exportClass("XMLAttributes")
+exportMethods("[")
+
+export(xmlNamespaceDefinitions)
 
 
 S3method(names, XMLNode)
@@ -485,7 +491,7 @@ exportMethods(clearMemoryManagement)
 export("xmlParent<-")
 
 export(xmlSearchNs)
-export("xmlNamespace<-")
+export("xmlNamespace<-", setXMLNamespace)
 
 export(readKeyValueDB, readSolrDoc)
 

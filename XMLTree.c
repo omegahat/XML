@@ -32,6 +32,7 @@
 #else
 #include <libxml/parserInternals.h>
 #include <libxml/xmlmemory.h>
+#include <libxml/HTMLTree.h>
 #endif
 
 
@@ -732,10 +733,19 @@ int R_numXMLDocs = 0;
 int R_numXMLDocsFreed = 0;
 
 USER_OBJECT_
-R_newXMLDoc(USER_OBJECT_ dtd, USER_OBJECT_ namespaces)
+R_newXMLDoc(USER_OBJECT_ dtd, USER_OBJECT_ namespaces, USER_OBJECT_ isHTML)
 {
   xmlDocPtr doc;
-  doc = xmlNewDoc(CHAR_TO_XMLCHAR("1.0"));
+  if(LOGICAL(isHTML)[0]) {
+      const char *d = CHAR_DEREF(STRING_ELT(dtd, 0));
+      if(d[0] == '5')
+	  doc = htmlNewDoc("", NULL);
+      else
+	  doc = htmlNewDocNoDtD(d && d[0] ? CHAR_TO_XMLCHAR(d) : NULL, NULL);
+
+  } else
+      doc = xmlNewDoc(CHAR_TO_XMLCHAR("1.0"));
+
   R_numXMLDocs++;
 
   return(R_createXMLDocRef(doc));
@@ -899,7 +909,7 @@ R_createXMLDocRef(xmlDocPtr doc)
 
   PROTECT(ref = R_MakeExternalPtr(doc, Rf_install("XMLInternalDocument"), R_NilValue));
   PROTECT(tmp = NEW_CHARACTER(1));
-  SET_STRING_ELT(tmp, 0, mkChar("XMLInternalDocument"));
+  SET_STRING_ELT(tmp, 0, mkChar( doc->type == XML_HTML_DOCUMENT_NODE ? "HTMLInternalDocument" : "XMLInternalDocument"));
   SET_CLASS(ref, tmp);
   UNPROTECT(2);
   return(ref);

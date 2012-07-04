@@ -119,7 +119,8 @@ R_SRC_FILES=\
    Src/xmlRoot.R \
    Src/xmlMemoryMgmt.R \
    Src/keyValueDB.R Src/solrDocs.R \
-   Src/XMLRErrorInfo.R
+   Src/XMLRErrorInfo.R \
+   Src/xincludes.R
 
 
 

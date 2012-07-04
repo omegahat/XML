@@ -73,6 +73,7 @@ Collate: AAA.R
         xmlMemoryMgmt.R
         keyValueDB.R solrDocs.R
         XMLRErrorInfo.R
+        xincludes.R
 
 
 

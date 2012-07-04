@@ -1,0 +1,67 @@
+When we have a dummy namespace, and then fix this up in fix...Namespace
+make certain to fix the attributes too.
+
+library(Sxslt); library(XML)
+rc = newXMLNode("r:code", namespaceDefinitions = c(r = 'http://www.r-project.org'))
+z = getTemplate("~/Books/XMLTechnologies/fo.xsl", rc)
+
+  - crashed in an R session.  Did a previous getTemplate() before this.
+    Looks like the finalizer.
+
+
+
+[done] getNodeSet now failing if it returns nothing.
+  getDefaultNamespace()
+  Is it just xmlParseDoc() - NO!
+txt = '<?xml version="1.0"?>
+<article xmlns="http://docbook.org/ns/docbook">
+  <section xmlns="http://docbook.org/ns/docbook">
+    <title xmlns="http://docbook.org/ns/docbook">Name Spaces in <xml/></title>
+    <para xmlns="http://docbook.org/ns/docbook">
+Name spaces in <xml/> can appear complicated, but are
+quite simple.
+</para>
+  </section>
+</article>'
+doc = xmlParseDoc(txt, NSCLEAN | NOBLANKS | COMPACT)
+x = getNodeSet(doc, "//x:xml", c("x" = "http://docbook.org/ns/docbook"))
+
+
+
+[done] doc = newXMLDoc()
+       node = newXMLNode("root")
+       xmlParent(node) = doc
+
+
+node[["abc"]] = node
+  should replace "abc"?
+
+node[[1]] = node
+  should overwrite any existing first child.
+
+
+newHTMLDoc("html4/strict")
+gc()  # crash
+
+add encoding for newXMLDoc() and then set it with htmlSetMetaEncoding.
+
+
+Make doc = newHTMLDoc("5") create <!DOCTYPE html>
+
+
+
+[Still problems with some of the KML includes (was Done) ] doc = xmlParse('book.xml')
+getNodeLocation(getNodeSet(doc, "//rdocbook")[[1]])
+ # this is wrong.  ParseXML/ParseXML/XPathNamespaces.xml
+ #  why the two XMLParse/.../
+ 
+
+
+[done] SOAP/chemspiderExample.Rdb example 
+  segfaults because of fixing namespaces.
+  Perhaps fixed now. Sat Jun 30th, 16:48
+
+
+SOAP/chemspiderExample.Rdb example 
+GetDatabases() returns NULL, but the content is there.
+  So in the conversion.

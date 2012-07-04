@@ -122,8 +122,22 @@ function(x)
 xmlAttrs.XMLInternalNode = 
 function(node, addNamespacePrefix = FALSE, addNamespaceURLs = TRUE, ...)
 {
-  .Call("RS_XML_xmlNodeAttributes",  node, as.logical(addNamespacePrefix), as.logical(addNamespaceURLs), PACKAGE = "XML")
+  ans = .Call("RS_XML_xmlNodeAttributes",  node, as.logical(addNamespacePrefix), as.logical(addNamespaceURLs), PACKAGE = "XML")
+  if(length(attr(ans, "namespaces")))
+    ans = new("XMLAttributes", ans) # class(ans) = "XMLAttributes"
+  
+  ans
 }
+
+#setOldClass(c("XMLAttributes", "character"))
+setClass("XMLAttributes", contains = "character")
+
+setMethod('[', c('XMLAttributes', "ANY"),
+function(x, i, j, ...)
+{
+  ans = callNextMethod()
+  structure(ans, namespaces = attr(x, "namespaces")[i], class = class(x))
+})
 
 
 
@@ -344,14 +358,48 @@ function(doc, finalizer)
   .Call("R_addXMLInternalDocument_finalizer", doc, fun, PACKAGE = "XML")
 }
 
+HTML_DTDs =
+  c("http://www.w3.org/TR/html4/frameset.dtd",
+    "http://www.w3.org/TR/html4/loose.dtd",
+    "http://www.w3.org/TR/html4/strict.dtd",
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd",
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd",
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd",
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"    
+    )
+
+newHTMLDoc =
+function(dtd = "loose", addFinalizer = TRUE, name = character(),
+          node = newXMLNode("html", newXMLNode("head"), newXMLNode("body")))
+{
+  if(is.na(dtd) || dtd == "")
+     dtd = ""
+  else if(tolower(dtd) %in% c("html5", "5"))
+     dtd = "5"
+  else {
+     i = grep(dtd, HTML_DTDs)
+     if(length(i)) {
+        if(length(i) > 1)
+           warning("matched multiple DTDs. Using the first")
+        dtd = HTML_DTDs[i[1]]
+     } else
+        dtd = ""
+   } 
+     
+  
+  doc = newXMLDoc(dtd = dtd, isHTML = TRUE, addFinalizer = addFinalizer, node = node)
+  doc
+}
+
 newXMLDoc <-
 #
 # Creates internal C-level libxml object for representing
 # an XML document/tree of nodes.
 #
-function(dtd = NA, namespaces = NULL, addFinalizer = TRUE, name = character(), node = NULL) 
+function(dtd = "", namespaces = NULL, addFinalizer = TRUE, name = character(), node = NULL,
+          isHTML = FALSE) 
 {
-  ans = .Call("R_newXMLDoc", dtd, namespaces, PACKAGE = "XML")
+  ans = .Call("R_newXMLDoc", as.character(dtd), namespaces, as.logical(isHTML), PACKAGE = "XML")
   class(ans) = oldClass(class(ans))
   
   addDocFinalizer(ans, addFinalizer)
@@ -419,12 +467,6 @@ function(name, ..., attrs = NULL,
         )
 {
    # determine whether we know now that there is definitely no namespace.
-
-  if(length(fixNamespaces) == 1)
-      fixNamespaces = structure(rep(fixNamespaces, 2), names = c("dummy", "default"))
-
-  if(length(names(fixNamespaces)) == 0)
-     names(fixNamespaces)  = c("dummy", "default")
  
     # make certain we have a character vector for the attributes.
  if(length(attrs)) {
@@ -525,15 +567,30 @@ function(name, ..., attrs = NULL,
  }
 
  if(any(fixNamespaces)) { # !is.null(parent)) {
-   if(fixNamespaces["dummy"])
-      xmlApply(node, function(x) .Call("R_fixDummyNS", x, TRUE, PACKAGE = "XML"))
-   if(fixNamespaces["default"])
-     .Call("R_getAncestorDefaultNSDef", node, TRUE, PACKAGE = "XML")
+    xmlFixNamespaces(node, fixNamespaces)
    # fixDummyNS(node, suppressNamespaceWarning)
  }
 
  node
 }
+
+xmlFixNamespaces =
+function(node, fix)
+{
+
+   if(length(fix) == 1)
+      fix = structure(rep(fix, 2), names = c("dummy", "default"))
+
+   if(length(names(fix)) == 0)
+      names(fix)  = c("dummy", "default")
+
+   
+   if(fix["dummy"])
+      xmlApply(node, function(x) .Call("R_fixDummyNS", x, TRUE, PACKAGE = "XML"))
+   if(fix["default"])
+      .Call("R_getAncestorDefaultNSDef", node, TRUE, PACKAGE = "XML")
+}
+
 
 FixDummyNS = 2L
 FixDefaultNS = 4L
@@ -606,8 +663,7 @@ function(node,  namespace, append = FALSE)
   else if(is.character(namespace))
 
      namespace = newNamespace(node, namespace)
-
-  else if(!inherits(namespace, c("XMLNamespaceRef", "XMLNamespaceDeclaration")))
+  else if(!is.null(namespace) && !inherits(namespace, c("XMLNamespaceRef", "XMLNamespaceDeclaration")))
     stop("Must provide a namespace definition, a prefix of existing namespace or a reference to a namespace definition")
 
   .Call("R_xmlSetNs", node, namespace, FALSE, PACKAGE = "XML") 
@@ -829,6 +885,17 @@ function(x, i, j, ..., value)
    if(!is.list(value))
      value = list(value)
 
+  if(is.character(i)) {
+     if(length(names(x) == 0))
+         k = rep(NA, length(i))
+     else
+         k = match(i, names(i))
+     if(any(is.na(k))) {
+       value[is.na(k)] = mapply(newXMLNode, i[is.na(k)], value[is.na(k)])
+     }
+     i = k
+   }
+
    addChildren(x, kids = value, at = i)
 
    x
@@ -845,8 +912,9 @@ function(node)
 }
 
 
+
 addChildren.XMLInternalNode =
-addChildren.XMLInternalDocument =
+addChildren.XMLInternalDocument =  
   #
   # XXX need to expand/recycle the at if it is given as a scalar
   # taking into account if the subsequent elements are lists, etc.
@@ -857,7 +925,8 @@ addChildren.XMLInternalDocument =
   # in kids.  This is not just the length of kids but
   # the number of nodes since some of the elements might be lists.
   #
-function(node, ..., kids = list(...), at = NA, cdata = FALSE, addFinalizer = NA)
+function(node, ..., kids = list(...), at = NA, cdata = FALSE, addFinalizer = NA,
+          fixNamespaces = c(dummy = TRUE, default = TRUE))
 {
   kids = unlist(kids, recursive = FALSE)
 
@@ -865,8 +934,8 @@ function(node, ..., kids = list(...), at = NA, cdata = FALSE, addFinalizer = NA)
 
   if(length(kids) == 1 && inherits(kids[[1]], "XMLInternalNode") && is.na(at)) {
      .Call("R_insertXMLNode", kids[[1]], node, -1L, FALSE, PACKAGE = "XML")
-     return(node)
-  }
+#     return(node)
+  } else {
 
 # if(all(is.na(at))) {
 #    kids = lapply(kids, as, function(x) if(is.character(x)) newXMLTextNode(x) else as(x, "XMLInternalNode"))
@@ -946,36 +1015,14 @@ function(node, ..., kids = list(...), at = NA, cdata = FALSE, addFinalizer = NA)
         }
      }
     }
+  }
+
+  
+  if(!is(node, "XMLInternalDocument") && any(fixNamespaces))
+    xmlFixNamespaces(node, fixNamespaces)
 
   node
 }
-
-
-setGeneric("findXIncludeStartNodes", 
-function(doc, ...)  
-{
-  standardGeneric("findXIncludeStartNodes")
-})
-
-setMethod("findXIncludeStartNodes", "character", 
-function(doc, ...)  
-{
-  findXIncludeStartNodes(xmlParse(doc), ...)
-})
-
-setMethod("findXIncludeStartNodes", "XMLInternalDocument", 
-function(doc, ...)  
-{
-  findXIncludeStartNodes(xmlRoot(doc), ...)
-})
-
-setMethod("findXIncludeStartNodes", "XMLInternalElementNode", 
-function(doc, ...)  
-{
-  nodes = .Call("R_findXIncludeStartNodes", xmlRoot(doc), PACKAGE = "XML")
-  names(nodes) = sapply(nodes, xmlGetAttr, "href", NA)
-  nodes
-})
 
 
 
@@ -1388,7 +1435,7 @@ function(node, ..., .attrs = NULL, .namespace = FALSE,
   node
 })
 
-namespaceDeclarations =
+xmlNamespaceDefinitions = namespaceDeclarations =
 function(node, ref = FALSE)
 {
   .Call("RS_XML_getNsList", node,  as.logical(ref), PACKAGE = "XML")
@@ -1484,109 +1531,6 @@ function(node, recursive = TRUE, addFinalizer = FALSE, ...)
 
 
 
-findXInclude =
-function(x, asNode = FALSE, recursive = FALSE)
-{
-  while(!is.null(x)) {
-    tmp = getSiblingXIncludeStart(x, TRUE)
-    if(!is.null(tmp))
-      return(fixFindXInclude(tmp, asNode, recursive))
-
-     sib = x
-     if(is(sib, "XMLXIncludeStartNode"))
-        return(fixFindXInclude(sib, asNode, recursive)) # if(asNode) sib else xmlAttrs(sib))
-
-     x = xmlParent(x)
-  }
-
-  fixFindXInclude(x, asNode, recursive)
-}
-
-bad.findXInclude = 
- # This version just looks in the left sibling, not all siblings to the left.
-function(x, asNode = FALSE, recursive = FALSE)
-{
-  ans = NULL
-  while(!is.null(x)) {
-     prev = getSiblingXIncludeStart(x, FALSE)
-     if(inherits(prev, "XMLXIncludeStartNode")) {
-        ans = prev
-        break
-     }
-
-     x = xmlParent(x)
-  }
-
-  fixFindXInclude(ans, asNode, recursive)
-}
-
-fixFindXInclude = 
-function(ans, asNode = FALSE, recursive = FALSE)
-{
-  if(is.null(ans))
-    return(NULL)
-
-  if(recursive) {
-    tmp = getXIncludePath(ans)
-    sprintf("%s%s%s",
-             paste(dirname(tmp), collapse = .Platform$file.sep),
-             .Platform$file.sep,
-             xmlAttrs(ans))
-  } else
-    if(asNode) ans else xmlAttrs(ans)
-}
-
-getXIncludePath =
-function(node)
-{
-  x = xmlParent(node)
-  ans = character()
-  while(!is.null(x)) {
-    ans = c(ans, findXInclude(x))
-    prev = x
-    x = xmlParent(x)
-  }
-  c(docName(prev), ans)
-}
-
-getSiblingXIncludeStart =
-function(x, asNode = FALSE)
-{
-     sib = x
-     while(!is.null(sib)) {
-       if(inherits(sib, "XMLXIncludeEndNode"))
-         return(NULL)
-       
-       if(inherits(sib, "XMLXIncludeStartNode"))
-         return(if(asNode) sib else xmlAttrs(sib))
-       
-       sib <- getSibling(sib, FALSE)
-     }
-
-     NULL
-}
-
-
-getNodeLocation =
-function(node, recursive = TRUE)
-{
-   fil = findXInclude(node, recursive = recursive)
-   if(is.null(fil))
-     fil = docName(node)
-
-   list(file = fil, line = getLineNumber(node))
-}
-
-
-getLineNumber =
-function(node, ...)
-{
-  if(!is(node, "XMLInternalNode"))
-      stop("This must be an C-level/native/internal XML node, i.e. of class 'XMLInternalNode'. Got ", paste(class(node), collapse = ", "))
-
-  .Call("R_getLineNumber", node, PACKAGE = "XML")
-}
-  
 
 
 

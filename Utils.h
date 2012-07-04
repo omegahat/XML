@@ -82,7 +82,7 @@ RS_XML(ParseTree)(USER_OBJECT_ fileName, USER_OBJECT_ converterFunctions,
                   USER_OBJECT_ manageMemory, USER_OBJECT_ r_parserOptions);
 
 USER_OBJECT_ R_newXMLDtd(USER_OBJECT_ sdoc, USER_OBJECT_ sname, USER_OBJECT_ sexternalID, USER_OBJECT_ ssysID, USER_OBJECT_ manageMemory);
-USER_OBJECT_ R_newXMLDoc(USER_OBJECT_ dtd, USER_OBJECT_ namespaces);
+		 USER_OBJECT_ R_newXMLDoc(USER_OBJECT_ dtd, USER_OBJECT_ namespaces, USER_OBJECT_ isHTML);
 
 USER_OBJECT_ R_newXMLNode(USER_OBJECT_ name, USER_OBJECT_ attrs, USER_OBJECT_ nameSpace, USER_OBJECT_ sdoc, USER_OBJECT_ namespaceDefinitions, USER_OBJECT_ manageMemory);
 USER_OBJECT_ R_newXMLTextNode(USER_OBJECT_ value, USER_OBJECT_ sdoc, USER_OBJECT_ manageMemory);

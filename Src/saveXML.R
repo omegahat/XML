@@ -162,7 +162,8 @@ setMethod("saveXML", "HTMLInternalDocument",
             } else
               out = character()
             
-            ans = .Call("RS_XML_dumpHTMLDoc", doc, as.integer(indent), as.character(encoding), as.logical(indent), as.character(out), PACKAGE = "XML")
+            ans = .Call("RS_XML_dumpHTMLDoc", doc, as.integer(indent), as.character(encoding),
+                             as.logical(indent), as.character(out), PACKAGE = "XML")
 
                if(length(file) && length(out) == 0) {
                  cat(ans, file = file)
