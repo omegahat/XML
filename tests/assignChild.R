@@ -11,3 +11,6 @@ xmlValue(node[[3]]) == "other text"
 node[[4]] = newXMLNode("bob", "other text")
 xmlName(node[[4]]) == "bob" && xmlValue(node[[4]]) == "other text"
 node[["def"]] = newXMLNode("code", "x = rnorm(100)")
+
+node[["temp"]] = I("some text")
+

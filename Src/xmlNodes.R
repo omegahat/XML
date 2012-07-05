@@ -132,6 +132,10 @@ function(node, addNamespacePrefix = FALSE, addNamespaceURLs = TRUE, ...)
 #setOldClass(c("XMLAttributes", "character"))
 setClass("XMLAttributes", contains = "character")
 
+setMethod("show", "XMLAttributes",
+           function(object)
+              print(unclass(object)))
+
 setMethod('[', c('XMLAttributes', "ANY"),
 function(x, i, j, ...)
 {
@@ -937,7 +941,7 @@ function(x, i, j, ..., value)
      else
          k = match(i, names(x))
      
-     if(is.na(k) && is.character(value)) {
+     if(is.na(k) && is.character(value) && !inherits(value, "AsIs")) {
            # create a node with that name and text
         value = newXMLNode(i, value)
      }
@@ -1490,8 +1494,9 @@ function(node, ..., .attrs = NULL, .namespace = FALSE,
   node
 })
 
-xmlNamespaceDefinitions = namespaceDeclarations =
-function(node, ref = FALSE)
+#xmlNamespaceDefinitions =  # ??? added this but overrides other S3 generic.
+namespaceDeclarations =
+function(node, ref = FALSE, ...)
 {
   .Call("RS_XML_getNsList", node,  as.logical(ref), PACKAGE = "XML")
 }  

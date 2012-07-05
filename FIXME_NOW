@@ -1,5 +1,9 @@
-When we have a dummy namespace, and then fix this up in fix...Namespace
+Methods for assigning multiple children to a node via [<-.
+
+
+[done] When we have a dummy namespace, and then fix this up in fix...Namespace
 make certain to fix the attributes too.
+   See tests/nsAttributes.R
 
 library(Sxslt); library(XML)
 rc = newXMLNode("r:code", namespaceDefinitions = c(r = 'http://www.r-project.org'))
@@ -31,7 +35,6 @@ x = getNodeSet(doc, "//x:xml", c("x" = "http://docbook.org/ns/docbook"))
 [done] doc = newXMLDoc()
        node = newXMLNode("root")
        xmlParent(node) = doc
-
 
 
 

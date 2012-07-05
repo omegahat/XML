@@ -1,5 +1,8 @@
 Version 3.94-0
 
+  *     assigning to a child of a node works, e.g. node[["abc"]] = text/node
+        and node[[index]] = text/node.
+
   *     getChildrenStrings() is a function that implements the equivalent of
         xmlApply(node, xmlValue) but faster because we avoid the function call
         for each element.
