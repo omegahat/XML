@@ -370,7 +370,8 @@ HTML_DTDs =
 
 newHTMLDoc =
 function(dtd = "loose", addFinalizer = TRUE, name = character(),
-          node = newXMLNode("html", newXMLNode("head"), newXMLNode("body")))
+          node = newXMLNode("html", newXMLNode("head", addFinalizer = FALSE), newXMLNode("body", addFinalizer = FALSE),
+                             addFinalizer = FALSE))
 {
   if(is.na(dtd) || dtd == "")
      dtd = ""
@@ -869,6 +870,12 @@ function(oldNode, newNode, ...)
   UseMethod("replaceNodes")
 }
 
+replaceNodes.list =
+function(oldNode, newNode, addFinalizer = NA, ...)
+{
+ mapply(replaceNodes, oldNode, newNode, MoreArgs = list(addFinalizer = addFinalizer, ...))
+}
+
 replaceNodes.XMLInternalNode =
 function(oldNode, newNode, addFinalizer = NA, ...)
 {
@@ -879,6 +886,8 @@ function(oldNode, newNode, addFinalizer = NA, ...)
   .Call("RS_XML_replaceXMLNode", oldNode, newNode, addFinalizer, PACKAGE = "XML")
 }  
 
+#
+if(FALSE) # This is vectorized for no reason
 "[[<-.XMLInternalNode" =
 function(x, i, j, ..., value)
 {
@@ -886,20 +895,66 @@ function(x, i, j, ..., value)
      value = list(value)
 
   if(is.character(i)) {
-     if(length(names(x) == 0))
+     if(length(names(x)) == 0)
          k = rep(NA, length(i))
      else
-         k = match(i, names(i))
+         k = match(i, names(x))
+     
      if(any(is.na(k))) {
-       value[is.na(k)] = mapply(newXMLNode, i[is.na(k)], value[is.na(k)])
+           # create a node with that name and text 
+         value[is.na(k)] = mapply(function(name, val)
+                                    if(is.character(val))
+                                         newXMLNode(name, val)
+                                    else
+                                         val)
      }
      i = k
    }
 
-   addChildren(x, kids = value, at = i)
+   replace =  (i <= xmlSize(x))
+
+   if(any(replace)) {
+     replaceNodes(xmlChildren(x)[i[replace]], value[replace])
+     value = value[!replace]
+     i = i[!replace]
+   }
+
+   if(length(i))
+      addChildren(x, kids = value, at = i)
 
    x
 }  
+
+
+
+
+"[[<-.XMLInternalNode" =
+function(x, i, j, ..., value)
+{
+  if(is.character(i)) {
+     if(length(names(x)) == 0)
+         k = NA
+     else
+         k = match(i, names(x))
+     
+     if(is.na(k) && is.character(value)) {
+           # create a node with that name and text
+        value = newXMLNode(i, value)
+     }
+     i = k
+   }
+
+   replace =  (i <= xmlSize(x))
+
+   if(replace) 
+     replaceNodes(xmlChildren(x)[[i]], value)
+   else
+     addChildren(x, kids = list(value), at = i)
+
+   x
+}  
+
+
 
 
 setNoEnc =

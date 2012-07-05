@@ -33,18 +33,19 @@ x = getNodeSet(doc, "//x:xml", c("x" = "http://docbook.org/ns/docbook"))
        xmlParent(node) = doc
 
 
-node[["abc"]] = node
-  should replace "abc"?
-
-node[[1]] = node
-  should overwrite any existing first child.
 
 
-newHTMLDoc("html4/strict")
-gc()  # crash
+
+[Done] node = newXMLNode("top", newXMLNode("abc"), newXMLNode("def"))
+       node[[1]] = newXMLNode("xyz")
+          should overwrite any existing first child.
+
+
+[done] newHTMLDoc("html4/strict")
+  gc()  # crash
 
 add encoding for newXMLDoc() and then set it with htmlSetMetaEncoding.
-
+  Does this make sense?
 
 Make doc = newHTMLDoc("5") create <!DOCTYPE html>
 
