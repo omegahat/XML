@@ -546,6 +546,7 @@ function(doc)
      ns[i]
   else
      character()
+  
 #  val = unlist(sapply(ns, function(x) if(x$id == "") x$uri))
 #  if(length(val))
 #     val[1]
@@ -720,6 +721,8 @@ function(doc, path, fun = NULL, ... , namespaces = xmlNamespaceDefinitions(doc, 
           resolveNamespaces = TRUE, addFinalizer = NA, .node = NULL, noMatchOkay = FALSE, 
            sessionEncoding = CE_NATIVE, noResultOk = FALSE) # native
 {
+  path = paste(path, collapse = " | ")
+    
   if(resolveNamespaces && !inherits( namespaces, "XMLNamespaceDefinitions"))
     namespaces = matchNamespaces(doc, namespaces)
   
@@ -870,6 +873,8 @@ function(doc, path, fun = NULL, ...,
           namespaces = xmlNamespaceDefinitions(doc, simplify = TRUE),
            resolveNamespaces = TRUE, addFinalizer = NA)
 {
+  path = paste(path, collapse = " | ")
+  
   node = doc
 
   addDocAttribute = FALSE

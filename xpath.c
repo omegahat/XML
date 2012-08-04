@@ -15,7 +15,7 @@ convertNodeSetToR(xmlNodeSetPtr obj, SEXP fun, int encoding, SEXP manageMemory)
 
   PROTECT(ans = NEW_LIST(obj->nodeNr));
 
-  if(GET_LENGTH(fun) && TYPEOF(fun) == CLOSXP) {
+  if(GET_LENGTH(fun) && (TYPEOF(fun) == CLOSXP || TYPEOF(fun) == BUILTINSXP)) {
     PROTECT(expr = allocVector(LANGSXP, 2));
     SETCAR(expr, fun);
     arg = CDR(expr);
@@ -53,7 +53,7 @@ convertNodeSetToR(xmlNodeSetPtr obj, SEXP fun, int encoding, SEXP manageMemory)
   }
 
   if(expr) {
-    if(TYPEOF(fun) == CLOSXP) 
+    if(TYPEOF(fun) == CLOSXP || TYPEOF(fun) == BUILTINSXP)
       UNPROTECT(1);
   } else
     SET_CLASS(ans, mkString("XMLNodeSet"));
