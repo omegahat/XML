@@ -148,6 +148,10 @@ C_SRC_FILES=\
   NodeGC.c NodeGC.h \
   fixNS.c
 
+copyC:
+	git mv $(C_SRC_FILES) src
+
+
 
 ifdef R
   C_SRC_FILES+= RUtils.c 

@@ -7,7 +7,7 @@
 
 #define RS_XML(a) RS_XML_##a
 
-/* #define R_XML_DEBUG 1    */
+#define R_XML_DEBUG 1   
 
 #if 0
 #if 1

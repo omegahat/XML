@@ -74,6 +74,7 @@ Collate: AAA.R
         keyValueDB.R solrDocs.R
         XMLRErrorInfo.R
         xincludes.R
-
+        namespaceHandlers.R
+        tangle1.R
 
 
