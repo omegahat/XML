@@ -1,0 +1,121 @@
+# An input file for autoconf to configure 
+# the XML parsing facilities for both R and S.
+# Currently this works for R.
+#
+# This was originally implemented by Friedrich Leisch
+# with modifications for subsequent versions 
+# by Duncan Temple Lang.
+#
+
+AC_INIT(DESCRIPTION)
+
+AC_ARG_WITH(libxml,
+  [  --with-libxml           use libxml library],
+  [ if test "${withval}" = no; then
+      USE_LIBXML=false;
+    else
+      USE_LIBXML=true;
+    fi],
+  USE_LIBXML=true)
+
+# Default is false for expat since we can 
+# do event driven parsing with libxml.
+AC_ARG_WITH(expat,
+  [  --with-expat            use expat library],
+  [ if test "${withval}" = no; then
+      USE_EXPAT=false;
+    else
+      USE_EXPAT=true;
+    fi],
+  USE_EXPAT=false)
+
+if ${USE_LIBXML}; then
+  if test -z ${LIBXML_INCDIR}; then
+    AC_CHECK_HEADER(gnome-xml/parser.h, LIBXML_INCDIR="gnome-xml/")
+  fi
+  if test -z ${LIBXML_INCDIR}; then
+    AC_CHECK_HEADER(libxml/parser.h, LIBXML_INCDIR="libxml/")
+  fi
+echo "${LIBXML_INCDIR}parser.h"
+#  AC_EGREP_HEADER(xmlParseFile, ${LIBXML_INCDIR}parser.h,
+#	HAVE_LIBXML_HEADER=true,
+#	AC_MSG_ERROR("header files for libxml seem to be incorrect"))
+  AC_CHECK_LIB(z, gzopen)
+  AC_CHECK_LIB(xml, xmlParseFile,, AC_MSG_ERROR("libxml not found"), "${LIBXML_LIBDIR}")
+  if test -n "${LIBXML_LIBDIR}" ; then
+     LIBS="${LIBS} $LIBXML_LIBDIR"
+  fi
+  PKG_CPPFLAGS="${PKG_CPPFLAGS} -DLIBXML -I${LIBXML_INCDIR}"
+
+
+  AC_TRY_COMPILE([
+  #include <libxml/tree.h>
+  ],
+  [
+  xmlNsPtr ns;
+   ns->context;
+ ],
+ [DEFINES="$DEFINES -DLIBXML_NAMESPACE_HAS_CONTEXT=1"; echo "xmlNs has a context field"], 
+ [echo "No context field in xmlNs structure."])
+
+fi
+
+if ${USE_EXPAT}; then
+  AC_CHECK_HEADER(xmltok/xmlparse.h, XMLPARSE_INCDIR="xmltok/")
+  if test -z ${XMLPARSE_INCDIR}; then 
+    AC_CHECK_HEADER(xmlparse/xmlparse.h, XMLPARSE_INCDIR="xmlparse/")
+  fi
+  AC_EGREP_HEADER(XML_Parse, ${XMLPARSE_INCDIR}xmlparse.h,
+	HAVE_EXPAT_HEADER=true,
+	AC_MSG_ERROR("header file xmlparse.h seems to be incorrect"))	
+  AC_CHECK_LIB(xmltok, XmlInitEncoding,,AC_MSG_ERROR("libxmltok not found"))
+  AC_CHECK_LIB(xmlparse, XML_Parse,,
+		AC_MSG_ERROR("libxmlparse not found"), -lxmltok)
+  PKG_CPPFLAGS="${PKG_CPPFLAGS} -DLIBEXPAT -I${XMLPARSE_INCDIR}"
+fi
+
+
+
+if  ${USE_EXPAT} ; then
+  SUPPORTS_EXPAT="TRUE"
+else
+  SUPPORTS_EXPAT="FALSE"
+fi
+
+echo "Expat: ${USE_EXPAT} ${SUPPORTS_EXPAT}"
+
+if ${USE_LIBXML} ; then
+  SUPPORTS_LIBXML="TRUE"
+else
+  SUPPORTS_LIBXML="FALSE"
+fi
+
+PKG_LIBS=${LIBS}
+
+
+echo "Checking for cetype_t enumeration"
+AC_TRY_COMPILE([
+   #include <Rinternals.h>
+],
+[
+   ctype_t t;
+],
+[DEFINES="$DEFINES -DHAVE_R_CETYPE_T=1"; echo "Using recent version of R with cetype_t enumeration type for encoding"], 
+[echo "No cetype_t enumeration defined in R headers."])
+
+
+AC_SUBST(ADD_XML_OUTPUT_BUFFER)
+
+AC_SUBST(LIBXML_INCDIR)
+AC_SUBST(XMLPARSE_INCDIR)
+AC_SUBST(PKG_LIBS)
+AC_SUBST(PKG_CPPFLAGS)
+
+AC_SUBST(SUPPORTS_LIBXML)
+AC_SUBST(SUPPORTS_EXPAT)
+
+#AC_OUTPUT(src/RS_XML.h src/Makevars)
+AC_OUTPUT(src/Makevars R/supports.R)
+
+
+
