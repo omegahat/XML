@@ -1,0 +1,1 @@
+../../SWinRegistry/RSCommon.h
