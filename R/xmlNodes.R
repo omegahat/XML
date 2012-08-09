@@ -1,4 +1,5 @@
-xmlRoot.XMLInternalDocument = 
+#xmlRoot.HTMLInternalDocument =
+  xmlRoot.XMLInternalDocument = 
 function(x, skip = TRUE, addFinalizer = NA, ...)
 {
   .Call("R_xmlRootNode", x, as.logical(skip), addFinalizer, PACKAGE = "XML")
@@ -31,6 +32,8 @@ setAs("XMLInternalNode", "XMLInternalDocument",
         function(from) {
            doc = .Call("R_getXMLNodeDocument", from, PACKAGE = "XML")
            addDocFinalizer(doc, TRUE)
+           if(is(doc, "HTMLInternalDocument"))
+              class(doc) = c(class(doc), "XMLInternalDocument", "XMLAbstractDocument")
 	   doc
       })
 
