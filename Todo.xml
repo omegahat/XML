@@ -16,6 +16,11 @@
 <title>XML Internal Nodes</title>
 
 <items>
+
+<item>
+Add error = argument for xmlParseDoc() so we can handle the errors.
+</item>
+
 <item>
 getEncoding() methods for different types of nodes and trees.
 </item>
