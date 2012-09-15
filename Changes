@@ -1,5 +1,8 @@
 Version 3.94-0
 
+  *     getNodeLocation() now reports the actual line number for text nodes rather than 0,
+        using the sibling nodes' or parent node's line number. 
+
   *     xpathApply() and related functions work with builtin type "functions", 
         e.g. class.
 

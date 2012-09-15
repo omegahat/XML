@@ -1499,6 +1499,24 @@ R_getDocEncoding(SEXP r_doc)
 }
 
 
+int 
+getTextElementLineNumber(xmlNodePtr node)
+{
+    int val = -1;
+
+    if(node->parent)
+	val = node->parent->line;
+
+    xmlNodePtr prev = node->prev;
+    while(prev) {
+	if(prev->line > 0) {
+	    val = prev->line;
+	    break;
+	}
+	prev = prev->prev;
+    }
+    return(val);
+}
 
 SEXP
 R_getLineNumber(SEXP r_node)
@@ -1509,7 +1527,9 @@ R_getLineNumber(SEXP r_node)
 	return(NEW_INTEGER(0));
     }
 
-    return(ScalarInteger(node->line));
+//    XML_GET_LINE(node)
+    return(ScalarInteger(node->type == XML_TEXT_NODE ? 
+			 getTextElementLineNumber(node) : node->line));
 }
 
 

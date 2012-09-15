@@ -30,6 +30,9 @@ getNodeLocation(node, recursive = TRUE)
   \code{getNodeLocation} returns a list with two elements -
   \code{file} and \code{line} which are a character string
   and the integer line number.
+
+  For text nodes, the line number is taken from the previous sibling
+  nodes or the parent node.
 }
 \references{libxml2 }
 \author{Duncan Temple Lang}
