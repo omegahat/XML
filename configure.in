@@ -118,9 +118,10 @@ AC_ARG_WITH(xmlsec, [  --with-xmlsec           add support (experimental) for XM
 
 dnl
 
-"$R_HOME/bin/R" CMD SHLIB testRemoveFinalizers.c   >& AS_MESSAGE_LOG_FD
+
+"$R_HOME/bin/R" CMD SHLIB testRemoveFinalizers.c &> AS_MESSAGE_LOG_FD
 if test "$?" = 0 ;  then
- $R_HOME/bin/R --vanilla < testRemoveFinalizers.R  >& AS_MESSAGE_LOG_FD
+ $R_HOME/bin/R --slave --vanilla < testRemoveFinalizers.R &> AS_MESSAGE_LOG_FD
 fi
 
 if ! test "$?" = 0 ; then

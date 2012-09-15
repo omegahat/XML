@@ -2977,9 +2977,9 @@ fi
 
 
 
-"$R_HOME/bin/R" CMD SHLIB testRemoveFinalizers.c   >& 5
+"$R_HOME/bin/R" CMD SHLIB testRemoveFinalizers.c >& 5
 if test "$?" = 0 ;  then
- $R_HOME/bin/R --vanilla < testRemoveFinalizers.R  >& 5
+ $R_HOME/bin/R --slave --vanilla < testRemoveFinalizers.R &> 5
 fi
 
 if ! test "$?" = 0 ; then
