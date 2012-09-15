@@ -1528,7 +1528,7 @@ R_getLineNumber(SEXP r_node)
     }
 
 //    XML_GET_LINE(node)
-    return(ScalarInteger(node->type == XML_TEXT_NODE ? 
+    return(ScalarInteger(node->line == 0 ? 
 			 getTextElementLineNumber(node) : node->line));
 }
 
