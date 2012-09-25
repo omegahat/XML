@@ -21,22 +21,15 @@ removeXMLNamespaces(node, ..., all = FALSE, .els = unlist(list(...)))
   \item{.els}{a list which is sometimes a convenient way to specify the
     namespaces to remove.}
 }
-\details{
-}
 \value{
-
-}
-\references{
-}
+This function is used for its side-effects and changing the internal node.}
 \author{
 Duncan Temple Lang
 }
 
-
-
 \seealso{
+  \code{\link{newXMLNamespace}}
 }
-\examples{
+%\examples{}
 
-}
-\keyword{IO }
+\keyword{IO}

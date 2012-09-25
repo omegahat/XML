@@ -119,6 +119,7 @@ AC_ARG_WITH(xmlsec, [  --with-xmlsec           add support (experimental) for XM
 dnl
 
 
+dnl Redirection: http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO-3.html
 "$R_HOME/bin/R" CMD SHLIB testRemoveFinalizers.c &> AS_MESSAGE_LOG_FD
 if test "$?" = 0 ;  then
  $R_HOME/bin/R --slave --vanilla < testRemoveFinalizers.R &> AS_MESSAGE_LOG_FD

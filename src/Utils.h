@@ -245,5 +245,8 @@ SEXP CreateCharSexpWithEncoding(const xmlChar *encoding, const xmlChar *str);
 
 SEXP R_createXMLNodeRefDirect(xmlNodePtr node, int addFinalizer);
 int R_XML_getManageMemory(USER_OBJECT_ user, xmlDocPtr doc, xmlNodePtr node);
+
+USER_OBJECT_ R_convertXMLNsRef(SEXP r_ns);
+
 #endif
 

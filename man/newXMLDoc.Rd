@@ -48,8 +48,8 @@ How do we define a default namespace?
 }
 \usage{
 xmlDoc(node, addFinalizer = TRUE)
-newXMLDoc(dtd = NA, namespaces=NULL, addFinalizer = TRUE, 
-           name = character(), node = NULL)
+newXMLDoc(dtd = "", namespaces=NULL, addFinalizer = TRUE, 
+           name = character(), node = NULL, isHTML = FALSE)
 newXMLNode(name, ..., attrs = NULL, namespace = character(),
             namespaceDefinitions = character(),
              doc = NULL, .children = list(...), parent = NULL,
@@ -57,7 +57,8 @@ newXMLNode(name, ..., attrs = NULL, namespace = character(),
              suppressNamespaceWarning =
                  getOption("suppressXMLNamespaceWarning", FALSE),
              sibling = NULL, addFinalizer = NA,
-              noNamespace = length(namespace) == 0 && !missing(namespace))
+              noNamespace = length(namespace) == 0 && !missing(namespace),
+               fixNamespaces = c(dummy = TRUE, default = TRUE))
 newXMLTextNode(text, parent = NULL, doc = NULL, cdata = FALSE, 
                 escapeEntities = is(text, "AsIs"), addFinalizer = NA)
 newXMLCDataNode(text, parent = NULL, doc = NULL, at = NA, sep = "\n",
@@ -190,6 +191,21 @@ This is just a convenient form of \code{parent = xmlParent(node)}.}
  \item{noNamespace}{a logical value that allows the caller to specify
   that the new node has no namespace. This can avoid searching parent
   and ancestor nodes up the tree for the default namespace.}
+  \item{isHTML}{a logical value that indicates whether the XML document
+  being created is HTML or generic XML. This helps to create an object
+  that is identified as an HTML document.}
+  \item{fixNamespaces}{a logical vector controlling how namespaces in
+  child nodes are to be processed. The two entries should be named
+  \code{dummy} and \code{default}.  The \code{dummy} element controls
+  whether we process child nodes that have a namespace which was not
+  defined when the node was created. These are created as \dQuote{dummy}
+  namespaces and can be resolved now that the parent node is defined and
+  the name space may be defined. When we know it is not yet defined, but
+  will be defined in an ancestor node, we can turn off this processing
+  with a value of \code{FALSE}.
+
+  The \code{default} element controls how we process the child nodes
+  and give them the default name space defined in the parent or ancestor nodes.}
 }
 \details{
 These create internal C level objects/structure instances

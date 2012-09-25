@@ -62,6 +62,5 @@ Class \code{"\linkS4class{vector}"}, by class "character", distance 2.
 \seealso{
  \code{\link{xmlSource}}
 }
-\examples{
-}
+\examples{}
 \keyword{classes}

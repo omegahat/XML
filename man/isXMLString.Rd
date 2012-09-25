@@ -36,13 +36,17 @@ xml(x)
   \item{addFinalizer}{a logical value or identifier for a C routine
         that controls whether we register finalizers on the intenal node.}   
 }
-\details{
-}
+%\details{}
 \value{
+  \code{isXMLString} returns a logical value.
 
+  \code{xmlParseString} returns an object of class
+  \code{XMLInternalElementNode}.
+
+  \code{xml} returns an object of class \code{XMLString}
+  identifying the  text as \code{XML}.
 }
-\references{
-}
+%\references{}
 \author{Dncan Temple Lang}
 
 \seealso{

@@ -26,8 +26,7 @@ compareXMLDocs(a, b, ...)
  \item{countDiffs}{a vector giving the difference in number of nodes with a particular name.}
 These give a description of what is missing from one document relative to the other.
 }
-\references{
-}
+%\references{}
 \author{
 Duncan Temple Lang
 }

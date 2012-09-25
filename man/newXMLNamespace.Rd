@@ -38,9 +38,14 @@ and apply to RXMLNode and its non-abstract classes.
 \author{Duncan Temple Lang}
 
 \seealso{
- Constructors for different XML node types - \code{newXMLNode} \code{xmlNode}
+ Constructors for different XML node types - \code{newXMLNode}
+ \code{xmlNode}.
+ \code{\link{newXMLNamespace}}.
 }
 \examples{
+ foo = newXMLNode("foo")
+ ns = newXMLNamespace(foo, "http://www.r-project.org", "r")
+ as(ns, "character")
 }
 \keyword{IO}
 \keyword{programming}

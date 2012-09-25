@@ -33,9 +33,7 @@ makeClassTemplate(xnode, types = character(), default = "ANY",
        or if \code{NULL} inhibits the code being evaluated. In this
        case, the code is returned as strings.}
 }
-\details{
-
-}
+%\details{}
 \value{
   A list with 4 elements:
   \item{name}{the name of the new class}
@@ -54,9 +52,7 @@ makeClassTemplate(xnode, types = character(), default = "ANY",
 \seealso{
  \code{\link{xmlToS4}}  
 }
-\examples{
-
-}
+\examples{}
 \keyword{programming}
 \concept{reflection}
 \concept{meta-programming}

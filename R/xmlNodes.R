@@ -314,7 +314,7 @@ getChildrenStrings =
 function(node, encoding = getEncoding(node), asVector = TRUE, len = xmlSize(node))
 {
    encoding = getEncodingREnum(encoding)
-   .Call("R_childStringValues", node, as.integer(len), as.logical(asVector), as.integer(encoding))
+   .Call("R_childStringValues", node, as.integer(len), as.logical(asVector), as.integer(encoding), PACKAGE = "XML")
 }
 
 
@@ -1636,7 +1636,7 @@ function(doc, what)
 setOldClass("XMLNamespaceRef")
 setAs("XMLNamespaceRef", "character",
        function(from) {
- 	.Call("R_convertXMLNsRef", from)
+ 	.Call("R_convertXMLNsRef", from, PACKAGE = "XML")
        })
 
 

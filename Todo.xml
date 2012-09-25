@@ -18,6 +18,19 @@
 <items>
 
 <item>
+getNodeLocation misbehaving on nested XIncludes.
+See book.xml and 
+<r:code>
+ci = getNodeSet(doc, "//citation/biblioref[contains(@linkend, 'NCBIEntrez')]")
+</r:code>
+Should be eGQueryResultType.Rdb, but showing up as mapTypesToR.Rdb
+This is a problem with findXInclude.
+It appears that the issue is caused by an xpointer qualifier 
+on the outer XInclude, i.e. XMLSchema include mapTypesToR.Rdb
+with an xpointer.
+</item>
+
+<item>
 Add error = argument for xmlParseDoc() so we can handle the errors.
 </item>
 

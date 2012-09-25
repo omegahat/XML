@@ -244,6 +244,7 @@ static R_CallMethodDef callMethods[] = {
 	ENTRY(RS_XML_getDefaultValiditySetting, 1),
 	ENTRY(RS_XML_xmlXIncludeProcessFlags, 2),
 	ENTRY(RS_XML_xmlXIncludeProcessTreeFlags, 2),
+	ENTRY(R_convertXMLNsRef, 1),
 	{NULL, NULL, 0}
 };
 

@@ -15,7 +15,7 @@
 }
 \usage{
 getLineNumber(node, ...)
-getNodeLocation(node, recursive = TRUE)
+getNodeLocation(node, recursive = TRUE, fileOnly = FALSE)
 }
 \arguments{
   \item{node}{the node whose location or line number is of interest}
@@ -23,6 +23,9 @@ getNodeLocation(node, recursive = TRUE)
   \item{recursive}{a logical value that controls whether the 
     full path of the nested includes is returned or just the
     path in the immediate XInclude element.}
+  \item{fileOnly}{a logical value which if \code{TRUE} means that only
+  the name of the file is returned, and not the \code{xpointer} attribute or
+  line number .}
 }
 
 \value{
