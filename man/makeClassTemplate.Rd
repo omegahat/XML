@@ -52,7 +52,15 @@ makeClassTemplate(xnode, types = character(), default = "ANY",
 \seealso{
  \code{\link{xmlToS4}}  
 }
-\examples{}
+\examples{
+ txt =
+ "<doc><part><name>ABC</name><type>XYZ</type><cost>3.54</cost><status>available</status></part></doc>"
+ doc = xmlParse(txt)
+
+ code = makeClassTemplate(xmlRoot(doc)[[1]], types = c(cost = "numeric"))
+
+ as(xmlRoot(doc)[["part"]], "part")
+}
 \keyword{programming}
 \concept{reflection}
 \concept{meta-programming}

@@ -12,10 +12,9 @@
  the root node and from a node to the document. 
  This helps to manage the nodes 
 }
-\usage{
-}
+%\usage{}
 \value{
- An object of the target type
+ An object of the target type.
 }
 \seealso{
 \code{\link{xmlTreeParse}}

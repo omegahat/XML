@@ -34,7 +34,11 @@ Duncan Temple Lang
  \code{\link{newXMLNode}}
 }
 \examples{
+ txt = '<top xmlns:r="http://www.r-project.org"><section><bottom/></section></top>'
 
+ doc = xmlParse(txt)
+ bottom = xmlRoot(doc)[[1]][[1]]
+ xmlSearchNs(bottom, "r")
 }
 \keyword{programming}
 \keyword{data}

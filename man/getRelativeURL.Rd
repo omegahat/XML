@@ -42,6 +42,11 @@ getRelativeURL(u, baseURL, sep = "/")
   XInclude and XML Schema import/include elements for computing relative locations of included/imported files..
 }
 \examples{
+ getRelativeURL("http://www.omegahat.org", "http://www.r-project.org")
+
+ getRelativeURL("bar.html", "http://www.r-project.org/")
+
+ getRelativeURL("../bar.html", "http://www.r-project.org/")
 }
 \keyword{IO}
 \keyword{programming}

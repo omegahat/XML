@@ -1,6 +1,7 @@
 % insert facilities
 \name{newXMLDoc}
 \alias{newXMLDoc}
+\alias{newHTMLDoc}
 \alias{newXMLNode}
 \alias{newXMLPINode}
 \alias{newXMLCDataNode}
@@ -50,6 +51,11 @@ How do we define a default namespace?
 xmlDoc(node, addFinalizer = TRUE)
 newXMLDoc(dtd = "", namespaces=NULL, addFinalizer = TRUE, 
            name = character(), node = NULL, isHTML = FALSE)
+newHTMLDoc(dtd = "loose", addFinalizer = TRUE, name = character(), 
+            node = newXMLNode("html",
+                               newXMLNode("head", addFinalizer = FALSE), 
+                               newXMLNode("body", addFinalizer = FALSE),
+                              addFinalizer = FALSE)) 
 newXMLNode(name, ..., attrs = NULL, namespace = character(),
             namespaceDefinitions = character(),
              doc = NULL, .children = list(...), parent = NULL,

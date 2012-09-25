@@ -31,7 +31,15 @@ xmlToS4(node, obj = new(xmlName(node)), ...)
  \code{\link{makeClassTemplate}}  
 }
 \examples{
+ txt =
+ "<doc><part><name>ABC</name><type>XYZ</type><cost>3.54</cost><status>available</status></part></doc>"
+ doc = xmlParse(txt)
 
+ setClass("part", representation(name = "character",
+                                 type = "character",
+                                 cost = "numeric",
+                                 status= "character"))
+ xmlToS4(xmlRoot(doc)[["part"]])
 }
 \keyword{programming}
 \keyword{IO}
