@@ -566,7 +566,7 @@ matchNamespaces =
   #
   #
 function(doc, namespaces,
-          nsDefs = xmlNamespaceDefinitions(doc, recursive = TRUE),
+          nsDefs = xmlNamespaceDefinitions(doc, recursive = TRUE, simplify = TRUE),
           defaultNs = getDefaultNamespace(doc)
         )
 {
@@ -583,11 +583,16 @@ function(doc, namespaces,
 
     # if it is a single "prefix" and we have a default namespace, then map the prefix to the default URI
     # and return.
-  if(is.character(namespaces) && length(namespaces) == 1 && is.null(names(namespaces)) && length(defaultNs) > 0) {
+  if(is.character(namespaces) && length(namespaces) == 1 &&
+        is.null(names(namespaces)) && length(defaultNs) > 0) {
        tmp = defaultNs
        names(tmp)[names(tmp) == ""] = namespaces
-       namespaces = tmp
-       return(namespaces)       
+         # make certain to convert to c(id = url) form from an XMLNamespaceDefinition
+       tmp = as(tmp[[1]], "character")
+         # if no name, so default namespace, then use the one in namespaces.
+       if(length(names(tmp)) == 0 || names(tmp) == "")
+         names(tmp) = namespaces
+       return(tmp)
    }
 
     # fix the names so that we have empty ones if we have none at all.

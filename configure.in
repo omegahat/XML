@@ -80,6 +80,7 @@ AC_PROG_CC
 AC_PROG_CPP
 
 
+
 dnl ======================================================
 
 dnl Check whether we are compiling this for use with SPlus
@@ -816,6 +817,12 @@ if test "$ADD_XML_OUTPUT_BUFFER" = "yes" ; then
 fi
 
 AC_SUBST(ADD_XML_OUTPUT_BUFFER)
+
+
+if test -n "${_R_CHECK_TIMINGS_}" ; then
+  PKG_CPPFLAGS="$PKG_CPPFLAGS -DNO_XML_MEMORY_SHOW_ROUTINE=1"
+fi
+
 
  dnl create the different targets
  dnl We had NAMESPACE here when were conditionally exporting the functions to 

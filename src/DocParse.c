@@ -1262,11 +1262,13 @@ makeSchemaReference(xmlSchemaPtr schema)
 }
 
 
+#ifndef NO_XML_MEMORY_SHOW_ROUTINE
 void
 RS_XML_MemoryShow()
 {
     xmlMemDisplay(stderr);
 }
+#endif
 
 USER_OBJECT_
 RS_XML_setDocumentName(USER_OBJECT_ sdoc, USER_OBJECT_ sname)

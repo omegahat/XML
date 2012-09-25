@@ -1723,14 +1723,15 @@ R_getChildByName(USER_OBJECT_ r_node, USER_OBJECT_ r_index, USER_OBJECT_ r_addFi
 */
 
 USER_OBJECT_
-R_childStringValues(SEXP r_node, SEXP r_len, SEXP r_asVector, SEXP r_encoding)
+R_childStringValues(SEXP r_node, SEXP r_len, SEXP r_asVector, SEXP r_encoding, SEXP r_addNames)
 {
     xmlNodePtr node, kid;
     int len, i;
-    SEXP ans;
+    SEXP ans, names = NULL;
     int asVector = LOGICAL(r_asVector)[0];
     int encoding = INTEGER(r_encoding)[0];
     xmlChar *tmp;
+    int nprotect = 0;
 
     node = (xmlNodePtr) R_ExternalPtrAddr(r_node);    
     len = INTEGER(r_len)[0];
@@ -1740,7 +1741,13 @@ R_childStringValues(SEXP r_node, SEXP r_len, SEXP r_asVector, SEXP r_encoding)
     else
 	ans = NEW_LIST(len);
 
-    PROTECT(ans);
+    PROTECT(ans); nprotect++;
+
+    if(LOGICAL(r_addNames)[0]) {
+	PROTECT(names = NEW_CHARACTER(len));
+	nprotect++;
+    }
+
 
     for(i = 0, kid = node->children; kid && i < len; i++, kid = kid->next) {
 	tmp  = xmlNodeGetContent(kid);	
@@ -1750,9 +1757,15 @@ R_childStringValues(SEXP r_node, SEXP r_len, SEXP r_asVector, SEXP r_encoding)
 	    SET_STRING_ELT(ans, i, val);
 	else
 	    SET_VECTOR_ELT(ans, i, ScalarString(val));
+	if(names && kid->name) {
+	    SET_STRING_ELT(names, i, mkCharCE(kid->name, encoding));
+	}
 	UNPROTECT(1);
     }
 
-    UNPROTECT(1);
+    if(names)
+	SET_NAMES(ans, names);
+
+    UNPROTECT(nprotect);
     return(ans);
 }

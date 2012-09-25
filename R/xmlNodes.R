@@ -143,6 +143,7 @@ setMethod('[', c('XMLAttributes', "ANY"),
 function(x, i, j, ...)
 {
   ans = callNextMethod()
+browser()  
   structure(ans, namespaces = attr(x, "namespaces")[i], class = class(x))
 })
 
@@ -311,10 +312,12 @@ function(X, FUN, ..., omitNodeTypes = c("XMLXIncludeStartNode", "XMLXIncludeEndN
 
 
 getChildrenStrings =
-function(node, encoding = getEncoding(node), asVector = TRUE, len = xmlSize(node))
+function(node, encoding = getEncoding(node), asVector = TRUE, len = xmlSize(node),
+          addNames = TRUE)
 {
    encoding = getEncodingREnum(encoding)
-   .Call("R_childStringValues", node, as.integer(len), as.logical(asVector), as.integer(encoding), PACKAGE = "XML")
+   .Call("R_childStringValues", node, as.integer(len), as.logical(asVector), as.integer(encoding),
+               as.logical(addNames), PACKAGE = "XML")
 }
 
 

@@ -4,6 +4,8 @@
 #define R_USE_XML_ENCODING 1
 #include "Utils.h"
 
+#include <R_ext/Print.h>
+
 #ifdef FROM_GNOME_XML_DIR
 #include <gnome-xml/parserInternals.h>
 #else
@@ -383,7 +385,7 @@ int numDocsCreated = 0;
 void
 R_reportDocGC()
 {
-    fprintf(stderr, "<r:docReport createdInBranch='%d' createdByXMLPackage='%d' freed='%d'/>\n", numDocsCreated, R_numXMLDocs, R_numXMLDocsFreed);
+    REprintf("<r:docReport createdInBranch='%d' createdByXMLPackage='%d' freed='%d'/>\n", numDocsCreated, R_numXMLDocs, R_numXMLDocsFreed);
 }
 
 void
