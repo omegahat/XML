@@ -12,6 +12,9 @@
  It adds \code{id} and \code{env} fields to the
  node and specializes the class by prefixing \code{className}
  to the class attribute.
+
+ This is not used very much anymore as we use the internal nodes for
+ most purposes.
 }
 \usage{
 asXMLTreeNode(node, env, id = get(".nodeIdGenerator", env)(xmlName(node)), className = "XMLTreeNode")
@@ -41,6 +44,12 @@ asXMLTreeNode(node, env, id = get(".nodeIdGenerator", env)(xmlName(node)), class
   \code{\link{xmlFlatListTree}}  
 }
 \examples{
+  txt = '<foo a="123" b="an attribute"><bar>some text</bar>other text</foo>'
+  doc = xmlTreeParse(txt)
+
+  class(xmlRoot(doc))
+
+  as(xmlRoot(doc), "XMLInternalNode")
 }
 \keyword{IO}
 \concept{XML}

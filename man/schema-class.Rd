@@ -30,10 +30,10 @@
  These are classes used when working with XML schema
 and using them to validate a document or querying the
 schema for its elements.
+The basic representation is an external/native object stored in the
+\code{ref} slot.
 }
-\section{Slots}{
- \describe{}
-}
+%\section{Slots}{ \describe{}}
 %\section{Methods}{}
 
 \seealso{

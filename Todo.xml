@@ -18,6 +18,10 @@
 <items>
 
 <item>
+In xmlTreeParse(), allow a function that takes the parser context.
+See xmlParserContextFunction example.
+</item>
+<item>
 getNodeLocation misbehaving on nested XIncludes.
 See book.xml and 
 <r:code>

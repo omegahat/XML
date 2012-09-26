@@ -1,4 +1,4 @@
-tangleR = getRCode =
+tangleR = xxx_getRCode =  # conflicts with getRCode in xmlInternalSource.R
 function(doc, tags =  c("code", "plot", "function"), out = gsub("\\.[a-zA-Z]+$", ".R", docName(doc)))
 {
    if(is.character(doc))

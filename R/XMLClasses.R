@@ -536,9 +536,8 @@ function(el, name, recursive = FALSE)
 
 
 getDefaultNamespace =
-function(doc)
+function(doc, ns = xmlNamespaceDefinitions(doc, simplify = simplify), simplify = FALSE)
 {
-  ns = xmlNamespaceDefinitions(doc)
   if(length(ns) == 0)
       return(character())
   i = which(names(ns) == "")
@@ -566,8 +565,8 @@ matchNamespaces =
   #
   #
 function(doc, namespaces,
-          nsDefs = xmlNamespaceDefinitions(doc, recursive = TRUE, simplify = TRUE),
-          defaultNs = getDefaultNamespace(doc)
+          nsDefs = xmlNamespaceDefinitions(doc, recursive = TRUE, simplify = FALSE),
+          defaultNs = getDefaultNamespace(doc, simplify = TRUE)
         )
 {
 

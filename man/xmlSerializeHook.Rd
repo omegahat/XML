@@ -34,6 +34,13 @@ xmlDeserializeHook(x)
    deserialized.}
 }
 \value{
+  \code{xmlSerializeHook} returns a character version of the XML
+  document or node, along with the basic class.
+  If it is called with an object that is not an native/internal XML
+  object, it returns \code{NULL}
+
+  \code{xmlDeserializeHook} returns the parsed XML object, either a
+  document or a node.
 }
 \references{
  The R Internals Manual.

@@ -726,7 +726,6 @@ R_xmlRootNode(USER_OBJECT_ sdoc, USER_OBJECT_ skipDtd, USER_OBJECT_ manageMemory
 /**
  Create an S object representing a newly created internal 
  XML document object.
-
  */
 
 int R_numXMLDocs = 0;
@@ -737,7 +736,8 @@ R_newXMLDoc(USER_OBJECT_ dtd, USER_OBJECT_ namespaces, USER_OBJECT_ isHTML)
 {
   xmlDocPtr doc;
   if(LOGICAL(isHTML)[0]) {
-      const char *d = CHAR_DEREF(STRING_ELT(dtd, 0));
+      const char *d = (TYPEOF(dtd) == STRSXP && Rf_length(dtd)) ? 
+                                CHAR_DEREF(STRING_ELT(dtd, 0)) : NULL;
       if(d[0] == '5')
 	  doc = htmlNewDoc("", NULL);
       else

@@ -39,5 +39,10 @@ Duncan Temple Lang
   \code{\link{newXMLNode}}
   \code{\link{xmlParse}}  
 }
-\examples{}
+\examples{
+  nn = newXMLNode("foo", attrs = c(a = "123", 'r:show' = "true"),
+                   namespaceDefinitions = c(r = "http://www.r-project.org"))
+  a = xmlAttrs(nn)
+  a["show"]
+}
 \keyword{classes}

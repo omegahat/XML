@@ -104,8 +104,8 @@ xpathSApply(doc, path, fun = NULL, ... ,
              namespaces = xmlNamespaceDefinitions(doc, simplify = TRUE),
                resolveNamespaces = TRUE, simplify = TRUE, addFinalizer = NA)
 matchNamespaces(doc, namespaces,
-                 nsDefs = xmlNamespaceDefinitions(doc, recursive = TRUE, simplify = TRUE),
-                 defaultNs = getDefaultNamespace(doc))
+                 nsDefs = xmlNamespaceDefinitions(doc, recursive = TRUE, simplify = FALSE),
+                 defaultNs = getDefaultNamespace(doc, simplify = TRUE))
 }
 \arguments{
   \item{doc}{an object of class \code{XMLInternalDocument}}

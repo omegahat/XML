@@ -41,8 +41,8 @@ represent an XML node, either directly in S or a reference to an internal
  These are old-style, S3 class definitions at present.
 }
 \section{Slots}{
-  \describe{
-  }
+  \describe{These are old-style S3 class definitions and do not have
+    formal slots}
 }
 \section{Methods}{
 No methods defined with class "XMLNode" in the signature.

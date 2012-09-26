@@ -1,3 +1,17 @@
+Version 3.95-0
+
+  *     Moved development version of the source code for the package to github -
+        https://github.com/omegahat/XML.git
+
+  *     Changes to the structure of the package to allow installation directly rather than
+        via a one-step staging into the R package structure.
+
+  *     Sample XML documents moved from data/ to exampleData, and examples updated.
+
+  *     getDefaultNamespace() and matchNamespaces() use simplify = TRUE to call
+        xmlNamespaceDefinitions() to get the namespaces as a character vector rather than
+        list.
+
 Version 3.94-0
 
   *     getNodeLocation() now reports the actual line number for text nodes rather than 0,

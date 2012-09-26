@@ -143,7 +143,7 @@ setMethod('[', c('XMLAttributes', "ANY"),
 function(x, i, j, ...)
 {
   ans = callNextMethod()
-browser()  
+  i = match(i, names(x))
   structure(ans, namespaces = attr(x, "namespaces")[i], class = class(x))
 })
 
@@ -410,13 +410,22 @@ newXMLDoc <-
 function(dtd = "", namespaces = NULL, addFinalizer = TRUE, name = character(), node = NULL,
           isHTML = FALSE) 
 {
-  ans = .Call("R_newXMLDoc", as.character(dtd), namespaces, as.logical(isHTML), PACKAGE = "XML")
+  if(is(dtd, "XMLInternalNode")) {
+    dtdNode = dtd
+    dtd = character()
+  } else
+    dtdNode = NULL
+  
+  ans = .Call("R_newXMLDoc", dtd, namespaces, as.logical(isHTML), PACKAGE = "XML")
   class(ans) = oldClass(class(ans))
   
   addDocFinalizer(ans, addFinalizer)
   
   if(length(name))
      docName(ans) = as.character(name)
+
+  if(length(dtdNode))
+     addChildren(ans, dtdNode)
 
   if(length(node)) {
     if(is.character(node))
@@ -995,7 +1004,7 @@ function(node, ..., kids = list(...), at = NA, cdata = FALSE, addFinalizer = NA,
 {
   kids = unlist(kids, recursive = FALSE)
 
-  removeNodes(kids)
+  removeNodes(kids)[!sapply(kids, is, "character")]
 
   if(length(kids) == 1 && inherits(kids[[1]], "XMLInternalNode") && is.na(at)) {
      .Call("R_insertXMLNode", kids[[1]], node, -1L, FALSE, PACKAGE = "XML")

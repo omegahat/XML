@@ -62,5 +62,17 @@ Class \code{"\linkS4class{vector}"}, by class "character", distance 2.
 \seealso{
  \code{\link{xmlSource}}
 }
-\examples{}
+\examples{
+ src =  system.file("exampleData", "Rsource.xml", package = "XML")
+   # mark the string as an XML file containing R code
+ k = xmlCodeFile(src)
+
+   # read and parse the code, but don't evaluate it.
+ code = xmlSource(k, eval = FALSE)
+
+   # read and evaluate the code in a special environment.
+ e = new.env()
+ ans = xmlSource(k, envir = e)
+ ls(e)
+}
 \keyword{classes}

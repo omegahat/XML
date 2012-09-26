@@ -30,7 +30,8 @@
 \usage{
 xmlNamespaceDefinitions(x, addNames = TRUE, recursive = FALSE, simplify = FALSE, ...)
 xmlNamespaces(x, addNames = TRUE, recursive = FALSE,  simplify = FALSE, ...)
-getDefaultNamespace(doc) 
+getDefaultNamespace(doc, ns = xmlNamespaceDefinitions(doc, simplify = simplify),  
+                      simplify = FALSE) 
 }
 \arguments{
   \item{x}{the \code{XMLNode} object in which to find any namespace
@@ -58,6 +59,8 @@ getDefaultNamespace(doc)
    whether the definition is local to the particular node or inherited
    from an ancestor.
  }
+ \item{ns}{the collection of namespaces. This is typically omitted
+   but can be specified if it has been computed in an earlier step.}
  \item{\dots}{additional parameters for methods}
 }
 \value{
