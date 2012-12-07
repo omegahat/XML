@@ -1,3 +1,4 @@
+library(XML)
 xmlEventParse(system.file("exampleData", "mathml.xml", package = "XML"),
                handlers = list(comment = function(x){cat("In comment\n")},
                                startElement = function(name, attrs) cat("generic startElement", name, "\n"),

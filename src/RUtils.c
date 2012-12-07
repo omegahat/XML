@@ -162,7 +162,7 @@ static R_CallMethodDef callMethods[] = {
 	ENTRY(RS_XML_getDTD, 5),
 	ENTRY(RS_XML_libxmlVersion, 0),
 	ENTRY(RS_XML_Parse, 17),
-	ENTRY(RS_XML_ParseTree, 20),
+	ENTRY(RS_XML_ParseTree, 21),
 	ENTRY(R_newXMLDtd, 5),
 	ENTRY(R_newXMLDoc, 3),
 	ENTRY(R_newXMLNode, 6),
@@ -362,6 +362,21 @@ R_lookString(SEXP rstr)
     const char *str;
     str = CHAR(STRING_ELT(rstr, 0));
     return(ScalarInteger(strlen(str)));
+}
+
+#include <libxml/uri.h>
+SEXP
+R_relativeURL(SEXP r_url, SEXP r_base)
+{
+    xmlChar *url, base;
+    const xmlChar *ans;
+    SEXP rans;
+    url = CHAR_DEREF(STRING_ELT(r_url, 0));
+    base = CHAR_DEREF(STRING_ELT(r_base, 0));
+    ans = xmlBuildRelativeURI(url, base);
+    rans = ScalarString(COPY_TO_USER_STRING(ans));
+    xmlFree(ans);
+    return(rans);
 }
 
 

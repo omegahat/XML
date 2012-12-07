@@ -113,6 +113,13 @@ function(x, asNode = FALSE)
 }
 
 
+getNodePosition =
+function(x) {
+    tmp = getNodeLocation(x)
+    sprintf("%s:%d", tmp$file[1], tmp$line)
+}
+
+
 getNodeLocation =
 function(node, recursive = TRUE, fileOnly = FALSE)
 {

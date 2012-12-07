@@ -36,7 +36,7 @@ void RS_XML(ValidationError)(void *ctx, const char *msg, ...);
 
 
 static USER_OBJECT_ convertNode(USER_OBJECT_ ans, xmlNodePtr node, R_XMLSettings *parserSettings);
-static void NodeTraverse(xmlNodePtr doc, USER_OBJECT_ converterFunctions, R_XMLSettings *parserSettings);
+static void NodeTraverse(xmlNodePtr doc, USER_OBJECT_ converterFunctions, R_XMLSettings *parserSettings, int rootFirst);
 
 
 static USER_OBJECT_ makeSchemaReference(xmlSchemaPtr ref);
@@ -113,7 +113,8 @@ RS_XML(ParseTree)(USER_OBJECT_ fileName, USER_OBJECT_ converterFunctions,
 		        USER_OBJECT_ fullNamespaceInfo, USER_OBJECT_ r_encoding,
 		        USER_OBJECT_ useDotNames,
       		         USER_OBJECT_ xinclude, USER_OBJECT_ errorFun,
-		           USER_OBJECT_ manageMemory, USER_OBJECT_ r_parserOptions)
+  	        	  USER_OBJECT_ manageMemory, USER_OBJECT_ r_parserOptions,
+                          USER_OBJECT_ r_rootFirst)
 {
 
   const char *name;
@@ -130,6 +131,7 @@ RS_XML(ParseTree)(USER_OBJECT_ fileName, USER_OBJECT_ converterFunctions,
   const char *encoding = NULL;
   int freeName = 0;
   int parserOptions = 0;
+  int rootFirst = INTEGER(r_rootFirst)[0];
 
   if(GET_LENGTH(r_encoding)) {
       encoding = CHAR(STRING_ELT(r_encoding, 0));
@@ -263,7 +265,7 @@ RS_XML(ParseTree)(USER_OBJECT_ fileName, USER_OBJECT_ converterFunctions,
 #endif
 #endif   
           PROTECT(rdocObj = R_createXMLDocRef(doc));
-	  NodeTraverse(root, converterFunctions, &parserSettings);
+	  NodeTraverse(root, converterFunctions, &parserSettings, rootFirst);
 	  UNPROTECT(1);
       }
       PROTECT(rdoc = NULL_USER_OBJECT);
@@ -317,7 +319,7 @@ enum { FILE_ELEMENT_NAME, VERSION_ELEMENT_NAME, CHILDREN_ELEMENT_NAME, NUM_DOC_E
 
 
 void
-NodeTraverse(xmlNodePtr root, USER_OBJECT_ converterFunctions, R_XMLSettings *parserSettings)
+NodeTraverse(xmlNodePtr root, USER_OBJECT_ converterFunctions, R_XMLSettings *parserSettings, int rootFirst)
 {
   xmlNodePtr c, tmp;
     c = root;
@@ -329,11 +331,17 @@ NodeTraverse(xmlNodePtr root, USER_OBJECT_ converterFunctions, R_XMLSettings *pa
 #else
                c->childs;
 #endif
-        if(tmp)
-	    NodeTraverse(tmp, converterFunctions, parserSettings);
-	PROTECT(ref = R_createXMLNodeRef(c, parserSettings->finalize));
-	convertNode(ref, c, parserSettings);
-	UNPROTECT(1);
+       
+        if(!rootFirst && tmp)
+	    NodeTraverse(tmp, converterFunctions, parserSettings, rootFirst);
+
+        PROTECT(ref = R_createXMLNodeRef(c, parserSettings->finalize));
+        convertNode(ref, c, parserSettings);
+    	UNPROTECT(1);
+
+        if(rootFirst && tmp)
+	    NodeTraverse(tmp, converterFunctions, parserSettings, rootFirst);
+
 	c = c->next;
     }
 }

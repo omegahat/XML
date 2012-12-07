@@ -5,6 +5,7 @@
 \alias{HTMLInternalDocument-class}
 \alias{coerce,XMLInternalNode,XMLInternalDocument-method}
 \alias{coerce,XMLInternalDocument,XMLInternalNode-method}
+\alias{coerce,XMLDocument,XMLInternalDocument-method}
 
 \title{Class to represent reference to C-level data structure for an XML
   document}

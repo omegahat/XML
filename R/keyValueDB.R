@@ -16,6 +16,10 @@ setMethod("readKeyValueDB", "character",
            function(doc, ...)
               readKeyValueDB(xmlParse(doc), ...))
 
+setMethod("readKeyValueDB", "AsIs",
+           function(doc, ...)
+              readKeyValueDB(xmlParse(doc), ...))
+
 setMethod("readKeyValueDB", "XMLInternalDocument",
            function(doc, ...)
               readKeyValueDB(xmlRoot(doc)[["dict"]], ...))

@@ -20,6 +20,9 @@ function(node, obj = new(xmlName(node)), ...)
 setMethod("xmlToS4", "XMLInternalNode",
  function(node, obj = new(xmlName(node)), ...)
 {
+  if(is(obj, "character") && !isS4(obj))
+    obj = new(obj)
+    
 #  if(xmlSize(node) == 1 && node[[1]])
 #    return(as())
   ids = names(node)

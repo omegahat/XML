@@ -18,6 +18,10 @@
 <items>
 
 <item>
+Get rid of spurios warning message in removeNodes.list() removeNode only works on internal nodes at present.
+See pkgBiblio.R in book directory.
+</item>
+<item>
 In xmlTreeParse(), allow a function that takes the parser context.
 See xmlParserContextFunction example.
 </item>

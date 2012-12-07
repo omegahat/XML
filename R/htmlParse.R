@@ -26,7 +26,7 @@ function(file, ignoreBlanks = TRUE, handlers = NULL,
             encoding = character(),
             useDotNames = length(grep("^\\.", names(handlers))) > 0,
             xinclude = FALSE, addFinalizer = TRUE, error = function(...){},
-            options = integer())
+            options = integer(), parentFirst = FALSE)
 {
 if(TRUE) 
   {
@@ -84,7 +84,7 @@ if(TRUE)
            FALSE, FALSE, 
            as.logical(isURL), FALSE, 
            as.logical(useInternalNodes), TRUE, FALSE, FALSE, as.character(encoding),
-           as.logical(useDotNames), xinclude, error, addFinalizer, options, PACKAGE = "XML")
+           as.logical(useDotNames), xinclude, error, addFinalizer, options, as.logical(parentFirst), PACKAGE = "XML")
 
  if(!missing(handlers) & !as.logical(asTree))
    return(handlers)
@@ -167,15 +167,3 @@ setAs("URI", "character",
 
 
 
-getHTMLLinks =
-function(doc, externalOnly = TRUE, xpQuery = "//a/@href")
-{
-  if(is.character(doc))
-     doc = htmlParse(doc)
-
-  links = as.character(getNodeSet(doc, xpQuery))
-  if(externalOnly)
-      grep("^#", links, value = TRUE, invert = TRUE)
-  else
-     links
-}

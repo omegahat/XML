@@ -39,8 +39,8 @@ setGeneric("readHTMLTable",
 setMethod("readHTMLTable", "character",
           function(doc, header = NA,
                     colClasses = NULL, skip.rows = integer(), trim = TRUE, elFun = xmlValue,
-                     as.data.frame = TRUE, which = integer(), ...) {
-              pdoc = htmlParse(doc)
+                     as.data.frame = TRUE, which = integer(), encoding = character(), ...) {
+              pdoc = htmlParse(doc, encoding = encoding)
               readHTMLTable(pdoc, header, colClasses, skip.rows, trim, elFun, as.data.frame, which, ...)
           })
 
@@ -129,19 +129,25 @@ function(doc, header = NA ,
   headerFromTable = FALSE
   dropFirstRow = FALSE
 
-
   
      # check if we have a header
-  if(length(header) ==1 && is.na(header))                                     # this node was doc
+  if(length(header) == 1 && is.na(header))                                     # this node was doc
       header = (xmlName(doc) %in% c("table", "tbody") &&
-                      ("thead" %in% names(doc) || length(getNodeSet(node, "./tr[1]/th")) > 0))
+                      ("thead" %in% names(doc) || length(getNodeSet(node, "./tr[1]/th | ./tr[1]/td")) > 0))
 
   if(is.logical(header) && (is.na(header) || header) &&  xmlName(node) == "table") {
     if("thead" %in% names(node))
        header = node[["thead"]]
-    else if(all(names(node[["tr"]]) %in% c('text', 'th'))) {
-       header = xpathSApply(node[["tr"]], "./th", xmlValue, encoding = encoding)
-       dropFirstRow = TRUE
+    else {
+       if("tr" %in% names(node))
+          tmp = node[["tr"]]
+       else
+          tmp = node[["tbody"]][["tr"]]
+
+       if(!is.null(tmp) && all(names(tmp) %in% c('text', 'th'))) {
+          header = xpathSApply(tmp, "./th | ./td", xmlValue, encoding = encoding)
+          dropFirstRow = TRUE
+        }
     }
   }
 
@@ -201,7 +207,10 @@ function(doc, header = NA ,
      header = els[[1]]
      els = els[-1]
      numEls = numEls[ - 1]
-   } 
+   }
+
+  if(length(els) == 0)
+    return(NULL)  #XXX we should have a header here so return a data frame with 0 rows.
 
    ans = lapply(seq(length = max(numEls)),
                   function(col) {

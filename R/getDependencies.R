@@ -6,6 +6,12 @@ function(filename, recursive = TRUE, skip = character(),
 {
    doc = xmlParse(filename, xinclude = FALSE)
 
+   if(missing(namespace)) {
+     ns = xmlNamespaceDefinitions(doc, simplify = TRUE)
+     if("http://www.w3.org/2001/XInclude" %in% ns)
+       namespace = c(xi = "http://www.w3.org/2001/XInclude")
+   }
+
    nodes = getNodeSet(doc, "//xi:include", namespaces = namespace)
    files = sapply(nodes, xmlGetAttr, "href")
    nonRecursive = as.logical(sapply(nodes, xmlGetAttr, "text", FALSE))

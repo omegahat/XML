@@ -231,7 +231,7 @@ function(x, i, j, ..., addFinalizer = NA)
 
 
 xmlValue.XMLInternalNode =
-function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x)) #CE_NATIVE)
+function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x), trim = FALSE) #CE_NATIVE)
 {
 
   encoding = if(is.integer(encoding)) 
@@ -251,7 +251,11 @@ function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x))
       return(character())
    }
   
-  .Call("R_xmlNodeValue", x, NULL, encoding, PACKAGE = "XML") # 2nd argument ignored.
+  ans = .Call("R_xmlNodeValue", x, NULL, encoding, PACKAGE = "XML") # 2nd argument ignored.
+  if(trim)
+     trim(ans)
+  else
+     ans
 }
 
 setS3Method("xmlValue", "XMLInternalNode")
@@ -310,6 +314,18 @@ function(X, FUN, ..., omitNodeTypes = c("XMLXIncludeStartNode", "XMLXIncludeEndN
    sapply(kids, FUN, ...)
 }  
 
+
+xmlSApply.XMLNodeSet =
+function(X, FUN, ..., omitNodeTypes = c("XMLXIncludeStartNode", "XMLXIncludeEndNode"), addFinalizer = NA)
+{
+  sapply(X, FUN, ...)
+}
+
+xmlApply.XMLNodeSet =
+function(X, FUN, ..., omitNodeTypes = c("XMLXIncludeStartNode", "XMLXIncludeEndNode"), addFinalizer = NA)
+{
+  lapply(X, FUN, ...)
+}
 
 getChildrenStrings =
 function(node, encoding = getEncoding(node), asVector = TRUE, len = xmlSize(node),
@@ -963,7 +979,7 @@ function(x, i, j, ..., value)
      i = k
    }
 
-   replace =  (i <= xmlSize(x))
+   replace = !is.na(i) & (i <= xmlSize(x))
 
    if(replace) 
      replaceNodes(xmlChildren(x)[[i]], value)

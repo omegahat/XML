@@ -9,17 +9,29 @@ getRelativeURL =
   #  getRelativeURL("/foo", "http://www.omegahat.org")
   #  getRelativeURL("/foo", "http://www.omegahat.org/")
   #  getRelativeURL("foo", "http://www.omegahat.org/")
-  #  getRelativeURL("http://www.foo.org", "http://www.omegahat.org/")      
+  #  getRelativeURL("http://www.foo.org", "http://www.omegahat.org/")
   #
-function(u, baseURL, sep = "/")  
+  # XXX test - baseURL with /path/ and u as /other/path. Looks okay. See
+  # ParsingStrategies example for kaggle.
+  #
+  # XXX not working for ../...
+  #  fails
+  #    getRelativeURL("../foo", "http://www.omegahat.org/a/b.html")
+  # should be http://www.omegahat.org/foo
+  # or at least http://www.omegahat.org/a/../foo
+function(u, baseURL, sep = "/", addBase = TRUE)  
 {
    if(length(u) > 1)
      return(sapply(u, getRelativeURL, baseURL, sep))
    
    pu = parseURI(u)
-   if(pu$scheme == "" && length(grep("^/", pu$path)) == 0)
-      paste(gsub(paste(sep, "$", sep = ""), "", baseURL), u, sep = sep)
-   else
+   #XXX Need to strip the path in baseURL if pu$path starts with /
+   if(pu$scheme == "" && addBase) {
+      b = parseURI(baseURL)
+      b$path = ""
+      b = as(b, "character")
+      sprintf("%s%s%s", b, if(grepl("^/", pu$path)) "" else sep, u)
+   } else
       u
 }
 

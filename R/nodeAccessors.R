@@ -91,7 +91,7 @@ function(X, FUN, ...)
 
 
 xmlValue <- 
-function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x))
+function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x), trim = FALSE)
 {
  UseMethod("xmlValue")
 }
@@ -102,18 +102,18 @@ if(useS4)
 
 
 xmlValue.XMLNode <- 
-function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x))
+function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x), trim = FALSE)
 {
  if(recursive && xmlSize(x) > 0) {
    kids = xmlChildren(x)
    if(ignoreComments)
      kids = kids[ !sapply(kids, "XMLCommentNode") ]
-   return(paste(unlist(lapply(kids, xmlValue, ignoreComments)), collapse = ""))
+   return(paste(unlist(lapply(kids, xmlValue, ignoreComments, trim = trim)), collapse = ""))
  } else if(!recursive && xmlSize(x) > 0) {
         #XXX If !recursive but have text nodes e.g. in the second child.
     i = sapply(xmlChildren(x), inherits, "XMLTextNode")
     if(any(i))
-      return(paste(unlist(lapply(xmlChildren(x)[i], xmlValue, ignoreComments)), collapse = ""))
+      return(paste(unlist(lapply(xmlChildren(x)[i], xmlValue, ignoreComments, trim = trim)), collapse = ""))
  }
  
  # if(xmlSize(x) == 1) # && (inherits(x[[1]], "XMLTextNode"))
@@ -122,16 +122,16 @@ function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x))
  if(is.null(x$value))
    character()
  else
-   x$value
+   if(trim) trim(x$value) else x$value
 }
 
 setS3Method("xmlValue", "XMLNode")
 
 xmlValue.XMLTextNode <- 
-function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x))
+function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x), trim = FALSE)
 {
   if(!is.null(x$value))
-     x$value
+     if(trim) trim(x$value) else x$value
   else
      character(0)
 }
@@ -139,13 +139,13 @@ function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x))
 setS3Method("xmlValue", "XMLTextNode")
 
 xmlValue.XMLComment <-  xmlValue.XMLCommentNode <-
-function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x))
+function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x), trim = FALSE)
 {
  if(ignoreComments)
    return("")
 
   if(!is.null(x$value))
-     x$value
+     if(trim) trim(x$value) else x$value
   else
      character(0)
 }
@@ -153,23 +153,23 @@ function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x))
 setS3Method("xmlValue", "XMLCommentNode")
 
 xmlValue.XMLCDataNode <- 
-function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x))
+function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x), trim = FALSE)
 {
- x$value
+  if(trim) trim(x$value) else x$value
 }
 
 setS3Method("xmlValue", "XMLCDataNode")
 
 xmlValue.XMLProcessingInstruction <- 
-function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x))
+function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x), trim = FALSE)
 {
- x$value
+  if(trim) trim(x$value) else x$value
 }
 
 setS3Method("xmlValue", "XMLProcessingInstruction")
 
 "xmlValue.NULL" =
-function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x))
+function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x), trim = FALSE)
           as.character(NA)
 
 #setS3Method("xmlValue", "NULL")
@@ -406,7 +406,7 @@ function(doc, parse = FALSE)
 }  
 
 getXIncludeInfo =
-function(node, parse = FALSE, baseURL = character())
+function(node, parse = FALSE, baseURL = character(), doc = NULL)
 {
 
 }

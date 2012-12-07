@@ -6,6 +6,10 @@ setMethod("readSolrDoc", "character",
            function(doc, ...)
               readSolrDoc(xmlParse(doc), ...))
 
+setMethod("readSolrDoc", "AsIs",
+           function(doc, ...)
+              readSolrDoc(xmlParse(doc), ...))
+
 setMethod("readSolrDoc", "XMLInternalDocument",
            function(doc, ...)
               readSolrDoc(xmlRoot(doc), ...))

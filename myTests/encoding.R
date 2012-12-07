@@ -1,5 +1,6 @@
 library(XML)
-doc = xmlTreeParse("../data/utf.xml")
+f = system.file("exampleData", "utf.xml", package = "XML")
+doc = xmlTreeParse(f)
 Encoding(xmlName(xmlRoot(doc)))
 # "unknown"
 xmlName(xmlRoot(doc)[[2]])
@@ -20,7 +21,7 @@ xmlValue(xmlRoot(doc)[[4]])
 #[1] "Simple text"
 
 
-doc = xmlInternalTreeParse("../data/utf.xml")
+doc = xmlInternalTreeParse(f)
 xmlname(xmlRoot(doc)[[2]])
 # [1] "â«ob"
 
@@ -32,4 +33,4 @@ hh<-function(){
   list(text = text,
        ft = function(){ tt })
 }
-z<-xmlEventParse(u,asText=T,handlers=hh())
+z<-xmlEventParse(u, asText=T, handlers=hh())

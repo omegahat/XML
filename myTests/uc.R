@@ -1,1 +1,1 @@
-x = “factor” 
+x = "factor"

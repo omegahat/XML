@@ -150,6 +150,12 @@ setOldClass(c("SimplifiedXMLNamespaceDefinitions", "XMLNamespaceDefinitions"))
 #setClass("XPathNodeSet", representation(ref = "externalptr"))
 
 
+setAs("XMLDocument", "XMLInternalDocument",
+       function(from) {
+         xmlParse(saveXML(from$doc$children$doc))
+       })
+
+
 ############
 
 #setMethod("[[", c("XMLInternalElementNode", "numeric") ,
@@ -726,6 +732,10 @@ function(doc, path, fun = NULL, ... , namespaces = xmlNamespaceDefinitions(doc, 
            sessionEncoding = CE_NATIVE, noResultOk = FALSE) # native
 {
   path = paste(path, collapse = " | ")
+
+  if(is(namespaces, "list") && all(sapply(namespaces, is, "XMLNamespaceDefinition"))) {
+     namespaces = structure(sapply(namespaces, `[[`, "uri"), names = names(namespaces))
+  }
     
   if(resolveNamespaces && !inherits( namespaces, "XMLNamespaceDefinitions"))
     namespaces = matchNamespaces(doc, namespaces)

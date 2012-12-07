@@ -22,8 +22,11 @@ function(file, ignoreBlanks = TRUE, handlers = NULL,
            useInternalNodes = FALSE, isSchema = FALSE,
            fullNamespaceInfo = FALSE, encoding = character(),
            useDotNames = length(grep("^\\.", names(handlers))) > 0, 
-           xinclude = TRUE, addFinalizer = TRUE, error = xmlErrorCumulator(), isHTML = FALSE, options = integer())
+           xinclude = TRUE, addFinalizer = TRUE, error = xmlErrorCumulator(), isHTML = FALSE, options = integer(),
+           parentFirst = FALSE)
 {
+  isMissingAsText = missing(asText)
+  
   if(length(file) > 1) {
     file = paste(file, collapse = "\n")
     if(!missing(asText) && !asText) 
@@ -76,9 +79,11 @@ function(file, ignoreBlanks = TRUE, handlers = NULL,
 
      # Look for a < in the string.
   if(asText && length(grep(sprintf("^%s?\\s*<", BOMRegExp), file, perl = TRUE, useBytes = TRUE)) == 0) {  # !isXMLString(file) ?
-    e = simpleError(paste("XML content does not seem to be XML, nor to identify a file name", sQuote(file)))
-    class(e) = c("XMLInputError", class(e))
-    stop(e)
+    if(!isHTML || (isMissingAsText && !inherits(file, "AsIs"))) {
+      e = simpleError(paste("XML content does not seem to be XML:", sQuote(file)))
+      class(e) = c("XMLInputError", class(e))
+      (if(isHTML) warning else stop)(e)
+    }
   }
   
 
@@ -109,7 +114,7 @@ function(file, ignoreBlanks = TRUE, handlers = NULL,
               as.logical(isURL), as.logical(addAttributeNamespaces),
               as.logical(useInternalNodes), as.logical(isHTML), as.logical(isSchema),
               as.logical(fullNamespaceInfo), as.character(encoding), as.logical(useDotNames),
-              xinclude, error, addFinalizer, as.integer(options), PACKAGE = "XML")
+              xinclude, error, addFinalizer, as.integer(options), as.logical(parentFirst), PACKAGE = "XML")
 
 
   if(!missing(handlers) && length(handlers) && !as.logical(asTree))

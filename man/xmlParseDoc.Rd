@@ -37,7 +37,18 @@ xmlParseDoc(file, options = 1L, encoding = character(), asText = !file.exists(fi
 }
 \arguments{
   \item{file}{the name of the file or URL or the XML content itself}
-  \item{options}{options controlling the behavior of the parser}
+  \item{options}{options controlling the behavior of the parser.
+    One specifies the different options as elements of an integer
+    vector. These are then bitwised OR'ed together. The possible options are
+    \code{RECOVER}, \code{NOENT}, \code{DTDLOAD},
+    \code{DTDATTR}, \code{DTDVALID}, \code{NOERROR}, \code{NOWARNING},
+    \code{PEDANTIC}, \code{NOBLANKS}, \code{SAX1}, \code{XINCLUDE},
+    \code{NONET}, \code{NODICT}, \code{NSCLEAN}, \code{NOCDATA},
+    \code{NOXINNODE}, \code{COMPACT}, \code{OLD10}, \code{NOBASEFIX},
+    \code{HUGE}, \code{OLDSAX}.
+     ( These options are also listed in the (non-exported) variable
+      \code{parserOptions}.)
+  }
   \item{encoding}{character string that provides the encoding of the
     document if it is not explicitly contained within the document itself.}
   \item{asText}{a logical value indicating whether \code{file} is the

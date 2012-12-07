@@ -9,6 +9,7 @@
 
 AC_INIT(DESCRIPTION)
 
+
 dnl The different command line arguments for configure.
 dnl They can also be specified by setting environment variables.
 
@@ -121,9 +122,13 @@ dnl
 
 
 dnl Redirection: http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO-3.html
-"$R_HOME/bin/R" CMD SHLIB testRemoveFinalizers.c &> AS_MESSAGE_LOG_FD
+if test -n "" ; then
+
+  # turned off for now
+  #XXX get the redirection correct
+"$R_HOME/bin/R" CMD SHLIB testRemoveFinalizers.c &> AS_MESSAGE_FD
 if test "$?" = 0 ;  then
- $R_HOME/bin/R --slave --vanilla < testRemoveFinalizers.R &> AS_MESSAGE_LOG_FD
+ $R_HOME/bin/R --slave --vanilla < testRemoveFinalizers.R &> AS_MESSAGE_FD
 fi
 
 if ! test "$?" = 0 ; then
@@ -133,6 +138,9 @@ else
  echo "Have R_RemoveExtPtrWeakRef" ; 
  PKG_CPPFLAGS="$PKG_CPPFLAGS -DR_HAS_REMOVE_FINALIZERS=1"; 
  EXPORT_MEMORY_MANAGEMENT="TRUE"
+fi
+else
+  EXPORT_MEMORY_MANAGEMENT="FALSE"
 fi
 
 dnl ======================================================
@@ -411,7 +419,7 @@ else   # -z "${LIBXML2}"
 #include <libxml/parser.h>
 #endif
 int 
-main(int argc, char *argv)
+main(int argc, char *argv[])
 {
   xmlCheckVersion(20000);
   return(0);

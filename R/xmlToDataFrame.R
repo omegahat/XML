@@ -56,9 +56,9 @@ function(doc, colClasses = NULL, homogeneous = NA, collectNames = TRUE, nodes = 
   else
      varNames = names(nodes[[which.max(nfields)]])
   
-  if(is.na(homogeneous)) {
+  if(is.na(homogeneous)) 
     homogeneous = all(nfields == nvar) && all(sapply(nodes[-1], function(x) all(names(x) == varNames)))
-  }
+
 
   if(!homogeneous) 
     return(fromRaggedXML2DataFrame(nodes, varNames, c(length(nfields), length(varNames)), colClasses, stringsAsFactors))
@@ -102,6 +102,10 @@ setMethod("xmlToDataFrame", c(nodes = "XMLInternalNodeList"), tmp)
 setMethod("xmlToDataFrame", "XMLNodeSet",   bob)
 setMethod("xmlToDataFrame", "XMLInternalNodeList",   bob)
 setMethod("xmlToDataFrame", "list",   bob)
+
+setMethod("xmlToDataFrame", "XMLInternalElementNode",
+          function(doc, colClasses = NULL, homogeneous = NA, collectNames = TRUE, nodes = list(), stringsAsFactors = default.stringsAsFactors())
+            xmlToDataFrame(nodes = xmlChildren(doc), colClasses = colClasses, homogeneous = homogeneous, collectNames = collectNames, stringsAsFactors = stringsAsFactors))
 
 fromRaggedXML2DataFrame =
   #
@@ -147,3 +151,79 @@ function(nodes, varNames = unique(unlist( lapply(nodes, names) )),
 
   ans
 }
+
+
+setGeneric("xmlAttrsToDataFrame",
+           function(doc, attrs = character(), omit = character(), ...)
+            standardGeneric("xmlAttrsToDataFrame"))
+
+setMethod("xmlAttrsToDataFrame", "character",
+           function(doc, attrs = character(), omit = character(), ...)
+            xmlAttrsToDataFrame(xmlParse(doc), attrs, omit, ...))
+
+setMethod("xmlAttrsToDataFrame", "AsIs",
+           function(doc, attrs = character(), omit = character(), ...)
+            xmlAttrsToDataFrame(xmlParse(doc), attrs, omit, ...))
+
+setMethod("xmlAttrsToDataFrame", "XMLInternalElementNode",
+           function(doc, attrs = character(), omit = character(), ...)
+            xmlAttrsToDataFrame(xmlChildren(doc), attrs, omit, ...))
+
+setMethod("xmlAttrsToDataFrame", "XMLNodeSet",
+           function(doc, attrs = character(), omit = character(), ...) {
+            xmlAttrsToDataFrame(as(doc, 'list'), attrs, omit, ...)
+          })
+
+setMethod("xmlAttrsToDataFrame", "list",
+           function(doc, attrs = character(), omit = character(), ...) {
+               # assuming these are all nodes.
+
+             combineNamedVectors(lapply(doc, xmlAttrs), attrs, omit, ...)
+           
+           })
+setMethod("xmlAttrsToDataFrame", "XMLInternalNodeList",
+           function(doc, attrs = character(), omit = character(), ...) {
+               # assuming these are all nodes.
+
+             combineNamedVectors(lapply(doc, xmlAttrs), attrs, omit, ...)
+           
+           })
+
+inAllRecords =
+function(x)
+{
+  tt = table(unlist(lapply(x, names)))
+  names(tt)[ tt == length(x)]
+}
+
+allNames =
+function(x)
+  unique( unlist(lapply(x, names))  )
+          
+
+combineNamedVectors   =
+function(els, attrs = character(), omit = character(), ...)
+{
+  if(is.function(attrs))
+     attrs = attrs(els)
+  
+  if(!length(attrs)) {
+    attrs = allNames(els)
+    
+    if(length(omit))
+      attrs = setdiff(attrs, omit)
+  }
+
+  if(length(attrs) == 0) {
+    warning("no elements to combine across records")
+    return(data.frame())
+  }
+  
+  values = lapply(els, function(x) {
+                         structure(x[attrs], names = attrs)
+                       })
+  ans = as.data.frame(do.call(rbind, values), row.names = NULL, ...)
+  rownames(ans) = NULL
+  ans
+}
+  

@@ -7,7 +7,7 @@ function(node, ...)
 setMethod("clearMemoryManagement", "XMLInternalElementNode",
 function(node, ...)
 {
-  .Call("R_clearNodeMemoryManagement", node)
+  .Call("R_clearNodeMemoryManagement", node, PACKAGE = "XML")
 })
 
 

@@ -347,7 +347,7 @@ saveXML(txt) # x &amp;lt; 1
    # get expanded, i.e. &lt; doesn't become &amp;lt;
 txt = newXMLTextNode(I("x &lt; 1"))
 txt # okay
-saveXML(txt) # x &amp;lt; 1
+saveXML(txt) # x &lt; 1
 
 
 newXMLNode("r:expr", newXMLTextNode(I("x < 1")),
