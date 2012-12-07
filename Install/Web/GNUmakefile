@@ -1,7 +1,7 @@
 PERL=perl
 CUR_DIR=$(shell pwd)
 
-include ../VersionInfo
+include ../../VersionInfo
 
 INDEX=../../index.html
 INDEX=index.html
@@ -24,7 +24,7 @@ all: man.pdf html examples Rdocs $(INDEX) ../../index.html
 
 $(INDEX): update
 
-update: configure ../VersionInfo
+update: configure ../../VersionInfo
 	./configure
 
 configure: configure.in	

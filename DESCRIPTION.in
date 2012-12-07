@@ -1,8 +1,7 @@
-Package: @PKG_NAME@
-Version: @MAJOR_VERSION@.@MINOR_VERSION@-@PATCH_LEVEL@
-ReleaseDate: @DATE@
-Author:  Duncan Temple Lang (duncan@wald.ucdavis.edu)
-Maintainer: Duncan Temple Lang <duncan@wald.ucdavis.edu>
+Package: XML
+Version: 3.95-1
+Author:  Duncan Temple Lang (duncan@r-project.org)
+Maintainer: Duncan Temple Lang <duncan@r-project.org>
 Title: Tools for parsing and generating XML within R and S-Plus.
 Depends: R (>= 1.2.0), methods, utils
 Imports: methods
@@ -76,6 +75,6 @@ Collate: AAA.R
         xincludes.R
         namespaceHandlers.R
         tangle1.R
-
-
-
+        htmlLinks.R
+        getDependencies.R
+	htmlLists.R

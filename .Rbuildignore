@@ -1,0 +1,10 @@
+Ctest.*
+.*.tar.gz
+TU.*
+testRemoveFinalizers.o
+testRemoveFinalizers.so
+stderr
+Install.*
+Problems.*
+pkg-config-configure.in
+

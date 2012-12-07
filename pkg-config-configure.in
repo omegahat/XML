@@ -404,7 +404,7 @@ else   # -z "${LIBXML2}"
 #include <libxml/parser.h>
 #endif
 int 
-main(int argc, char *argv)
+main(int argc, char *argv[])
 {
   xmlCheckVersion(20000);
   return(0);

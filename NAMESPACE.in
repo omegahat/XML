@@ -286,6 +286,10 @@ S3method(xmlSApply, XMLDocument)
 S3method(xmlSApply, XMLDocumentContent)
 S3method(xmlSApply, XMLInternalNode)
 
+S3method(xmlSApply, XMLNodeSet)
+S3method(xmlApply, XMLNodeSet)
+
+
 if(TRUE) {
 S3method(xmlValue, XMLNode)
 S3method(xmlValue, XMLTextNode)
@@ -417,7 +421,7 @@ exportMethods(source)
 export(xmlClone)
 export(findXInclude)
 
-export(getLineNumber, getNodeLocation)
+export(getLineNumber, getNodeLocation, getNodePosition)
 
 export(ensureNamespace)
 
@@ -489,3 +493,6 @@ export("xmlNamespace<-")
 
 export(readKeyValueDB, readSolrDoc)
 
+export(readHTMLList, getHTMLLinks)
+
+export(getXIncludes)
