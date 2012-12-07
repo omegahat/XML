@@ -1711,6 +1711,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
+
 # Check whether --with-splus was given.
 if test "${with_splus+set}" = set; then
   withval=$with_splus; USE_SPLUS=1
@@ -2979,9 +2980,13 @@ fi
 
 
 
-"$R_HOME/bin/R" CMD SHLIB testRemoveFinalizers.c &> 5
+if test -n "" ; then
+
+  # turned off for now
+  #XXX get the redirection correct
+"$R_HOME/bin/R" CMD SHLIB testRemoveFinalizers.c &> 6
 if test "$?" = 0 ;  then
- $R_HOME/bin/R --slave --vanilla < testRemoveFinalizers.R &> 5
+ $R_HOME/bin/R --slave --vanilla < testRemoveFinalizers.R &> 6
 fi
 
 if ! test "$?" = 0 ; then
@@ -2991,6 +2996,9 @@ else
  echo "Have R_RemoveExtPtrWeakRef" ;
  PKG_CPPFLAGS="$PKG_CPPFLAGS -DR_HAS_REMOVE_FINALIZERS=1";
  EXPORT_MEMORY_MANAGEMENT="TRUE"
+fi
+else
+  EXPORT_MEMORY_MANAGEMENT="FALSE"
 fi
 
 
@@ -4544,7 +4552,7 @@ cat >>conftest.$ac_ext <<_ACEOF
 #include <libxml/parser.h>
 #endif
 int
-main(int argc, char *argv)
+main(int argc, char *argv[])
 {
   xmlCheckVersion(20000);
   return(0);
