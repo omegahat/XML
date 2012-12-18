@@ -364,11 +364,13 @@ R_lookString(SEXP rstr)
     return(ScalarInteger(strlen(str)));
 }
 
+
+#if 0
 #include <libxml/uri.h>
 SEXP
 R_relativeURL(SEXP r_url, SEXP r_base)
 {
-    xmlChar *url, base;
+    xmlChar *url, *base;
     const xmlChar *ans;
     SEXP rans;
     url = CHAR_DEREF(STRING_ELT(r_url, 0));
@@ -378,6 +380,6 @@ R_relativeURL(SEXP r_url, SEXP r_base)
     xmlFree(ans);
     return(rans);
 }
-
+#endif
 
 
