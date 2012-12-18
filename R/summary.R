@@ -13,8 +13,11 @@ getRelativeURL =
   #
   # XXX test - baseURL with /path/ and u as /other/path. Looks okay. See
   # ParsingStrategies example for kaggle.
+  #   getRelativeURL("../foo/xyz/bar.html", "http://www.omegahat.org/a/b.html")
+  # getRelativeURL("./foo/xyz/bar.html", "http://www.omegahat.org/a/b.html")
+  #  getRelativeURL("../foo/xyz/bar.html", "http://www.omegahat.org/a/b.html")
   #
-  # XXX not working for ../...
+  # [Fixed] not working for ../...
   #  fails
   #    getRelativeURL("../foo", "http://www.omegahat.org/a/b.html")
   # should be http://www.omegahat.org/foo
@@ -28,9 +31,23 @@ function(u, baseURL, sep = "/", addBase = TRUE)
    #XXX Need to strip the path in baseURL if pu$path starts with /
    if(pu$scheme == "" && addBase) {
       b = parseURI(baseURL)
-      b$path = ""
-      b = as(b, "character")
-      sprintf("%s%s%s", b, if(grepl("^/", pu$path)) "" else sep, u)
+      b$query = ""
+      if(grepl("^/", pu$path)) {
+        b$path = u
+        return(as(b, "character"))
+      }
+
+      b$path = sprintf("%s%s%s", dirname(b$path), sep, u)
+        # handle .. in the path and try to collapse these.
+      if(grepl("..", b$path, fixed = TRUE)) {
+        els = strsplit(b$path, sep)[[1]]
+        i = which(els == "..")
+        els = els[-c(i, i-1)]
+        b$path = paste(els, collapse = sep)
+      }
+      return(as(b, "character"))         
+#      b = as(b, "character")
+#      sprintf("%s%s%s", b, "" else sep, u)
    } else
       u
 }

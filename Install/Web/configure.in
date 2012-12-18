@@ -1,6 +1,6 @@
 AC_INIT(../../index.html.in)
 
-. ../VersionInfo
+. ../../VersionInfo
 
 DATE=`date`
 AC_SUBST(DATE)

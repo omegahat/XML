@@ -1,3 +1,7 @@
+Version 3.95-1
+
+  *     Allow htmlParse(), xmlParse(), etc. 
+
 Version 3.95-0
 
   *     Moved development version of the source code for the package to github -
@@ -11,6 +15,9 @@ Version 3.95-0
   *     getDefaultNamespace() and matchNamespaces() use simplify = TRUE to call
         xmlNamespaceDefinitions() to get the namespaces as a character vector rather than
         list.
+
+  *     Documentation updates
+ 
 
 Version 3.94-0
 
