@@ -153,6 +153,12 @@ setOldClass("URL")
 
 setAs("URI", "character",
       function(from) {
+          if(from$scheme == "")
+              sprintf("%s%s%s",
+                      from["path"],
+                      if(from[["query"]] != "") sprintf("?%s", from[["query"]]) else "",
+                      if(from[["fragment"]] != "") sprintf("#%s", from[["fragment"]]) else "" )
+          else
            sprintf("%s://%s%s%s%s%s%s%s",
                                     from[["scheme"]],
                                     from[["user"]],

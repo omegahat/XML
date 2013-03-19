@@ -3,6 +3,7 @@
 \alias{readSolrDoc,XMLInternalDocument-method}
 \alias{readSolrDoc,XMLInternalNode-method}
 \alias{readSolrDoc,character-method}
+\alias{readSolrDoc,AsIs-method}
 
 \title{Read the data from a Solr document}
 \description{

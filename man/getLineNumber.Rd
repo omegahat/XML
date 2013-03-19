@@ -1,13 +1,18 @@
 \name{getLineNumber}
 \alias{getNodeLocation}
+\alias{getNodePosition}
 \alias{getLineNumber}
 \title{Determine the location - file \& line number of an (internal) XML node}
 \description{
-  The getLineNumber function is used to query the location of an internal/C-level
+  The \code{getLineNumber} function is used to query the location of an internal/C-level
   XML node within its original "file". This gives us the line number.
   \code{getNodeLocation} gives both the line number and the name of the
   file in which the node is located, handling XInclude files in a
   top-level document  and identifying the included file, as appropriate.
+  \code{getNodePosition} returns a simplified version of
+  \code{getNodeLocation},
+  combining the file and line number into a string and ignoring the
+  \code{XPointer} component.
 
   This is useful when we identify a node with a particular charactestic
   and want to view/edit the original document, e.g. when authoring an

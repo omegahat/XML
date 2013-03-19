@@ -40,7 +40,7 @@ xmlTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, replaceEntities=FALSE,
              fullNamespaceInfo = FALSE, encoding = character(),
              useDotNames = length(grep("^\\\\.", names(handlers))) > 0,
              xinclude = TRUE, addFinalizer = TRUE, error = xmlErrorCumulator(),
-             isHTML = FALSE, options = integer())
+             isHTML = FALSE, options = integer(), parentFirst = FALSE)
 
 xmlInternalTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, replaceEntities=FALSE,
              asText=FALSE, trim=TRUE, validate=FALSE, getDTD=TRUE,
@@ -49,7 +49,7 @@ xmlInternalTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, replaceEntities=FAL
              fullNamespaceInfo = FALSE, encoding = character(),
              useDotNames = length(grep("^\\\\.", names(handlers))) > 0,
              xinclude = TRUE, addFinalizer = TRUE, error = xmlErrorCumulator(),
-             isHTML = FALSE, options = integer())
+             isHTML = FALSE, options = integer(), parentFirst = FALSE)
 
 xmlNativeTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, replaceEntities=FALSE,
              asText=FALSE, trim=TRUE, validate=FALSE, getDTD=TRUE,
@@ -58,7 +58,7 @@ xmlNativeTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, replaceEntities=FALSE
              fullNamespaceInfo = FALSE, encoding = character(),
              useDotNames = length(grep("^\\\\.", names(handlers))) > 0,
              xinclude = TRUE, addFinalizer = TRUE, error = xmlErrorCumulator(),
-             isHTML = FALSE, options = integer())
+             isHTML = FALSE, options = integer(), parentFirst = FALSE)
 
 
 htmlTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, replaceEntities=FALSE,
@@ -68,7 +68,7 @@ htmlTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, replaceEntities=FALSE,
              fullNamespaceInfo = FALSE, encoding = character(),
              useDotNames = length(grep("^\\\\.", names(handlers))) > 0,
              xinclude = TRUE, addFinalizer = TRUE, error = htmlErrorHandler,
-             isHTML = TRUE, options = integer())
+             isHTML = TRUE, options = integer(), parentFirst = FALSE)
 
 htmlParse(file, ignoreBlanks = TRUE, handlers = NULL, replaceEntities = FALSE, 
           asText = FALSE, trim = TRUE, validate = FALSE, getDTD = TRUE, 
@@ -77,7 +77,8 @@ htmlParse(file, ignoreBlanks = TRUE, handlers = NULL, replaceEntities = FALSE,
              encoding = character(), 
              useDotNames = length(grep("^\\\\.", names(handlers))) > 0, 
               xinclude = TRUE, addFinalizer = TRUE, 
-               error = htmlErrorHandler, isHTML = TRUE, options = integer()) 
+               error = htmlErrorHandler, isHTML = TRUE,
+                options = integer(), parentFirst = FALSE) 
 
 xmlSchemaParse(file, asText = FALSE, xinclude = TRUE, error = xmlErrorCumulator())
 }
@@ -261,7 +262,12 @@ This is ignored when parsing an HTML document.
   (OR'ed) together
     to specify options for the XML parser. This is the same as the
     \code{options} parameter for \code{\link{xmlParseDoc}}.
-   }
+  }
+  \item{parentFirst}{a logical value for use when we have handler
+    functions and are traversing the tree.
+     This controls whether we process
+    the node before processing its children, or process the children
+    before their parent node.}
 }
 \details{
  The \code{handlers} argument is used similarly

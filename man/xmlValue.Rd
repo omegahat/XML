@@ -19,7 +19,8 @@
   that contain a single text node.
 }
 \usage{
-xmlValue(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x))
+xmlValue(x, ignoreComments = FALSE, recursive = TRUE,
+          encoding = getEncoding(x), trim = FALSE)
 }
 \arguments{
   \item{x}{the \code{XMLNode} object whose
@@ -33,7 +34,10 @@ xmlValue(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x))
     sub-nodes (\code{TRUE}) or only the text nodes within the node \code{x}.
   }
 %XXX
- \item{encoding}{experimental functionality and parameter related to encoding.}
+ \item{encoding}{experimental functionality and parameter related to
+   encoding.}
+ \item{trim}{a logical value controlling whether we remove leading or
+   trailing white space when returning the string value}
 }
 \value{
  The object stored in the 

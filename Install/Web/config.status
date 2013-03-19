@@ -331,7 +331,7 @@ Copyright (C) 2006 Free Software Foundation, Inc.
 This config.status script is free software; the Free Software Foundation
 gives unlimited permission to copy, distribute and modify it."
 
-ac_pwd='/Users/duncan/Projects/org/omegahat/XML/RS/Install/Web'
+ac_pwd='/Users/duncan/GitWorkingArea/XML/Install/Web'
 srcdir='.'
 # If no file are specified by the user, then we need to provide default
 # value.  By we need to know if files were specified by the user.
@@ -503,10 +503,10 @@ s,@LIBS@,|#_!!_#|,g
 s,@build_alias@,|#_!!_#|,g
 s,@host_alias@,|#_!!_#|,g
 s,@target_alias@,|#_!!_#|,g
-s,@DATE@,|#_!!_#|Fri Feb 17 15:16:50 PST 2012,g
-s,@TAR_FILE@,|#_!!_#|XML_3.93-0.tar.gz,g
-s,@ZIP_FILE@,|#_!!_#|XML_3.93-0.zip,g
-s,@MINOR_VERSION@,|#_!!_#|93,g
+s,@DATE@,|#_!!_#|Tue Mar 19 16:21:04 PDT 2013,g
+s,@TAR_FILE@,|#_!!_#|XML_3.96-0.tar.gz,g
+s,@ZIP_FILE@,|#_!!_#|XML_3.96-0.zip,g
+s,@MINOR_VERSION@,|#_!!_#|96,g
 s,@MAJOR_VERSION@,|#_!!_#|3,g
 s,@PATCH_LEVEL@,|#_!!_#|0,g
 s,@PKG_NAME@,|#_!!_#|XML,g

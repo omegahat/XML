@@ -6,6 +6,7 @@
 \alias{xmlToDataFrame,ANY,ANY,ANY,ANY,XMLInternalNodeList-method}
 \alias{xmlToDataFrame,ANY,ANY,ANY,ANY,list-method}
 \alias{xmlToDataFrame,XMLInternalNodeList,ANY,ANY,ANY,ANY-method}
+\alias{xmlToDataFrame,XMLInternalElementNode,ANY,ANY,ANY,ANY-method}
 \alias{xmlToDataFrame,XMLNodeSet,ANY,ANY,ANY,ANY-method}
 \alias{xmlToDataFrame,list,ANY,ANY,ANY,ANY-method}
 \title{Extract data from a simple XML document}

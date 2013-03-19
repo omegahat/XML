@@ -23,7 +23,7 @@ function(filename, recursive = TRUE, skip = character(),
      processed = c(filename, skip)
      for(f in unique(files[!nonRecursive])) {
            # path name relative to the base document of the XInclude
-        f = getRelativeURL(f, dirname(filename))
+        f = getRelativeURL(f, filename) # dirname(filename))
         if(file.exists(f))
            files = c(files, getXIncludes(f, TRUE, skip = processed))
         else

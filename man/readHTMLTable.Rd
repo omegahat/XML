@@ -111,11 +111,6 @@ HTML4.0 specification
   # R doesn't allow the variable names to start with digits.
  tmp = tables[[2]]
 
-  # We can transform this to get the rows to be years and the columns
-  # to be population counts. We'll create a matrix.
- vals = cbind(year = as.integer(gsub("X", "", names(tmp)[-1])),
-              matrix(as.integer(gsub(",", "", as.character(unlist(tmp[-1])))),
-                      ncol(tmp)-1, byrow = TRUE, dimnames = list(NULL, as.character(tmp[[1]]))))
 
    # Let's just read the second table directly by itself.
  doc = htmlParse(u)
@@ -140,7 +135,7 @@ HTML4.0 specification
 
 
   zz = readHTMLTable("http://www.inflationdata.com/Inflation/Consumer_Price_Index/HistoricalCPI.aspx")
-  if(any(i <- sapply(zz, ncol) == 14)) {  # guard against the structure of the page changing.
+  if(any(i <- sapply(zz, function(x) if(is.null(x)) 0 else ncol(x)) == 14)) {  # guard against the structure of the page changing.
     zz = zz[[which(i)[1]]]  # 4th table
         # convert columns to numeric.  Could use colClasses in the call to readHTMLTable()
     zz[-1] = lapply(zz[-1], function(x) as.numeric(gsub(".* ", "", as.character(x))))
@@ -170,22 +165,6 @@ if(FALSE) {
  con = textConnection(xmlValue(p[[2]]))
  tides = read.table(con)
 }
-
-   # header as a logical vector
- tt = tryCatch(readHTMLTable("http://www.sfgate.com/weather/rainfall.shtml",
-                               header = c(FALSE, FALSE, TRUE, FALSE, FALSE)),
-                "XML_IO_LOAD_ERROR"= function(err, ...) {
-                                         cat("cannot connect to sfgate.com\n")
-                                         NULL
-                                     })
-
-   #
- tt = tryCatch(readHTMLTable("http://www.sfgate.com/weather/rainfall.shtml",
-                               which = 3, header = TRUE),
-                "XML_IO_LOAD_ERROR"= function(err, ...) {
-                                         cat("cannot connect to sfgate.com\n")
-                                         NULL
-                                     })
 
 
 if(require(RCurl) && url.exists("http://www.omegahat.org/RCurl/testPassword/table.html")) {

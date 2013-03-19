@@ -1,6 +1,14 @@
+Version 3.96-0
+
+  *     Introduced readHTMLList(), getHTMLLinks(), getHTMLExternalFiles(), getXIncludes().
+
+  *     When serializing XMLNode objects, i.e. R representations of nodes, ensure " and <, etc. in attributes
+        are serialized correctly.
+
+
 Version 3.95-1
 
-  *     Allow htmlParse(), xmlParse(), etc. 
+  *     Allow htmlParse(), xmlParse(), etc. ?
 
 Version 3.95-0
 

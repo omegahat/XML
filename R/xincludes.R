@@ -115,6 +115,9 @@ function(x, asNode = FALSE)
 
 getNodePosition =
 function(x) {
+   if(is.list(x))
+     return(sapply(x, getNodePosition))
+   
     tmp = getNodeLocation(x)
     sprintf("%s:%d", tmp$file[1], tmp$line)
 }
@@ -123,6 +126,9 @@ function(x) {
 getNodeLocation =
 function(node, recursive = TRUE, fileOnly = FALSE)
 {
+   if(is.list(node))
+     return(lapply(node, getNodeLocation))
+            
    fil = findXInclude(node, recursive = recursive)
    if(is.null(fil))
      fil = docName(node)

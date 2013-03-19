@@ -3,6 +3,8 @@
 \alias{readKeyValueDB,character-method}
 \alias{readKeyValueDB,XMLInternalDocument-method}
 \alias{readKeyValueDB,XMLInternalNode-method}
+\alias{readKeyValueDB,AsIs-method}
+
 \title{Read an XML property-list style document}
 \description{
   This function and its methods reads an XML document

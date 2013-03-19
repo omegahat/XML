@@ -428,7 +428,7 @@ print.XMLNode <-
 function(x, ..., indent = "", tagSeparator = "\n")
 {
  if(length(xmlAttrs(x))) {
-   tmp <- paste(names(xmlAttrs(x)),paste("\"", xmlAttrs(x),"\"", sep=""), sep="=", collapse=" ")
+   tmp <- paste(names(xmlAttrs(x)),paste("\"", insertEntities(xmlAttrs(x)), "\"", sep=""), sep="=", collapse=" ")
  } else 
    tmp <- ""
 

@@ -13,7 +13,7 @@
  relative directories such as "..".
 }
 \usage{
-getRelativeURL(u, baseURL, sep = "/")
+getRelativeURL(u, baseURL, sep = "/", addBase = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -24,7 +24,10 @@ getRelativeURL(u, baseURL, sep = "/")
      one might use \code{.Platform$file.sep}, but this is incorrect unless one knows that the
      resulting file is to be accessed using Windows file system notation, i.e. 
       \code{C:\\\\my\\\\folder\\\\file}.
-   .}
+    }
+    \item{addBase}{a logical controlling whether we prepend the base URL
+      to  the  result.}
+    
 }
 \details{
  This uses the function \code{parseURI} to compute the components

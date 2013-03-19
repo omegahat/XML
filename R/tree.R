@@ -123,7 +123,7 @@ xmlToList =
 function(node, addAttributes = TRUE, simplify = FALSE)
 {
   if(is.character(node))
-    node = xmlTreeParse(node)
+    node = xmlParse(node)
 
   if(inherits(node, "XMLAbstractDocument"))
     node = xmlRoot(node)
