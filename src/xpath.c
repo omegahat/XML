@@ -154,7 +154,7 @@ R_isWeakRef(SEXP sdoc)
 SEXP
 R_addXMLInternalDocument_finalizer(SEXP sdoc, SEXP fun)
 {
-    R_CFinalizer_t action;
+    R_CFinalizer_t action = NULL;
 #if R_XML_DEBUG_WEAK_REFS
     LastDoc = sdoc;
 #endif

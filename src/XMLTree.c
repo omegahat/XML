@@ -454,7 +454,7 @@ RS_XML_setRootNode(USER_OBJECT_ r_doc, USER_OBJECT_ r_node)
 SEXP
 R_isNodeChildOfAt(SEXP rkid, SEXP rnode, SEXP rat)
 {
-    int i, at;
+    int i=0, at;
     xmlNodePtr kid, node, ptr;
     node = (xmlNodePtr) R_ExternalPtrAddr(rnode);	
     kid = (xmlNodePtr) R_ExternalPtrAddr(rkid);	

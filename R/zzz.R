@@ -1,3 +1,4 @@
+if(FALSE) {
 .First.lib <-
 function(libname, pkgname)
 {
@@ -9,6 +10,7 @@ function(libname, pkgname)
 
    # Set the error handlers to our local ones.
  .C("RSXML_setErrorHandlers", PACKAGE = "XML")
+}
 }
 
 .onLoad =

@@ -31,6 +31,10 @@ DefaultXPathNamespaces =
                    xi="http://www.w3.org/2001/XInclude"                   
                   )
 
+DefaultXMLSourceXPath =
+   sprintf("%s[not(@eval='false') and not(ancestor::ignore)]",
+            c("//r:init", "//r:function", "//r:init", "//r:code", "//r:plot", "//r:expr"))
+
 setGeneric("xmlSource",
 function(url, ...,
           envir = globalenv(),
@@ -40,7 +44,7 @@ function(url, ...,
           ask = FALSE,
           example = NA,
           fatal = TRUE, verbose = FALSE, echo = verbose, print = echo,
-          xnodes = c("//r:function", "//r:init[not(@eval='false')]", "//r:code[not(@eval='false')]", "//r:plot[not(@eval='false')]"),         
+          xnodes = DefaultXMLSourceXPath,         
           namespaces = DefaultXPathNamespaces, section = character(), eval = TRUE, init = TRUE,
           setNodeNames = FALSE, parse = TRUE)
 {
@@ -62,7 +66,7 @@ function(url, ...,
           ask = FALSE,
           example = NA,         
           fatal = TRUE, verbose = FALSE, echo = verbose, print = echo,
-          xnodes = c("//r:function", "//r:init[not(@eval='false')]", "//r:code[not(@eval='false')]", "//r:plot[not(@eval='false')]"),
+          xnodes = DefaultXMLSourceXPath,
           namespaces = DefaultXPathNamespaces,
           section = character(), eval = TRUE, init = TRUE, setNodeNames = FALSE, parse = TRUE)
 {
@@ -83,7 +87,7 @@ function(url, ...,
           ask = FALSE,
           example = NA,         
           fatal = TRUE, verbose = FALSE, echo = verbose, print = echo,
-          xnodes = c("//r:function", "//r:init[not(@eval='false')]", "//r:code[not(@eval='false')]", "//r:plot[not(@eval='false')]"),
+          xnodes = DefaultXMLSourceXPath,
           namespaces = DefaultXPathNamespaces,
           section = character(), eval = TRUE, init = TRUE, setNodeNames = FALSE, parse = TRUE)
 {
@@ -156,7 +160,7 @@ function(url, ...,
                   }), recursive = FALSE)
   } else {
 
-    functions = limitXPathToSection(section, "//r:function")
+    functions = limitXPathToSection(section, "//r:function[not(@eval = 'false') and not(ancestor::ignore)]")
     xnodes = limitXPathToSection(section, xnodes)
         # Do we need to ensure the order for the functions first?
     v = getNodeSet(doc, paste(c(functions, xnodes), collapse = "|"), namespaces)
@@ -225,7 +229,7 @@ function(url, ..., envir =globalenv(),
           ask = FALSE,
           example = NA,         
           fatal = TRUE, verbose = FALSE, echo = verbose, print = echo,
-          xnodes = c("r:function", "r:init[not(@eval='false')]", "r:code[not(@eval='false')]", "//r:plot[not(@eval='false')]"),         
+          xnodes = c("r:function[not(@val='false')]", "r:init[not(@eval='false')]", "r:code[not(@eval='false')]", "//r:plot[not(@eval='false')]"),         
           namespaces =  DefaultXPathNamespaces, section = character(), eval = TRUE, init = TRUE, setNodeNames = FALSE, parse = TRUE)
 {
   if(ask) {
@@ -236,7 +240,7 @@ function(url, ..., envir =globalenv(),
 #XXX
      }
    }
-  
+
   ans = sapply(url, evalNode, envir = envir, verbose = verbose, ids = ids,
                 omit = omit, echo = echo, print = print, ask = ask, eval = eval, parse = parse)
 

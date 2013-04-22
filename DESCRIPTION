@@ -1,5 +1,5 @@
 Package: XML
-Version: 3.96-0
+Version: 3.96-1
 Author:  Duncan Temple Lang (duncan@r-project.org)
 Maintainer: Duncan Temple Lang <duncan@r-project.org>
 Title: Tools for parsing and generating XML within R and S-Plus.

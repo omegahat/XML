@@ -203,7 +203,8 @@ function(doc, header = NA ,
     return(NULL)
   
    numEls = sapply(els, length)
-   if(is.logical(header) && !is.na(header) && header) {
+                                                           # els[[1]] should be a scalar
+   if(is.logical(header) && !is.na(header) && header && any(nchar(els[[1]]) < 999)) {
      header = els[[1]]
      els = els[-1]
      numEls = numEls[ - 1]
@@ -217,7 +218,7 @@ function(doc, header = NA ,
                     sapply(els, `[`, col)
                   })
 
-   if(is.character(header))
+   if(is.character(header) && length(header) == length(ans))
       names(ans) = header
 
    if(length(colClasses)) {
@@ -246,7 +247,7 @@ function(doc, header = NA ,
 
    if(as.data.frame)  {
      ans = as.data.frame(ans, ...)
-     if(is.character(header))
+     if(is.character(header) && length(header) == length(ans))
         names(ans) = header
      else if(nrow(ans) > 0)
        names(ans) = paste("V", seq(along = ans), sep = "")

@@ -1,3 +1,10 @@
+Version 3.96-1
+ 
+  *     readHTMLTable() ignores headers that are over 999 characters.
+
+  *     Fix a problem in readHTMLTable() with some table headers not having 
+        the correct number of elements to match the columns.
+  
 Version 3.96-0
 
   *     Introduced readHTMLList(), getHTMLLinks(), getHTMLExternalFiles(), getXIncludes().
