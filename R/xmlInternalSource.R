@@ -32,7 +32,7 @@ DefaultXPathNamespaces =
                   )
 
 DefaultXMLSourceXPath =
-   sprintf("%s[not(@eval='false') and not(ancestor::ignore)]",
+   sprintf("%s[not(@eval='false') and not(ancestor::ignore) and not(ancestor::section[@r:eval = 'false'])]",
             c("//r:init", "//r:function", "//r:init", "//r:code", "//r:plot", "//r:expr"))
 
 setGeneric("xmlSource",
@@ -43,10 +43,10 @@ function(url, ...,
           omit = character(),
           ask = FALSE,
           example = NA,
-          fatal = TRUE, verbose = FALSE, echo = verbose, print = echo,
+          fatal = TRUE, verbose = TRUE, echo = verbose, print = echo,
           xnodes = DefaultXMLSourceXPath,         
           namespaces = DefaultXPathNamespaces, section = character(), eval = TRUE, init = TRUE,
-          setNodeNames = FALSE, parse = TRUE)
+          setNodeNames = FALSE, parse = TRUE, force = FALSE)
 {
 
   standardGeneric("xmlSource")
@@ -65,16 +65,16 @@ function(url, ...,
           omit = character(),
           ask = FALSE,
           example = NA,         
-          fatal = TRUE, verbose = FALSE, echo = verbose, print = echo,
+          fatal = TRUE, verbose = TRUE, echo = verbose, print = echo,
           xnodes = DefaultXMLSourceXPath,
           namespaces = DefaultXPathNamespaces,
-          section = character(), eval = TRUE, init = TRUE, setNodeNames = FALSE, parse = TRUE)
+          section = character(), eval = TRUE, init = TRUE, setNodeNames = FALSE, parse = TRUE, force = FALSE)
 {
   doc = xmlTreeParse(url, ..., useInternalNodes = TRUE)
   xmlSource(doc, ..., envir = envir, xpath = xpath, ids = ids, omit = omit,
              ask = ask, example = example, fatal = fatal, verbose = verbose,
               print = print, xnodes = xnodes, namespaces = namespaces,
-               section = section, eval = eval, init = init, setNodeNames = setNodeNames, parse = parse)
+               section = section, eval = eval, init = init, setNodeNames = setNodeNames, parse = parse, force = force)
 })
 
 
@@ -86,10 +86,10 @@ function(url, ...,
           omit = character(),
           ask = FALSE,
           example = NA,         
-          fatal = TRUE, verbose = FALSE, echo = verbose, print = echo,
+          fatal = TRUE, verbose = TRUE, echo = verbose, print = echo,
           xnodes = DefaultXMLSourceXPath,
           namespaces = DefaultXPathNamespaces,
-          section = character(), eval = TRUE, init = TRUE, setNodeNames = FALSE, parse = TRUE)
+          section = character(), eval = TRUE, init = TRUE, setNodeNames = FALSE, parse = TRUE, force = FALSE)
 {
   doc = url
   if(inherits(verbose, "numeric"))
@@ -120,7 +120,7 @@ function(url, ...,
       init = getNodeSet(doc, "//r:init[not(ancestor::r:example)]",
                            c(r = "http://www.r-project.org"))
       if(length(init)) {
-        xmlSource(init, envir = envir, omit = omit, verbose = verbose, namespaces = namespaces, eval = eval)
+        xmlSource(init, envir = envir, omit = omit, verbose = verbose, namespaces = namespaces, eval = eval, force = force)
         cat("Done doc-level init", length(init), "\n")
       }
 
@@ -130,7 +130,7 @@ function(url, ...,
                           cat("Example", ids[x], "\n")
 
                              #XXX put the correct ids in her.
-                        xmlSource(nodes, envir = envir, omit = omit, verbose = verbose, namespaces = namespaces, eval = eval, setNodeNames = setNodeNames, parse = parse)
+                        xmlSource(nodes, envir = envir, omit = omit, verbose = verbose, namespaces = namespaces, eval = eval, setNodeNames = setNodeNames, parse = parse, force = force)
                         
                       })
       return(ans)
@@ -195,7 +195,7 @@ function(url, ...,
 
   xmlSource(v, ids = ids, omit = omit, ask = ask, fatal = fatal, verbose = verbose,  envir = envir,
             section = if(!is.character(section)) section else character(),
-            eval = eval, setNodeNames = setNodeNames, parse = parse)
+            eval = eval, setNodeNames = setNodeNames, parse = parse, force = force)
 })
 
 
@@ -228,9 +228,9 @@ function(url, ..., envir =globalenv(),
           omit = character(),
           ask = FALSE,
           example = NA,         
-          fatal = TRUE, verbose = FALSE, echo = verbose, print = echo,
+          fatal = TRUE, verbose = TRUE, echo = verbose, print = echo,
           xnodes = c("r:function[not(@val='false')]", "r:init[not(@eval='false')]", "r:code[not(@eval='false')]", "//r:plot[not(@eval='false')]"),         
-          namespaces =  DefaultXPathNamespaces, section = character(), eval = TRUE, init = TRUE, setNodeNames = FALSE, parse = TRUE)
+          namespaces =  DefaultXPathNamespaces, section = character(), eval = TRUE, init = TRUE, setNodeNames = FALSE, parse = TRUE, force = FALSE)
 {
   if(ask) {
      doc = as(url[[1]], "XMLInternalDocument")     #XXXX  no doc here now.
@@ -242,7 +242,7 @@ function(url, ..., envir =globalenv(),
    }
 
   ans = sapply(url, evalNode, envir = envir, verbose = verbose, ids = ids,
-                omit = omit, echo = echo, print = print, ask = ask, eval = eval, parse = parse)
+                omit = omit, echo = echo, print = print, ask = ask, eval = eval, parse = parse, force = force)
 
   if(setNodeNames)
      names(ans) = sapply(url, getRCodeNodeName)
@@ -254,12 +254,12 @@ function(url, ..., envir =globalenv(),
 
 evalNode = 
 function(node, envir = globalenv(), ids = character(), verbose = FALSE, echo = verbose, omit = character(),
-         namespaces = c(r = "http://www.r-project.org"), print = echo, ask = FALSE, eval = TRUE, parse = TRUE)
+         namespaces = c(r = "http://www.r-project.org"), print = echo, ask = FALSE, eval = TRUE, parse = TRUE, force = FALSE)
 {
             #XXX check all ancestors. Ideally exclude them in the XPath query
-   if(xmlName(xmlParent(node)) == "ignore" ||
+   if(!force && (xmlName(xmlParent(node)) == "ignore" ||
           length(getNodeSet(node, "./ancestor::section[@r:eval='false']|./ancestor::para[@r:eval='false']",
-                              c(r = "http://www.r-project.org"))) > 0)
+                              c(r = "http://www.r-project.org"))) > 0))
      return(FALSE)
 
    tmp = xmlGetAttr(node, "id", NA)
@@ -462,7 +462,7 @@ setMethod("xmlSourceFunctions", "character",
   #
 function(doc, ids = character(), parse = TRUE, ...)
 {
-  xmlSourceFunctions(xmlParse(doc), ids, parse = parse, ...)
+  invisible(xmlSourceFunctions(xmlParse(doc), ids, parse = parse, ...))
 })
 
 
@@ -489,7 +489,7 @@ function(doc, ids = character(), parse = TRUE, setNodeNames = FALSE, ...)
   if(setNodeNames)
     names(ans) = sapply(nodes, getRCodeNodeName)
   
-  ans
+  invisible(ans)
 })
 
 getRCodeNodeName =
