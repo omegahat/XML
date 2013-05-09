@@ -30,8 +30,8 @@ Kernel configured for up to 4 processors.
 Processor type: i486 (Intel 80486)
 Processors active: 0 1 2 3
 Primary memory available: 8.00 gigabytes
-Default processor set: 117 tasks, 476 threads, 4 processors
-Load average: 2.44, Mach factor: 1.54
+Default processor set: 148 tasks, 637 threads, 4 processors
+Load average: 2.17, Mach factor: 1.82
 /bin/machine           = unknown
 /usr/bin/oslevel       = unknown
 /bin/universe          = unknown
@@ -101,7 +101,7 @@ ac_cv_env_target_alias_value=
 ## Output variables. ##
 ## ----------------- ##
 
-DATE='Tue Mar 19 16:21:04 PDT 2013'
+DATE='Wed Mar 27 11:27:38 PDT 2013'
 DEFS='-DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\"'
 ECHO_C='ECHO_N=''
 ECHO_T=''
@@ -115,12 +115,12 @@ PACKAGE_NAME=''
 PACKAGE_STRING=''
 PACKAGE_TARNAME=''
 PACKAGE_VERSION=''
-PATCH_LEVEL='0'
+PATCH_LEVEL='1'
 PATH_SEPARATOR=':'
 PKG_NAME='XML'
 SHELL='/bin/sh'
-TAR_FILE='XML_3.96-0.tar.gz'
-ZIP_FILE='XML_3.96-0.zip'
+TAR_FILE='XML_3.96-1.tar.gz'
+ZIP_FILE='XML_3.96-1.zip'
 bindir='${exec_prefix}/bin'
 build_alias=''
 datadir='${datarootdir}'

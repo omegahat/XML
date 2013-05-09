@@ -1,10 +1,9 @@
-Ctest.*
 .*.tar.gz
-TU.*
+Ctest.*
+TU/.*
 testRemoveFinalizers.o
 testRemoveFinalizers.so
 stderr
 Install.*
 Problems.*
 pkg-config-configure.in
-
