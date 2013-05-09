@@ -1,3 +1,8 @@
+Version 3.97-0
+
+  *      Fix for xmlValue(node) = text.  Identified by Lawrence Edwards.
+         Uses xmlNodeSetContent() now and leaves freeing the original content to that routine.
+
 Version 3.96-1
  
   *     readHTMLTable() ignores headers that are over 999 characters.
