@@ -1450,12 +1450,14 @@ R_setXMLInternalTextNode_value(SEXP node, SEXP value)
        PROBLEM  "Can only set value on an text node"
 	   ERROR;
    }
-    
+
+#if 0    
    if(n->content)
        xmlFree(n->content);
-
+#endif
    str = CHAR(STRING_ELT(value, 0));
-   n->content = xmlCharStrndup(str, strlen(str));
+   xmlNodeSetContent(n, str);
+//   n->content = xmlCharStrndup(str, strlen(str));
 /*xmlStrdup(CHAR_TO_XMLCHAR(CHAR(STRING_ELT(value, 0))));*/
     
    return(node);
