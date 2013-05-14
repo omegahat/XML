@@ -1279,6 +1279,7 @@ RS_XML_setDoc(USER_OBJECT_ snode, USER_OBJECT_ sdoc)
     return(R_createXMLDocRef(doc));
 }
 
+#if 0
 void
 RS_XML_recursive_unsetDoc(xmlNodePtr node)
 {
@@ -1288,6 +1289,44 @@ RS_XML_recursive_unsetDoc(xmlNodePtr node)
     while(tmp) {
 	RS_XML_recursive_unsetDoc(tmp);
 	tmp = tmp->next;
+    }
+}
+#endif
+
+/* The following two routines are from Paul Murrell.
+   They fix a problem with xpathApply() changing the document
+   presumably when doing an XPath query on a node within a document.
+   The old version didn't deal with the properties on the node.
+ */
+void
+RS_XML_recursive_unsetTreeDoc(xmlNodePtr node) {
+    xmlAttrPtr prop;
+
+    if (node == NULL)
+	return;
+    if(node->type == XML_ELEMENT_NODE) {
+        prop = node->properties;
+        while (prop != NULL) {
+            prop->doc = NULL;
+            RS_XML_recursive_unsetListDoc(prop->children);
+            prop = prop->next;
+        }
+    }
+    if (node->children != NULL)
+        RS_XML_recursive_unsetListDoc(node->children);
+    node->doc = NULL;
+}
+
+void
+RS_XML_recursive_unsetListDoc(xmlNodePtr list) {
+    xmlNodePtr cur;
+
+    if (list == NULL)
+	return;
+    cur = list;
+    while (cur != NULL) {
+        RS_XML_recursive_unsetTreeDoc(cur);
+	cur = cur->next;
     }
 }
 
@@ -1315,7 +1354,7 @@ RS_XML_unsetDoc(USER_OBJECT_ snode, USER_OBJECT_ unlink, USER_OBJECT_ r_parent, 
     }
 
     if(LOGICAL(recursive)[0]) {
-	RS_XML_recursive_unsetDoc(node);
+	RS_XML_recursive_unsetTreeDoc(node);
     }
 
     return(ScalarLogical(TRUE));
@@ -1451,14 +1490,8 @@ R_setXMLInternalTextNode_value(SEXP node, SEXP value)
 	   ERROR;
    }
 
-#if 0    
-   if(n->content)
-       xmlFree(n->content);
-#endif
    str = CHAR(STRING_ELT(value, 0));
    xmlNodeSetContent(n, str);
-//   n->content = xmlCharStrndup(str, strlen(str));
-/*xmlStrdup(CHAR_TO_XMLCHAR(CHAR(STRING_ELT(value, 0))));*/
     
    return(node);
 }

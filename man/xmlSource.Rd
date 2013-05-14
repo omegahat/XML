@@ -75,13 +75,11 @@ xmlSource(url, ...,
           omit = character(),
           ask = FALSE,
           example = NA,
-          fatal = TRUE, verbose = FALSE, echo = verbose, print = echo,
-          xnodes = c("//r:function", 
-                     "//r:init[not(@eval='false')]",
-                     "//r:code[not(@eval='false')]",
-                     "//r:plot[not(@eval='false')]"),
+          fatal = TRUE, verbose = TRUE, echo = verbose, print = echo,
+          xnodes = DefaultXMLSourceXPath,
           namespaces = DefaultXPathNamespaces, section = character(),
-          eval = TRUE, init = TRUE, setNodeNames = FALSE, parse = TRUE)
+          eval = TRUE, init = TRUE, setNodeNames = FALSE, parse = TRUE,
+          force = FALSE)
 xmlSourceFunctions(doc, ids = character(), parse = TRUE, ...)
 xmlSourceSection(doc, ids = character(),
                  xnodes = c(".//r:function", ".//r:init[not(@eval='false')]", 
@@ -191,6 +189,10 @@ xmlSourceSection(doc, ids = character(),
     the name for each node (or result) by finding is id or name
     attribute or enclosing task node.
   }
+  \item{force}{a logical value. If this is \code{TRUE}, the function
+    will evaluate the code in a node even if it is explicitly marked
+  as not to be evaluated with \code{eval = "false"}, either on the node
+    itself or an ancestor.}
 }
 \details{
   This evaluates the \code{code}, \code{function} and \code{example}
