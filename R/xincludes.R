@@ -127,7 +127,7 @@ getNodeLocation =
 function(node, recursive = TRUE, fileOnly = FALSE)
 {
    if(is.list(node))
-     return(lapply(node, getNodeLocation))
+     return(lapply(node, getNodeLocation, recursive, fileOnly))
             
    fil = findXInclude(node, recursive = recursive)
    if(is.null(fil))

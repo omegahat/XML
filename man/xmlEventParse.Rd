@@ -401,7 +401,6 @@ if(libxmlVersion()$major >= 2) {
 
  startElement = function(x, ...) cat(x, "\n")
 
-
  xmlEventParse(file(f), handlers = list(startElement = startElement))
 
 

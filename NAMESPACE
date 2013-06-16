@@ -507,3 +507,5 @@ export(readHTMLList)
 export(getXIncludes)
 export(getHTMLExternalFiles)
 
+export(xmlCleanNamespaces)
+

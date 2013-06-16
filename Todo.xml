@@ -18,6 +18,16 @@
 <items>
 
 <item>
+[This is a libxml2 2.9.0 issue. Dropping back to libxml2 2.7.8 cures the problem.
+So implement for 2.9.0]
+getNodeLocation misbehaving by not giving filename.
+See book.xml and 
+<r:code>
+getNodeLocation(xmlParent(getNodeSet(doc, "//r:func[. = 'addRevision']")[[1]]))
+</r:code>
+</item>
+
+<item>
 Get rid of spurios warning message in removeNodes.list() removeNode only works on internal nodes at present.
 See pkgBiblio.R in book directory.
 </item>

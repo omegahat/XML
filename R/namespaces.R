@@ -8,6 +8,29 @@ setMethod("simplifyNamespaces", "character",
                simplifyNamespaces(pdoc, ...)
             })   
 
+xmlCleanNamespaces =
+  #
+  # @eg xmlParse("~/GitWorkingArea/XML/inst/exampleData/redundantNS.xml")
+  #
+  # ?Should we write the result to a file if we are given a file?
+  #
+  #
+function(doc, options = integer(), out = docName(doc), ...)
+{
+   if(is(doc, "XMLInternalDocument"))
+      doc = saveXML(doc)
+   options = unique(c(options, NSCLEAN))
+   newDoc = xmlParse(doc, ..., options = options)
+
+   if(is.logical(out))
+     out =  if(out)  docName(doc) else character()
+   
+   if(is.character(out) && length(out))
+     saveXML(newDoc, out)
+   else
+     newDoc
+}
+
 setMethod("simplifyNamespaces", "XMLInternalDocument",
             function(doc, alreadyCleaned = FALSE, ...) {           
 

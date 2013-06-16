@@ -1,3 +1,11 @@
+Version 3.98-0
+
+  *      Update for libxml2-2.9.1 and reading from a connection for xmlEventParse().
+
+  *      xmlIncludes() is a hierarchical version of getXIncludes()
+
+  *      Modifications to xmlSource(), e.g. verbose = TRUE as default.
+
 Version 3.97-0
 
   *      Fix for xmlValue(node) = text.  Identified by Lawrence Edwards.

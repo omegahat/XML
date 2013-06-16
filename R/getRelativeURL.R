@@ -27,7 +27,7 @@ getRelativeURL =
   #    getRelativeURL("../foo", "http://www.omegahat.org/a/b.html")
   # should be http://www.omegahat.org/foo
   # or at least http://www.omegahat.org/a/../foo
-function(u, baseURL, sep = "/", addBase = TRUE)  
+function(u, baseURL, sep = "/", addBase = TRUE, simplify = TRUE)  
 {
    if(length(u) > 1)
      return(sapply(u, getRelativeURL, baseURL, sep))
@@ -44,15 +44,48 @@ function(u, baseURL, sep = "/", addBase = TRUE)
 
       b$path = sprintf("%s%s%s", dirname(b$path), sep, u)
         # handle .. in the path and try to collapse these.
-      if(grepl("..", b$path, fixed = TRUE)) {
-        els = strsplit(b$path, sep)[[1]]
-        i = which(els == "..")
-        els = els[-c(i, i-1)]
-        b$path = paste(els, collapse = sep)
-      }
+      if(simplify && grepl("..", b$path, fixed = TRUE))
+        b$path = simplifyPath(b$path)
+
       return(as(b, "character"))         
 #      b = as(b, "character")
 #      sprintf("%s%s%s", b, "" else sep, u)
    } else
       u
 }
+
+simplifyPath =
+function(path)
+{
+  path = gsub("/\\./", "/", path)  
+  path = gsub("^\\./", "", path)  
+  # Doesn't  handle "../foo"
+  while(grepl("[^./]/\\.\\.", path)) {
+     path = gsub("/[^/.]+/\\.\\./?", "/", path)
+ }
+
+  
+ path = gsub("^(\\./)+", "", path)
+  
+ path
+}
+
+
+simplifyPath1 =
+# Could use strsplit, etc.  
+function(path)
+{
+ els = strsplit(path, "/")[[1]]
+ 
+ while(length(i <- which(els == ".."))) {
+   i = max(i)
+   if(length(i) == 1 && i == 1)
+     break
+
+   i = i[i != 1]
+ }
+
+ paste(els, sep = "/")
+}
+
+  

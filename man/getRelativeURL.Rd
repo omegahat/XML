@@ -13,7 +13,7 @@
  relative directories such as "..".
 }
 \usage{
-getRelativeURL(u, baseURL, sep = "/", addBase = TRUE)
+getRelativeURL(u, baseURL, sep = "/", addBase = TRUE, simplify = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -27,6 +27,8 @@ getRelativeURL(u, baseURL, sep = "/", addBase = TRUE)
     }
     \item{addBase}{a logical controlling whether we prepend the base URL
       to  the  result.}
+    \item{simplify}{a logical value that controls whether we attempt to
+      simplify/normalize the path to remove \code{..} and \code{.}}
     
 }
 \details{

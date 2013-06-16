@@ -123,6 +123,12 @@ RS_XML_closeConnectionInput(void *context)
 }
 #endif
 
+
+typedef struct {
+    SEXP fun;
+    xmlParserCtxtPtr ctx;
+} RFunCtxData;
+
 int
 RS_XML_readConnectionInput(void *context, char *buffer, int len)
 {
@@ -136,22 +142,34 @@ RS_XML_readConnectionInput(void *context, char *buffer, int len)
   char *orig = buffer;
 #endif
 
-  xmlParserCtxtPtr ctx = (xmlParserCtxtPtr) context;
+
+  SEXP fun;
+  xmlParserCtxtPtr ctx;
+
+#ifndef LIBXML2_NEW_BUFFER
+  ctx = (xmlParserCtxtPtr) context;
+  fun = ctx->_private;
+#else  
+  RFunCtxData *user = (RFunCtxData *) context;
+  ctx = user->ctx;
+  fun = user->fun;
+#endif
 
   if(len == -1)
      return(0);
 
   /* Setup the expression to call the user-supplied R function or call readLines(con, 1) 
      if they gave us a connection. */
-  if(isFunction(ctx->_private)) {
+  if(isFunction(fun)) {
      /* Invoke the user-provided function to get the next line. */
     PROTECT(e = allocVector(LANGSXP, 2));
-    SETCAR(e, ctx->_private);
+    SETCAR(e, fun);
     PROTECT(arg = NEW_INTEGER(1));
     INTEGER_DATA(arg)[0] = len;
     SETCAR(CDR(e), arg);
     UNPROTECT(1);
-  }
+  } else 
+      e = fun;
 
   n = count = 0;
   while(n == 0 && left > 0) {
@@ -159,7 +177,7 @@ RS_XML_readConnectionInput(void *context, char *buffer, int len)
    str = NULL;
 
      /* Update the argument to the user-defined function to say how much is left. */
-   if(isFunction(ctx->_private))
+   if(isFunction(fun))
      INTEGER_DATA(arg)[0] = left;
 
    tmp = R_tryEval(e, R_GlobalEnv, &errorOccurred);
@@ -219,17 +237,28 @@ RS_XML_xmlCreateConnectionParserCtxt(USER_OBJECT_ con)
 
 #ifdef LIBXML2
       ctx = xmlNewParserCtxt();
+#ifndef LIBXML2_NEW_BUFFER  // < 2.9.1
       ctx->_private = (USER_OBJECT_) con;
                                       /* R_chk_calloc */
       buf = (xmlParserInputBufferPtr) calloc(1, sizeof(xmlParserInputBuffer));
       buf->readcallback = RS_XML_readConnectionInput;
       buf->context = (void*) ctx;
-      buf->buffer = xmlBufferCreate();
       buf->raw = NULL; /* buf->buffer; */
+      xmlBufferPtr tmp = xmlBufferCreate();
+      buf->buffer = tmp;
+#else
+    RFunCtxData *userData = (RFunCtxData *) R_alloc(sizeof(RFunCtxData), 1);
+    userData->fun = con;
+    userData->ctx = ctx;
+    buf = xmlParserInputBufferCreateIO(RS_XML_readConnectionInput, NULL, userData, XML_CHAR_ENCODING_NONE);
+#endif
 
-      ctx->input = xmlNewIOInputStream(ctx, buf, XML_CHAR_ENCODING_NONE);
-
-      inputPush(ctx, ctx->input);
+      xmlParserInputPtr input = xmlNewIOInputStream(ctx, buf, XML_CHAR_ENCODING_NONE);
+      if(!input) {
+	  PROBLEM "can't create new IOInputStream"
+	      ERROR;
+      }
+      inputPush(ctx, input);
 #endif
       return(ctx);
 }
@@ -309,7 +338,7 @@ R_isBranch(const xmlChar *localname, RS_XMLParserData *rinfo)
 }
 
 char *
-getPropertyValue(xmlChar **ptr)
+getPropertyValue(const xmlChar **ptr)
 {
   int len;
   char *tmp;
@@ -348,7 +377,7 @@ R_processBranch(RS_XMLParserData * rinfo,
 	  for(i = 0; *p ; i += 2, p += 2) 
             xmlSetProp(node, p[0], p[1]); /*??? Do we need to xmlStrdup() this. */
 	} else {
-	  xmlChar **ptr = p;
+	  const xmlChar **ptr = p;
 	  for(i = 0; i < nb_attributes; i++, ptr += 5) {
 	    /*XXX does this get freed later on?*/
             xmlSetProp(node, xmlStrdup(ptr[0]), getPropertyValue(ptr));
