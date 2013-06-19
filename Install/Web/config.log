@@ -30,12 +30,13 @@ Kernel configured for up to 4 processors.
 Processor type: i486 (Intel 80486)
 Processors active: 0 1 2 3
 Primary memory available: 8.00 gigabytes
-Default processor set: 136 tasks, 746 threads, 4 processors
-Load average: 3.62, Mach factor: 0.85
+Default processor set: 119 tasks, 583 threads, 4 processors
+Load average: 1.37, Mach factor: 2.61
 /bin/machine           = unknown
 /usr/bin/oslevel       = unknown
 /bin/universe          = unknown
 
+PATH: /Users/duncan/llvm-devel/build/Debug+Asserts/bin
 PATH: /Library/Frameworks/Python.framework/Versions/Current/bin
 PATH: /Library/Frameworks/Python.framework/Versions/2.6/bin
 PATH: .
@@ -101,7 +102,7 @@ ac_cv_env_target_alias_value=
 ## Output variables. ##
 ## ----------------- ##
 
-DATE='Sun Jun 16 08:07:24 PDT 2013'
+DATE='Tue Jun 18 19:04:03 PDT 2013'
 DEFS='-DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\"'
 ECHO_C='ECHO_N=''
 ECHO_T=''
@@ -115,12 +116,12 @@ PACKAGE_NAME=''
 PACKAGE_STRING=''
 PACKAGE_TARNAME=''
 PACKAGE_VERSION=''
-PATCH_LEVEL='0'
+PATCH_LEVEL='1'
 PATH_SEPARATOR=':'
 PKG_NAME='XML'
 SHELL='/bin/sh'
-TAR_FILE='XML_3.98-0.tar.gz'
-ZIP_FILE='XML_3.98-0.zip'
+TAR_FILE='XML_3.98-1.tar.gz'
+ZIP_FILE='XML_3.98-1.zip'
 bindir='${exec_prefix}/bin'
 build_alias=''
 datadir='${datarootdir}'

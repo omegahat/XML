@@ -1,16 +1,24 @@
 \name{getXIncludes}
 \alias{getXIncludes}
+\alias{xmlXIncludes}
 \title{Find the documents that are XInclude'd in an XML document}
 \description{
-  This function finds the names of the  documents
+  The \code{getXMLIncludes} function finds the names of the  documents
   that are XIncluded in a given XML document,
   optionally processing these documents recursively.
+
+  \code{xmlXIncludes} returns the hierarchy of included documents.
 }
 \usage{
 getXIncludes(filename, recursive = TRUE, skip = character(),
              omitPattern = "\\\\.(js|html?|txt|R|c)$",
              namespace = c(xi = "http://www.w3.org/2003/XInclude"),
             duplicated = TRUE)
+xmlXIncludes(filename, recursive = TRUE,
+         omitPattern = "\\.(js|html?|txt|R|c)$",
+         namespace = c(xi = "http://www.w3.org/2003/XInclude"),
+         addNames = TRUE,
+         clean = NULL, ignoreTextParse = FALSE)
 }
 \arguments{
   \item{filename}{the name of the XML document's URL or file or the
@@ -25,6 +33,16 @@ getXIncludes(filename, recursive = TRUE, skip = character(),
   \item{duplicated}{a logical value that controls whether only the
     unique names of the files are returned, or if we get all references
     to all files.}
+  \item{addNames}{a logical that controls whether we add the name of
+    the parent file as the names vector for the collection of included
+    file names. This is useful, but sometimes we want to disable this,
+    e.g. to create a \code{JSON} representation of the hierarchy for use
+  in, e.g., D3.}
+  \item{clean}{how to process the names of the files. This can be a
+    function or a character vector of two regular expressions passed to
+    \code{gsub}.
+    The function is called with a vector of file names. The regular
+    expressions are used in a call to \code{gsub}.}
 }
 \value{
  If \code{recursive} is \code{FALSE}, a character vector giving the

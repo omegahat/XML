@@ -51,6 +51,8 @@ void incrementDocRef(xmlDocPtr doc);
 int getNodeCount(xmlNodePtr node);
 void incrementDocRefBy(xmlDocPtr doc, int num);
 
+void RS_XML_recursive_unsetListDoc(xmlNodePtr list);
+
 
 /**
  Create a libxml comment node and return it as an S object
@@ -113,7 +115,6 @@ R_newXMLCDataNode(USER_OBJECT_ sdoc, USER_OBJECT_ value, USER_OBJECT_ manageMemo
 USER_OBJECT_
 R_newXMLPINode(USER_OBJECT_ sdoc, USER_OBJECT_ name, USER_OBJECT_ content, USER_OBJECT_ manageMemory)
 {
-  xmlDocPtr  doc = NULL;
   xmlNodePtr node;
 
   node = xmlNewPI(CHAR_TO_XMLCHAR(CHAR_DEREF(STRING_ELT(name, 0))), CHAR_TO_XMLCHAR(CHAR_DEREF(STRING_ELT(content, 0))));
@@ -290,10 +291,10 @@ RS_XML_removeNodeNamespaces(SEXP s_node, SEXP r_ns)
 {
     int i, n;
     xmlNodePtr node = (xmlNodePtr) R_ExternalPtrAddr(s_node);
-    xmlNsPtr p;
     SEXP el, ans;
     const char *prefix;
-    int t = TYPEOF(r_ns);
+//    xmlNsPtr p;
+//    int t = TYPEOF(r_ns);
     n = Rf_length(r_ns);
     PROTECT(ans = allocVector(LGLSXP, n));
 
@@ -1123,8 +1124,8 @@ R_createXMLNodeRef(xmlNodePtr node, USER_OBJECT_ finalize)
 SEXP
 R_addXMLNodeFinalizer(SEXP r_node)
 {
-   xmlNodePtr node = (xmlNodePtr) R_ExternalPtrAddr(r_node);
 #ifdef XML_REF_COUNT_NODES /* ??? should this be ifndef or ifdef.??  */
+   xmlNodePtr node = (xmlNodePtr) R_ExternalPtrAddr(r_node);
   R_RegisterCFinalizer(r_node, decrementNodeRefCount);
 #endif
   return(r_node);
@@ -1480,7 +1481,7 @@ SEXP
 R_setXMLInternalTextNode_value(SEXP node, SEXP value)
 {
    xmlNodePtr n = (xmlNodePtr) R_ExternalPtrAddr(node);
-   xmlChar *tmp;
+//   xmlChar *tmp;
    const char *str;
 
    DECL_ENCODING_FROM_NODE(n)
@@ -1614,7 +1615,7 @@ RS_XML_isDescendantOf(USER_OBJECT_ r_node, USER_OBJECT_ r_top, USER_OBJECT_ stri
 SEXP
 R_XML_indexOfChild(SEXP r_node)
 {
-    xmlNodePtr node, parent, ptr;
+    xmlNodePtr node, ptr; // parent
     int i = 0;
     node = (xmlNodePtr) R_ExternalPtrAddr(r_node);    
     ptr = node->parent->children;

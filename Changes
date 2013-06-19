@@ -1,3 +1,7 @@
+Version 3.98-1
+  
+  *      Compilation error with clang. Simple declaration of a routine.
+
 Version 3.98-0
 
   *      Update for libxml2-2.9.1 and reading from a connection for xmlEventParse().

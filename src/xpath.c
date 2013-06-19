@@ -158,7 +158,6 @@ R_addXMLInternalDocument_finalizer(SEXP sdoc, SEXP fun)
 #if R_XML_DEBUG_WEAK_REFS
     LastDoc = sdoc;
 #endif
-    void *ptr = R_ExternalPtrAddr(sdoc);
     if(TYPEOF(fun) == CLOSXP) {
 	R_RegisterFinalizer(sdoc, fun);	
 	return(sdoc);
@@ -171,6 +170,7 @@ R_addXMLInternalDocument_finalizer(SEXP sdoc, SEXP fun)
 
     R_RegisterCFinalizer(sdoc, action);
 #ifdef R_XML_DEBUG_WEAK_REFS
+    void *ptr = R_ExternalPtrAddr(sdoc);
     int status = R_findExtPtrWeakRef(ptr);
     fprintf(stderr, "is weak ref %d\n", status);
 #endif

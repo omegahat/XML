@@ -182,7 +182,7 @@ collectChildNodes(xmlNodePtr root, unsigned int *ctr, SEXP kids)
 void
 processNode(xmlNodePtr root, xmlNodePtr parent, unsigned int *ctr, int parentId, char *id, SEXP env, SEXP childrenEnv, SEXP parentEnv, R_XMLSettings *parserSettings)
 {
-  int i;
+//  int i;
   xmlNodePtr node;
   SEXP rnode, kids;
   unsigned int curId = *ctr;
@@ -239,7 +239,7 @@ processNode(xmlNodePtr root, xmlNodePtr parent, unsigned int *ctr, int parentId,
 unsigned int
 convertDOMToHashTree(xmlNodePtr root, SEXP env, SEXP childrenEnv, SEXP parentEnv, R_XMLSettings *parserSettings)
 {
-  SEXP rnode;
+//  SEXP rnode;
   unsigned int ctr = 0;
   xmlNodePtr tmp;
   char id[20];

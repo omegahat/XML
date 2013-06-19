@@ -54,38 +54,3 @@ function(u, baseURL, sep = "/", addBase = TRUE, simplify = TRUE)
       u
 }
 
-simplifyPath =
-function(path)
-{
-  path = gsub("/\\./", "/", path)  
-  path = gsub("^\\./", "", path)  
-  # Doesn't  handle "../foo"
-  while(grepl("[^./]/\\.\\.", path)) {
-     path = gsub("/[^/.]+/\\.\\./?", "/", path)
- }
-
-  
- path = gsub("^(\\./)+", "", path)
-  
- path
-}
-
-
-simplifyPath1 =
-# Could use strsplit, etc.  
-function(path)
-{
- els = strsplit(path, "/")[[1]]
- 
- while(length(i <- which(els == ".."))) {
-   i = max(i)
-   if(length(i) == 1 && i == 1)
-     break
-
-   i = i[i != 1]
- }
-
- paste(els, sep = "/")
-}
-
-  
