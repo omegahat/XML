@@ -56,11 +56,17 @@ a \code{XMLInternalDocument} or which is a file name or string
 \examples{
 
   xsd = xmlParse(system.file("exampleData", "author.xsd", package = "XML"), isSchema =TRUE)
+
   doc = xmlInternalTreeParse(system.file("exampleData", "author.xml",  package = "XML"))
   xmlSchemaValidate(xsd, doc)
 
   doc = xmlInternalTreeParse(system.file("exampleData", "author_invalid.xml",  package = "XML"))
-  xmlSchemaValidate(xsd, doc)
+  e = xmlSchemaValidate(xsd, doc)
+  names(e)
+  length(e$errors)
+  names(e$errors[[1]])
+  e$errors[[1]]
+
 }
 \keyword{IO}
 \concept{validation}
