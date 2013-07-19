@@ -54,11 +54,13 @@ a \code{XMLInternalDocument} or which is a file name or string
  \code{\link{xmlSchemaParse}}
 }
 \examples{
-if(FALSE) {
+
   xsd = xmlParse(system.file("exampleData", "author.xsd", package = "XML"), isSchema =TRUE)
   doc = xmlInternalTreeParse(system.file("exampleData", "author.xml",  package = "XML"))
   xmlSchemaValidate(xsd, doc)
-}
+
+  doc = xmlInternalTreeParse(system.file("exampleData", "author_invalid.xml",  package = "XML"))
+  xmlSchemaValidate(xsd, doc)
 }
 \keyword{IO}
 \concept{validation}
