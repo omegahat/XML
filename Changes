@@ -1,5 +1,8 @@
 Version 3.98-1
   
+  *      xmlToS4() handles attributes with namespace prefixes and children
+         with the same node name.
+
   *      Compilation error with clang. Simple declaration of a routine.
 
   *      xmlXIncludes() added.

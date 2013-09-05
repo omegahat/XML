@@ -17,7 +17,10 @@ function(node, obj = new(xmlName(node)), ...)
  standardGeneric("xmlToS4")
 )
 
+
 setMethod("xmlToS4", "XMLInternalNode",
+          # really should use XMLSchema define the classes
+          # and 
  function(node, obj = new(xmlName(node)), ...)
 {
   if(is(obj, "character") && !isS4(obj))
@@ -27,22 +30,79 @@ setMethod("xmlToS4", "XMLInternalNode",
 #    return(as())
   ids = names(node)
   nodes = xmlChildren(node)
-  obj = addXMLAttributes(obj, xmlAttrs(node))
+  obj = addXMLAttributes(obj, xmlAttrs(node, addNamespacePrefix = TRUE))
+  
   slotIds = slotNames(obj)
   slots = getClass(class(obj))@slots
+
+
+if(any(duplicated(ids))) {
+     # experimenting with a different way of doing this.
+     # Group the nodes with the same names and the process those.
+  groupedNodes = split(nodes, ids)
+  ids = intersect(names(groupedNodes), slotIds)
+  for(i in ids) {
+    tmp = groupedNodes[[i]]
+    slot = slots[[i]]
+    if(length(tmp) > 1) {
+      val = lapply(tmp, convertNode, slot)
+      val = if(isAtomicType(slot))
+              unlist(val)
+            else
+              as(val, slot) # may be a specific sub-type of list
+    } else {
+       el = tmp[[1]]
+       val = convertNode(el, slot)
+    }
+    slot(obj, i) <- val 
+
+  }
+} else {
+
+  # This was the original mechanism but it doesn't handle multiple nodes of the same name.
   for(i in seq(along = nodes)) {
      if(ids[i] %in% slotIds) {
 
        val = if(slots[[ids[i]]] == "character")
-                 xmlValue(nodes[[i]])
+                xmlValue(nodes[[i]])
              else
-                 as(nodes[[i]], slots[[ids[i]]]) 
+                tryCatch(as(nodes[[i]], slots[[ids[i]]]),
+                         error = function(e)
+                                    xmlToS4(nodes[[i]]))
+       
        slot(obj, ids[i]) <- val #    xmlToS4(nodes[[i]])
      }
      # obj = addAttributes(obj,  xmlAttrs(nodes[[i]]))
   }
+}
+  
   obj
 })
+
+convertNode =
+function(el, slot)
+{
+  if(slot == "character")
+    xmlValue(el)
+  else
+    tryCatch(as(el, slot),
+             error = function(e)
+                         xmlToS4(el))
+}
+
+isAtomicType =
+  #
+  # check if className refers to a primitive/atomic type
+  # or not.
+function(className)
+{
+  atomicTypes = c("logical", "integer", "numeric", "character")
+  if(className %in% atomicTypes)
+    return(TRUE)
+
+  k = getClassDef(className)
+  length(intersect(names(k@contains), atomicTypes)) > 0
+}
 
 
 addXMLAttributes =
@@ -50,10 +110,21 @@ function(obj, attrs)
 {
   slots = getClass(class(obj))@slots
   i = match(names(attrs), names(slots))
-  if(any(!is.na(i)))
-    for(i in names(attrs)[!is.na(i)])
-      slot(obj, i) <- as(attrs[i], slots[[i]])
 
+   # handle any namespace prefix
+  if(any(is.na(i))) {
+     w = grepl(":", names(attrs)) & is.na(i)
+     if(any(w))
+       i[which(w)] = match(gsub(".*:", "", names(attrs)[which(w)]), names(slots))
+  }
+
+  m = i
+  if(any(!is.na(i))) {
+    vals = structure(attrs[!is.na(i)], names = names(slots)[i [!is.na(i)] ])
+    for(i in names(vals))
+      slot(obj, i) <- as(vals[i], slots[[i]])
+  }
+  
   obj
 }
 
