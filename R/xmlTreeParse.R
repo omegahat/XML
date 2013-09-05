@@ -38,6 +38,8 @@ function(file, ignoreBlanks = TRUE, handlers = NULL,
   if(missing(isURL) && !asText) 
     isURL <- length(grep("^(http|ftp|file)://", file, useBytes = TRUE, perl = TRUE))
 
+  if(file == "" || length(file) == 0)
+    stop("empty or no content specified")
 
   if(isHTML) {
     validate = FALSE

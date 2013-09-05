@@ -19,16 +19,16 @@ htmlTreeParse <-
 # See also xml
 #
 function(file, ignoreBlanks = TRUE, handlers = NULL,
-           replaceEntities = FALSE, asText = inherits(file, "AsIs") || !isURL && grepl("^<", file), # could have a BOM
-            trim = TRUE, 
-            isURL = is.character(file) && grepl("^(http|ftp)", file),
-            asTree = FALSE, useInternalNodes = FALSE,
-            encoding = character(),
-            useDotNames = length(grep("^\\.", names(handlers))) > 0,
-            xinclude = FALSE, addFinalizer = TRUE, error = function(...){},
-            options = integer(), parentFirst = FALSE)
+         replaceEntities = FALSE, asText = inherits(file, "AsIs") || !isURL && grepl("^<", file), # could have a BOM
+         trim = TRUE, 
+         isURL = is.character(file) && grepl("^(http|ftp)", file),
+         asTree = FALSE, useInternalNodes = FALSE,
+         encoding = character(),
+         useDotNames = length(grep("^\\.", names(handlers))) > 0,
+         xinclude = FALSE, addFinalizer = TRUE, error = function(...){},
+         options = integer(), parentFirst = FALSE)
 {
-if(TRUE) 
+  if(TRUE) 
   {
      doc = xmlTreeParse(file, ignoreBlanks, handlers, replaceEntities, asText, trim, validate = FALSE,
                       getDTD = FALSE, isURL, asTree, addAttributeNamespaces = FALSE, 

@@ -52,6 +52,9 @@ function(msg, code, domain, line, col, level, filename, class = "XMLError")
 htmlErrorHandler = 
 function(msg, code, domain, line, col, level, filename, class = "XMLError")
 {
+  if(missing(code))  # this is early in the process and we don't get all the information
+    stop(if(length(msg)) msg else "unknown XML error")
+  
   e = makeXMLError(msg, code, domain, line, col, level, filename, class)
   dom = names(e$domain)
   class(e) = c(names(e$code),
