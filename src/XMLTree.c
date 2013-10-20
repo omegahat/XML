@@ -1205,7 +1205,9 @@ R_saveXMLDOM(USER_OBJECT_ sdoc, USER_OBJECT_ sfileName, USER_OBJECT_ compression
 	    xmlSetDocCompressMode(doc, INTEGER_DATA(compression)[0]);
 	}
 	if(encoding && encoding[0])
-	    xmlSaveFileEnc(CHAR_DEREF(STRING_ELT(sfileName, 0)),  doc, encoding);
+// xmlSaveFileEnc doesn't indent. So use xmlSaveFormatFileEnc(). Issue identified by Earl Brown.
+//	    xmlSaveFileEnc(CHAR_DEREF(STRING_ELT(sfileName, 0)),  doc, encoding);
+	    xmlSaveFormatFileEnc(CHAR_DEREF(STRING_ELT(sfileName, 0)),  doc, encoding, LOGICAL_DATA(sindent)[0]);
 #if 0
 	else
 	    xmlSaveFile(CHAR_DEREF(STRING_ELT(sfileName, 0)),  doc);
