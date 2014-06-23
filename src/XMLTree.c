@@ -1215,6 +1215,10 @@ R_saveXMLDOM(USER_OBJECT_ sdoc, USER_OBJECT_ sfileName, USER_OBJECT_ compression
 	else {
 	  FILE *f;
 	  f = fopen(CHAR_DEREF(STRING_ELT(sfileName, 0)), "w");
+	  if(!f) {
+	      PROBLEM "cannot create file %s. Check the directory exists and permissions are appropriate", CHAR_DEREF(STRING_ELT(sfileName, 0))
+		  ERROR;
+          }
 	  xmlDocFormatDump(f, doc, 1);
 	  fclose(f);
 	}
