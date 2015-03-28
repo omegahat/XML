@@ -1020,7 +1020,7 @@ function(node, ..., kids = list(...), at = NA, cdata = FALSE, addFinalizer = NA,
 {
   kids = unlist(kids, recursive = FALSE)
 
-  removeNodes(kids)[!sapply(kids, is, "character")]
+  removeNodes(kids[!vapply(kids, is.character, logical(1L))])
 
   if(length(kids) == 1 && inherits(kids[[1]], "XMLInternalNode") && is.na(at)) {
      .Call("R_insertXMLNode", kids[[1]], node, -1L, FALSE, PACKAGE = "XML")
