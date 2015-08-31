@@ -417,6 +417,9 @@ R_reportDocGC()
     REprintf("<r:docReport createdInBranch='%d' createdByXMLPackage='%d' freed='%d'/>\n", numDocsCreated, R_numXMLDocs, R_numXMLDocsFreed);
 }
 
+
+typedef void (*BranchRoutine)(xmlNodePtr);
+
 void
 R_endBranch(RS_XMLParserData *rinfo,
             const xmlChar * localname, 
@@ -437,17 +440,23 @@ R_endBranch(RS_XMLParserData *rinfo,
 		fun = VECTOR_ELT(rinfo->branches, rinfo->branchIndex);
  	    }
 
-	    PROTECT(args = NEW_LIST(1));
-	    if(tmp->doc == NULL) {
-		doc = xmlNewDoc("1.0");
-		initDocRefCounter(doc);
-   	        xmlDocSetRootElement(doc, tmp);
+
+	    if(TYPEOF(fun) == EXTPTRSXP) {
+		BranchRoutine r = (BranchRoutine) R_ExternalPtrAddr(fun);
+		r(tmp);
+	    } else {
+		PROTECT(args = NEW_LIST(1));
+		if(tmp->doc == NULL) {
+		    doc = xmlNewDoc("1.0");
+		    initDocRefCounter(doc);
+		    xmlDocSetRootElement(doc, tmp);
 /*		fprintf(stderr, "<r:createDoc addr='%p'/>\n", doc); */
-		numDocsCreated++;
+		    numDocsCreated++;
+		}
+		SET_VECTOR_ELT(args, 0, rnode = R_createXMLNodeRef(tmp, rinfo->finalize));
+		RS_XML(invokeFunction)(fun, args, NULL, rinfo->ctx);
+		UNPROTECT(1);
 	    }
-	    SET_VECTOR_ELT(args, 0, rnode = R_createXMLNodeRef(tmp, rinfo->finalize));
-	    RS_XML(invokeFunction)(fun, args, NULL, rinfo->ctx);
- 	    UNPROTECT(1);
 	    /*
             xmlFreeNode(rinfo->top);
             rinfo->top = NULL;
