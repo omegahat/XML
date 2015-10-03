@@ -1239,6 +1239,15 @@ function(node, ..., kids = list(...), free = FALSE)
    node
 }
 
+replaceNodeWithChildren =
+function(node)
+{
+  if(!inherits(node, "XMLInternalNode"))
+      stop("replaceNodeWithChildren only work on internal XML/HTML nodes")
+  
+  .Call("R_replaceNodeWithChildren", node)
+}
+
 
 
 setGeneric("toHTML",
@@ -1676,3 +1685,8 @@ function(node, ns, asPrefix = TRUE, doc = as(node, "XMLInternalDocument"))
 
  .Call("R_xmlSearchNs", doc, node, as.character(ns), as.logical(asPrefix), PACKAGE = "XML")
 }
+
+
+
+
+

@@ -1811,3 +1811,31 @@ R_childStringValues(SEXP r_node, SEXP r_len, SEXP r_asVector, SEXP r_encoding, S
     UNPROTECT(nprotect);
     return(ans);
 }
+
+
+
+USER_OBJECT_
+R_replaceNodeWithChildren(USER_OBJECT_ r_node)
+{
+    xmlNodePtr node = (xmlNodePtr) R_ExternalPtrAddr(r_node);    
+
+    xmlNodePtr nxt = node->next;
+
+    if(node->prev) {
+	node->prev->next = node->children;
+	node->children->prev = node->prev;
+    } else
+	node->parent->children = node->children;
+    
+    if(node->children) {
+	xmlNodePtr cur = node->children;
+	while(cur->next)
+	    cur = cur->next;
+
+	cur->next = nxt;
+	if(nxt)
+	    nxt->prev = cur;
+    }
+
+    return(NULL_USER_OBJECT);
+}
