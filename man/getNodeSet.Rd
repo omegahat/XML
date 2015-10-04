@@ -31,7 +31,11 @@
   as well as within the sub-tree that the node parents.  Node specific
   XPath expressions are typically started with a "." to indicate the
   search is relative to that node.
-  
+
+  You can use several XPath 2.0 functions in the XPath
+  query. Furthermore, you can also register additional XPath
+  functions that are implemented either with R functions or C routines.
+  (See \code{xpathFuns}.)
 
   The set of matching nodes corresponding to an XPath expression
   are returned in R as a list.  One can then  iterate over these elements to process the 
@@ -54,6 +58,7 @@
   to a vector or matrix rather than left as a list.
   In this way, it has the same relationship to  \code{xpathApply}
   as \code{\link[base]{sapply}} has to  \code{\link[base]{lapply}}.
+
 
   \code{matchNamespaces} is a separate function that is used to
   facilitate
@@ -99,10 +104,11 @@ getNodeSet(doc, path, namespaces = xmlNamespaceDefinitions(doc, simplify = TRUE)
                     fun = NULL, sessionEncoding = CE_NATIVE, addFinalizer = NA, ...)
 xpathApply(doc, path, fun, ... ,
             namespaces =  xmlNamespaceDefinitions(doc, simplify = TRUE),
-              resolveNamespaces = TRUE, addFinalizer = NA)
+              resolveNamespaces = TRUE, addFinalizer = NA, xpathFuns = list())
 xpathSApply(doc, path, fun = NULL, ... ,
              namespaces = xmlNamespaceDefinitions(doc, simplify = TRUE),
-               resolveNamespaces = TRUE, simplify = TRUE, addFinalizer = NA)
+               resolveNamespaces = TRUE, simplify = TRUE,
+                addFinalizer = NA, xpathFuns = list())
 matchNamespaces(doc, namespaces,
                  nsDefs = xmlNamespaceDefinitions(doc, recursive = TRUE, simplify = FALSE),
                  defaultNs = getDefaultNamespace(doc, simplify = TRUE))
@@ -159,7 +165,19 @@ matchNamespaces(doc, namespaces,
 \item{sessionEncoding}{experimental functionality and parameter related
   to encoding.}
   \item{addFinalizer}{a logical value or identifier for a C routine
-        that controls whether we register finalizers on the intenal node.}   
+        that controls whether we register finalizers on the intenal
+	node.} 
+
+  \item{xpathFuns}{a list containing either character strings
+    or a named element containing the address of a C routine.
+    These identify functions that can be used in the XPath expression.
+    A character string identifies the name of the XPath function and the
+    R function of the same name (and located on the R search path).
+    A C routine to implement an XPath function is specified via a call
+    to \code{\link[base]{getNativeSymbolInfo}} and passing just the
+    address field.  This is provided in the list() with a name which is
+    used as the name of the XPath function.
+  }
 }
 \details{
   When a namespace is defined on a node in the XML document,
@@ -443,8 +461,23 @@ So we would use
     class)))
 
 
+       
+       # Use of XPath 2.0 functions min() and max()
+     doc = xmlParse('<doc><p age="10"/><p age="12"/><p age="7"/></doc>')
+     getNodeSet(doc, "//p[@age  = min(//p/@age)]")
+     getNodeSet(doc, "//p[@age  = max(//p/@age)]")
+
+     avg = function(...) {
+             mean(as.numeric(unlist(...)))
+           }
+     getNodeSet(doc, "//p[@age > avg(//p/@age)]", xpathFuns = "avg")
 
 
+     doc = xmlParse('<doc><ev date="2010-12-10"/><ev date="2011-3-12"/><ev date="2015-10-4"/></doc>')
+     `month-from-date` = function(node) {
+        match(months(as.Date(as.character(node[[1]]))), month.name)
+     }
+     getNodeSet(doc, "//ev[month-from-date(@date) > 7]", xpathFuns =  list("month-from-date"))
 }
 \keyword{file}
 \keyword{IO}
