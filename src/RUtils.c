@@ -201,7 +201,7 @@ static R_CallMethodDef callMethods[] = {
 	ENTRY(RS_XML_setKeepBlanksDefault, 1),
 	ENTRY(R_getDocEncoding, 1),
 	ENTRY(R_getLineNumber, 1),
-        ENTRY(RS_XML_xpathEval, 7),
+        ENTRY(RS_XML_xpathEval, 9),
         ENTRY(RS_XML_xmlNodeChildrenReferences, 3),
 	ENTRY(RS_XML_freeDoc, 1),
 	ENTRY(RS_XML_setRootNode, 2),
@@ -228,7 +228,6 @@ static R_CallMethodDef callMethods[] = {
 	ENTRY(RS_XML_xmlNodeName, 1),
 	ENTRY(RS_XML_xmlNodeNamespace, 1),
 	ENTRY(RS_XML_xmlNodeAttributes, 3),
-	ENTRY(RS_XML_xmlNodeChildrenReferences, 3),
 	ENTRY(R_xmlNodeValue, 3),
 	ENTRY(R_setXMLInternalTextNode_value, 2),
 	ENTRY(RS_XML_xmlNodeParent, 2),
@@ -245,6 +244,7 @@ static R_CallMethodDef callMethods[] = {
 	ENTRY(RS_XML_xmlXIncludeProcessFlags, 2),
 	ENTRY(RS_XML_xmlXIncludeProcessTreeFlags, 2),
 	ENTRY(R_convertXMLNsRef, 1),
+	ENTRY(R_replaceNodeWithChildren, 1),
 	{NULL, NULL, 0}
 };
 
