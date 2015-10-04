@@ -82,7 +82,7 @@ function(file, ignoreBlanks = TRUE, handlers = NULL,
      # Look for a < in the string.
   if(asText && length(grep(sprintf("^%s?\\s*<", BOMRegExp), file, perl = TRUE, useBytes = TRUE)) == 0) {  # !isXMLString(file) ?
     if(!isHTML || (isMissingAsText && !inherits(file, "AsIs"))) {
-      e = simpleError(paste("XML content does not seem to be XML:", sQuote(file)))
+      e = simpleError(paste("XML content does not seem to be XML:", if(file.exists(file)) file else sQuote(substring(file, 100))))
       class(e) = c("XMLInputError", class(e))
       (if(isHTML) warning else stop)(e)
     }
