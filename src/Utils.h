@@ -116,7 +116,7 @@ USER_OBJECT_ RS_XML_clone(USER_OBJECT_ obj, USER_OBJECT_ recursive, USER_OBJECT_
 
 USER_OBJECT_ R_xmlRootNode(USER_OBJECT_ sdoc, USER_OBJECT_ skipDtd, USER_OBJECT_ manageMemory);
 SEXP RS_XML_xpathEval(SEXP sdoc, SEXP r_node, SEXP path, SEXP namespaces, SEXP fun, SEXP charEncoding,
-		      SEXP manageMemory);
+		      SEXP manageMemory, SEXP xpathFuns, SEXP anonFuns);
 
 USER_OBJECT_ RS_XML_xmlNodeChildrenReferences(USER_OBJECT_ snode, USER_OBJECT_ r_addNames, USER_OBJECT_ manageMemory);
 
@@ -247,6 +247,8 @@ SEXP R_createXMLNodeRefDirect(xmlNodePtr node, int addFinalizer);
 int R_XML_getManageMemory(USER_OBJECT_ user, xmlDocPtr doc, xmlNodePtr node);
 
 USER_OBJECT_ R_convertXMLNsRef(SEXP r_ns);
+
+USER_OBJECT_ R_replaceNodeWithChildren(USER_OBJECT_ r_node);
 
 #endif
 
