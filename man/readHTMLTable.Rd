@@ -174,6 +174,7 @@ if(require(RCurl)) {
  tb = readHTMLTable(tableNodes[[2]], elFun = tryAsInteger,
                        colClasses = c("character", rep("integer", 9)))
 }
+}
 \keyword{IO}
 \keyword{data}
 
