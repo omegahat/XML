@@ -1245,7 +1245,7 @@ function(node)
   if(!inherits(node, "XMLInternalNode"))
       stop("replaceNodeWithChildren only work on internal XML/HTML nodes")
   
-  .Call("R_replaceNodeWithChildren", node)
+  .Call("R_replaceNodeWithChildren", node, PACKAGE = "XML")
 }
 
 
