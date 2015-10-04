@@ -168,6 +168,18 @@ function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x),
 
 setS3Method("xmlValue", "XMLProcessingInstruction")
 
+
+xmlValue.XMLNodeSet =
+function (x, ignoreComments = FALSE, recursive = TRUE, encoding = if(length(x)) getEncoding(x[[1]]) else "", 
+    trim = FALSE) 
+{
+  sapply(x, xmlValue, recursive = recursive, encoding = encoding, trim = trim)
+}
+
+setS3Method("xmlValue", "XMLNodeSet")
+
+
+
 "xmlValue.NULL" =
 function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x), trim = FALSE)
           as.character(NA)
