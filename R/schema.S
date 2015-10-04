@@ -106,7 +106,7 @@ function(schema, doc, errorHandler = xmlErrorFun(), options = 0L)
   if(is.character(schema))
     schema = xmlSchemaParse(schema)
 
-  .oldErrorHandler = XML:::setXMLErrorHandler(if(is.list(errorHandler)) errorHandler[[1]] else errorHandler)
+  .oldErrorHandler = setXMLErrorHandler(if(is.list(errorHandler)) errorHandler[[1]] else errorHandler)
   on.exit(.Call("RS_XML_setStructuredErrorHandler", .oldErrorHandler, PACKAGE = "XML"), add = TRUE)
   
   status = .Call("RS_XML_xmlSchemaValidateDoc", schema@ref, doc, as.integer(options), NULL, PACKAGE = "XML") # errorHandler)

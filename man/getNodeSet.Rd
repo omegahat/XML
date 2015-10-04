@@ -168,14 +168,14 @@ matchNamespaces(doc, namespaces,
         that controls whether we register finalizers on the intenal
 	node.} 
 
-  \item{xpathFuns}{a list containing either character strings
-    or a named element containing the address of a C routine.
+  \item{xpathFuns}{a list containing either character strings, functions
+    or named elements containing the address of a C routine.
     These identify functions that can be used in the XPath expression.
     A character string identifies the name of the XPath function and the
     R function of the same name (and located on the R search path).
     A C routine to implement an XPath function is specified via a call
     to \code{\link[base]{getNativeSymbolInfo}} and passing just the
-    address field.  This is provided in the list() with a name which is
+    address field.  This is provided in the \code{list()} with a name which is
     used as the name of the XPath function.
   }
 }
@@ -474,10 +474,10 @@ So we would use
 
 
      doc = xmlParse('<doc><ev date="2010-12-10"/><ev date="2011-3-12"/><ev date="2015-10-4"/></doc>')
-     `month-from-date` = function(node) {
-        match(months(as.Date(as.character(node[[1]]))), month.name)
-     }
-     getNodeSet(doc, "//ev[month-from-date(@date) > 7]", xpathFuns =  list("month-from-date"))
+     getNodeSet(doc, "//ev[month-from-date(@date) > 7]",
+                 xpathFuns = list("month-from-date" =  function(node) {
+                                                           match(months(as.Date(as.character(node[[1]]))), month.name)
+                                                        }))
 }
 \keyword{file}
 \keyword{IO}

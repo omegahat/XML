@@ -3,7 +3,7 @@
   # state variable.
   # This also defines methods for the 
 function(where = "package:XML") {  
-   require(methods)
+
 
    setClass("SAXState",  "VIRTUAL", where = where)
 
