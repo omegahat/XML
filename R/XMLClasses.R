@@ -156,6 +156,9 @@ setAs("XMLDocument", "XMLInternalDocument",
        })
 
 
+###################
+
+
 ############
 
 #setMethod("[[", c("XMLInternalElementNode", "numeric") ,
@@ -729,7 +732,8 @@ function(doc, path, fun = NULL, ... , namespaces = xmlNamespaceDefinitions(doc, 
 xpathApply.XMLInternalDocument =
 function(doc, path, fun = NULL, ... , namespaces = xmlNamespaceDefinitions(doc, simplify = TRUE),
           resolveNamespaces = TRUE, addFinalizer = NA, .node = NULL, noMatchOkay = FALSE, 
-           sessionEncoding = CE_NATIVE, noResultOk = FALSE) # native
+           sessionEncoding = CE_NATIVE, noResultOk = FALSE,
+          xpathFuns = list()) # native
 {
   path = paste(path, collapse = " | ")
 
@@ -755,7 +759,10 @@ function(doc, path, fun = NULL, ... , namespaces = xmlNamespaceDefinitions(doc, 
              else
                 getEncodingREnum(sessionEncoding)
 
-  ans = .Call("RS_XML_xpathEval", doc, .node, as.character(path), namespaces, fun, encoding, addFinalizer, PACKAGE = "XML")
+  if(is.character(xpathFuns))
+      xpathFuns = as.list(xpathFuns)
+
+  ans = .Call("RS_XML_xpathEval", doc, .node, as.character(path), namespaces, fun, encoding, addFinalizer, xpathFuns, PACKAGE = "XML")
 
   if(!noMatchOkay && length(ans) == 0 && length(getDefaultNamespace(xmlRoot(doc))) > 0) {
     tmp = strsplit(path, "/")[[1]]

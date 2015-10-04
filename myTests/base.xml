@@ -1,0 +1,7 @@
+<doc
+	 xmlns:xi="http://www.w3.org/2003/XInclude">
+<p>
+This is regular text in the original document.
+</p>
+<xi:include href="baseInclude.xml" xpointer="xpointer(/p)"/>
+</doc>
