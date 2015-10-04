@@ -474,7 +474,7 @@ RS_XML(createParserData)(USER_OBJECT_ handlers, USER_OBJECT_ finalize)
  parser->methods = handlers;
  parser->finalize = finalize;
 
-return(parser);
+ return(parser);
 }
 
 /**
