@@ -1,9 +1,9 @@
 Package: XML
-Version: 3.98-1
+Version: 3.98-3
 Author:  Duncan Temple Lang (duncan@r-project.org)
 Maintainer: Duncan Temple Lang <duncan@r-project.org>
-Title: Tools for parsing and generating XML within R and S-Plus.
-Depends: R (>= 1.2.0), methods, utils
+Title: Tools for parsing and generating XML within R and S-Plus
+Depends: R (>= 1.2.0), utils
 Imports: methods
 Suggests: bitops, RCurl
 SystemRequirements: libxml2 (>= 2.6.3)
@@ -19,7 +19,7 @@ Note: In version 2.4.0 of this package, a new approach to garbage collection has
       the result of incrementing the minor count by 1 for each release.  
       Specifically, there is no change in the interface.
 URL:  http://www.omegahat.org/RSXML
-License: BSD
+License: BSD_3_clause + file LICENSE
 Collate: AAA.R
 	DTD.R
 	DTDClasses.R

@@ -13,7 +13,8 @@
  relative directories such as "..".
 }
 \usage{
-getRelativeURL(u, baseURL, sep = "/", addBase = TRUE, simplify = TRUE)
+getRelativeURL(u, baseURL, sep = "/", addBase = TRUE,
+               simplify = TRUE, escapeQuery = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -29,7 +30,7 @@ getRelativeURL(u, baseURL, sep = "/", addBase = TRUE, simplify = TRUE)
       to  the  result.}
     \item{simplify}{a logical value that controls whether we attempt to
       simplify/normalize the path to remove \code{..} and \code{.}}
-    
+    \item{escapeQuery}{a logical value. Currently ignored.}
 }
 \details{
  This uses the function \code{parseURI} to compute the components

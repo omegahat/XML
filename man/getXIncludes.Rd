@@ -15,7 +15,7 @@ getXIncludes(filename, recursive = TRUE, skip = character(),
              namespace = c(xi = "http://www.w3.org/2003/XInclude"),
             duplicated = TRUE)
 xmlXIncludes(filename, recursive = TRUE,
-         omitPattern = "\\.(js|html?|txt|R|c)$",
+         omitPattern = "\\\\.(js|html?|txt|R|c)$",
          namespace = c(xi = "http://www.w3.org/2003/XInclude"),
          addNames = TRUE,
          clean = NULL, ignoreTextParse = FALSE)
@@ -43,6 +43,8 @@ xmlXIncludes(filename, recursive = TRUE,
     \code{gsub}.
     The function is called with a vector of file names. The regular
     expressions are used in a call to \code{gsub}.}
+  \item{ignoreTextParse}{if \code{TRUE}, ignore the XIncluded files that
+  are identified as text and not XML with \code{parse="text"}.}
 }
 \value{
  If \code{recursive} is \code{FALSE}, a character vector giving the

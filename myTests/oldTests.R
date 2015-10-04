@@ -2,7 +2,7 @@ if(FALSE) {
   # URL changed and the format of the data is now
   # via <li> elements.
   
-  u = "http://weather.sfgate.com/auto/sfgate/geo/precip/index.html"
+ u = "http://weather.sfgate.com/auto/sfgate/geo/precip/index.html"
                                         # header as a logical vector
  tt = tryCatch(readHTMLTable(u,
                                header = c(FALSE, FALSE, TRUE, FALSE, FALSE)),

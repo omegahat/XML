@@ -18,6 +18,9 @@ getRelativeURL =
   #  getRelativeURL("../foo/xyz/bar.html", "http://www.omegahat.org/a/b.html")
   #
   #
+  #  getRelativeURL("?page=2&searchterms=Data%20Science&searchlocation=&newsearch=true&sorttype=",  "http://www.cybercoders.com/search"))
+  #
+  #
   #  BROKEN
   #   getRelativeURL("foo", ".")   yields :///foo
   #
@@ -27,12 +30,13 @@ getRelativeURL =
   #    getRelativeURL("../foo", "http://www.omegahat.org/a/b.html")
   # should be http://www.omegahat.org/foo
   # or at least http://www.omegahat.org/a/../foo
-function(u, baseURL, sep = "/", addBase = TRUE, simplify = TRUE)  
+function(u, baseURL, sep = "/", addBase = TRUE, simplify = TRUE, escapeQuery = FALSE)  
 {
    if(length(u) > 1)
      return(sapply(u, getRelativeURL, baseURL, sep))
    
    pu = parseURI(u)
+   
    #XXX Need to strip the path in baseURL if pu$path starts with /
    if(pu$scheme == "" && addBase) {
       b = parseURI(baseURL)
@@ -42,7 +46,13 @@ function(u, baseURL, sep = "/", addBase = TRUE, simplify = TRUE)
         return(as(b, "character"))
       }
 
-      b$path = sprintf("%s%s%s", dirname(b$path), sep, u)
+
+      endsWithSlash = grepl("/$", b$path)
+
+      if(endsWithSlash && grepl("^\\./", u))
+          u = substring(u, 3)
+          
+      b$path = sprintf("%s%s%s", if(endsWithSlash) b$path else dirname(b$path), if(endsWithSlash) "" else sep, u)
         # handle .. in the path and try to collapse these.
       if(simplify && grepl("..", b$path, fixed = TRUE))
         b$path = simplifyPath(b$path)

@@ -1,4 +1,16 @@
-Version 3.98-1
+Version 3.99-0
+
+  *      We can specify R functions and C routines for use as XPath functions in calls to 
+         getNodeSet() and xpathApply().
+
+  *      Implementations of XPath 2.0 functions matches(), lower-case(), ends-with(), abs(), min(), max(), replace()
+
+Version 3.98-2
+
+  *      xmlSave() of a document to a file with encoding now honors indenting.
+         Uses xmlSaveFormatFileEnc(). Issue identified by Earl Brown.
+
+Version 3.98-2
   
   *      xmlToS4() handles attributes with namespace prefixes and children
          with the same node name.

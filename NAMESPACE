@@ -3,6 +3,7 @@
 
 import(methods)
 
+
 export(
  append.xmlNode,
  append.XMLNode,
@@ -224,6 +225,8 @@ S3method(xmlSize, XMLInternalNode)
 
 
 S3method(xmlValue, XMLInternalNode)
+
+S3method(xmlValue, XMLNodeSet)
 
 #exportS3method("xmlValue", "NULL")
 S3method("xmlValue", "NULL")
@@ -509,3 +512,4 @@ export(getHTMLExternalFiles)
 
 export(xmlCleanNamespaces)
 
+export(replaceNodeWithChildren)

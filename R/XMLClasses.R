@@ -698,7 +698,7 @@ xpathApply =
   #
   #
 function(doc, path, fun = NULL, ... , namespaces = xmlNamespaceDefinitions(doc, simplify = TRUE),
-          resolveNamespaces = TRUE, addFinalizer = NA)
+          resolveNamespaces = TRUE, addFinalizer = NA, xpathFuns = list())
 {
   UseMethod("xpathApply")
 }  
@@ -715,11 +715,11 @@ function(x, ...)
 
 xpathApply.XMLNode =
 function(doc, path, fun = NULL, ... , namespaces = xmlNamespaceDefinitions(doc, simplify = TRUE),
-          resolveNamespaces = TRUE, addFinalizer = NA, .node = NULL, noMatchOkay = FALSE)
+          resolveNamespaces = TRUE, addFinalizer = NA, xpathFuns = list(), .node = NULL, noMatchOkay = FALSE)
 {
   idoc = xmlParse(saveXML(doc), asText = TRUE)
   ans = xpathApply(idoc, path, fun, ..., namespaces = namespaces, resolveNamespaces = resolveNamespaces,
-                        .node = .node, noMatchOkay = noMatchOkay)
+                        .node = .node, noMatchOkay = noMatchOkay, xpathFuns = xpathFuns)
 
   # Now convert the results
   if(length(ans)) 
@@ -731,9 +731,8 @@ function(doc, path, fun = NULL, ... , namespaces = xmlNamespaceDefinitions(doc, 
 
 xpathApply.XMLInternalDocument =
 function(doc, path, fun = NULL, ... , namespaces = xmlNamespaceDefinitions(doc, simplify = TRUE),
-          resolveNamespaces = TRUE, addFinalizer = NA, .node = NULL, noMatchOkay = FALSE, 
-           sessionEncoding = CE_NATIVE, noResultOk = FALSE,
-          xpathFuns = list()) # native
+          resolveNamespaces = TRUE, addFinalizer = NA, xpathFuns = list(), .node = NULL, noMatchOkay = FALSE, 
+           sessionEncoding = CE_NATIVE, noResultOk = FALSE) # native
 {
   path = paste(path, collapse = " | ")
 
@@ -763,7 +762,7 @@ function(doc, path, fun = NULL, ... , namespaces = xmlNamespaceDefinitions(doc, 
   if(is.character(xpathFuns))
       xpathFuns = as.list(xpathFuns)
   else
-      anonFuns = xpathFuns[ sapply(xpathFuns, is.function) ]
+      anonFuns = xpathFuns[ vapply(xpathFuns, is.function, FALSE) ]
 
 
   ans = .Call("RS_XML_xpathEval", doc, .node, as.character(path), namespaces, fun, encoding, addFinalizer, xpathFuns, anonFuns, PACKAGE = "XML")
@@ -896,7 +895,7 @@ xpathSubNodeApply =
   #
 function(doc, path, fun = NULL, ...,
           namespaces = xmlNamespaceDefinitions(doc, simplify = TRUE),
-           resolveNamespaces = TRUE, addFinalizer = NA)
+           resolveNamespaces = TRUE, addFinalizer = NA, xpathFuns = list())
 {
   path = paste(path, collapse = " | ")
   
@@ -955,7 +954,7 @@ function(doc, path, fun = NULL, ...,
     docName(doc) = paste("created for xpathApply for", path, "in node", xmlName(node))
    
 
-  ans = xpathApply(doc, path, NULL, namespaces = namespaces, resolveNamespaces = resolveNamespaces, addFinalizer = addFinalizer)
+  ans = xpathApply(doc, path, NULL, namespaces = namespaces, resolveNamespaces = resolveNamespaces, addFinalizer = addFinalizer, xpathFuns = xpathFuns)
 
   if(length(ans) == 0)
     return(ans)
@@ -987,27 +986,27 @@ if(TRUE)
 xpathApply.XMLInternalNode =
 function(doc, path, fun = NULL, ...,
           namespaces = xmlNamespaceDefinitions(doc, simplify = TRUE),
-           resolveNamespaces = TRUE, addFinalizer = NA)
+           resolveNamespaces = TRUE, addFinalizer = NA, xpathFuns = list())
 {
   ndoc = as(doc, "XMLInternalDocument")
   if(is.null(ndoc))
-    xpathSubNodeApply(doc, path, fun, ..., namespaces = namespaces, resolveNamespaces = resolveNamespaces, addFinalizer = addFinalizer)
+    xpathSubNodeApply(doc, path, fun, ..., namespaces = namespaces, resolveNamespaces = resolveNamespaces, addFinalizer = addFinalizer, xpathFuns = xpathFuns)
   else
     xpathApply.XMLInternalDocument(ndoc, path, fun, ...,
                                  namespaces = namespaces, resolveNamespaces = resolveNamespaces,
-                                 .node = doc, addFinalizer = addFinalizer)
+                                 .node = doc, addFinalizer = addFinalizer, xpathFuns = xpathFuns)
 }
 
 
 xpathApply.XMLDocument =
 #xpathApply.XMLNode =  
 function(doc, path, fun = NULL, ... , namespaces = xmlNamespaceDefinitions(doc, simplify = TRUE),
-          resolveNamespaces = TRUE, .node = NULL, addFinalizer = NA)
+          resolveNamespaces = TRUE, .node = NULL, addFinalizer = NA, xpathFuns = list())
 {
   txt = saveXML(doc)
   doc = xmlParse(txt, asText = TRUE)
   ans = xpathApply(doc, path, fun, ..., namespaces = namespaces, resolveNamespaces = resolveNamespaces, .node = .node,
-                     addFinalizer = addFinalizer)
+                     addFinalizer = addFinalizer, xpathFuns = xpathFuns)
 
   if(length(ans)) 
      ans = lapply(ans, toXMLNode)
