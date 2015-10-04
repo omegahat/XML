@@ -418,7 +418,7 @@ R_reportDocGC()
 }
 
 
-typedef void (*BranchRoutine)(xmlNodePtr);
+typedef void (*BranchRoutine)(xmlNodePtr, xmlParserCtxtPtr);
 
 void
 R_endBranch(RS_XMLParserData *rinfo,
@@ -443,7 +443,7 @@ R_endBranch(RS_XMLParserData *rinfo,
 
 	    if(TYPEOF(fun) == EXTPTRSXP) {
 		BranchRoutine r = (BranchRoutine) R_ExternalPtrAddr(fun);
-		r(tmp);
+		r(tmp, rinfo->ctx);
 	    } else {
 		PROTECT(args = NEW_LIST(1));
 		if(tmp->doc == NULL) {
