@@ -1829,8 +1829,10 @@ R_replaceNodeWithChildren(USER_OBJECT_ r_node)
     
     if(node->children) {
 	xmlNodePtr cur = node->children;
-	while(cur->next)
+	while(cur->next) {
+	    cur->parent = node->parent;
 	    cur = cur->next;
+	}
 
 	cur->next = nxt;
 	if(nxt)
