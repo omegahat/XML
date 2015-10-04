@@ -11,3 +11,5 @@ myTests
 \.so$
 \.o$
 memoryLeak.R
+NAMESPACE.in
+DESCRIPTION.in
