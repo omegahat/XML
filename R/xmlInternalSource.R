@@ -241,13 +241,14 @@ function(url, ..., envir =globalenv(),
      }
    }
 
-  ans = sapply(url, evalNode, envir = envir, verbose = verbose, ids = ids,
+  ans = lapply(url, evalNode, envir = envir, verbose = verbose, ids = ids,
                 omit = omit, echo = echo, print = print, ask = ask, eval = eval, parse = parse, force = force)
 
   if(setNodeNames)
      names(ans) = sapply(url, getRCodeNodeName)
   else
-     names(ans) = sapply(url, xmlName, full = TRUE)
+     names(ans) = sapply(url, getNodePosition) #sapply(url, xmlName, full = TRUE)
+  
   invisible(ans)
 })
 
@@ -316,7 +317,8 @@ function(node, envir = globalenv(), ids = character(), verbose = FALSE, echo = v
 
 
 getRCode =
-function(node, namespaces = c(r = "http://www.r-project.org"), recursive = TRUE)
+function(node, namespaces = c(r = "http://www.r-project.org"), recursive = TRUE,
+          dropOutput = FALSE)
 {
  tmp = xmlSApply(node, function(x) {
 
@@ -335,19 +337,24 @@ function(node, namespaces = c(r = "http://www.r-project.org"), recursive = TRUE)
            stop("More than 1 code block/fragment named ", ref)         
          else
             if(recursive)
-              getRCode(v[[1]], namespaces, recursive = TRUE)
+              getRCode(v[[1]], namespaces, recursive = TRUE, dropOutput = dropOutput)
             else
               xmlValue(v[[1]])
      } else {
          if(recursive)
-              getRCode(x, namespaces, recursive = TRUE)
+              getRCode(x, namespaces, recursive = TRUE, dropOutput = dropOutput)
             else
               xmlValue(x)
      }
   } else if(inherits(x, "XMLInternalElementNode") && xmlName(x, full = TRUE) %in% c("r:error", "r:output")) {
+ 
   }  else
      xmlValue(x)
  })
+
+ if(dropOutput && length(names(tmp)))
+   tmp = tmp[names(tmp) != "output"]
+ 
  paste(tmp, collapse = "\n")
 }
 
@@ -431,7 +438,7 @@ function(doc)
 getCodeVar =
 function(node)
 {
-     e = parse(text = XML:::getRCode(node))
+     e = parse(text = getRCode(node))
      e = e[[length(e)]]
      # This should use the code in ptoc in RTools.
      id = if(class(e) %in% c("=", "<-"))
@@ -480,7 +487,7 @@ function(doc, ids = character(), parse = TRUE, setNodeNames = FALSE, ...)
   if(length(ids))
      nodes = getNodeSet(doc, paste("//r:function[", paste("@id", sQuote(ids), sep = "=", collapse = " or " ), "]"), c(r = "http://www.r-project.org"))
   else
-     nodes = getNodeSet(doc, "//r:function", c(r = "http://www.r-project.org"))
+     nodes = getNodeSet(doc, "//r:function[not(ancestor-or-self::*/@eval = 'false')]", c(r = "http://www.r-project.org"))
 
   if(parse == FALSE)
      return(nodes)
