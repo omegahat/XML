@@ -759,10 +759,14 @@ function(doc, path, fun = NULL, ... , namespaces = xmlNamespaceDefinitions(doc, 
              else
                 getEncodingREnum(sessionEncoding)
 
+  anonFuns = NULL
   if(is.character(xpathFuns))
       xpathFuns = as.list(xpathFuns)
+  else
+      anonFuns = xpathFuns[ sapply(xpathFuns, is.function) ]
 
-  ans = .Call("RS_XML_xpathEval", doc, .node, as.character(path), namespaces, fun, encoding, addFinalizer, xpathFuns, PACKAGE = "XML")
+
+  ans = .Call("RS_XML_xpathEval", doc, .node, as.character(path), namespaces, fun, encoding, addFinalizer, xpathFuns, anonFuns, PACKAGE = "XML")
 
   if(!noMatchOkay && length(ans) == 0 && length(getDefaultNamespace(xmlRoot(doc))) > 0) {
     tmp = strsplit(path, "/")[[1]]
