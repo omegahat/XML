@@ -7,19 +7,23 @@
 <p align="right">Last Release:
   @MAJOR_VERSION@.@MINOR_VERSION@-@PATCH_LEVEL@ (<font color="red">@DATE@</font>)</p>
 
+<div>
+<p>
+The latest version (3.99-0) introduces the ability to define XPath functions
+for use in the getNodeSet() and xpathApply() R functions.
+One can use R functions and C routines to implement new XPath functions.
+Additionally, several XPath 2.0 functions are implemented by default.  
+</p>  
+</div>
+
 <div style="border: red 1px solid; padding: 10pt">
 <p>
-Note:  In version 2.4-0, there is a new approach to garbage collecting
-internal/C-level nodes and documents returned from, e.g.
-xmlParse(), getNodeSet(), xpathApply(), newXMLNode().
-This endeavors to avoid freeing a document when there is
-an R variable refering to one of its nodes, and to garbage
-collect a document when all nodes are unreferenced.
-This has been tested and appears to work, however there may be
-some cases that we have not encountered. So if you encounter problems,
-please send me email.
+Some people have encounterd memory leaks with this package.
+As far as I am aware, these are only on Windows.  I think this is  due to the binary
+versions of the package created for the package missing compiler flag.
 </p>
 </div>
+
 
 <p>
 This package provides facilities for the S language
@@ -129,14 +133,14 @@ o = readKeyValueDB("http://www.omegahat.org/RSXML/plist.xml")
   <dt>
   <li> XML "solr" files that are similar to JSON and name-value pairs
        with nodes of the form
-<pre><![CDATA[
-<lst name="info">
-      <str name="ABC">A string</str>
-      <int name="xyz">103</int>
-      <long name="big">1000012310303</long>
-      <bool>true</bool>
-      <date name="lastModified">2011-02-10T11:29:03Z</date>
-</lst>]]>
+<pre>
+&lt;lst name="info">
+      &lt;str name="ABC">A string&lt;/str>
+      &lt;int name="xyz">103&lt;/int>
+      &lt;long name="big">1000012310303&lt;/long>
+      &lt;bool>true&lt;/bool>
+      &lt;date name="lastModified">2011-02-10T11:29:03Z&lt;/date>
+&lt;/lst>
 </pre>      
   <dd> <a href="solrDocs.R">solrDocs.R</a>
       <br/>
