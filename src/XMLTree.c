@@ -1824,7 +1824,7 @@ R_replaceNodeWithChildren(USER_OBJECT_ r_node)
     if(node->prev) {
 	node->prev->next = node->children;
 	node->children->prev = node->prev;
-    } else
+    } else if(node->parent)
 	node->parent->children = node->children;
     
     if(node->children) {
