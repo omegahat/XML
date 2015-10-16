@@ -169,7 +169,7 @@ function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x),
 setS3Method("xmlValue", "XMLProcessingInstruction")
 
 
-xmlValue.XMLNodeSet =
+xmlValue.list = xmlValue.XMLNodeSet =
 function (x, ignoreComments = FALSE, recursive = TRUE, encoding = if(length(x)) getEncoding(x[[1]]) else "", 
     trim = FALSE) 
 {
