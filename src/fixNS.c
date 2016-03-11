@@ -54,7 +54,7 @@ setDummyNS(xmlNodePtr node, const xmlChar *prefix)
 #ifdef R_XML_DEBUG
 	    fprintf(stderr, "mapping %s to %s\n", prefix, ns->href);fflush(stderr);
 #endif
-	    node->nsDef = node->nsDef->next;
+	    node->nsDef = node->nsDef ? node->nsDef->next : NULL;
 	    xmlSetNs(node, ns);
 	    return(1);
 	}
