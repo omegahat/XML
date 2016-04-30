@@ -198,10 +198,13 @@ RS_XML_readConnectionInput(void *context, char *buffer, int len)
       if(n != 0) { /* Just add a new line and do it again. */
 
          if(n > left) {
+	   //fprintf(stderr, "string won't fit in buffer %d %d\n", n, left);fflush(stderr);
+	   // Rf_PrintValue(tmp);
             PROBLEM "string read from XML connection too long for buffer: truncating %s to %d characters", str, left
      	    WARN;
          }
          strncpy(buffer, str, left);
+	 //	 buffer[len-1] = '\0';
          left -= n;
 
          count += n ;

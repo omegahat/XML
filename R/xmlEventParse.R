@@ -74,11 +74,32 @@ function(file, handlers = xmlEventHandler(), ignoreBlanks = FALSE, addContext = 
       open(file, "r")
       on.exit(close(con))
     }
+
+    leftOver = ""
     file = function(len) {
-              txt = readLines(con, 1)
-              if(length(txt) == 0) return(txt)
-              paste(txt, "\n", sep = "")
-           }
+       if(nchar(leftOver) > 0) {
+           txt = leftOver
+#cat("using leftOver text", nchar(txt), "\n")
+       } else
+#  txt = readBin(con, "", n = len - 1L)
+           txt = readLines(con, 1)
+       if(length(txt) == 0) return(txt)
+
+       if(len < nchar(txt, "bytes")) {
+#if(grepl("{{Infob", substring(txt, 1, 40), fixed = TRUE)) cat("here it comes\n")  #browser()
+           tmp = mkSubstringByBytes(txt, len)
+          leftOver <<- tmp[2]  # substring(txt, len - 1)
+#  cat("leaving part of the string in leftOver", nchar(leftOver), "\n")
+	  txt =tmp[1] #  substring(txt, 1, len - 2)
+       } else
+          leftOver <<- ""
+         
+#print(txt)
+       tmp = paste(txt, "\n", sep = "")
+#print(c(len, nchar(tmp), nchar(tmp, "bytes"), nchar(leftOver)))
+       tmp
+       }
+
   } else if(is.function(file)) {
       # call with -1 to allow us to close the connection
       # if necessary.
@@ -124,7 +145,14 @@ function(file, handlers = xmlEventHandler(), ignoreBlanks = FALSE, addContext = 
      return(invisible(handlers))
 }
 
-
+mkSubstringByBytes = 
+function(txt, nbytes)
+{
+  letters = strsplit(txt, "")[[1]]
+  nb = nchar(letters, "bytes")
+  i = which(cumsum(nb) >= nbytes)[1] - 1
+  c(paste(letters[1:i], collapse = ""), paste(letters[-(1:i)], collapse = ""))
+}
 
 xmlStopParser =
 function(parser)
