@@ -3,8 +3,8 @@ Version: 4.0-0
 Author:  Duncan Temple Lang (duncan@r-project.org)
 Maintainer: Duncan Temple Lang <duncan@r-project.org>
 Title: Tools for parsing and generating XML within R and S-Plus
-Depends: R (>= 1.2.0), utils
-Imports: methods
+Depends: R (>= 1.2.0)
+Imports: methods, utils, grDevices
 Suggests: bitops, RCurl
 SystemRequirements: libxml2 (>= 2.6.3)
 xxxLazyLoad: yes
