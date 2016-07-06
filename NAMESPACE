@@ -2,6 +2,8 @@
 #  useDynLib(XML)
 
 import(methods)
+import(utils)
+import(grDevices)
 
 
 export(
@@ -227,6 +229,7 @@ S3method(xmlSize, XMLInternalNode)
 S3method(xmlValue, XMLInternalNode)
 
 S3method(xmlValue, XMLNodeSet)
+S3method(xmlValue, list)
 
 #exportS3method("xmlValue", "NULL")
 S3method("xmlValue", "NULL")
