@@ -74,11 +74,30 @@ function(file, handlers = xmlEventHandler(), ignoreBlanks = FALSE, addContext = 
       open(file, "r")
       on.exit(close(con))
     }
+
+    leftOver = ""
     file = function(len) {
-              txt = readLines(con, 1)
-              if(length(txt) == 0) return(txt)
-              paste(txt, "\n", sep = "")
-           }
+       if(nchar(leftOver) > 0) {
+           txt = leftOver
+       else {
+            #  txt = readBin(con, "", n = len - 1L)
+           txt = readLines(con, 1)
+       }
+
+       if(length(txt) == 0) 
+          return(txt)
+
+       if(len < nchar(txt, "bytes")) {
+           tmp = mkSubstringByBytes(txt, len)
+          leftOver <<- tmp[2]  # substring(txt, len - 1)
+	  txt =tmp[1] #  substring(txt, 1, len - 2)
+       } else
+          leftOver <<- ""
+         
+
+        paste(txt, "\n", sep = "")
+      }
+
   } else if(is.function(file)) {
       # call with -1 to allow us to close the connection
       # if necessary.
@@ -124,7 +143,14 @@ function(file, handlers = xmlEventHandler(), ignoreBlanks = FALSE, addContext = 
      return(invisible(handlers))
 }
 
-
+mkSubstringByBytes = 
+function(txt, nbytes)
+{
+  letters = strsplit(txt, "")[[1]]
+  nb = nchar(letters, "bytes")
+  i = which(cumsum(nb) >= nbytes)[1] - 1
+  c(paste(letters[1:i], collapse = ""), paste(letters[-(1:i)], collapse = ""))
+}
 
 xmlStopParser =
 function(parser)
