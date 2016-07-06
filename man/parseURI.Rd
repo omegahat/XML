@@ -24,9 +24,9 @@ parseURI(uri)
   A list with 8 elements
   \item{scheme}{the name of the protocol being used, http, ftp as a string.}
   \item{authority}{a string represeting a rarely used aspect of URIs}
-  \item{server}{a string identifying the host, e.g. www.omegahat.org}
+  \item{server}{a string identifying the host, e.g. www.omegahat.net}
   \item{user}{a string giving the name of the user, e.g. in FTP
-  "ftp://duncan@www.omegahat.org", this would yield "duncan"}
+  "ftp://duncan@www.omegahat.net", this would yield "duncan"}
   \item{path}{a string identifying the path of the target file}
   \item{query}{the CGI query part of the string, e.g.
          the bit after '?' of the form \code{name=value&name=value}}
@@ -39,14 +39,14 @@ parseURI(uri)
  \code{\link{getRelativeURL}}
 }
 \examples{
-  parseURI("http://www.omegahat.org:8080/RCurl/index.html")
-  parseURI("ftp://duncan@www.omegahat.org:8080/RCurl/index.html")
+  parseURI("http://www.omegahat.net:8080/RCurl/index.html")
+  parseURI("ftp://duncan@www.omegahat.net:8080/RCurl/index.html")
 
-  parseURI("ftp://duncan@www.omegahat.org:8080/RCurl/index.html#my_anchor")
+  parseURI("ftp://duncan@www.omegahat.net:8080/RCurl/index.html#my_anchor")
 
-  as(parseURI("http://duncan@www.omegahat.org:8080/RCurl/index.html#my_anchor"), "character")
+  as(parseURI("http://duncan@www.omegahat.net:8080/RCurl/index.html#my_anchor"), "character")
 
-  as(parseURI("ftp://duncan@www.omegahat.org:8080/RCurl/index.html?foo=1&bar=axd"), "character")
+  as(parseURI("ftp://duncan@www.omegahat.net:8080/RCurl/index.html?foo=1&bar=axd"), "character")
 }
 \keyword{IO}
 \concept{URI}

@@ -43,7 +43,7 @@ part of the particular version of libcurl.
 }
 
 \references{\url{http://www.w3.org/XML}, \url{http://www.xmlsoft.org},
-\url{http://www.omegahat.org}  }
+\url{http://www.omegahat.net}  }
 \author{ Duncan Temple Lang }
 
 %\seealso{}

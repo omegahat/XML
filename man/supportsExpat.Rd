@@ -28,7 +28,7 @@ has been linked into the package.
 }
 
 \references{\url{http://www.w3.org/XML}, \url{http://www.jclark.com/xml},
-\url{http://www.omegahat.org}  }
+\url{http://www.omegahat.net}  }
 \author{ Duncan Temple Lang }
 
 \seealso{

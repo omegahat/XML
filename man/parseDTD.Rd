@@ -91,7 +91,7 @@ d <- parseDTD(txt, asText=TRUE)
 
 
 \dontrun{
- url <- "http://www.omegahat.org/XML/DTDs/DatasetByRecord.dtd"
+ url <- "http://www.omegahat.net/XML/DTDs/DatasetByRecord.dtd"
  d <- parseDTD(url, asText=FALSE)  
 }
 }

@@ -28,7 +28,7 @@ via the assignment operator, such as
  The XML node \code{x} containing the new or modified
 nodes.
 }
-\references{\url{http://www.w3.org}, \url{http://www.omegahat.org/RSXML}}
+\references{\url{http://www.w3.org}, \url{http://www.omegahat.net/RSXML}}
 \author{Duncan Templle Lang}
 
 

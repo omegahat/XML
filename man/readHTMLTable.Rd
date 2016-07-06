@@ -134,8 +134,8 @@ if(FALSE) {
 }
 
 
-if(require(RCurl) && url.exists("http://www.omegahat.org/RCurl/testPassword/table.html")) {
-  tt =  getURL("http://www.omegahat.org/RCurl/testPassword/table.html",  userpwd = "bob:duncantl")
+if(require(RCurl) && url.exists("http://www.omegahat.net/RCurl/testPassword/table.html")) {
+  tt =  getURL("http://www.omegahat.net/RCurl/testPassword/table.html",  userpwd = "bob:duncantl")
   readHTMLTable(tt)
 }
 

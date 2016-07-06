@@ -216,21 +216,21 @@ So we would use
 \references{\url{http://xmlsoft.org}, 
   \url{http://www.w3.org/xml}
   \url{http://www.w3.org/TR/xpath}
-  \url{http://www.omegahat.org/RSXML}
+  \url{http://www.omegahat.net/RSXML}
 }
 \author{Duncan Temple Lang <duncan@wald.ucdavis.edu>}
 
 \note{
   In order to match nodes in the default name space for
  documents with a non-trivial default namespace, e.g. given as
-  \code{xmlns="http://www.omegahat.org"}, you will need to use a prefix
+  \code{xmlns="http://www.omegahat.net"}, you will need to use a prefix
   for the default namespace in this call.
   When specifying the namespaces, give a name - any name - to the
   default namespace URI and then use this as the prefix in the
   XPath expression, e.g.
-  \code{getNodeSet(d, "//d:myNode", c(d = "http://www.omegahat.org"))}
+  \code{getNodeSet(d, "//d:myNode", c(d = "http://www.omegahat.net"))}
   to match myNode in the default name space
-  \code{http://www.omegahat.org}.
+  \code{http://www.omegahat.net}.
   
   This default namespace of the document is now computed for us and
   is the default value for the namespaces argument.
@@ -257,8 +257,8 @@ So we would use
  sapply(els, function(el) xmlGetAttr(el, "status"))
 
    # use of namespaces on an attribute.
- getNodeSet(doc, "/doc//b[@x:status]", c(x = "http://www.omegahat.org"))
- getNodeSet(doc, "/doc//b[@x:status='foo']", c(x = "http://www.omegahat.org"))
+ getNodeSet(doc, "/doc//b[@x:status]", c(x = "http://www.omegahat.net"))
+ getNodeSet(doc, "/doc//b[@x:status='foo']", c(x = "http://www.omegahat.net"))
 
    # Because we know the namespace definitions are on /doc/a
    # we can compute them directly and use them.
@@ -340,9 +340,9 @@ So we would use
   d = xmlParse(uri)
   getNodeSet(d, "//c:c", c(c="http://www.c.org"))
 
-  getNodeSet(d, "/o:a//c:c", c("o" = "http://www.omegahat.org", "c" = "http://www.c.org"))
+  getNodeSet(d, "/o:a//c:c", c("o" = "http://www.omegahat.net", "c" = "http://www.c.org"))
 
-   # since http://www.omegahat.org is the default namespace, we can
+   # since http://www.omegahat.net is the default namespace, we can
    # just the prefix "o" to map to that.
   getNodeSet(d, "/o:a//c:c", c("o", "c" = "http://www.c.org"))
 
@@ -350,12 +350,12 @@ So we would use
    # the following, perhaps unexpectedly but correctly, returns an empty
    # with no matches
    
-  getNodeSet(d, "//defaultNs", "http://www.omegahat.org")
+  getNodeSet(d, "//defaultNs", "http://www.omegahat.net")
 
    # But if we create our own prefix for the evaluation of the XPath
    # expression and use this in the expression, things work as one
    # might hope.
-  getNodeSet(d, "//dummy:defaultNs", c(dummy = "http://www.omegahat.org"))
+  getNodeSet(d, "//dummy:defaultNs", c(dummy = "http://www.omegahat.net"))
 
    # And since the default value for the namespaces argument is the
    # default namespace of the document, we can refer to it with our own
@@ -370,7 +370,7 @@ So we would use
    # in our query and let getNodeSet() and friends map them to the
    # actual namespace definitions.
    # "o" is used to represent the default namespace for the document
-   # i.e. http://www.omegahat.org, and "r" is mapped to the same
+   # i.e. http://www.omegahat.net, and "r" is mapped to the same
    # definition that has the prefix "r" in the XML document.
 
   tmp = getNodeSet(d, "/o:a/r:b/o:defaultNs", c("o", "r"))

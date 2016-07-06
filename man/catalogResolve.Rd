@@ -5,7 +5,7 @@
   XML parsers use a catalog to map generic system and public addresses
   to actual local files or potentially different remote files.
   We can use a catalog to map a reference such as
-  \code{http://www.omegahat.org/XSL/} to a particular
+  \code{http://www.omegahat.net/XSL/} to a particular
   directory on our local machine and then not have to
   modify any of the documents if we move the local files to another
   directory, e.g. install a new version in an alternate directory.
@@ -61,10 +61,10 @@ Sys.setenv("XML_CATALOG_FILES" = system.file("exampleData", "catalog.xml", packa
 
 catalogResolve("-//OASIS//DTD DocBook XML V4.4//EN", "public")
 
-catalogResolve("http://www.omegahat.org/XSL/foo.xsl")
+catalogResolve("http://www.omegahat.net/XSL/foo.xsl")
 
-catalogResolve("http://www.omegahat.org/XSL/article.xsl", "uri")
-catalogResolve("http://www.omegahat.org/XSL/math.xsl", "uri")
+catalogResolve("http://www.omegahat.net/XSL/article.xsl", "uri")
+catalogResolve("http://www.omegahat.net/XSL/math.xsl", "uri")
 
 
   # This one does not resolve anything, returning an empty value.

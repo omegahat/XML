@@ -42,7 +42,7 @@ namespace.}
 \item{local}{? (can't remember off-hand).}
 }
 \references{\url{http://www.w3.org/XML}, \url{http://www.jclark.com/xml},
-\url{http://www.omegahat.org}  }
+\url{http://www.omegahat.net}  }
 \author{ Duncan Temple Lang }
 
 \seealso{
@@ -76,7 +76,7 @@ namespace.}
 
    doc = xmlParse('<top xmlns:r="http://www.r-project.org"><bob><code>a = 1:10</code></bob></top>')
    node = xmlRoot(doc)[[1]][[1]]
-   xmlNamespaces(node, set = TRUE) = c(omg = "http://www.omegahat.org")
+   xmlNamespaces(node, set = TRUE) = c(omg = "http://www.omegahat.net")
    node
 }
 \keyword{file}

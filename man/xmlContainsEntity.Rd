@@ -26,7 +26,7 @@ was found in the appropriate list of
 entitiy or element definitions.
 }
 \references{\url{http://www.w3.org/XML}, \url{http://www.jclark.com/xml},
-\url{http://www.omegahat.org}  }
+\url{http://www.omegahat.net}  }
 \author{ Duncan Temple Lang }
 \seealso{ \code{\link{parseDTD}},
 \code{\link{dtdEntity}},

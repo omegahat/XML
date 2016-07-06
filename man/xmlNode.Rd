@@ -76,7 +76,7 @@ and
 \code{\link{xmlNamespace}}
 }
 \references{\url{http://www.w3.org/XML}, \url{http://www.jclark.com/xml},
-\url{http://www.omegahat.org}  }
+\url{http://www.omegahat.net}  }
 \author{ Duncan Temple Lang }
 
 \seealso{
@@ -116,6 +116,6 @@ and
   # Using a character vector as a namespace definitions
  x = xmlNode("bob",
              namespaceDefinitions = c(r = "http://www.r-project.org",
-                                      omg = "http://www.omegahat.org"))
+                                      omg = "http://www.omegahat.net"))
 }
 \keyword{file}

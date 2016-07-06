@@ -365,7 +365,7 @@ local to it and that the caller knows how to extract this.
 \dontrun{
   # Parse the text rather than a file or URL by reading the URL's contents
   # and making it a single string. Then call xmlEventParse
-xmlURL <- "http://www.omegahat.org/Scripts/Data/mtcars.xml"
+xmlURL <- "http://www.omegahat.net/Scripts/Data/mtcars.xml"
 xmlText <- paste(scan(xmlURL, what="",sep="\n"),"\n",collapse="\n")
 xmlEventParse(xmlText, asText=TRUE)
 }

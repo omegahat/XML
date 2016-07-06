@@ -51,11 +51,11 @@ Duncan Temple Lang
   \code{\link{getXIncludes}}
 }
 \examples{
-  getHTMLLinks("http://www.omegahat.org")
+  getHTMLLinks("http://www.omegahat.net")
 
-  getHTMLLinks("http://www.omegahat.org/RSXML")
+  getHTMLLinks("http://www.omegahat.net/RSXML")
 
-  unique(getHTMLExternalFiles("http://www.omegahat.org"))
+  unique(getHTMLExternalFiles("http://www.omegahat.net"))
 }
 \keyword{IO}
 \keyword{programming}

@@ -10,7 +10,7 @@ but that uses the internal structures of
 libxml.
 This can be used to create a DOM that can be 
 constructed in R and exported to another system
-such as XSLT (\url{http://www.omegahat.org/Sxslt})
+such as XSLT (\url{http://www.omegahat.net/Sxslt})
 }
 \usage{
 xmlTree(tag, attrs = NULL, dtd=NULL, namespaces=list(),
@@ -39,7 +39,7 @@ xmlTree(tag, attrs = NULL, dtd=NULL, namespaces=list(),
   }
   \item{namespaces}{a named character vector with each element giving the name space identifier and the
     corresponding URI, \\
-    e.g \code{c(shelp = "http://www.omegahat.org/XML/SHelp")}
+    e.g \code{c(shelp = "http://www.omegahat.net/XML/SHelp")}
     If \code{tag} is specified as a character vector, these name spaces
     are defined within that new node.
   }
@@ -80,7 +80,7 @@ contents of the tree.}
 
 
 \references{\url{http://www.w3.org/XML}, \url{http://www.xmlsoft.org},
-\url{http://www.omegahat.org}  }
+\url{http://www.omegahat.net}  }
 \author{ Duncan Temple Lang }
 
 \note{This is an early version of this function and I need to iron out some
@@ -134,7 +134,7 @@ z$addNode("numeric", attrs = c("r:length" = length(x)))
 
   # shows namespace prefix on an attribute, and different from the one on the node.
   z = xmlTree()
-z$addNode("r:data",  namespace = c(r = "http://www.r-project.org", omg = "http://www.omegahat.org"), close = FALSE)
+z$addNode("r:data",  namespace = c(r = "http://www.r-project.org", omg = "http://www.omegahat.net"), close = FALSE)
 x = rnorm(3)
 z$addNode("r:numeric", attrs = c("omg:length" = length(x)))
 
@@ -158,9 +158,9 @@ cat(saveXML(d))
 # Just doctype
 za = xmlTree("people", dtd = "people")
 # no public element
-zb = xmlTree("people", dtd = c("people", "", "http://www.omegahat.org/XML/types.dtd"))
+zb = xmlTree("people", dtd = c("people", "", "http://www.omegahat.net/XML/types.dtd"))
 # public and system
-zc = xmlTree("people", dtd = c("people", "//a//b//c//d", "http://www.omegahat.org/XML/types.dtd"))
+zc = xmlTree("people", dtd = c("people", "//a//b//c//d", "http://www.omegahat.net/XML/types.dtd"))
 
 
 
