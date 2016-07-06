@@ -175,7 +175,7 @@ initDocRefCounter(xmlDocPtr doc)
 
     doc->_private = calloc(2, sizeof(int));
     val = (int *) doc->_private;
-    val[1] = R_MEMORY_MANAGER_MARKER;
+    val[1] = (int) R_MEMORY_MANAGER_MARKER;
 }
 
 void 

@@ -311,8 +311,6 @@ RS_XML(libXMLEventParse)(const char *fileName, RS_XMLParserData *parserData, RS_
   xmlFreeParserCtxt(ctx);
 
   return(status);
-
-/*  Free(xmlParserHandler); */
 }
 
 

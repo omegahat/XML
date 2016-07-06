@@ -1,10 +1,10 @@
 Package: XML
-Version: 3.99-0
+Version: 4.0-0
 Author:  Duncan Temple Lang (duncan@r-project.org)
 Maintainer: Duncan Temple Lang <duncan@r-project.org>
 Title: Tools for parsing and generating XML within R and S-Plus
-Depends: R (>= 1.2.0), utils
-Imports: methods
+Depends: R (>= 1.2.0)
+Imports: methods, utils, grDevices
 Suggests: bitops, RCurl
 SystemRequirements: libxml2 (>= 2.6.3)
 xxxLazyLoad: yes
@@ -18,7 +18,8 @@ Note: In version 2.4.0 of this package, a new approach to garbage collection has
       The versions numbers 1.0 and 2.0 do not have any special significance, but are merely
       the result of incrementing the minor count by 1 for each release.  
       Specifically, there is no change in the interface.
-URL:  http://www.omegahat.org/RSXML
+URL:  http://www.omegahat.net/RSXML
+      https://github.com/omegahat/XML
 License: BSD_3_clause + file LICENSE
 Collate: AAA.R
 	DTD.R

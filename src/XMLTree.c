@@ -1100,7 +1100,7 @@ R_createXMLNodeRef(xmlNodePtr node, USER_OBJECT_ finalize)
       if(node->_private == NULL) {
         node->_private = calloc(2, sizeof(int));
 	val = (int *) node->_private;
-	val[1] = R_MEMORY_MANAGER_MARKER;
+	val[1] = (int) R_MEMORY_MANAGER_MARKER;
       }
 
       val = (int *) node->_private;
