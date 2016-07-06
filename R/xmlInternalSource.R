@@ -303,17 +303,64 @@ function(node, envir = globalenv(), ids = character(), verbose = FALSE, echo = v
 
    if(eval) {
      if(ask) {
-       w = menu(c("evaluate", "skip", "terminate"))
+       w = utils::menu(c("evaluate", "skip", "terminate"))
        if(w == 2)
          return(NULL)
        else if(w == 3)
          stop("User terminated the xmlSource")
      }
 
-     eval(cmd, envir)     
+     isPlot = xmlName(node) == "plot"
+     if(isPlot) {
+         f = xmlGetAttr(node, "img")
+         if(!is.null(f)) {
+             attrs = xmlAttrs(node)
+             dev = openDevice(f, attrs)
+         }
+         if(!xmlGetAttr(node, "continuePlot", FALSE, as.logical))
+             on.exit(dev.off())         
+     }
+
+     ans = eval(cmd, envir)
+     if(isPlot && inherits(ans, "trellis"))
+         print(ans)
+     ans
    } else
      cmd
 }  
+
+openDevice =
+function(f, attrs)
+{
+   if("format" %in% names(attrs))
+       ext = attrs["format"]
+   else
+       ext = getExtension(f)
+   
+   fun = switch(ext, png = png, jpeg = jpeg, pdf = pdf)
+
+   args = lapply(c("width", "height"), getDevAttr, attrs, fun, as.numeric)
+
+   cat("opening device for", f, "\n")
+   fun(f)
+}
+
+getDevAttr =
+function(name, attrs, devFun, converter = as.character)
+{
+    if(name %in% names(attrs))
+        converter(attrs[[name]])
+    else if(name %in% names(formals(devFun)))
+        formals(devFun)[[name]]
+    else
+        converter(NA)
+}
+
+getExtension =
+function(f)
+{
+    gsub(".*\\.", "", basename(f))
+}
 
 
 getRCode =
@@ -419,15 +466,15 @@ setMethod("[[", "XMLCodeFile",
             doc = as(x, "XMLCodeDoc")
             n = getNodeSet(doc, paste("//*[@id=", sQuote(i), "]"))
             if(length(n) == 0) {
-              # This needs code from ptoc to determine the name of an "element"
-             doc = updateIds(doc, save = x)
+                 # This needs code from ptoc to determine the name of an "element"
+               doc = updateIds(doc) # , save = x)
             }
 
-            eval(parse(text = xmlValue(n[[1]])), env = env)
+            eval(parse(text = xmlValue(n[[1]])), envir = env)
           })
 
 updateIds =
-function(doc)
+function(doc, ...)
 {
    nodes = getNodeSet(doc,
                       "//r:function[not(@id) and not(@eval = 'false')]|//r:code[not(@id) and not(@eval = 'false')]",
