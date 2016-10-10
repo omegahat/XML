@@ -74,7 +74,7 @@ objects.
 }
 \references{ \url{http://www.w3.org} }
 \author{Duncan Temple Lang <duncan@wald.ucdavis.edu>}
-\note{Needs libxml (currently version 1.8.7) from \url{}}
+\note{Needs libxml (currently version 1.8.7)}
 
 \section{WARNING}{Errors in the DTD are stored as warnings for programmatic access.} 
 
@@ -82,8 +82,8 @@ objects.
  WritingXML.html in the distribution.}
 
 \examples{
- dtdFile <- system.file("exampleData", "foo.dtd",package="XML")
- parseDTD(dtdFile)
+dtdFile <- system.file("exampleData", "foo.dtd", package="XML")
+parseDTD(dtdFile)
 
 txt <- readLines(dtdFile)
 txt <- paste(txt,  collapse="\n")
@@ -92,7 +92,7 @@ d <- parseDTD(txt, asText=TRUE)
 
 \dontrun{
  url <- "http://www.omegahat.net/XML/DTDs/DatasetByRecord.dtd"
- d <- parseDTD(url, asText=FALSE)  
+ d <- parseDTD(url, asText = FALSE)  
 }
 }
 \keyword{file}

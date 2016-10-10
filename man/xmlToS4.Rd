@@ -14,7 +14,6 @@
 \usage{
 xmlToS4(node, obj = new(xmlName(node)), ...)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{node}{the top-level XML node to convert to an S4 object}
   \item{obj}{the object whose slots are to be filled from the
@@ -31,8 +30,9 @@ xmlToS4(node, obj = new(xmlName(node)), ...)
  \code{\link{makeClassTemplate}}  
 }
 \examples{
- txt =
- "<doc><part><name>ABC</name><type>XYZ</type><cost>3.54</cost><status>available</status></part></doc>"
+ txt = "<doc><part><name>ABC</name><type>XYZ</type><cost>3.54</cost>
+<status>available</status></part></doc>"
+
  doc = xmlParse(txt)
 
  setClass("part", representation(name = "character",

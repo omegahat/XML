@@ -134,7 +134,9 @@ z$addNode("numeric", attrs = c("r:length" = length(x)))
 
   # shows namespace prefix on an attribute, and different from the one on the node.
   z = xmlTree()
-z$addNode("r:data",  namespace = c(r = "http://www.r-project.org", omg = "http://www.omegahat.net"), close = FALSE)
+z$addNode("r:data",  namespace = c(r = "http://www.r-project.org",
+                                   omg = "http://www.omegahat.net"),
+          close = FALSE)
 x = rnorm(3)
 z$addNode("r:numeric", attrs = c("omg:length" = length(x)))
 

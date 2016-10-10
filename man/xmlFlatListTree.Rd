@@ -25,7 +25,8 @@
 \usage{
 xmlHashTree(nodes = list(), parents = character(), children = list(), 
              env = new.env(TRUE, parent = emptyenv()))
-xmlFlatListTree(nodes = list(), parents = character(), children = list(), env = new.env(), n = 200)
+xmlFlatListTree(nodes = list(), parents = character(), children = list(),
+                env = new.env(), n = 200)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

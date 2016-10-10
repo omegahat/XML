@@ -33,7 +33,8 @@ parser. The options control many different aspects the parsing process
  
 }
 \usage{
-xmlParseDoc(file, options = 1L, encoding = character(), asText = !file.exists(file), baseURL = file)
+xmlParseDoc(file, options = 1L, encoding = character(),
+             asText = !file.exists(file), baseURL = file)
 }
 \arguments{
   \item{file}{the name of the file or URL or the XML content itself}

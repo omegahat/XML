@@ -110,8 +110,8 @@ xpathSApply(doc, path, fun = NULL, ... ,
                resolveNamespaces = TRUE, simplify = TRUE,
                 addFinalizer = NA)
 matchNamespaces(doc, namespaces,
-                 nsDefs = xmlNamespaceDefinitions(doc, recursive = TRUE, simplify = FALSE),
-                 defaultNs = getDefaultNamespace(doc, simplify = TRUE))
+                nsDefs = xmlNamespaceDefinitions(doc, recursive = TRUE, simplify = FALSE),
+                defaultNs = getDefaultNamespace(doc, simplify = TRUE))
 }
 \arguments{
   \item{doc}{an object of class \code{XMLInternalDocument}}
@@ -327,11 +327,13 @@ So we would use
 
 
    #  Using xpathApply, we can do
- rates = xpathApply(doc, "//ns:Cube[@currency='SIT']", xmlGetAttr, "rate", namespaces = namespaces )
+ rates = xpathApply(doc, "//ns:Cube[@currency='SIT']", xmlGetAttr, "rate", 
+                     namespaces = namespaces )
  rates = as.numeric(unlist(rates))
 
    # Using an expression rather than  a function and ...
- rates = xpathApply(doc, "//ns:Cube[@currency='SIT']", quote(xmlGetAttr(x, "rate")), namespaces = namespaces )
+ rates = xpathApply(doc, "//ns:Cube[@currency='SIT']", quote(xmlGetAttr(x, "rate")), 
+                    namespaces = namespaces )
 
  #free(doc)
 
@@ -383,7 +385,8 @@ So we would use
    # Work with the nodes and their content (not just attributes) from the node set.
    # From bondsTables.R in examples/
 
-  doc = htmlTreeParse("http://finance.yahoo.com/bonds/composite_bond_rates", useInternalNodes = TRUE)
+  doc = htmlTreeParse("http://finance.yahoo.com/bonds/composite_bond_rates",
+                      useInternalNodes = TRUE)
   if(is.null(xmlRoot(doc))) 
      doc = htmlTreeParse("http://finance.yahoo.com/bonds", useInternalNodes = TRUE)
 
@@ -434,7 +437,8 @@ So we would use
     free(subDoc)
 
 
-    txt = '<top xmlns="http://www.r-project.org" xmlns:r="http://www.r-project.org"><r:a><b/></r:a></top>'
+    txt = '<top xmlns="http://www.r-project.org"
+             xmlns:r="http://www.r-project.org"><r:a><b/></r:a></top>'
     doc = xmlInternalTreeParse(txt, asText = TRUE)
 
 \dontrun{
@@ -473,11 +477,12 @@ So we would use
      getNodeSet(doc, "//p[@age > avg(//p/@age)]", xpathFuns = "avg")
 
 
-     doc = xmlParse('<doc><ev date="2010-12-10"/><ev date="2011-3-12"/><ev date="2015-10-4"/></doc>')
-     getNodeSet(doc, "//ev[month-from-date(@date) > 7]",
-                 xpathFuns = list("month-from-date" =  function(node) {
-                                                           match(months(as.Date(as.character(node[[1]]))), month.name)
-                                                        }))
+  doc = xmlParse('<doc><ev date="2010-12-10"/><ev date="2011-3-12"/><ev date="2015-10-4"/></doc>')
+  getNodeSet(doc, "//ev[month-from-date(@date) > 7]",
+              xpathFuns = list("month-from-date" =
+                                function(node) {
+                                  match(months(as.Date(as.character(node[[1]]))), month.name)
+                                }))
 }
 \keyword{file}
 \keyword{IO}

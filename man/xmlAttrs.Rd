@@ -16,7 +16,9 @@
 }
 \usage{
  xmlAttrs(node, ...)
- 'xmlAttrs<-'(node, append = TRUE, suppressNamespaceWarning = getOption("suppressXMLNamespaceWarning", FALSE), value)
+ 'xmlAttrs<-'(node, append = TRUE,
+              suppressNamespaceWarning = getOption("suppressXMLNamespaceWarning", FALSE),
+              value)
 }
 \arguments{
   \item{node}{The \code{XMLNode} object

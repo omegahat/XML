@@ -550,7 +550,8 @@ m <- xmlTreeParse(fileName,
  h1$links()
 
  h2 = getLinks()
- htmlTreeParse(system.file("examples", "index.html", package = "XML"), handlers = h2, useInternalNodes = TRUE)
+ htmlTreeParse(system.file("examples", "index.html", package = "XML"),
+               handlers = h2, useInternalNodes = TRUE)
  all(h1$links() == h2$links())
 
   # Using flat trees
@@ -594,8 +595,8 @@ m <- xmlTreeParse(fileName,
     # catch the error by type.
  tryCatch(xmlTreeParse("<doc><a> & < <?pi > </doc>"),
                 "XMLParserErrorList" = function(e) {
-                                                      cat("Errors in XML document\n", e$message, "\n")
-                                                    })
+                                         cat("Errors in XML document\n", e$message, "\n")
+                                       })
 
     #  terminate on first error            
   try(xmlTreeParse("<doc><a> & < <?pi > </doc>", error = NULL))

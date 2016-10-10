@@ -101,8 +101,10 @@ HTML4.0 specification
 \examples{
 # u = "http://en.wikipedia.org/wiki/World_population"
 
-  zz = readHTMLTable("http://www.inflationdata.com/Inflation/Consumer_Price_Index/HistoricalCPI.aspx")
-  if(any(i <- sapply(zz, function(x) if(is.null(x)) 0 else ncol(x)) == 14)) {  # guard against the structure of the page changing.
+  u = "http://www.inflationdata.com/Inflation/Consumer_Price_Index/HistoricalCPI.aspx"
+  zz = readHTMLTable(u)
+       # guard against the structure of the page changing.
+  if(any(i <- sapply(zz, function(x) if(is.null(x)) 0 else ncol(x)) == 14)){ 
     zz = zz[[which(i)[1]]]  # 4th table
         # convert columns to numeric.  Could use colClasses in the call to readHTMLTable()
     zz[-1] = lapply(zz[-1], function(x) as.numeric(gsub(".* ", "", as.character(x))))

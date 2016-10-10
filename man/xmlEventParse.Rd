@@ -466,7 +466,8 @@ if(libxmlVersion()$major >= 2) {
           endElement = function(name, uri) {
                           cat("Finishing", name, "\n")
             }) 
- xmlEventParse(system.file("exampleData", "namespaces.xml", package="XML"), handlers = h, saxVersion = 2)
+ xmlEventParse(system.file("exampleData", "namespaces.xml", package="XML"), 
+               handlers = h, saxVersion = 2)
 
 
  # This example is not very realistic but illustrates how to use the
@@ -489,7 +490,9 @@ if(libxmlVersion()$major >= 2) {
   filename = system.file("exampleData", "branch.xml", package="XML")
    
   invisible(xmlEventParse(filename, branches = list(b = function(node) {print(names(node))})))
-  invisible(xmlEventParse(filename, branches = list(b = function(node) {print(xmlName(xmlChildren(node)[[1]]))})))
+  invisible(xmlEventParse(filename, branches = list(b = function(node) {
+                                                           print(xmlName(xmlChildren(node)[[1]]))
+                                                        })))
 }
 
   

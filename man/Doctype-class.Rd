@@ -33,6 +33,8 @@
  \code{\link{saveXML}}
 }
 \examples{
-  d = Doctype(name = "section", public = c("-//OASIS//DTD DocBook XML V4.2//EN", "http://oasis-open.org/docbook/xml/4.2/docbookx.dtd"))  
+d = Doctype(name = "section",
+            public = c("-//OASIS//DTD DocBook XML V4.2//EN", 
+                       "http://oasis-open.org/docbook/xml/4.2/docbookx.dtd"))  
 }
 \keyword{classes}

@@ -44,11 +44,15 @@ Doctype(system = character(), public = character(), name = "")
 }
 \examples{
 
-  d = Doctype(name = "section", public = c("-//OASIS//DTD DocBook XML V4.2//EN", "http://oasis-open.org/docbook/xml/4.2/docbookx.dtd"))
+  d = Doctype(name = "section",
+              public = c("-//OASIS//DTD DocBook XML V4.2//EN",
+                         "http://oasis-open.org/docbook/xml/4.2/docbookx.dtd"))
   as(d, "character")
 
    # this call switches the system to the URI associated with the PUBLIC element.
-  d = Doctype(name = "section", public = c("-//OASIS//DTD DocBook XML V4.2//EN"), system = "http://oasis-open.org/docbook/xml/4.2/docbookx.dtd")
+  d = Doctype(name = "section",
+              public = "-//OASIS//DTD DocBook XML V4.2//EN",
+              system = "http://oasis-open.org/docbook/xml/4.2/docbookx.dtd")
 }
 \keyword{IO}
 

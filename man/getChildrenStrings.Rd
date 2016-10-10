@@ -41,7 +41,8 @@ Duncan Temple Lang
 doc = xmlParse("<doc><a>a string</a> some text <b>another piece of text</b></doc>")
 getChildrenStrings(xmlRoot(doc))
 
-doc = xmlParse("<doc><a>a string</a> some text <b>another piece of text</b><c/><d>abc<e>xyz</e></d></doc>")
+txt = "<doc><a>a string</a> some text <b>another piece of text</b><c/><d>abc<e>xyz</e></d></doc>"
+doc = xmlParse(txt)
 getChildrenStrings(xmlRoot(doc))
 }
 \keyword{programming}

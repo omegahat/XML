@@ -74,7 +74,8 @@
  filename = system.file("exampleData", "eurofxref-hist.xml.gz", package = "XML")
 
 # Parse the file, arranging to have our startElement.SAX method invoked.
- z = xmlEventParse(filename, genericSAXHandlers(), state = new("ElementNameCounter"), addContext = FALSE)
+ z = xmlEventParse(filename, genericSAXHandlers(),
+                   state = new("ElementNameCounter"), addContext = FALSE)
 
  z@elements
 

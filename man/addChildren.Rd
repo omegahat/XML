@@ -158,7 +158,8 @@ libxml2 \url{http://www.xmlsoft.org}
 }
 \examples{
 
-b = newXMLNode("bob", namespace = c(r = "http://www.r-project.org", omg = "http://www.omegahat.net"))
+b = newXMLNode("bob", namespace = c(r = "http://www.r-project.org",
+                                    omg = "http://www.omegahat.net"))
 
 cat(saveXML(b), "\n")
 

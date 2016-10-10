@@ -13,7 +13,8 @@ integrated with other trees generated manually
 or with via the parser.
 }
 \usage{
-xmlNode(name, ..., attrs=NULL, namespace="", namespaceDefinitions = NULL, .children = list(...))
+xmlNode(name, ..., attrs=NULL, namespace="", namespaceDefinitions = NULL,
+        .children = list(...))
 xmlTextNode(value, namespace="", entities = XMLEntities, cdata = FALSE)
 xmlPINode(sys, value, namespace="")
 xmlCDataNode(...)

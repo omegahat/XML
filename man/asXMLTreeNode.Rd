@@ -17,7 +17,8 @@
  most purposes.
 }
 \usage{
-asXMLTreeNode(node, env, id = get(".nodeIdGenerator", env)(xmlName(node)), className = "XMLTreeNode")
+asXMLTreeNode(node, env, id = get(".nodeIdGenerator", env)(xmlName(node)),
+              className = "XMLTreeNode")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
