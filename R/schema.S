@@ -57,7 +57,8 @@ setMethod("$", "xmlSchemaRef",
             if(is.na(idx))
               stop("No field ", name, " in ", paste(SchemaRefFields, collapse = ", "))
 
-            .Call(paste("R_libxmlTypeTable", SchemaRefFields[idx], sep = "_"),  x, PACKAGE = "XML")
+            sym = paste("R_libxmlTypeTable", SchemaRefFields[idx], sep = "_")
+            .Call(sym,  x, PACKAGE = "XML")
            })
 
 setMethod("names", "xmlSchemaRef", function(x) SchemaRefFields)
