@@ -225,7 +225,7 @@ function(doc, header = NA ,
 
       colClasses = rep(colClasses, length = length(ans))
      
-      n = sapply(colClasses, is.null)
+      n = sapply(colClasses, function(x) is.null(x) || x == "NULL")
       if(any(n)) {
          ans = ans[ ! n ]
          colClasses = colClasses[ ! n ]
@@ -243,7 +243,7 @@ function(doc, header = NA ,
                             as(ans[[i]], colClasses[[i]])
                    )
 
-   }
+  }
 
    if(as.data.frame)  {
      ans = as.data.frame(ans, ...)

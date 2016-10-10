@@ -1,0 +1,5 @@
+library(XML)
+doc = xmlParse("doc.xml")
+pgs = getNodeSet(doc, "//page")
+.Call("R_replaceNodeWithChildren", pgs[[1]])
+.Call("R_replaceNodeWithChildren", pgs[[2]])

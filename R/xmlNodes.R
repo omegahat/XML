@@ -154,8 +154,8 @@ function(x, addNames = TRUE, omitNodeTypes = c("XMLXIncludeStartNode", "XMLXIncl
 {
   kids = .Call("RS_XML_xmlNodeChildrenReferences", x, as.logical(addNames), addFinalizer, PACKAGE = "XML")
   
-if(length(omitNodeTypes))
-    kids = kids[! sapply(kids, function(x) any(inherits(x, omitNodeTypes)) )]   
+  if(length(omitNodeTypes))
+     kids = kids[! sapply(kids, function(x) any(inherits(x, omitNodeTypes)) )]   
 
   structure(kids, class = c("XMLInternalNodeList", "XMLNodeList"))
 }

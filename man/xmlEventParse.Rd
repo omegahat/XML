@@ -67,7 +67,8 @@ xmlEventParse(file, handlers = xmlEventHandler(),
                   state = NULL, replaceEntities = TRUE, validate = FALSE,
                    saxVersion = 1, branches = NULL,
                     useDotNames = length(grep("^\\\\.", names(handlers))) > 0,
-                     error = xmlErrorCumulator(), addFinalizer = NA)
+                     error = xmlErrorCumulator(), addFinalizer = NA,
+                      encoding = character())
 }
 \arguments{
   \item{file}{the source of the XML content.
@@ -315,6 +316,11 @@ If this is True, each callback function  should support
  }
 \item{addFinalizer}{a logical value or identifier for a C routine
         that controls whether we register finalizers on the intenal node.}
+\item{encoding}{ a character string (scalar) giving the encoding for the
+  document.  This is optional as the document should contain its own
+  encoding information. However, if it doesn't, the caller can specify
+  this for the parser.
+}
 }
 \details{
  This is now implemented using the libxml parser.
