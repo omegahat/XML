@@ -89,7 +89,7 @@ RS_XML(Parse)(USER_OBJECT_ fileName, USER_OBJECT_ handlers, USER_OBJECT_ endElem
                  USER_OBJECT_ trim, USER_OBJECT_ useExpat, USER_OBJECT_ stateObject,
                   USER_OBJECT_ replaceEntities, USER_OBJECT_ validate, USER_OBJECT_ saxVersion,
 	      USER_OBJECT_ branches, USER_OBJECT_ useDotNames, USER_OBJECT_ errorFun,
-              USER_OBJECT_ manageMemory)
+              USER_OBJECT_ manageMemory, USER_OBJECT_ r_encoding)
 {
 #ifdef LIBEXPAT
   FILE *file = NULL;
@@ -168,7 +168,7 @@ RS_XML(Parse)(USER_OBJECT_ fileName, USER_OBJECT_ handlers, USER_OBJECT_ endElem
    xmlSubstituteEntitiesDefault(LOGICAL_DATA(replaceEntities)[0]);   
 #endif
 
-  status = RS_XML(libXMLEventParse)(input, parserData, asTextBuffer, INTEGER_DATA(saxVersion)[0]);
+  status = RS_XML(libXMLEventParse)(input, parserData, asTextBuffer, INTEGER_DATA(saxVersion)[0], r_encoding);
 
 /* How about using R_alloc() here so that it is freed, i.e. for the fileName and the parserData itself. */
   ans = parserData->stateObject ? parserData->stateObject : handlers;

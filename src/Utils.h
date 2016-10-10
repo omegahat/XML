@@ -63,7 +63,7 @@ RS_XML(Parse)(USER_OBJECT_ fileName, USER_OBJECT_ handlers, USER_OBJECT_ endElem
                  USER_OBJECT_ trim, USER_OBJECT_ useExpat, USER_OBJECT_ stateObject,
                   USER_OBJECT_ replaceEntities, USER_OBJECT_ validate, USER_OBJECT_ saxVersion,
     	           USER_OBJECT_ branches, USER_OBJECT_ useDotNames, USER_OBJECT_ errorFun,
-                    USER_OBJECT_ manageMemory);
+	            USER_OBJECT_ manageMemory, USER_OBJECT_ r_encoding);
 /*
 USER_OBJECT_ RS_XML(Parse)(USER_OBJECT_ fileName, USER_OBJECT_ handlers, USER_OBJECT_ addContext, 
 			   USER_OBJECT_ ignoreBlanks,  USER_OBJECT_ useTagName, USER_OBJECT_ asText,

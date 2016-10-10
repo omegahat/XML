@@ -38,7 +38,7 @@ function(file, handlers = xmlEventHandler(), ignoreBlanks = FALSE, addContext = 
           isURL=FALSE, state = NULL,
           replaceEntities = TRUE, validate = FALSE, saxVersion = 1,
           branches = NULL,  useDotNames =  length(grep("^\\.", names(handlers))) > 0,
-          error = xmlErrorCumulator(), addFinalizer = NA) 
+          error = xmlErrorCumulator(), addFinalizer = NA, encoding = character()) 
 {  
   if(libxmlVersion()$major < 2 && !is.character(file))
     stop("Without libxml2, the source of the XML can only be specified as a URI.")
@@ -79,7 +79,7 @@ function(file, handlers = xmlEventHandler(), ignoreBlanks = FALSE, addContext = 
     file = function(len) {
        if(nchar(leftOver) > 0) {
            txt = leftOver
-       else {
+       } else {
             #  txt = readBin(con, "", n = len - 1L)
            txt = readLines(con, 1)
        }
@@ -134,7 +134,7 @@ function(file, handlers = xmlEventHandler(), ignoreBlanks = FALSE, addContext = 
                      as.logical(useTagName), as.logical(asText), as.logical(trim), 
                       as.logical(useExpat), state, as.logical(replaceEntities),
                        as.logical(validate), as.integer(saxVersion), branches, as.logical(useDotNames), error,
-                        addFinalizer,
+                        addFinalizer, as.character(encoding),
                  PACKAGE = "XML")
 
   if(!is.null(state))

@@ -172,7 +172,7 @@ int RS_XML(parseBufferWithParserData)(char *buf, RS_XMLParserData *parserData);
 int RS_XML(notStandAloneHandler)(void *userData);
 
 int RS_XML(libXMLEventParse)(const char *fileName, RS_XMLParserData *parserData, RS_XML_ContentSourceType asText,
-			      int saxVersion);
+			     int saxVersion, USER_OBJECT_ r_encoding);
 
 
 USER_OBJECT_ findEndElementFun(const char *name, RS_XMLParserData *rinfo);

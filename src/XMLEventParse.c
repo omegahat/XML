@@ -265,7 +265,7 @@ RS_XML_xmlCreateConnectionParserCtxt(USER_OBJECT_ con)
 
 int
 RS_XML(libXMLEventParse)(const char *fileName, RS_XMLParserData *parserData, RS_XML_ContentSourceType asText,
-                          int saxVersion)
+			 int saxVersion, USER_OBJECT_ r_encoding)
 {
  xmlSAXHandlerPtr xmlParserHandler;
  xmlParserCtxtPtr ctx; 
@@ -304,6 +304,11 @@ RS_XML(libXMLEventParse)(const char *fileName, RS_XMLParserData *parserData, RS_
   parserData->ctx = ctx;
   ctx->userData = parserData;
   ctx->sax = xmlParserHandler;
+
+  if(Rf_length(r_encoding) && STRING_ELT(r_encoding, 0) != R_NaString) { 
+//      Rf_PrintValue(r_encoding);
+      ctx->encoding = xmlStrdup(CHAR(STRING_ELT(r_encoding, 0)));
+  }
 
   status = xmlParseDocument(ctx);
 
