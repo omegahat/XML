@@ -2,13 +2,12 @@ Package: XML
 Version: 4.0-0
 Author:  Duncan Temple Lang (duncan@r-project.org)
 Maintainer: Duncan Temple Lang <duncan@r-project.org>
-Title: Tools for parsing and generating XML within R and S-Plus
+Title: Tools for Parsing and Generating XML Within R and S-Plus
 Depends: R (>= 1.2.0)
 Imports: methods, utils, grDevices
 Suggests: bitops, RCurl
 SystemRequirements: libxml2 (>= 2.6.3)
-xxxLazyLoad: yes
-Description: This package provides many approaches for both reading and creating XML (and HTML)
+Description: This provides many approaches for both reading and creating XML (and HTML)
       documents (including DTDs), both local and accessible via HTTP or FTP.  It also offers
       access to an XPath "interpreter".
 Note: In version 2.4.0 of this package, a new approach to garbage collection has been implemented
