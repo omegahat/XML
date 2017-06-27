@@ -148,7 +148,7 @@ RS_XML(Parse)(USER_OBJECT_ fileName, USER_OBJECT_ handlers, USER_OBJECT_ endElem
   /*Is this necessary? Shouldn't it already be protected? Or is there a chance that we may 
     be doing this asynchronously in a pull approach. */
   if(parserData->stateObject && parserData->stateObject != NULL_USER_OBJECT)
-    R_PreserveObject(parserData->stateObject);
+     R_PreserveObject(parserData->stateObject);
 
 
 #ifdef LIBEXPAT
@@ -178,9 +178,9 @@ RS_XML(Parse)(USER_OBJECT_ fileName, USER_OBJECT_ handlers, USER_OBJECT_ endElem
   if(parserData->stateObject && parserData->stateObject != NULL_USER_OBJECT)
      R_ReleaseObject(parserData->stateObject);
 
-  if(status != 0) {
-    RSXML_structuredStop(errorFun, NULL);
-  }
+  if(status != 0) 
+     RSXML_structuredStop(errorFun, NULL);
+
 
   /* free(parserData); Now using R_alloc */
 
@@ -357,7 +357,7 @@ fixedTrim(char *str,  int len, int *start, int *end)
     return(str);
 
    /* Jump to the end */
-  tmp = str + len - 2;
+  tmp = str + len - 1;
   while(tmp >= str && isspace(*tmp)) {
       tmp--;
       (*end)--;
