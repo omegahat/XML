@@ -334,7 +334,6 @@ R_isBranch(const xmlChar *localname, RS_XMLParserData *rinfo)
                 return(i);
             }
         }
-
     }
      
     return(-1);   
