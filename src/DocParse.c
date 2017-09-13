@@ -1495,6 +1495,9 @@ R_getDocEncoding(SEXP r_doc)
     const xmlChar *encoding;
     SEXP ans;
 
+    if(!doc)
+	return(NEW_CHARACTER(0));
+    
     if(doc->type != XML_DOCUMENT_NODE && doc->type != XML_HTML_DOCUMENT_NODE)
 	doc = ((xmlNodePtr) doc)->doc;
     if(!doc)
@@ -1657,4 +1660,24 @@ R_findXIncludeStartNodes(SEXP r_root, SEXP manageMemory)
     return(ans);
 }
 
+
+SEXP
+R_findXIncludeStartNodes2(SEXP r_node, SEXP manageMemory)
+{
+    xmlNodePtr node, p;
+    SEXP ans;
+
+    node = (xmlNodePtr) R_ExternalPtrAddr(r_node);
+    if(!node)
+	return(R_NilValue);
+
+    p = node;
+    while(p) {
+	if(p->type == XML_XINCLUDE_START)
+	   return(R_createXMLNodeRef(p, manageMemory));
+	p = p->prev;
+    }
+
+    return(R_NilValue);
+}
 #endif
