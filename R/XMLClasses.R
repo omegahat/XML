@@ -192,7 +192,10 @@ xmlChildren.XMLNode <-
 #
 function(x, addNames = TRUE, ...)
 {
-  structure(x$children, class = "XMLNodeList")
+   if(is.null(x$children)){
+      return(structure(list(), class = "XMLNodeList"))
+    }
+    structure(x$children, class = "XMLNodeList")
 }
 
 
