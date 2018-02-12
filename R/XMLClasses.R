@@ -192,7 +192,7 @@ xmlChildren.XMLNode <-
 #
 function(x, addNames = TRUE, ...)
 {
-  structure(x$children, class = "XMLNodeList")
+  structure(if(length(x$children)) x$children else list(), class = "XMLNodeList")
 }
 
 
@@ -701,7 +701,17 @@ function(doc, path, fun = NULL, ... , namespaces = xmlNamespaceDefinitions(doc, 
           resolveNamespaces = TRUE, addFinalizer = NA, xpathFuns = list())
 {
   UseMethod("xpathApply")
-}  
+}
+
+
+xpathApply.XMLNode =
+function(doc, path, fun = NULL, ... , namespaces = xmlNamespaceDefinitions(doc, simplify = TRUE),
+          resolveNamespaces = TRUE, addFinalizer = NA, xpathFuns = list())
+{
+   stop("xpathApply/xpathSApply/getNodeSet require an XML/HTML internal document or node. Use xmlParse() or htmlParse()")
+}
+
+
 
 toXMLNode =
   #
