@@ -246,7 +246,7 @@ function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x),
     kids = xmlChildren(x, addFinaliizer = FALSE)
     i = sapply(kids, inherits, "XMLInternalTextNode")
     if(any(i))
-      return(paste(unlist(lapply(kids[i], xmlValue, ignoreComments, recursive = TRUE, encoding = encoding)), collapse = ""))
+      return(paste(unlist(lapply(kids[i], xmlValue, ignoreComments, recursive = TRUE, encoding = encoding, trim = trim)), collapse = ""))
     else
       return(character())
    }
