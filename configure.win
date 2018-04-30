@@ -1,34 +1,29 @@
 #!/bin/sh
 
-
+# This is changed to work with Jeroen's RWinLib collections.
+# Rather than having the package download the latest archive
+# we get the user to do this for now.
 
 if test -z "$LIB_XML" ; then
-  echo "Please define LIB_XML (and LIB_ZLIB, LIB_ICONV)"
-  exit 1
+
+  ${R_HOME}/bin${R_ARCH}/Rscript getWinArchive.R
+
+#  echo "Please define LIB_XML to point to where the libxml2 archive was unpacked"
+#  echo "You can download this archive from https://github.com/rwinlib/libxml2/archive/v2.9.8.zip"
+#  echo "Then unzip this and set the LIB_XML directory to point to this."
+#  exit 1  
+#  DIR=`find ${HOME} -name parser.h | head -n 1`
+#  if test -z "$DIR" ; then
+#
+#  fi
+#  LIB_XML=`echo "$DIR" | sed -e 's|/include/.*||' | sed -e 's|^/home|C:/cygwin64|'`
+# 
 fi
 
-if test -z "$LIB_ZLIB" ; then
-  echo "Please define LIB_ZLIB (and LIB_ICONV)"
-  exit 1
-fi
-
-if test -z "$LIB_ICONV" ; then  
-  echo "Please define LIB_ICONV"
-  exit 1
-fi
-
-if test -z "${R_PACKAGE_DIR}"; then
-   R_PACKAGE_DIR=${DPKG}
-fi
-
-mkdir "$R_PACKAGE_DIR/libs"
-# These were in $LIB_ZLIB/lib/ and $LIB_XML/lib
-cp $LIB_ZLIB/bin/zlib1.dll "$R_PACKAGE_DIR/libs"
-cp $LIB_XML/bin/libxml2.dll "$R_PACKAGE_DIR/libs"
-cp $LIB_ICONV/bin/iconv.dll "$R_PACKAGE_DIR/libs"
+#echo "LIB_XML = $LIB_XML"
+#echo "LIB_XML=$LIB_XML"  > src/Makevariables
 
 echo "supportsExpat <- function() FALSE" > R/supports.R
 echo "supportsLibxml <- function() TRUE" >> R/supports.R
 echo "ADD_XML_OUTPUT_BUFFER = FALSE" >> R/supports.R
-
 
