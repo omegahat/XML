@@ -54,9 +54,10 @@ function(u, baseURL, sep = "/", addBase = TRUE, simplify = TRUE, escapeQuery = F
           u = substring(u, 3)
       
       #handle ../ occurences
-      parent_levels <- length(gregexpr("\\.\\./",b$path)[[1]])
+      parent_levels <- gregexpr("\\.\\./",u)[[1]]
+      parent_levels <- parent_levels[parent_levels!=-1]
       if(length(parent_levels)>0)
-        for(i in 1:parent_levels) bdir <- dirname(bdir)
+        for(i in 1:length(parent_levels)) bdir <- dirname(bdir)
         if(bdir=="/") bdir <- ""
         u <- gsub("\\.\\./","",u)  
           
