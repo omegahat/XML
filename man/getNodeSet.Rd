@@ -67,7 +67,7 @@
   and connecting these with the namespace definitions in the
   target XML document in which the XPath expression will be evaluated.
 
-  \code{matchNamespaces} uses rules that are very slightly awkard or
+  \code{matchNamespaces} uses rules that are very slightly awkward or
   specifically involve a special case. This is because this mapping of
   namespaces from  XPath to XML targets is difficult, involving
    prefixes in the XPath expression, definitions in the XPath evaluation
@@ -86,7 +86,7 @@
    namespaces anywhere within the target document, i.e. in any node and
    not just the root one.
    If there is no match for the first element of the \code{namespaces}
-   vector, this is treated specially and is mapped to the
+   vector, this is treated differently and is mapped to the
    default namespace of the target document. If there is no default
    namespace defined, an error occurs.
 
@@ -165,7 +165,7 @@ matchNamespaces(doc, namespaces,
 \item{sessionEncoding}{experimental functionality and parameter related
   to encoding.}
   \item{addFinalizer}{a logical value or identifier for a C routine
-        that controls whether we register finalizers on the intenal
+        that controls whether we register finalizers on the internal
 	node.} 
 
   \item{xpathFuns}{a list containing either character strings, functions
@@ -181,7 +181,7 @@ matchNamespaces(doc, namespaces,
 }
 \details{
   When a namespace is defined on a node in the XML document,
-  an XPath expressions must use a namespace, even if it is the default
+  an XPath expression must use a namespace, even if it is the default
   namespace for the XML document/node.
   For example, suppose we have an XML document
 \code{<help xmlns="http://www.r-project.org/Rd"><topic>...</topic></help>}  
@@ -221,7 +221,7 @@ So we would use
 \author{Duncan Temple Lang <duncan@wald.ucdavis.edu>}
 
 \note{
-  In order to match nodes in the default name space for
+  In order to match nodes in the default namespace for
  documents with a non-trivial default namespace, e.g. given as
   \code{xmlns="http://www.omegahat.net"}, you will need to use a prefix
   for the default namespace in this call.
@@ -229,7 +229,7 @@ So we would use
   default namespace URI and then use this as the prefix in the
   XPath expression, e.g.
   \code{getNodeSet(d, "//d:myNode", c(d = "http://www.omegahat.net"))}
-  to match myNode in the default name space
+  to match myNode in the default namespace
   \code{http://www.omegahat.net}.
   
   This default namespace of the document is now computed for us and
