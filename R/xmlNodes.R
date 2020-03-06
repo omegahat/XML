@@ -338,9 +338,12 @@ function(node, encoding = getEncoding(node), asVector = TRUE, len = xmlSize(node
 
 
 setMethod("xmlParent", "XMLInternalNode",
-function(x, addFinalizer = NA, ...)
+function(x, addFinalizer = NA, count = 1, ...)
 {
-  .Call("RS_XML_xmlNodeParent", x, addFinalizer, PACKAGE = "XML")
+      # fix the addFinalizer to be only for the last one.
+    for(i in 1:count)              
+        x = .Call("RS_XML_xmlNodeParent", x, addFinalizer, PACKAGE = "XML")
+    x
 })
 
 
@@ -445,7 +448,7 @@ function(dtd = "", namespaces = NULL, addFinalizer = TRUE, name = character(), n
 
   if(length(node)) {
     if(is.character(node))
-       newXMLTextNode(node, addFinalizer = FALSE, parent = doc)
+       newXMLTextNode(node, addFinalizer = FALSE, parent = ans)
     else
        addChildren(ans, node)
   }
