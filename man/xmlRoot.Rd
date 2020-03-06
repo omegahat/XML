@@ -30,7 +30,7 @@ xmlRoot(x, skip = TRUE, ...)
   \item{...}{arguments that are passed by the generic to the different specialized 
     methods of this generic.}
   \item{addFinalizer}{a logical value or identifier for a C routine
-        that controls whether we register finalizers on the intenal node.}
+        that controls whether we register finalizers on the internal node.}
 }
 \value{
  An object of class \code{XMLNode}.

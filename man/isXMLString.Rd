@@ -34,7 +34,7 @@ xml(x)
   \item{namespaces}{a character vector giving the URIs for the XML namespaces which are to be removed if \code{clean} is \code{TRUE}.}
   \item{clean}{a logical value that controls whether namespaces are removed after the document is parsed..}
   \item{addFinalizer}{a logical value or identifier for a C routine
-        that controls whether we register finalizers on the intenal node.}   
+        that controls whether we register finalizers on the internal node.}
 }
 %\details{}
 \value{

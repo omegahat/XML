@@ -315,7 +315,7 @@ If this is True, each callback function  should support
    This is called with 6 arguments and is described in \code{\link{xmlTreeParse}}.
  }
 \item{addFinalizer}{a logical value or identifier for a C routine
-        that controls whether we register finalizers on the intenal node.}
+        that controls whether we register finalizers on the internal node.}
 \item{encoding}{ a character string (scalar) giving the encoding for the
   document.  This is optional as the document should contain its own
   encoding information. However, if it doesn't, the caller can specify
