@@ -40,7 +40,17 @@ typedef enum {RS_XML_FILENAME, RS_XML_TEXT, RS_XML_CONNECTION, RS_XML_INVALID_CO
 #endif
 #endif /* end of ignoring version details */
 
-#endif /* end of _R_ */
 
+#ifndef PROBLEM
+
+#define R_PROBLEM_BUFSIZE	4096
+#define PROBLEM			{char R_problem_buf[R_PROBLEM_BUFSIZE];(snprintf)(R_problem_buf, R_PROBLEM_BUFSIZE,
+#define ERROR			),Rf_error(R_problem_buf);}
+#define WARNING(x)		),Rf_warning(R_problem_buf);}
+#define WARN			WARNING(NULL)
+
+#endif
+
+#endif /* end of _R_ */
 
 #endif
