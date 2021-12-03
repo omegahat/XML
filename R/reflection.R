@@ -118,7 +118,6 @@ function(obj, attrs)
        i[which(w)] = match(gsub(".*:", "", names(attrs)[which(w)]), names(slots))
   }
 
-  m = i
   if(any(!is.na(i))) {
     vals = structure(attrs[!is.na(i)], names = names(slots)[i [!is.na(i)] ])
     for(i in names(vals))
