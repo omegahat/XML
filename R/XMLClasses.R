@@ -775,6 +775,10 @@ function(doc, path, fun = NULL, ... , namespaces = xmlNamespaceDefinitions(doc, 
       anonFuns = xpathFuns[ vapply(xpathFuns, is.function, FALSE) ]
 
 
+  if("xml" %in% names(namespaces))
+      stop("'xml' cannot be a prefix for the namespace definitions in XPath queries. Use 'x' or some other local prefix.")
+
+
   ans = .Call("RS_XML_xpathEval", doc, .node, as.character(path), namespaces, fun, encoding, addFinalizer, xpathFuns, anonFuns, PACKAGE = "XML")
 
   if(!noMatchOkay && length(ans) == 0 && length(getDefaultNamespace(xmlRoot(doc))) > 0) {
