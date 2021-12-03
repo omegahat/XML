@@ -4,7 +4,6 @@
   # This also defines methods for the 
 function(where = "package:XML") {  
 
-
    setClass("SAXState",  "VIRTUAL", where = where)
 
    setGeneric("startElement.SAX", function(name, atts, .state = NULL)  standardGeneric("startElement.SAX"), where = where)
