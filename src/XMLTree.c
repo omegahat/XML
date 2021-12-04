@@ -1857,12 +1857,17 @@ R_setXMLNodeType(USER_OBJECT_ r_node, USER_OBJECT_ r_type)
 //////////////////////////////////////////////////////
 
 xmlNodePtr
-inc_addXInclude(xmlNodePtr cur, SEXP ans, int *pos)
+inc_findXIncludeStartNodes(xmlNodePtr cur, SEXP ans, int *pos, int depth);
+
+xmlNodePtr
+inc_addXInclude(xmlNodePtr cur, SEXP ans, int *pos, int depth)
 {
     fprintf(stderr, "adding XINCLUDE_START %s @href = %s \n", cur->name, xmlGetProp(cur, (const xmlChar *) "href"));    
     SET_VECTOR_ELT(ans, (*pos)++, R_createXMLNodeRefDirect(cur, 1)); 
 
-	    // skip to the ending sentinel
+    inc_findXIncludeStartNodes(cur->next, ans, pos, depth);
+
+      // skip to the ending sentinel
     while(cur->type != XML_XINCLUDE_END)
 	cur = cur->next;
     
@@ -1882,7 +1887,7 @@ inc_findXIncludeStartNodes(xmlNodePtr cur, SEXP ans, int *pos, int depth)
     fprintf(stderr, "%d) %s  (%p) %s\n", depth, cur->name, (void*) cur, (cur->type == XML_TEXT_NODE) ? xmlNodeGetContent(cur) : "");
     xmlNodePtr nextNode = cur->next;
     if(cur->type == XML_XINCLUDE_START) {
-	cur = inc_addXInclude(cur, ans, pos);
+	cur = inc_addXInclude(cur, ans, pos, depth);
     } else
 	cur = cur->children;
 
@@ -1890,7 +1895,7 @@ inc_findXIncludeStartNodes(xmlNodePtr cur, SEXP ans, int *pos, int depth)
 	return(NULL);
     
 
-    while(cur && cur->type != XML_XINCLUDE_END) {
+    while(cur) { // && cur->type != XML_XINCLUDE_END) {
 	if(cur->type != XML_TEXT_NODE )
 	    cur = inc_findXIncludeStartNodes(cur, ans, pos, depth + 1);
 	else
