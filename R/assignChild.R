@@ -28,11 +28,15 @@ function(x, i, value)
 }
 
 
-append.xmlNode <-
+append <-
 function(to, ...)
 {
  UseMethod("append")
 }
+
+append.default <-
+function(to, ...)
+    base::append(to, ...)
 
 append.XMLNode <-
 function(to, ...)

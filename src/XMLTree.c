@@ -941,7 +941,7 @@ R_createXMLNsRef(xmlNsPtr ns)
 USER_OBJECT_
 R_convertXMLNsRef(SEXP r_ns)
 {
-  SEXP ref, ans;
+  SEXP ans;
   xmlNsPtr ns;
 
   if(TYPEOF(r_ns) != EXTPTRSXP) {
@@ -1125,7 +1125,7 @@ SEXP
 R_addXMLNodeFinalizer(SEXP r_node)
 {
 #ifdef XML_REF_COUNT_NODES /* ??? should this be ifndef or ifdef.??  */
-   xmlNodePtr node = (xmlNodePtr) R_ExternalPtrAddr(r_node);
+    // xmlNodePtr node = (xmlNodePtr) R_ExternalPtrAddr(r_node);
   R_RegisterCFinalizer(r_node, decrementNodeRefCount);
 #endif
   return(r_node);
@@ -1723,7 +1723,7 @@ R_xmlSearchNs(SEXP r_doc, SEXP r_node, SEXP r_ns, SEXP r_asPrefix)
 USER_OBJECT_
 R_getChildByIndex(USER_OBJECT_ r_node, USER_OBJECT_ r_index, USER_OBJECT_ r_addFinalizer)
 {
-    xmlNodePtr node, parent, ptr;
+    xmlNodePtr node, ptr;
     int i = 0, idx;
     node = (xmlNodePtr) R_ExternalPtrAddr(r_node);    
     ptr = node->children;
@@ -1741,8 +1741,8 @@ R_getChildByIndex(USER_OBJECT_ r_node, USER_OBJECT_ r_index, USER_OBJECT_ r_addF
 USER_OBJECT_
 R_getChildByName(USER_OBJECT_ r_node, USER_OBJECT_ r_index, USER_OBJECT_ r_addFinalizer)
 {
-    xmlNodePtr node, parent, ptr;
-    int i = 0, idx;
+    xmlNodePtr node, ptr;
+
     node = (xmlNodePtr) R_ExternalPtrAddr(r_node);    
     ptr = node->children;
     const char *name = CHAR_DEREF(STRING_ELT(r_index, 0));
@@ -1840,4 +1840,83 @@ R_replaceNodeWithChildren(USER_OBJECT_ r_node)
     }
 
     return(NULL_USER_OBJECT);
+}
+
+
+
+USER_OBJECT_
+R_setXMLNodeType(USER_OBJECT_ r_node, USER_OBJECT_ r_type)
+{
+    xmlNodePtr node = (xmlNodePtr) R_ExternalPtrAddr(r_node);
+    node->type = INTEGER(r_type)[0];
+    return(r_node);
+}
+
+
+
+//////////////////////////////////////////////////////
+
+xmlNodePtr
+inc_addXInclude(xmlNodePtr cur, SEXP ans, int *pos)
+{
+    fprintf(stderr, "adding XINCLUDE_START %s @href = %s \n", cur->name, xmlGetProp(cur, (const xmlChar *) "href"));    
+    SET_VECTOR_ELT(ans, (*pos)++, R_createXMLNodeRefDirect(cur, 1)); 
+
+	    // skip to the ending sentinel
+    while(cur->type != XML_XINCLUDE_END)
+	cur = cur->next;
+    
+    cur = cur->next;
+    
+    if(cur)
+	fprintf(stderr, "returning %d,  %p\n", cur->type, cur);
+    else
+	fprintf(stderr, "return NULL\n");
+    
+    return(cur);
+}
+
+xmlNodePtr
+inc_findXIncludeStartNodes(xmlNodePtr cur, SEXP ans, int *pos, int depth)
+{
+    fprintf(stderr, "%d) %s  (%p) %s\n", depth, cur->name, (void*) cur, (cur->type == XML_TEXT_NODE) ? xmlNodeGetContent(cur) : "");
+    xmlNodePtr nextNode = cur->next;
+    if(cur->type == XML_XINCLUDE_START) {
+	cur = inc_addXInclude(cur, ans, pos);
+    } else
+	cur = cur->children;
+
+    if(!cur)
+	return(NULL);
+    
+
+    while(cur && cur->type != XML_XINCLUDE_END) {
+	if(cur->type != XML_TEXT_NODE )
+	    cur = inc_findXIncludeStartNodes(cur, ans, pos, depth + 1);
+	else
+	    fprintf(stderr, "skipping node of type %d: '%s'\n", cur->type, cur->type == XML_TEXT_NODE ? cur->content : "");
+	if(cur)
+	    cur = cur->next;
+    }
+
+    return(nextNode);
+}
+
+
+
+/*
+  
+ */
+USER_OBJECT_
+R_inc_findXIncludeStartNodes(USER_OBJECT_ r_node, USER_OBJECT_ r_num)
+{
+    xmlNodePtr node = (xmlNodePtr) R_ExternalPtrAddr(r_node);
+    SEXP ans;
+    int ctr = 0;
+    PROTECT(ans = NEW_LIST(INTEGER(r_num)[0]));
+
+    inc_findXIncludeStartNodes(node, ans, &ctr, 0);
+    
+    UNPROTECT(1);
+    return(ans);
 }
