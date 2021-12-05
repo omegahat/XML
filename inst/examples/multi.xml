@@ -1,0 +1,9 @@
+<multi xmlns:xi="http://www.w3.org/2003/XInclude">
+This is a regular text node but with a <random><i>italic</i> content</random> node
+and then we go to the XInclude.
+<xi:include href="B.xml"/>
+And then another <xi:include href="Y.xml"/>
+and then one with an xpointer in this document.
+<xi:include href="other.xml" xpointer="xpointer(//title)" />
+</multi>
+

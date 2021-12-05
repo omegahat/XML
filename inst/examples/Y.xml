@@ -1,0 +1,9 @@
+<doc xmlns:xi="http://www.w3.org/2003/XInclude">
+  <p>Other</p>
+  <Y>Y1 node</Y>
+  <Y>Y2 node
+     <xi:include href="B.xml"/>
+  </Y>  
+  <p>Second other</p>
+  <xi:include href="A.xml"/>
+</doc>
