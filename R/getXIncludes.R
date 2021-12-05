@@ -30,7 +30,7 @@ function(file, recursive = TRUE, xpointer = "", parse = "", from = file)
     if(recursive && length(href) > 0) {
    ##     isParse = (parse == "text")
    ##    tmp = mapply(getXIncludes, href[!isParse], xpointer[!isParse], MoreArgs = list(recursive = TRUE), SIMPLIFY = FALSE)
-        tmp = mapply(getXIncludes, href, xpointer, parse, MoreArgs = list(recursive = TRUE, from = file), SIMPLIFY = FALSE)
+        tmp = mapply(getXIncludes2, href, xpointer, parse, MoreArgs = list(recursive = TRUE, from = file), SIMPLIFY = FALSE)
 
         tmp2 = mapply(function(i, info) rbind(ans[i,], info), seq(along = tmp), tmp, SIMPLIFY = FALSE)
         ans = do.call(rbind, tmp2)

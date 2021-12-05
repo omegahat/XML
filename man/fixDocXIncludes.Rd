@@ -28,8 +28,7 @@ Duncan Temple Lang
 \code{\link{getNodeLocation}}
 }
 \examples{
-library(XML)
-m = xmlParse(system.file("examples/multi.xml", packageg = "XML"))
+m = xmlParse(system.file("examples/multi.xml", package = "XML"))
 invisible(fixDocXIncludes(m))
 getNodeLocation(getNodeSet(m, "//C"))
 }
