@@ -20,7 +20,7 @@
 }
 \usage{
 getLineNumber(node, ...)
-getNodeLocation(node, recursive = TRUE, fileOnly = FALSE)
+getNodeLocation(node, recursive = FALSE, fileOnly = FALSE)
 }
 \arguments{
   \item{node}{the node whose location or line number is of interest}
