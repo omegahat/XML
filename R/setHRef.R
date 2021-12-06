@@ -28,7 +28,7 @@ if(FALSE) {
     inc$index = as.integer(ordered(inc$file, inc$file[!duplicated(inc$file)]))
     diff(inc$index)
     g = split(inc, cumsum(c(0, diff(inc$index)) != 0))
-}
+
 
 
 fixDocXIncludes =
@@ -55,6 +55,9 @@ setXIncludeHref =
     # maybe the entire traversal.
 function(x, attrs)
 {
+    if(is.null(x))
+        stop("setXIncludeHref called with NULL for node")
+    
     oclass = class(x)
 
     # temporarily set to an ELEMENT_NODE so we find xmlAttrs<-()
@@ -69,4 +72,5 @@ function(x, attrs)
     class(x) = oclass
     
     x
+}
 }
