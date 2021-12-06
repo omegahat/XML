@@ -81,3 +81,6 @@ Collate: AAA.R
         getRelativeURL.R
         xmlIncludes.R
         simplifyPath.R
+        setHRef.R
+	getXIncludes.R
+	xincludeFuns.R

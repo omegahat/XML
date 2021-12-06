@@ -1847,7 +1847,18 @@ R_replaceNodeWithChildren(USER_OBJECT_ r_node)
 }
 
 
+SEXP
+R_getXMLNodeType(SEXP r_node)
+{
+    xmlNodePtr node = (xmlNodePtr) R_ExternalPtrAddr(r_node);
+    return(ScalarInteger(node->type));
+}
 
+
+// Probably don't need. Added when we were exploring setting
+// attributes on XML_XINCLUDE_START nodes to implement XInclude
+// in R code.  Needed to temporarily set the node->type to
+// XML_ELEMENT_NODE to have xmlSetProp() work.
 USER_OBJECT_
 R_setXMLNodeType(USER_OBJECT_ r_node, USER_OBJECT_ r_type)
 {
@@ -1857,6 +1868,86 @@ R_setXMLNodeType(USER_OBJECT_ r_node, USER_OBJECT_ r_type)
 }
 
 
+
+/*--------------------------------------------------------------*/
+
+void
+visitXMLDocCall(xmlNodePtr node, int depth, SEXP call)
+{
+    if(!node)
+	return;
+    
+    while(node) {
+	// note NO FINALIZER.  Use and discard the XML node in the function call
+	// or ensure the XML document persists.  Easy enough to add the finalizer.
+	// Probably should.
+	SETCAR(CDR(call), R_createXMLNodeRefDirect(node, 0));
+	Rf_eval(call, R_GlobalEnv);
+	visitXMLDocCall(node->children, depth + 1, call);
+	node = node->next;
+    }
+}
+
+SEXP
+R_visitXMLDocCall(SEXP r_node, SEXP call)
+{
+    xmlNodePtr node = (xmlNodePtr) R_ExternalPtrAddr(r_node);
+    visitXMLDocCall(node, 0, call);
+    return(R_NilValue);
+}
+
+
+
+/*----------------------
+ These 2 routines are very specific versions of the visitXMLDocCall above.
+ These collect all the nodes or the node type depending on the #if  in visitXMLDoc.
+ This is now handled more generally by the codde above that allows the caller 
+ to provide the function.
+ */
+#if 0
+void
+visitXMLDoc(xmlNodePtr node, int depth, SEXP ans, int *pos)
+{
+    if(!node)
+	return;
+    
+//    fprintf(stderr, "%d) type=%d  %s\n", depth, node->type, node->name ? (char *) node->name : "?");
+    while(node) {
+#if 0	
+	if(node->type == XML_XINCLUDE_START)
+	    SET_VECTOR_ELT(ans, (*pos)++, R_createXMLNodeRefDirect(node, 1));
+#else
+	SET_VECTOR_ELT(ans, (*pos)++, ScalarInteger(node->type));
+#endif
+	
+	visitXMLDoc(node->children, depth + 1, ans, pos);
+	node = node->next;
+    }
+}
+
+SEXP
+R_visitXMLDoc(SEXP r_node, SEXP r_len)
+{
+    xmlNodePtr node = (xmlNodePtr) R_ExternalPtrAddr(r_node);
+    SEXP ans;
+    int pos = 0;
+    PROTECT(ans = NEW_LIST(INTEGER(r_len)[0]));
+    visitXMLDoc(node, 0, ans, &pos);
+    UNPROTECT(1);
+    return(ans);
+}
+#endif
+
+
+
+
+
+
+
+////////////////////////////////
+
+#if 0
+// Use visitXMLDocCall and R_... insteadd.
 
 //////////////////////////////////////////////////////
 
@@ -1952,69 +2043,4 @@ R_inc_findXIncludeStartNodes(USER_OBJECT_ r_node, USER_OBJECT_ r_num)
     return(ans);
 }
 
-
-
-/*--------------------------------------------------------------*/
-
-void
-visitXMLDoc(xmlNodePtr node, int depth, SEXP ans, int *pos)
-{
-    if(!node)
-	return;
-    
-    fprintf(stderr, "%d) type=%d  %s\n", depth, node->type, node->name ? (char *) node->name : "?");
-    while(node) {
-#if 0	
-	if(node->type == XML_XINCLUDE_START)
-	    SET_VECTOR_ELT(ans, (*pos)++, R_createXMLNodeRefDirect(node, 1));
-#else
-	SET_VECTOR_ELT(ans, (*pos)++, ScalarInteger(node->type));
 #endif
-	
-	visitXMLDoc(node->children, depth + 1, ans, pos);
-	node = node->next;
-    }
-}
-
-SEXP
-R_visitXMLDoc(SEXP r_node, SEXP r_len)
-{
-    xmlNodePtr node = (xmlNodePtr) R_ExternalPtrAddr(r_node);
-    SEXP ans;
-    int pos = 0;
-    PROTECT(ans = NEW_LIST(INTEGER(r_len)[0]));
-    visitXMLDoc(node, 0, ans, &pos);
-    UNPROTECT(1);
-    return(ans);
-}
-
-
-
-void
-visitXMLDocCall(xmlNodePtr node, int depth, SEXP call)
-{
-    if(!node)
-	return;
-    
-    while(node) {
-	SETCAR(CDR(call), R_createXMLNodeRefDirect(node, 0));
-	Rf_eval(call, R_GlobalEnv);
-	visitXMLDocCall(node->children, depth + 1, call);
-	node = node->next;
-    }
-}
-
-SEXP
-R_visitXMLDocCall(SEXP r_node, SEXP call)
-{
-    xmlNodePtr node = (xmlNodePtr) R_ExternalPtrAddr(r_node);
-    visitXMLDocCall(node, 0, call);
-    return(R_NilValue);
-}
-
-SEXP
-R_getXMLNodeType(SEXP r_node)
-{
-    xmlNodePtr node = (xmlNodePtr) R_ExternalPtrAddr(r_node);
-    return(ScalarInteger(node->type));
-}

@@ -41,6 +41,10 @@ genCollectNodeType = function(n) {
 
 
 visitNodes =
+   #
+   #  given a function that takes one argument - the XML node reference -
+   #  this function visits all nodes in the XML tree, including XML_XINCLUDE_START/END nodes 
+   #  and invokes that function for each node.
 function(doc, fun)    
 {
     e = substitute(f(x), list(f = fun))
@@ -48,5 +52,5 @@ function(doc, fun)
     if(is(doc, "XMLInternalDocument"))
         doc = xmlRoot(doc)
     
-    .Call("R_visitXMLDocCall", doc, e)
+    .Call("R_visitXMLDocCall", doc, e, PACKAGE = "XML")
 }

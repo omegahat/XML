@@ -124,7 +124,7 @@ function(x) {
 
 
 getNodeLocation =
-function(node, recursive = FALSE, fileOnly = FALSE)
+function(node, recursive = TRUE, fileOnly = FALSE)
 {
    if(is.list(node))
      return(lapply(node, getNodeLocation, recursive, fileOnly))

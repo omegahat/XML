@@ -7,7 +7,7 @@ import(grDevices)
 
 
 export(
- append.xmlNode,
+# append.xmlNode,
  append.XMLNode,
  Doctype,
  asXMLNode,
@@ -385,6 +385,10 @@ exportMethods("names", "$", "$<-", "coerce")
 export(getSibling)
 S3method(getSibling, XMLInternalNode)
 S3method(getSibling, XMLHashTreeNode)
+
+export(getSiblings)
+S3method(getSiblings, XMLInternalNode)
+
 export(catalogLoad, catalogClearTable, catalogAdd, catalogDump)
 
 
@@ -516,3 +520,8 @@ export(getHTMLExternalFiles)
 export(xmlCleanNamespaces)
 
 export(replaceNodeWithChildren)
+
+export(getXIncludes2)
+#export(fixDocXIncludes)
+
+export(visitNodes)
