@@ -47,6 +47,10 @@
 # define XML_ROOT(n) (n)->xmlRootNode
 #endif
 
+
+#define  XML_CHAR_CAST (const xmlChar *)
+#define  XML_2CHAR_CAST (const char *)
+
 void incrementDocRef(xmlDocPtr doc);
 int getNodeCount(xmlNodePtr node);
 void incrementDocRefBy(xmlDocPtr doc, int num);
@@ -221,7 +225,7 @@ removeNodeNamespaceByName(xmlNodePtr node, const char * const id)
 	return(0);
     prev = node->nsDef;
     p = node->nsDef;
-    if(!(id[0] && !p->prefix) || (p->prefix && strcmp(p->prefix, id) ==  0)) {
+    if(!(id[0] && !p->prefix) || (p->prefix && strcmp(XML_2CHAR_CAST p->prefix, id) ==  0)) {
                 /*XXX Free or not */
         if(node->ns == p)
 	    node->ns = NULL;
@@ -230,7 +234,7 @@ removeNodeNamespaceByName(xmlNodePtr node, const char * const id)
     }
 
     while(1) {
-	if((!id[0] && !p->prefix) || (p->prefix && strcmp(p->prefix, id) == 0)) {
+	if((!id[0] && !p->prefix) || (p->prefix && strcmp( XML_2CHAR_CAST  p->prefix, id) == 0)) {
 	    prev->next = p->next;
 	    if(node->ns == p)
 		node->ns = NULL;
@@ -305,7 +309,7 @@ RS_XML_removeNodeNamespaces(SEXP s_node, SEXP r_ns)
 	    LOGICAL(ans)[i] = removeNodeNamespaceByName(node, prefix);
 	} else if(TYPEOF(el) == EXTPTRSXP) {
 	    xmlNsPtr p = (xmlNsPtr) R_ExternalPtrAddr(el);
-	    LOGICAL(ans)[i] = removeNodeNamespaceByName(node, p->prefix);
+	    LOGICAL(ans)[i] = removeNodeNamespaceByName(node, XML_2CHAR_CAST p->prefix);
 	}
     }
 
@@ -500,7 +504,7 @@ R_insertXMLNode(USER_OBJECT_ node, USER_OBJECT_ parent, USER_OBJECT_ at, USER_OB
         int i;
 	p = (xmlNodePtr) R_ExternalPtrAddr(parent);	
 	for(i = 0; i < GET_LENGTH(node); i++) {
-  	    n = xmlNewText(CHAR(STRING_ELT(node, i)));
+  	    n = xmlNewText( XML_CHAR_CAST  CHAR(STRING_ELT(node, i)));
    	    xmlAddChild(p, n);
 	}
 	return(NULL_USER_OBJECT);
@@ -740,7 +744,7 @@ R_newXMLDoc(USER_OBJECT_ dtd, USER_OBJECT_ namespaces, USER_OBJECT_ isHTML)
       const char *d = (TYPEOF(dtd) == STRSXP && Rf_length(dtd)) ? 
                                 CHAR_DEREF(STRING_ELT(dtd, 0)) : NULL;
       if(d[0] == '5')
-	  doc = htmlNewDoc("", NULL);
+	  doc = htmlNewDoc(XML_CHAR_CAST "", NULL);
       else
 	  doc = htmlNewDocNoDtD(d && d[0] ? CHAR_TO_XMLCHAR(d) : NULL, NULL);
 
@@ -951,7 +955,7 @@ R_convertXMLNsRef(SEXP r_ns)
 
   ns = (xmlNsPtr) R_ExternalPtrAddr(r_ns);
 
-  PROTECT(ans =  mkString(ns->href));
+  PROTECT(ans =  mkString((const char *) ns->href));
   SET_NAMES(ans, mkString(ns->prefix ? XMLCHAR_TO_CHAR(ns->prefix) : ""));
 
   UNPROTECT(1);
@@ -1459,9 +1463,9 @@ RS_XML_printXMLNode(USER_OBJECT_ r_node, USER_OBJECT_ level, USER_OBJECT_ format
     if(xbuf->use > 0) {
         /*XXX this const char * in CHARSXP means we have to make multiple copies. */
      if(INTEGER(r_encoding_int)[0] == CE_NATIVE)
-        ans = ScalarString(CreateCharSexpWithEncoding(encoding, xbuf->content));
+        ans = ScalarString(CreateCharSexpWithEncoding( XML_CHAR_CAST encoding, xbuf->content));
      else
-        ans = ScalarString(mkCharCE(xbuf->content, INTEGER(r_encoding_int)[0]));
+        ans = ScalarString(mkCharCE((const char *) xbuf->content, INTEGER(r_encoding_int)[0]));
     } else
       ans = NEW_CHARACTER(1);
 
@@ -1498,7 +1502,7 @@ R_setXMLInternalTextNode_value(SEXP node, SEXP value)
    }
 
    str = CHAR(STRING_ELT(value, 0));
-   xmlNodeSetContent(n, str);
+   xmlNodeSetContent(n, XML_CHAR_CAST str);
     
    return(node);
 }
@@ -1539,7 +1543,7 @@ R_xmlNodeValue(SEXP node, SEXP raw, SEXP r_encoding)
      if(INTEGER(r_encoding)[0] == CE_NATIVE)
         ans = ScalarString(CreateCharSexpWithEncoding(encoding, tmp));
      else
-        ans = ScalarString(mkCharCE(tmp, INTEGER(r_encoding)[0]));
+        ans = ScalarString(mkCharCE((const char *) tmp, INTEGER(r_encoding)[0]));
 
 
      free(tmp);
@@ -1698,7 +1702,7 @@ R_xmlSearchNs(SEXP r_doc, SEXP r_node, SEXP r_ns, SEXP r_asPrefix)
     const char * val;
     xmlNsPtr ns;
 
-    xmlDocPtr doc = (xmlDocPtr) r_doc == NULL_USER_OBJECT ? NULL : R_ExternalPtrAddr(r_doc);    
+    xmlDocPtr doc = (xmlDocPtr) (r_doc == NULL_USER_OBJECT ? NULL : R_ExternalPtrAddr(r_doc));    
     xmlNodePtr node = (xmlNodePtr) R_ExternalPtrAddr(r_node);    
 
     if(Rf_length(r_ns) == 0)
@@ -1706,14 +1710,14 @@ R_xmlSearchNs(SEXP r_doc, SEXP r_node, SEXP r_ns, SEXP r_asPrefix)
 
     val = CHAR_DEREF(STRING_ELT(r_ns, 0));
     
-    ns = LOGICAL(r_asPrefix)[0] ? xmlSearchNs(doc, node, val) : xmlSearchNsByHref(doc, node, val);
+    ns = LOGICAL(r_asPrefix)[0] ? xmlSearchNs(doc, node, XML_CHAR_CAST  val) : xmlSearchNsByHref(doc, node, XML_CHAR_CAST val);
 
     if(!ns)
 	return(NEW_CHARACTER(0));
     else {
 	SEXP r_ans;
-	PROTECT(r_ans =  mkString(ns->href));
-	SET_NAMES(r_ans, mkString(ns->prefix ? XMLCHAR_TO_CHAR(ns->prefix) : ""));
+	PROTECT(r_ans =  mkString((const char *) ns->href));
+	SET_NAMES(r_ans, mkString(ns->prefix ? (const char *) XMLCHAR_TO_CHAR(ns->prefix) : ""));
 	UNPROTECT(1);
 	return(r_ans);
     }
@@ -1748,7 +1752,7 @@ R_getChildByName(USER_OBJECT_ r_node, USER_OBJECT_ r_index, USER_OBJECT_ r_addFi
     const char *name = CHAR_DEREF(STRING_ELT(r_index, 0));
 
     while(ptr) {
-	if(ptr->name && strcmp(name, ptr->name) == 0)
+	if(ptr->name && strcmp(name, (const char *) ptr->name) == 0)
 	    break;
 	ptr = ptr->next;
     }
@@ -1793,14 +1797,14 @@ R_childStringValues(SEXP r_node, SEXP r_len, SEXP r_asVector, SEXP r_encoding, S
 
     for(i = 0, kid = node->children; kid && i < len; i++, kid = kid->next) {
 	tmp  = xmlNodeGetContent(kid);	
-	SEXP val = mkCharCE(tmp, encoding);
+	SEXP val = mkCharCE( (const char *) tmp, encoding);
 	PROTECT(val);
 	if(asVector)
 	    SET_STRING_ELT(ans, i, val);
 	else
 	    SET_VECTOR_ELT(ans, i, ScalarString(val));
 	if(names && kid->name) {
-	    SET_STRING_ELT(names, i, mkCharCE(kid->name, encoding));
+	    SET_STRING_ELT(names, i, mkCharCE((const char *) kid->name, encoding));
 	}
 	UNPROTECT(1);
     }
@@ -1859,10 +1863,14 @@ R_setXMLNodeType(USER_OBJECT_ r_node, USER_OBJECT_ r_type)
 xmlNodePtr
 inc_findXIncludeStartNodes(xmlNodePtr cur, SEXP ans, int *pos, int depth);
 
+#define XINCLUDE_DEBUG 1
+
 xmlNodePtr
 inc_addXInclude(xmlNodePtr cur, SEXP ans, int *pos, int depth)
 {
-    fprintf(stderr, "adding XINCLUDE_START %s @href = %s \n", cur->name, xmlGetProp(cur, (const xmlChar *) "href"));    
+#if XINCLUDE_DEBUG    
+    fprintf(stderr, "adding XINCLUDE_START %s @href = %s, first node = %s \n", cur->name, xmlGetProp(cur, (const xmlChar *) "href"), (xmlChar *) cur->next->name);
+#endif    
     SET_VECTOR_ELT(ans, (*pos)++, R_createXMLNodeRefDirect(cur, 1)); 
 
     inc_findXIncludeStartNodes(cur->next, ans, pos, depth);
@@ -1872,11 +1880,13 @@ inc_addXInclude(xmlNodePtr cur, SEXP ans, int *pos, int depth)
 	cur = cur->next;
     
     cur = cur->next;
-    
+
+#if XINCLUDE_DEBUG        
     if(cur)
 	fprintf(stderr, "returning %d,  %p\n", cur->type, cur);
     else
 	fprintf(stderr, "return NULL\n");
+#endif    
     
     return(cur);
 }
@@ -1884,24 +1894,40 @@ inc_addXInclude(xmlNodePtr cur, SEXP ans, int *pos, int depth)
 xmlNodePtr
 inc_findXIncludeStartNodes(xmlNodePtr cur, SEXP ans, int *pos, int depth)
 {
-    fprintf(stderr, "%d) %s  (%p) %s\n", depth, cur->name, (void*) cur, (cur->type == XML_TEXT_NODE) ? xmlNodeGetContent(cur) : "");
+#if XINCLUDE_DEBUG        
+    fprintf(stderr, "%d) %s (%d) (%p) '%s'\n", depth, cur->name, cur->type, (void*) cur,
+	((cur->type == XML_TEXT_NODE) ? XML_2CHAR_CAST  xmlNodeGetContent(cur) : ""));
+#endif
+    
     xmlNodePtr nextNode = cur->next;
     if(cur->type == XML_XINCLUDE_START) {
 	cur = inc_addXInclude(cur, ans, pos, depth);
     } else
 	cur = cur->children;
 
-    if(!cur)
+/*    
+    if(!cur) {
 	return(NULL);
-    
+    }
+*/
 
     while(cur) { // && cur->type != XML_XINCLUDE_END) {
 	if(cur->type != XML_TEXT_NODE )
 	    cur = inc_findXIncludeStartNodes(cur, ans, pos, depth + 1);
+#if XINCLUDE_DEBUG    	
 	else
-	    fprintf(stderr, "skipping node of type %d: '%s'\n", cur->type, cur->type == XML_TEXT_NODE ? cur->content : "");
+	    fprintf(stderr, "skipping node of type %d: '%s'\n",
+		    cur->type,
+		    (cur->type == XML_TEXT_NODE ? XML_2CHAR_CAST cur->content : ""));
+#endif		    	
 	if(cur)
 	    cur = cur->next;
+    }
+
+    cur = nextNode;
+    while(cur) {
+	inc_findXIncludeStartNodes(cur, ans, pos, depth + 1);
+	cur = cur->next;
     }
 
     return(nextNode);
@@ -1924,4 +1950,71 @@ R_inc_findXIncludeStartNodes(USER_OBJECT_ r_node, USER_OBJECT_ r_num)
     
     UNPROTECT(1);
     return(ans);
+}
+
+
+
+/*--------------------------------------------------------------*/
+
+void
+visitXMLDoc(xmlNodePtr node, int depth, SEXP ans, int *pos)
+{
+    if(!node)
+	return;
+    
+    fprintf(stderr, "%d) type=%d  %s\n", depth, node->type, node->name ? (char *) node->name : "?");
+    while(node) {
+#if 0	
+	if(node->type == XML_XINCLUDE_START)
+	    SET_VECTOR_ELT(ans, (*pos)++, R_createXMLNodeRefDirect(node, 1));
+#else
+	SET_VECTOR_ELT(ans, (*pos)++, ScalarInteger(node->type));
+#endif
+	
+	visitXMLDoc(node->children, depth + 1, ans, pos);
+	node = node->next;
+    }
+}
+
+SEXP
+R_visitXMLDoc(SEXP r_node, SEXP r_len)
+{
+    xmlNodePtr node = (xmlNodePtr) R_ExternalPtrAddr(r_node);
+    SEXP ans;
+    int pos = 0;
+    PROTECT(ans = NEW_LIST(INTEGER(r_len)[0]));
+    visitXMLDoc(node, 0, ans, &pos);
+    UNPROTECT(1);
+    return(ans);
+}
+
+
+
+void
+visitXMLDocCall(xmlNodePtr node, int depth, SEXP call)
+{
+    if(!node)
+	return;
+    
+    while(node) {
+	SETCAR(CDR(call), R_createXMLNodeRefDirect(node, 0));
+	Rf_eval(call, R_GlobalEnv);
+	visitXMLDocCall(node->children, depth + 1, call);
+	node = node->next;
+    }
+}
+
+SEXP
+R_visitXMLDocCall(SEXP r_node, SEXP call)
+{
+    xmlNodePtr node = (xmlNodePtr) R_ExternalPtrAddr(r_node);
+    visitXMLDocCall(node, 0, call);
+    return(R_NilValue);
+}
+
+SEXP
+R_getXMLNodeType(SEXP r_node)
+{
+    xmlNodePtr node = (xmlNodePtr) R_ExternalPtrAddr(r_node);
+    return(ScalarInteger(node->type));
 }
