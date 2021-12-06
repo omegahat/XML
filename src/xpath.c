@@ -20,18 +20,19 @@ convertNodeSetToR(xmlNodeSetPtr obj, SEXP fun, int encoding, SEXP manageMemory)
 {
   SEXP ans, expr = NULL, arg = NULL, ref;
   int i;
+  int nprot = 0;
 
   if(!obj)
      return(NULL_USER_OBJECT);
 
-  PROTECT(ans = NEW_LIST(obj->nodeNr)); 
+  PROTECT(ans = NEW_LIST(obj->nodeNr)); nprot++;
 
   if(GET_LENGTH(fun) && (TYPEOF(fun) == CLOSXP || TYPEOF(fun) == BUILTINSXP)) {
-    PROTECT(expr = allocVector(LANGSXP, 2));
+    PROTECT(expr = allocVector(LANGSXP, 2)); nprot++;
     SETCAR(expr, fun);
     arg = CDR(expr);
   } else if(TYPEOF(fun) == LANGSXP) { 
-    PROTECT(expr = duplicate(fun));
+    PROTECT(expr = duplicate(fun)); nprot++;
     arg = CDR(expr);
   }
 
@@ -44,14 +45,14 @@ convertNodeSetToR(xmlNodeSetPtr obj, SEXP fun, int encoding, SEXP manageMemory)
 	  SET_NAMES(ref, mkString(el->name));
 #else
 	  PROTECT(ref = ScalarString(mkCharCE((el->children && el->children->content) ? XMLCHAR_TO_CHAR(el->children->content) : "", encoding)));
-	  SET_NAMES(ref, ScalarString(mkCharCE(el->name, encoding)));
+	  SET_NAMES(ref, ScalarString(mkCharCE(XMLCHAR_TO_CONST_CHAR(el->name), encoding)));
 #endif
 	  SET_CLASS(ref, mkString("XMLAttributeValue"));
 	  UNPROTECT(1);
       } else if(el->type == XML_NAMESPACE_DECL)
 	  ref = R_createXMLNsRef((xmlNsPtr) el);
       else
-        ref = R_createXMLNodeRef(el, manageMemory);
+          ref = R_createXMLNodeRef(el, manageMemory);
 
     if(expr) {
       PROTECT(ref);
@@ -63,12 +64,10 @@ convertNodeSetToR(xmlNodeSetPtr obj, SEXP fun, int encoding, SEXP manageMemory)
       SET_VECTOR_ELT(ans, i, ref);
   }
 
-  if(expr) {
-    UNPROTECT(1);
-  } else
+  if(!expr)   // change from Tomas Kalibera 2016-11-10
     SET_CLASS(ans, mkString("XMLNodeSet"));
 
-  UNPROTECT(1); // ans
+  UNPROTECT(nprot); 
 
   return(ans);
 }

@@ -286,9 +286,14 @@ setMethod("docName", "XMLHashTreeNode",
          )
 
 docName.XMLInternalDocument =
-function(doc, ...)
+function(doc, decode = TRUE, ...)
 {
-  .Call("RS_XML_getDocumentName", doc, PACKAGE = "XML")
+    ans = .Call("RS_XML_getDocumentName", doc, PACKAGE = "XML")
+    if(decode)
+        URLdecode(ans)
+    else
+        ans
+        
 }
 
 setMethod("docName", "XMLInternalDocument", docName.XMLInternalDocument)
@@ -296,7 +301,7 @@ setMethod("docName", "XMLInternalDocument", docName.XMLInternalDocument)
 docName.XMLInternalNode =
 function(doc, ...)
 {
-  docName(as(doc, "XMLInternalDocument"))
+  docName(as(doc, "XMLInternalDocument"), ...)
 }
 setMethod("docName", "XMLInternalNode", docName.XMLInternalNode)
 
