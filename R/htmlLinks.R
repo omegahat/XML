@@ -1,5 +1,5 @@
 readHTMLLinks = getHTMLLinks =
-function(doc, externalOnly = TRUE, xpQuery = "//a/@href", baseURL = docName(doc),
+function(doc, externalOnly = TRUE, xpQuery = "//a[@href]", baseURL = docName(doc),
           relative = FALSE)
 {
   if(is.character(doc))
@@ -9,7 +9,10 @@ function(doc, externalOnly = TRUE, xpQuery = "//a/@href", baseURL = docName(doc)
   if(is(doc, "XMLInternalNode") && grepl("^/", xpQuery))
      xpQuery = sprintf(".%s", xpQuery)
 
-  links = as.character(getNodeSet(doc, xpQuery))
+  nodes = getNodeSet(doc, xpQuery)
+  links = sapply(nodes, xmlGetAttr, "href")
+  names(links) = sapply(nodes, xmlValue)
+  
   links = if(externalOnly)
              grep("^#", links, value = TRUE, invert = TRUE)
           else
