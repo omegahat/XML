@@ -290,7 +290,7 @@ RS_XML_getStructuredErrorHandler()
     SEXP ans;
     PROTECT(ans = NEW_LIST(2));
     SET_VECTOR_ELT(ans, 0, R_MakeExternalPtr(xmlGenericErrorContext, Rf_install("xmlGenericErrorContext"), R_NilValue));
-    SET_VECTOR_ELT(ans, 1, R_MakeExternalPtr(xmlStructuredError, Rf_install("xmlStructuredErrorFunc"), R_NilValue));
+    SET_VECTOR_ELT(ans, 1, R_MakeExternalPtr((void *) xmlStructuredError, Rf_install("xmlStructuredErrorFunc"), R_NilValue));
     UNPROTECT(1);
     return(ans);
 }
