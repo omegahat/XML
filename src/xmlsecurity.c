@@ -29,5 +29,7 @@ R_xmlSecCryptoShutdown()
     return(ScalarInteger(status));
 }
 #else
-static int foo;
+// avoid empty translation unit.
+//static int foo;
+enum {FOO, BAR};
 #endif
