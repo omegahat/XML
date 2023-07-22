@@ -734,7 +734,7 @@ RS_XML(createDTDAttribute)(xmlAttributePtr val, xmlElementPtr el)
  INTEGER_DATA(VECTOR_ELT(ans, DTD_ATTRIBUTE_DEFAULT_SLOT))[0] =  val->def;
  SET_ENUM_NAME(AttributeDefaultNames, val->def, VECTOR_ELT(ans, DTD_ATTRIBUTE_DEFAULT_SLOT));
 
- if(val->type == XML_ATTRIBUTE_ENUMERATION) {
+ if(val->type == (xmlElementType) XML_ATTRIBUTE_ENUMERATION) {
    SET_VECTOR_ELT(ans, DTD_ATTRIBUTE_DEFAULT_VALUE_SLOT, RS_XML(AttributeEnumerationList)(val->tree, val, el));
  } else {
     SET_VECTOR_ELT(ans, DTD_ATTRIBUTE_DEFAULT_VALUE_SLOT, NEW_CHARACTER(1));
