@@ -7,7 +7,8 @@
 # by Duncan Temple Lang.
 #
 
-AC_INIT(DESCRIPTION)
+AC_INIT
+AC_CONFIG_SRCDIR([DESCRIPTION])
 
 
 dnl The different command line arguments for configure.
@@ -350,15 +351,14 @@ dnl Do we need this? XXX
   if test -z "${LIBXML2}" ; then
 CPPFLAGS="${PKG_CPPFLAGS} ${LIBXML_INCDIR}"
 echo "Checking for 1.8: ${CPPFLAGS}"
-  AC_TRY_COMPILE([
+  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #ifdef FROM_GNOME_XML_DIR
 #include <gnome-xml/parser.h>
 #else
 #include <libxml/parser.h>
-#endif],
-[ xmlAttr *attr;
+#endif]], [[ xmlAttr *attr;
    attr->val = NULL;
-], [echo "Using libxml 1.8.*!"],[LIBXML2="-DLIBXML2=1"; echo "Using libxml2.*" ])
+]])],[echo "Using libxml 1.8.*!"],[LIBXML2="-DLIBXML2=1"; echo "Using libxml2.*" ])
   fi
 
 #  AC_EGREP_HEADER(xmlParseFile, ${LIBXML_INCDIR}parser.h,
@@ -394,15 +394,14 @@ if test -z "${LIBXML2}" ; then
 
    if test -z "${USE_OLD_ROOT_CHILD_NAMES}" ; then
        CPPFLAGS=${PKG_CPPFLAGS}
-       AC_TRY_COMPILE([
+       AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #ifdef FROM_GNOME_XML_DIR
 #include <gnome-xml/parser.h>
 #else
 #include <libxml/parser.h>
-#endif],
-       [ xmlDocPtr node;
+#endif]], [[ xmlDocPtr node;
          node->xmlRootNode = NULL;
-       ], [echo "New style libxml!"],[USE_OLD_ROOT_CHILD_NAMES=1; echo "Need to use old-style libxml names"])
+       ]])],[echo "New style libxml!"],[USE_OLD_ROOT_CHILD_NAMES=1; echo "Need to use old-style libxml names"])
 
        echo "Using old root child names? ${USE_OLD_ROOT_CHILD_NAMES-0}" 
    fi  # USE_OLD_ROOT_CHILD_NAMES
@@ -412,7 +411,7 @@ else   # -z "${LIBXML2}"
     LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${LIBXML_LIBDIR}
     export LD_LIBRARY_PATH
    fi
-   AC_TRY_RUN([
+   AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #ifdef FROM_GNOME_XML_DIR
 #include <gnome-xml/parser.h>
 #else
@@ -424,7 +423,7 @@ main(int argc, char *argv[])
   xmlCheckVersion(20000);
   return(0);
 }
-    ],[ LIBXML2_OK=1],[LIBXML2_OK=0])
+    ]])],[ LIBXML2_OK=1],[LIBXML2_OK=0],[])
 
     if test "${LIBXML2_OK}" = "0" ; then 
      echo "You are trying to use a version 2.* edition of libxml"
@@ -451,17 +450,16 @@ if test "${USE_LIBXML}" ; then
   
   echo "Checking DTD parsing (presence of externalSubset)..."
 
-  AC_TRY_COMPILE([
+  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #ifdef FROM_GNOME_XML_DIR
 #include <gnome-xml/parser.h>
 #else
 #include <libxml/parser.h>
-#endif],
-  [
+#endif]], [[
     xmlParserCtxtPtr ctxt;
      ctxt->inSubset = 0;
      ctxt->sax->externalSubset = NULL;
-  ], USE_EXT_SUBSET=1)
+  ]])],[USE_EXT_SUBSET=1],[])
 
  if test -n "${USE_EXT_SUBSET}" ; then
    PKG_CPPFLAGS="${PKG_CPPFLAGS} -DUSE_EXTERNAL_SUBSET=1"
@@ -469,18 +467,17 @@ if test "${USE_LIBXML}" ; then
 
 
 
-  AC_TRY_COMPILE([
+  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #ifdef FROM_GNOME_XML_DIR
 #include <gnome-xml/parser.h>
 #else
 #include <libxml/parser.h>
-#endif],
-  [
+#endif]], [[
      xmlNodePtr node;
      int x;
       x =  node->type == XML_DTD_NODE;
 
-  ], ROOT_HAS_DTD_NODE=1, echo "No XML_DTD_NODE defined")
+  ]])],[ROOT_HAS_DTD_NODE=1],[echo "No XML_DTD_NODE defined"])
 
  if test -n "${ROOT_HAS_DTD_NODE}" ; then
    PKG_CPPFLAGS="${PKG_CPPFLAGS} -DROOT_HAS_DTD_NODE=1"
@@ -490,16 +487,15 @@ if test "${USE_LIBXML}" ; then
 
 
 
-  AC_TRY_COMPILE([
+  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #ifdef FROM_GNOME_XML_DIR
 #include <gnome-xml/parser.h>
 #else
 #include <libxml/parser.h>
-#endif],
-  [
+#endif]], [[
     xmlEntityPtr ent;
     ent->checked = 1;
-  ], ENTITY_HAS_CHECKED="yes", ENTITY_HAS_CHECKED="no")
+  ]])],[ENTITY_HAS_CHECKED="yes"],[ENTITY_HAS_CHECKED="no"])
 
  if test "${ENTITY_HAS_CHECKED}" = "no" ; then
    PKG_CPPFLAGS="${PKG_CPPFLAGS} -DNO_CHECKED_ENTITY_FIELD=1"
@@ -519,31 +515,29 @@ if test -z "${FROM_GNOME_XML_DIR}" ; then
   AC_CHECK_HEADER(libxml/xmlversion.h, PKG_CPPFLAGS="${PKG_CPPFLAGS} -DUSE_XML_VERSION_H=1")
 fi
 
-AC_TRY_COMPILE([
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #ifdef FROM_GNOME_XML_DIR
 #include <gnome-xml/tree.h>
 #else
 #include <libxml/tree.h>
-#endif],
-[
+#endif]], [[
  xmlElementPtr el;
  int x;
   x = el->etype;
-], PKG_CPPFLAGS="${PKG_CPPFLAGS} -DXML_ELEMENT_ETYPE=1"
-)
+]])],[PKG_CPPFLAGS="${PKG_CPPFLAGS} -DXML_ELEMENT_ETYPE=1"
+],[])
 
-AC_TRY_COMPILE([
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #ifdef FROM_GNOME_XML_DIR
 #include <gnome-xml/tree.h>
 #else
 #include <libxml/tree.h>
-#endif],
-[
+#endif]], [[
  xmlAttributePtr el;
  int x;
   x = el->atype;
-], PKG_CPPFLAGS="${PKG_CPPFLAGS} -DXML_ATTRIBUTE_ATYPE=1"
-)
+]])],[PKG_CPPFLAGS="${PKG_CPPFLAGS} -DXML_ATTRIBUTE_ATYPE=1"
+],[])
 
 
 
@@ -609,18 +603,15 @@ else
 fi   dnl end of if S-Plus.
 
 
-AC_TRY_LINK(
-[
+AC_LINK_IFELSE([AC_LANG_PROGRAM([[
 #include "parser.h"
-],
-[
+]], [[
   extern int xmlSkipBlankChars(xmlParserCtxtPtr ctxt);
   xmlParserCtxtPtr p;
   xmlSkipBlankChars(p);
-],
- echo "No need for old SKIP_BLANKS definition"
-, BLANKS_DEF="-DOLD_SKIP_BLANKS=1"
-)
+]])],[echo "No need for old SKIP_BLANKS definition"
+],[BLANKS_DEF="-DOLD_SKIP_BLANKS=1"
+])
 
 
 if test -n "LIBXML2" ; then
@@ -629,7 +620,7 @@ TMP_CFLAGS="${CFLAGS}"
 CFLAGS="${CFLAGS} -pedantic-errors"
 echo "Checking for return type of xmlHashScan element routine."
 
-AC_TRY_COMPILE([
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #ifdef FROM_GNOME_XML_DIR
 #include <gnome-xml/SAX.h>
 #include <gnome-xml/hash.h>
@@ -637,27 +628,22 @@ AC_TRY_COMPILE([
 #include <libxml/SAX.h>
 #include <libxml/hash.h>
 #endif
-],
-[
+]], [[
   void *(*foo)(void *, void *, xmlChar*);
   xmlElementTablePtr table;
   xmlHashScan(table, foo, NULL);
-], [echo "xmlHashScan wants a return value."],
-  [echo "No return value for xmlHashScan"; PKG_CPPFLAGS="${PKG_CPPFLAGS} -DNO_XML_HASH_SCANNER_RETURN=1"]
-)
+]])],[echo "xmlHashScan wants a return value."],[echo "No return value for xmlHashScan"; PKG_CPPFLAGS="${PKG_CPPFLAGS} -DNO_XML_HASH_SCANNER_RETURN=1"
+])
 
 CFLAGS="${TMP_CFLAGS}"
 
 
-  AC_TRY_COMPILE([
+  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
   #include <libxml/tree.h>
-  ],
-  [
+  ]], [[
   xmlNsPtr ns;
    ns->context;
- ],
- [PKG_CPPFLAGS="$PKG_CPPFLAGS -DLIBXML_NAMESPACE_HAS_CONTEXT=1"; echo "xmlNs has a context field"], 
- [echo "No context field in xmlNs structure."])
+ ]])],[PKG_CPPFLAGS="$PKG_CPPFLAGS -DLIBXML_NAMESPACE_HAS_CONTEXT=1"; echo "xmlNs has a context field"],[echo "No context field in xmlNs structure."])
 
 
 fi
@@ -665,14 +651,11 @@ fi
 
 CPPFLAGS="$CPPFLAGS -I$R_HOME/include"
 echo "Checking for cetype_t enumeration"
-AC_TRY_COMPILE([
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
    #include <Rinternals.h>
-],
-[
+]], [[
    cetype_t t;
-],
-[PKG_CPPFLAGS="${PKG_CPPFLAGS} -DHAVE_R_CETYPE_T=1"; echo "Using recent version of R with cetype_t enumeration type for encoding"], 
-[echo "No cetype_t enumeration defined in R headers."])
+]])],[PKG_CPPFLAGS="${PKG_CPPFLAGS} -DHAVE_R_CETYPE_T=1"; echo "Using recent version of R with cetype_t enumeration type for encoding"],[echo "No cetype_t enumeration defined in R headers."])
 
 AC_SUBST(DUMP_WITH_ENCODING)
 
@@ -737,19 +720,16 @@ dnl  ---------------------------------------------------
 
 AC_DEFUN([CHECK_ENUM], [
 
-AC_TRY_COMPILE([
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #ifdef FROM_GNOME_XML_DIR
 #include <gnome-xml/parser.h>
 #else
 #include <libxml/parser.h>
 #endif
-],
-[
+]], [[
   int val;
   val = $1;
-],
-[PKG_CPPFLAGS="$PKG_CPPFLAGS -DHAVE_$1=1"; echo "Version has $1"], 
-[echo "No $1 enumeration value."])
+]])],[PKG_CPPFLAGS="$PKG_CPPFLAGS -DHAVE_$1=1"; echo "Version has $1"],[echo "No $1 enumeration value."])
 ])
 
 
@@ -757,19 +737,28 @@ CHECK_ENUM(XML_WITH_ZLIB)
 
 
 
-AC_TRY_COMPILE([
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #ifdef FROM_GNOME_XML_DIR
 #include <gnome-xml/parser.h>
 #else
 #include <libxml/parser.h>
 #endif
-],
-[
+]], [[
    xmlFeature f;
    xmlHasFeature(f);
-],
-[PKG_CPPFLAGS="$PKG_CPPFLAGS -DHAVE_XML_HAS_FEATURE=1"; echo "Version has xmlHasFeature()"], 
-[echo "No xmlHasFeature."])
+]])],[PKG_CPPFLAGS="$PKG_CPPFLAGS -DHAVE_XML_HAS_FEATURE=1"; echo "Version has xmlHasFeature()"],[echo "No xmlHasFeature."])
+
+
+
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#ifdef FROM_GNOME_XML_DIR
+#include <gnome-xml/parser.h>
+#else
+#include <libxml/parser.h>
+#endif
+]], [[
+	2 > XML_PARSE_BIG_LINES
+]])],[PKG_CPPFLAGS="$PKG_CPPFLAGS -DHAVE_XML_PARSE_BIG_LINES=1"; echo "Version has XML_PARSE_BIG_LINES"],[echo "No XML_PARSE_BIG_LINES."])
 
 
 
@@ -836,7 +825,8 @@ fi
  dnl We had NAMESPACE here when were conditionally exporting the functions to 
  dnl remove finalizers on a node or document.  Need to add NAMESPACE.in in 
  dnl Install/GNUmakefile.admin
-AC_OUTPUT(src/Makevars R/supports.R inst/scripts/RSXML.csh inst/scripts/RSXML.bsh ${SPLUS_MAKEFILE})
+AC_CONFIG_FILES([src/Makevars R/supports.R inst/scripts/RSXML.csh inst/scripts/RSXML.bsh ${SPLUS_MAKEFILE}])
+AC_OUTPUT
 chmod +x cleanup
 
 
