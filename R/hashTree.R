@@ -73,7 +73,7 @@ function(nodes = list(), parents = character(), children = list(),
      .count <<- .count + 1
 
        # if no parent, 
-     if(!inherits(parent, "XMLNode") && (!is.environment(parent) && length(parent) == 0) || parent == "")
+     if(!inherits(parent, "XMLNode") && (!is.environment(parent) && length(parent) == 0) || identical(parent, ""))
        return(node)
     
      if(inherits(parent, "XMLHashTreeNode"))
