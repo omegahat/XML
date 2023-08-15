@@ -202,23 +202,23 @@ function(doc, header = NA ,
   if(length(els) == 0)
     return(NULL)
   
-   numEls = sapply(els, length)
+  numEls = sapply(els, length)
                                                            # els[[1]] should be a scalar
-   if(is.logical(header) && !is.na(header) && header && any(nchar(els[[1]]) < 999)) {
+  if(is.logical(header) && !is.na(header) && header && any(nchar(els[[1]]) < 999)) {
      header = els[[1]]
      els = els[-1]
      numEls = numEls[ - 1]
-   }
+  }
 
   if(length(els) == 0)
     return(NULL)  #XXX we should have a header here so return a data frame with 0 rows.
 
-   ans = lapply(seq(length = max(numEls)),
+  ans = lapply(seq(length = max(numEls)),
                   function(col) {
                     sapply(els, `[`, col)
                   })
 
-   if(is.character(header) && length(header) == length(ans))
+  if(is.character(header) && length(header) == length(ans))
       names(ans) = header
 
    if(length(colClasses)) {
