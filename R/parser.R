@@ -32,6 +32,8 @@ NOBASEFIX = 2^18
 HUGE = 2^19
 OLDSAX = 2^20
 
+XML_PARSE_BIG_LINES = 4194304L  # 1<<22.
+
 xmlParseDoc =
 function(file, options = 1L, encoding = character(), asText = !file.exists(file),
           baseURL = file)

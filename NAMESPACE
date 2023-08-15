@@ -379,6 +379,8 @@ exportMethods("names", "$", "$<-", "coerce")
 }
 
 
+export(XML_PARSE_BIG_LINES)
+
 
 #importFrom(utils, normalizePath)
 

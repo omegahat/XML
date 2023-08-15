@@ -142,6 +142,13 @@ RS_XML(ParseTree)(USER_OBJECT_ fileName, USER_OBJECT_ converterFunctions,
   if(Rf_length(r_parserOptions))
      parserOptions = INTEGER(r_parserOptions)[0];
 
+#ifndef HAVE_XML_PARSE_BIG_LINES
+  if(parserOptions & 4194304) {
+	 PROBLEM "XML_PARSE_BIG_LINES used as an option for XML parsing, but not supported by this version of libxml2. If this is important, update libxml2 and reinstall the XML package"
+	 WARN;
+  }
+#endif
+  
   parserSettings.skipBlankLines = LOGICAL_DATA(skipBlankLines)[0];
   parserSettings.converters = converterFunctions;
   parserSettings.useDotNames = LOGICAL_DATA(useDotNames)[0];
