@@ -22,7 +22,7 @@ setMethod("readKeyValueDB", "AsIs",
 
 setMethod("readKeyValueDB", "XMLInternalDocument",
            function(doc, ...)
-              readPlistNodeValue(xmlRoot(doc)[[1]], ...))  # [["dict"]]
+              readPlistNodeValue(xmlRoot(doc)[[1]], ...))
 
 
 setMethod("readKeyValueDB", "XMLInternalNode",
