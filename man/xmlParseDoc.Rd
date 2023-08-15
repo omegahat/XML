@@ -22,6 +22,7 @@
 \alias{XINCLUDE}
 \alias{OLD10}
 \alias{SAX1}
+\alias{XML_PARSE_BIG_FILES}
 
 \title{Parse an XML document with options controlling the parser.}
 
@@ -46,7 +47,7 @@ xmlParseDoc(file, options = 1L, encoding = character(),
     \code{PEDANTIC}, \code{NOBLANKS}, \code{SAX1}, \code{XINCLUDE},
     \code{NONET}, \code{NODICT}, \code{NSCLEAN}, \code{NOCDATA},
     \code{NOXINNODE}, \code{COMPACT}, \code{OLD10}, \code{NOBASEFIX},
-    \code{HUGE}, \code{OLDSAX}.
+    \code{HUGE}, \code{OLDSAX}, \code{XML_PARSE_BIG_FILES}.
      ( These options are also listed in the (non-exported) variable
       \code{parserOptions}.)
   }
