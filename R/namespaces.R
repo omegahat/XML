@@ -77,7 +77,8 @@ function(ns, nsDefs, node, namespace, noNamespace, namespaceDefinitions = NULL, 
   if(noNamespace)
     return(NULL)
 
- if(is.character(namespace) && length(namespace) && !is.na(namespace) && namespace == "") {
+    # the length() == 1 was added by CRAN. Somewhat unnecessary as the namespace should only be empty or scalar. But fine.
+ if(is.character(namespace) && length(namespace) == 1L && !is.na(namespace) && namespace == "") {
    if(length(namespaceDefinitions) == 0)
        return(findNamespaceDefinition(node, ""))
  }
