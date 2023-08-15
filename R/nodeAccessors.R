@@ -186,6 +186,40 @@ function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x),
 
 #setS3Method("xmlValue", "NULL")
 
+getSiblings =
+function(node, after = TRUE, ...)
+    UseMethod("getSiblings")
+
+if(FALSE) {
+getSiblings.XMLInternalNode =
+function(node, after = TRUE, ...)
+{
+    ans = list()
+    p = node
+    while(TRUE) {
+        p = getSibling(p, after = after)
+        if(is.null(p))
+            break
+        ans = c(ans, p)
+    }
+    ans
+}
+} # FALSE
+
+# Alternative version
+getSiblings.XMLInternalNode =
+function(node, after = TRUE, ...)
+{
+    els = xmlChildren(xmlParent(node))
+    i = which(sapply(els, identical, node))
+    idx = if(after)
+              i:length(els)
+          else
+              1:i
+    els[idx]
+}
+
+
 getSibling.XMLInternalNode =
   # Access the next field in the xmlNodePtr object.
   # not exported.
@@ -422,3 +456,4 @@ function(node, parse = FALSE, baseURL = character(), doc = NULL)
 {
 
 }
+
