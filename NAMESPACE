@@ -386,8 +386,8 @@ export(getSibling)
 S3method(getSibling, XMLInternalNode)
 S3method(getSibling, XMLHashTreeNode)
 
-export(getSiblings)
-S3method(getSiblings, XMLInternalNode)
+#export(getSiblings)
+#S3method(getSiblings, XMLInternalNode)
 
 export(catalogLoad, catalogClearTable, catalogAdd, catalogDump)
 
