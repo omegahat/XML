@@ -86,7 +86,7 @@ readHTMLTable(doc, header = NA,
 }
 \value{
   If the document (either by name or parsed tree) is specified,
-  the return vale is a list of data frames or matrices.
+  the return value is a list of data frames or matrices.
   If a single HTML node is provided
 }
 \references{
