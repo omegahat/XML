@@ -1,3 +1,11 @@
+Version 4.0-0
+
+  *	Support for XML_PARSE_BIG_LINES (thanks to Hugues Mercier).  If using libxml2 version 2.9 or higher,
+  	using XML_PARSE_BIG_LINES in the options vector/value in a call to  xmlParse() will allow reporting
+	line numbers greater than 65535 for text() nodes (not regular named XML elements/nodes.)
+	
+  *	Changes that I did not record
+
 Version 3.99-0
 
   *      We can specify R functions and C routines for use as XPath functions in calls to 
