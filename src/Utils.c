@@ -399,11 +399,11 @@ stop(const char *className, const char *msg, ...)
 
     PROTECT(e = allocVector(LANGSXP, 2));
     PROTECT(ns_name = mkString("XML"));
-    ns_env = R_FindNamespace(ns_name);
+    PROTECT(ns_env = R_FindNamespace(ns_name));
     SETCAR(e, findVarInFrame(ns_env, Rf_install("xmlStop")));
     SETCAR(CDR(e), error);
     Rf_eval(e, R_GlobalEnv);
-    UNPROTECT(2);
+    UNPROTECT(4); // wont' get to here.
 
 /*
     errorcall(error, "%s", msg);
