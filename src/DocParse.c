@@ -1541,7 +1541,7 @@ R_getLineNumber(SEXP r_node)
     }
 
 //    XML_GET_LINE(node)
-#if 1
+#if HAVE_XML_PARSE_BIG_LINES
     return(ScalarReal(xmlGetLineNo(node)));
 #else	
     return(ScalarInteger(node->line == 0 ? 
