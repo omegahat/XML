@@ -165,7 +165,7 @@ xmlChildren.XMLInternalDocument =
 function(x, addNames = TRUE, ...)
 {
 # .Call("RS_XML_xmlDocumentChildren", x, as.logical(addNames), PACKAGE = "XML")
- xmlChildren.XMLInternalNode(x, addNames, ...)
+   xmlChildren.XMLInternalNode(x, addNames, ...)
 }
 
 
