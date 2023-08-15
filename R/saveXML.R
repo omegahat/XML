@@ -104,7 +104,7 @@ function(doc, file = NULL, compression = 0, indent = TRUE, prefix = '<?xml versi
          doctype = NULL, encoding = getEncoding(doc), ...)
 {
   asString = is.null(file)
-  if(asString)
+  if(asString) 
     file = textConnection(NULL, "w")
   
   if(inherits(file, c("character", "connection"))) {
@@ -112,6 +112,9 @@ function(doc, file = NULL, compression = 0, indent = TRUE, prefix = '<?xml versi
     on.exit(sink())
   }
 
+  if(asString) # added by CRAN.
+      on.exit(close(file), add = TRUE)
+  
   if(!is.null(prefix))
     cat(as.character(prefix))
 
