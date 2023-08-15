@@ -34,8 +34,8 @@ xmlEventParse <-
 # See also xmlParseTree()
 #
 function(file, handlers = xmlEventHandler(), ignoreBlanks = FALSE, addContext = TRUE,
-          useTagName = TRUE, asText = FALSE, trim=TRUE, useExpat = FALSE,
-          isURL=FALSE, state = NULL,
+          useTagName = TRUE, asText = FALSE, trim = TRUE, useExpat = FALSE,
+          isURL = FALSE, state = NULL,
           replaceEntities = TRUE, validate = FALSE, saxVersion = 1,
           branches = NULL,  useDotNames =  length(grep("^\\.", names(handlers))) > 0,
           error = xmlErrorCumulator(), addFinalizer = NA, encoding = character()) 
