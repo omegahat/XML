@@ -20,7 +20,9 @@ function(libname, pkgname)
   # Added by Uwe Ligges.
  if(.Platform$OS.type == "windows"){
 
-     fixPath = if(getRversion() < "2.13.0")  utils::normalizePath else base::normalizePath
+     #  CRAN reverted this change they had suggested
+     #  fixPath = if(getRversion() < "2.13.0")  utils::normalizePath else base::normalizePath
+     fixPath = base::normalizePath
 
      temp <- Sys.getenv("PATH")
      Sys.setenv("PATH" = paste(fixPath(file.path(libname, pkgname, "libs")), 
