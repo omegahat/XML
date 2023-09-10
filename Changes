@@ -1,15 +1,27 @@
 Version 4.0-0
 
+  *     xmlValue method for XMLAttributeValue so can mix xpathSApply(doc, "//x/y | //w/@z", xmlValue).
+
+  *     Fix to [.XMLInternalNode with character vector indexing. Keep the order of the subset the same as the index.
+
   *	Support for XML_PARSE_BIG_LINES (thanks to Hugues Mercier).  If using libxml2 version 2.9 or higher,
   	using XML_PARSE_BIG_LINES in the options vector/value in a call to  xmlParse() will allow reporting
 	line numbers greater than 65535 for text() nodes (not regular named XML elements/nodes.)
-	
+
+  *      getXIncludes2()  (does this work?)
+
+  *	 visitNodes()
+  
   *	Changes that I did not record
 
 Version 3.99-0
 
+  *      Added getSiblings()
+
+  *      For internal nodes, xmlParent() has a count parameter that allows getting ancestors, not just the direct parent.
+
   *      We can specify R functions and C routines for use as XPath functions in calls to 
-         getNodeSet() and xpathApply().
+         getNodeSet() and xpathApply(), i.e., User-defined XPath functions.
 
   *      Implementations of XPath 2.0 functions matches(), lower-case(), ends-with(), abs(), min(), max(), replace()
 
