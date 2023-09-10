@@ -223,9 +223,13 @@ function(x, i, j, ..., addFinalizer = NA)
   if(is(i, "numeric"))
      structure(kids[i], class = c("XMLInternalNodeList", "XMLNodeList"))
   else {
-     id = as.character(i)
-     which = match(sapply(kids, xmlName), id)
-     structure(kids[!is.na(which)], class = c("XMLInternalNodeList", "XMLNodeList"))     
+      id = as.character(i)
+      #
+      # The following can return the nodes in the wrong order.
+      #     which = match(sapply(kids, xmlName), id)
+      #     structure(kids[!is.na(which)], class = c("XMLInternalNodeList", "XMLNodeList"))
+      # This is keeps the order of i/id and is simpler.
+     structure(kids[id], class = c("XMLInternalNodeList", "XMLNodeList"))          
   }
 }  
 
