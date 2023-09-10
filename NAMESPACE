@@ -227,6 +227,7 @@ S3method(xmlSize, XMLInternalNode)
 
 
 S3method(xmlValue, XMLInternalNode)
+S3method(xmlValue, XMLAttributeValue)
 
 S3method(xmlValue, XMLNodeSet)
 S3method(xmlValue, list)

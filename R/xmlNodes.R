@@ -262,7 +262,12 @@ function(x, ignoreComments = FALSE, recursive = TRUE, encoding = getEncoding(x),
      ans
 }
 
+xmlValue.XMLAttributeValue =
+function(x, ...)
+      unname( x )
+
 setS3Method("xmlValue", "XMLInternalNode")
+setS3Method("xmlValue", "XMLAttributeValue")
 
 setGeneric("xmlValue<-", function(x, ..., value) standardGeneric("xmlValue<-"))
 
