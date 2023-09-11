@@ -120,7 +120,7 @@ function(x, ...)
 
 
 xmlToList =
-function(node, addAttributes = TRUE, simplify = FALSE)
+function(node, addAttributes = TRUE, simplify = FALSE, attributesAsElements = FALSE)
 {
     # If a string, parse
   if(is.character(node))
@@ -150,12 +150,15 @@ function(node, addAttributes = TRUE, simplify = FALSE)
      names(vals) = xmlSApply(node, xmlName)
      
      if(length(attrs <- xmlAttrs(node)) > 0) {
-       if(addAttributes)
-         vals[[".attrs"]] = attrs
-       else {
-           attributes(vals) = merge(as.list(attrs), attributes(vals))
-       }
-       
+#         browser()
+         if(addAttributes) {
+             if(attributesAsElements)
+                 vals = append(vals, as.list(attrs))
+             else
+                 vals[[".attrs"]] = attrs
+         }
+         else 
+           attributes(vals) = append(as.list(attrs), attributes(vals))
      }
      
      if(any(tt) && length(vals) == 1)

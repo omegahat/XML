@@ -29,7 +29,8 @@ The ".attrs" element of the list is the character vector of
 attributes from the node \code{<c>...</c>}.
 }
 \usage{
-xmlToList(node, addAttributes = TRUE, simplify = FALSE)
+xmlToList(node, addAttributes = TRUE, simplify = FALSE,
+          attributesAsElements = FALSE)
 }
 \arguments{
   \item{node}{the XML node or document to be converted to an R list.
@@ -47,12 +48,13 @@ xmlToList(node, addAttributes = TRUE, simplify = FALSE)
     (corresponding to the subnodes \code{f} and \code{g}) and
       the attributes named \code{a}, \code{b} and \code{c} awith the string values from the node
       attributes of \code{foo} are added as R attributes to the 2-element (f and g) list.
-      In the future, I might add an option to allow  each attribute
-      to be a separate element of the resulting list if \code{addAttributes = TRUE},
+   }
+  \item{attributesAsElements}{if \code{TRUE} and also \code{addAttributes} is \code{TRUE},
+     add each attribute of the XML node as a separate element of the resulting list
       rather than having them in a single character vector in an element named \code{.attr}.
-      In other words, the result would be a list with elements named
-      \code{f}, \code{g}, \code{a}, \code{b} and \code{c}.
-  }
+      In other words, in the example in \code{addAttributes},
+      the result would be a list with elements named
+      \code{f}, \code{g}, \code{a}, \code{b} and \code{c}.}
   \item{simplify}{a logical value that controls whether we collapse
    the list to a vector if the elements all have a common compatible
    type. Basically, this controls whether we use \code{sapply} or \code{lapply}.
@@ -84,6 +86,18 @@ tt =
    # use an R-level node representation
   doc = xmlTreeParse(tt)
   xmlToList(doc)
+
+
+   # add the attributes a and b from foo as attributes to the list
+  v1 = xmlToList('<foo a="1" b="xyz"><f>123</f><g>2.2</g></foo>', FALSE)
+
+   # add the attributes a and b as a character vector to the resulting list in an
+   # element named .attrs
+  v2 = xmlToList('<foo a="1" b="xyz"><f>123</f><g>2.2</g></foo>', TRUE)
+
+   # add a and b as regular elements to the resulting list to get
+   #  f, g, a and b 
+  v3 = xmlToList('<foo a="1" b="xyz"><f>123</f><g>2.2</g></foo>', TRUE, attributesAsElements = TRUE)
 }
 \keyword{IO}
 \keyword{data}
