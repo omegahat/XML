@@ -282,7 +282,7 @@ function(node, ...)
 }
 
 if(useS4)
-setMethod("xmlAttrs", "XMLNode", xmlAttrs.XMLNode)
+  setMethod("xmlAttrs", "XMLNode", xmlAttrs.XMLNode)
 
 
 "[.XMLNode" <-
