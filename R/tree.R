@@ -122,14 +122,18 @@ function(x, ...)
 xmlToList =
 function(node, addAttributes = TRUE, simplify = FALSE)
 {
+    # If a string, parse
   if(is.character(node))
     node = xmlParse(node)
 
+    # If a  document, deal with the root node
   if(inherits(node, "XMLAbstractDocument"))
     node = xmlRoot(node)
 
+    # If text node, get the text.
   if(any(inherits(node, c("XMLTextNode", "XMLInternalTextNode"))))
-     xmlValue(node)
+      xmlValue(node)
+    # if no children, return the attributes as a character vector
   else if(xmlSize(node) == 0)
      xmlAttrs(node)
   else {
@@ -137,16 +141,21 @@ function(node, addAttributes = TRUE, simplify = FALSE)
        tmp = vals = xmlSApply(node, xmlToList, addAttributes)
        tt = xmlSApply(node, inherits, c("XMLTextNode", "XMLInternalTextNode"))       
      } else {
-        tmp = vals = (if(simplify) xmlSApply else xmlApply)(node, xmlToList, addAttributes)
+         # recursively call xmlToList
+         #XXX what about passing simplify = simplify
+        vals = (if(simplify) xmlSApply else xmlApply)(node, xmlToList, addAttributes)
         tt = xmlSApply(node, inherits, c("XMLTextNode", "XMLInternalTextNode"))
      }
      vals[tt] = (if(simplify) sapply else lapply)(vals[tt], function(x) x[[1]])
-
+     names(vals) = xmlSApply(node, xmlName)
+     
      if(length(attrs <- xmlAttrs(node)) > 0) {
        if(addAttributes)
          vals[[".attrs"]] = attrs
-       else
-         attributes(vals) = as.list(attrs)
+       else {
+           attributes(vals) = merge(as.list(attrs), attributes(vals))
+       }
+       
      }
      
      if(any(tt) && length(vals) == 1)

@@ -35,8 +35,24 @@ xmlToList(node, addAttributes = TRUE, simplify = FALSE)
   \item{node}{the XML node or document to be converted to an R list.
    This can be an "internal" or C-level node (i.e. \code{\link{XMLInternalNode-class}})
    or a regular R-level node (either \code{\link{XMLNode-class}} or \code{XMLHashNode}).}
-  \item{addAttributes}{a logical value which controls whether the attributes of an empty node
-    are added to the }
+  \item{addAttributes}{a logical value which controls whether the attributes of a node
+    are added to the list as a character vector element named \code{.attrs},
+    or set as R attributes on the resulting list.
+    In other words, suppose we have a node of the
+    form \code{<foo a="1" b="xyz" c="true"><f>123</f><g>2.2</g></foo>},
+    \code{addAttributes = TRUE} will result in a list with elements named
+    \code{f}, \code{g} and \code{.attrs} with the last of these being a named
+    character vector \code{c(a = "1", b = "xyz", c = "true")}.
+    If \code{addAttributes = FALSE}, we get a list with two elements
+    (corresponding to the subnodes \code{f} and \code{g}) and
+      the attributes named \code{a}, \code{b} and \code{c} awith the string values from the node
+      attributes of \code{foo} are added as R attributes to the 2-element (f and g) list.
+      In the future, I might add an option to allow  each attribute
+      to be a separate element of the resulting list if \code{addAttributes = TRUE},
+      rather than having them in a single character vector in an element named \code{.attr}.
+      In other words, the result would be a list with elements named
+      \code{f}, \code{g}, \code{a}, \code{b} and \code{c}.
+  }
   \item{simplify}{a logical value that controls whether we collapse
    the list to a vector if the elements all have a common compatible
    type. Basically, this controls whether we use \code{sapply} or \code{lapply}.
