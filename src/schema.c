@@ -71,8 +71,14 @@ typedef struct {
 } HashGatherer;
 
 
+#if LIBXML_VERSION >= 20908
+# define CONST const
+#else
+# define CONST
+#endif
+
 static void
-getKeys(void *el, void *data, xmlChar *name)
+getKeys(void *el, void *data, CONST xmlChar *name)
 {
    HashGatherer *d = (HashGatherer *)data;
    SET_STRING_ELT(d->names, d->pos, COPY_TO_USER_STRING(name));
@@ -119,7 +125,7 @@ R_libxmlTypeTable_lookup(USER_OBJECT_ table, USER_OBJECT_ name, USER_OBJECT_ s_e
    void *p;
 
    t = R_getExternalRef(table, NULL); /* R_libxmlTypeTableGetRef(table); */
-   p = xmlHashLookup(t, CHAR_DEREF(STRING_ELT(name, 0)));
+   p = xmlHashLookup(t, CHAR_TO_CONST_XMLCHAR( CHAR_DEREF(STRING_ELT(name, 0))) );
    ans = R_makeRefObject(p, CHAR_DEREF(STRING_ELT(s_elType, 0)));
 
    return(ans);
