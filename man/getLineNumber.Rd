@@ -2,7 +2,7 @@
 \alias{getNodeLocation}
 \alias{getNodePosition}
 \alias{getLineNumber}
-\title{Determine the location - file \& line number of an (internal) XML node}
+\title{Determine the location - file and line number of an (internal) XML node}
 \description{
   The \code{getLineNumber} function is used to query the location of an internal/C-level
   XML node within its original "file". This gives us the line number.

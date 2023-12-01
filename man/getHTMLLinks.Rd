@@ -9,7 +9,7 @@
   The external files include images, JavaScript and CSS documents.
 }
 \usage{
-getHTMLLinks(doc, externalOnly = TRUE, xpQuery = "//a/@href",
+getHTMLLinks(doc, externalOnly = TRUE, xpQuery = "//a[@href]",
                baseURL = docName(doc), relative = FALSE)
 getHTMLExternalFiles(doc, xpQuery = c("//img/@src", "//link/@href",
                                       "//script/@href", "//embed/@src"),

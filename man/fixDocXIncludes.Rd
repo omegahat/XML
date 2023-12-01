@@ -1,7 +1,11 @@
 \name{fixDocXIncludes}
 \alias{fixDocXIncludes}
 \title{Fix the href attributes on XML_XINCLUDE_START nodes}
-\description{}
+\description{
+  This attempts to fix the C-level XML nodes that libxml2
+  creates to represent content included by XInclude \code{xi:include}
+  nodes.
+}
 \usage{
 fixDocXIncludes(doc, xinc = getXIncludes2(docName(doc)))
 }

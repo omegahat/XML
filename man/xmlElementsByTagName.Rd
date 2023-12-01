@@ -32,7 +32,7 @@ xmlElementsByTagName(el, name, recursive = FALSE)
 \note{
   The addition of the \code{recursive} argument makes this
   function behave like the \code{getElementsByTagName}
-  in other language APIs such as Java, C\#.
+  in other language APIs such as Java, C\code{#}.
   However, one should be careful to understand that
   in those languages, one would get back a set of
   node objects. These nodes have references to their

@@ -85,7 +85,7 @@ xmlSchemaParse(file, asText = FALSE, xinclude = TRUE, error = xmlErrorCumulator(
 
 \arguments{
  \item{file}{ The name of the file containing the XML contents.
-This can contain \~ which is expanded to the user's
+This can contain \code{~} which is expanded to the user's
 home directory.
 It can also be a URL. See \code{isURL}.
 Additionally, the file can be compressed (gzip)
