@@ -156,7 +156,11 @@ RSXML_setErrorHandlers()
 #endif
 
    xmlDefaultSAXHandler.error = S_xmlParserError;
+
+#ifdef HAS_HTML_DEFAULT_SAX_HANDLER   
    htmlDefaultSAXHandler.error = S_xmlParserError;
+#endif
+   
 #if 0
    docbDefaultSAXHandler.error = S_xmlParserError;
 #endif

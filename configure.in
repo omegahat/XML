@@ -763,6 +763,34 @@ AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 
 
 
+
+
+
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#ifdef FROM_GNOME_XML_DIR
+#include <gnome-xml/xmlsave.h>
+#else
+#include <libxml/xmlsave.h>
+#endif
+]], [[
+	xmlIndentTreeOutput = 1;
+]])],[PKG_CPPFLAGS="$PKG_CPPFLAGS -DHAVE_XMLSAVE_H=1"; echo "libxml2 has xmlsave.h and xmlIndentTreeOutput"],[echo "No xmlsave.h with xmlIndentTreeOutput"])
+
+
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#ifdef FROM_GNOME_XML_DIR
+#include <gnome-xml/xmlsave.h>
+#else
+#include <libxml/xmlsave.h>
+#endif
+]], [[
+       htmlDefaultSAXHandler.error = NULL;
+]])],[PKG_CPPFLAGS="$PKG_CPPFLAGS -DHAS_HTML_DEFAULT_SAX_HANDLER=1"; echo "libxml2 has htmlDefaultSAXHandler"],[echo "No htmlDefaultSAXHandler"])
+
+
+
+
+
 dnl   ---------------------------------------------
 
 

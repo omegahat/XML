@@ -11,6 +11,9 @@
 
 #include "libxml/HTMLparser.h"
 #include "libxml/HTMLtree.h"
+#ifdef HAVE_XMLSAVE_H
+#include "libxml/xmlsave.h"
+#endif
 
 #include <sys/stat.h>
 #include <unistd.h>  

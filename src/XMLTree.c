@@ -1139,6 +1139,9 @@ R_addXMLNodeFinalizer(SEXP r_node)
 #define ValOrNULL(x) CHAR_TO_XMLCHAR ((x && x[0] ? x : NULL))
 
 
+#ifdef HAVE_XMLSAVE_H
+#include "libxml/xmlsave.h"
+#endif
 
 /**
  Write the XML tree/DOM to a file or into a buffer (depending on the value
