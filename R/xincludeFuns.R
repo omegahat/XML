@@ -35,7 +35,7 @@ genCollectNodeType = function(n) {
     cur = 0L
     function(node) {
         cur <<- cur + 1L
-        ans[cur] <<- .Call("R_getXMLNodeType", node)
+        ans[cur] <<- .Call("R_getXMLNodeType", node, PACKAGE = "XML")
     }
 }
 
