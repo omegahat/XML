@@ -1,5 +1,6 @@
 \name{getXIncludes}
 \alias{getXIncludes}
+\alias{getXIncludes2}
 \alias{xmlXIncludes}
 \title{Find the documents that are XInclude'd in an XML document}
 \description{
@@ -14,6 +15,7 @@ getXIncludes(filename, recursive = TRUE, skip = character(),
              omitPattern = "\\\\.(js|html?|txt|R|c)$",
              namespace = c(xi = "http://www.w3.org/2003/XInclude"),
             duplicated = TRUE)
+getXIncludes2(file, recursive = TRUE, xpointer = "", parse = "", from = file)
 xmlXIncludes(filename, recursive = TRUE,
          omitPattern = "\\\\.(js|html?|txt|R|c)$",
          namespace = c(xi = "http://www.w3.org/2003/XInclude"),
@@ -21,7 +23,7 @@ xmlXIncludes(filename, recursive = TRUE,
          clean = NULL, ignoreTextParse = FALSE)
 }
 \arguments{
-  \item{filename}{the name of the XML document's URL or file or the
+  \item{filename,file}{the name of the XML document's URL or file or the
     parsed document itself.}
   \item{recursive}{a logical value controlling whether to recursively
    process the XInclude'd files for their XInclude'd files}
@@ -30,6 +32,11 @@ xmlXIncludes(filename, recursive = TRUE,
     are included that we do not want to recursively process}
   \item{namespace}{the namespace to use for the XInclude. There are two
     that are in use 2001 and 2003.}
+  \item{xpointer}{the value of the \code{xpointer} attribute on an XInclude \code{include} node
+    to control which subset  of nodes are included.}
+  \item{parse}{the value of the \code{parse} attribute on an XInclude \code{include} node
+     controlling whether the content being included is XML or text.}
+  \item{from}{a label identifying the source being included}
   \item{duplicated}{a logical value that controls whether only the
     unique names of the files are returned, or if we get all references
     to all files.}
