@@ -1,5 +1,20 @@
-# Or should we look at R CMD build gitRepos
-# and then compare.
+# Yes - Should compare build of package from git repos and the CRAN package.
+#
+
+#
+# In /tmp
+# git clone
+# R CMD build XML
+# mkdir Mine
+# cd Mine
+# tar zxf ../XML_....tar.gz
+#
+# mkdir CRAN
+# cd CRAN
+# tar zxf ~/Downloads/XML_...tar.gz
+#
+#
+# Won't look at d1,f1, ... as they are the git repos.
 
 d1 = "XML"
 d2 = "CRAN/XML"
