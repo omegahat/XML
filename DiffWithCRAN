@@ -1,0 +1,10 @@
+In CRAN
+
+CRAN                     Mine
+"inst/FAQ.html"       FAQ.html
+"man/xmlHashTree.Rd"  in FlatList.Rd
+"src/Makevars.ucrt"    NA
+"inst/exampleData/GNUmakefile"  .Rbuildignore
+"inst/examples/GNUmakefile"     .Rbuildignore
+"MD5"                       NA
+
