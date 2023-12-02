@@ -56,7 +56,7 @@ USER_OBJECT_ RS_XML(HtmlParseTree)(USER_OBJECT_ fileName, USER_OBJECT_ converter
 
 USER_OBJECT_ RS_XML(getDTD)(USER_OBJECT_ dtdFileName, USER_OBJECT_ externalId, 
 			    USER_OBJECT_ asText, USER_OBJECT_ isURL, USER_OBJECT_ errorFun);
-USER_OBJECT_ RS_XML(libxmlVersion)();
+USER_OBJECT_ RS_XML(libxmlVersion)(void);
 
 
 USER_OBJECT_ 
@@ -132,11 +132,11 @@ SEXP RS_XML_setRootNode(USER_OBJECT_ r_doc, USER_OBJECT_ r_node);
 USER_OBJECT_ R_getNodeChildByIndex(USER_OBJECT_ snode, USER_OBJECT_ r_index, USER_OBJECT_ manageMemory);
 SEXP RS_XML_setDocEl(SEXP r_node, SEXP r_doc);
 USER_OBJECT_ RS_XML_isDescendantOf(USER_OBJECT_ r_node, USER_OBJECT_ r_top, USER_OBJECT_ strict);
-SEXP RS_XML_getStructuredErrorHandler();
+SEXP RS_XML_getStructuredErrorHandler(void);
 SEXP RS_XML_setStructuredErrorHandler(SEXP els);
 SEXP R_convertDOMToHashTree(SEXP rnode, SEXP env, SEXP childrenEnv, SEXP parentEnv);
 SEXP R_parseURI(SEXP r_uri);
-SEXP R_getXMLFeatures();
+SEXP R_getXMLFeatures(void);
 SEXP R_xmlReadMemory(SEXP r_txt, SEXP len, SEXP r_encoding, SEXP r_options, SEXP r_base);
 SEXP R_xmlReadFile(SEXP r_filename, SEXP r_encoding, SEXP r_options);
 USER_OBJECT_ R_libxmlTypeTable_names(USER_OBJECT_ table, USER_OBJECT_ s_elType) ;
@@ -190,7 +190,7 @@ USER_OBJECT_ RS_XML_replaceXMLNode(USER_OBJECT_ r_old, USER_OBJECT_ r_new, USER_
 
 USER_OBJECT_ RS_XML_xmlAddSiblingAt(USER_OBJECT_ r_to, USER_OBJECT_ r_node, USER_OBJECT_ r_before, USER_OBJECT_ manageMemory);
 
-SEXP RS_XML_clearCatalog();
+SEXP RS_XML_clearCatalog(void);
 SEXP RS_XML_loadCatalog(SEXP catalogs);
 SEXP RS_XML_catalogAdd(SEXP orig, SEXP replace, SEXP type);
 SEXP RS_XML_catalogDump(SEXP fileName);

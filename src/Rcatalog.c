@@ -64,7 +64,7 @@ RS_XML_loadCatalog(SEXP catalogs)
 }
 
 SEXP
-RS_XML_clearCatalog()
+RS_XML_clearCatalog(void)
 {
     xmlCatalogCleanup();
     return(ScalarLogical(1));
@@ -102,7 +102,7 @@ RS_XML_catalogDump(SEXP fileName)
 }
 
 void
-R_xmlInitializeCatalog()
+R_xmlInitializeCatalog(void)
 {
     xmlInitializeCatalog();
 }

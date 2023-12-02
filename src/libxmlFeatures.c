@@ -8,7 +8,7 @@
 #endif
 
 SEXP
-R_getXMLFeatures()
+R_getXMLFeatures(void)
 {
 
 #ifdef HAVE_XML_HAS_FEATURE
