@@ -6,6 +6,7 @@
 \alias{xmlNativeTreeParse}
 \alias{xmlParse}
 \alias{xmlSchemaParse}
+\alias{XML_PARSE_BIG_LINES}
 \title{XML Parser}
 \description{
  Parses an XML or HTML file or string containing XML/HTML content, and generates an R 

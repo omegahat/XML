@@ -1950,7 +1950,7 @@ R_visitXMLDoc(SEXP r_node, SEXP r_len)
 ////////////////////////////////
 
 #if 0
-// Use visitXMLDocCall and R_... insteadd.
+// Use visitXMLDocCall and R_... instead.
 
 //////////////////////////////////////////////////////
 

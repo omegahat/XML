@@ -5,7 +5,8 @@
 \alias{xmlParent,XMLInternalNode-method}
 \alias{xmlParent,XMLHashTreeNode-method}
 \alias{xmlParent,XMLTreeNode-method}
-\title{Get parent node of XMLInternalNode or ancestor nodes}
+\alias{getSiblings}
+\title{Get parent node, ancestor nodes or sibling nodes of XMLInternalNode}
 \description{
  \code{xmlParent} operates on an XML node
  and returns a reference to its parent node 
@@ -31,9 +32,10 @@
 \usage{
 xmlParent(x, ...)
 xmlAncestors(x, fun = NULL, ..., addFinalizer = NA, count = -1L)
+getSiblings(node, after = TRUE, ...) 
 }
 \arguments{
-  \item{x}{an object of class \code{XMLInternalNode} whose parent is being requested. }
+  \item{x,node}{an object of class \code{XMLInternalNode} whose parent is being requested. }
   \item{fun}{an R function which is invoked for each  node as we walk up
     the tree.}
   \item{\dots}{any additional arguments that are passed in calls to
@@ -50,6 +52,8 @@ xmlAncestors(x, fun = NULL, ..., addFinalizer = NA, count = -1L)
  \item{count}{an integer that indicates how many levels of the hierarchy
    to traverse. This allows us to get the \code{count} most recent
    ancestors of the node.}
+ \item{after}{a logical value that indicates we want the siblings following \code{node}
+   or, if \code{FALSE}, the nodes before \code{node}.}
 }
 \details{
  This uses the internal libxml structures to access the parent in the DOM tree. 
