@@ -53,7 +53,7 @@ append.xmlNode(to, ...)
    # </record>
    # </data>
 
-
+\dontrun{
  n = xmlNode("data", attrs = c("numVars" = 2, numRecords = 3))
  n = append.xmlNode(n, xmlNode("varNames", xmlNode("string", "A"), xmlNode("string", "B")))
  n = append.xmlNode(n, xmlNode("record", "1.2 3.5"))
@@ -61,7 +61,7 @@ append.xmlNode(to, ...)
  n = append.xmlNode(n, xmlNode("record", "10.1 5.67"))
 
  print(n)
-
+}
 
 \dontrun{
    tmp <-  lapply(references, function(i) {
