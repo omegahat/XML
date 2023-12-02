@@ -27,9 +27,9 @@ function(node, env,
 addParentNode =
 function(node, kids = character())
 {
-  if(!inherits(node, 'XMLTreeNode')) {
+  if(!inherits(node, 'XMLTreeNode')) 
      node = asXMLTreeNode(node, .this)
-  }
+
   id = node$id
   .children[[ id ]] <<-  kids
   .parents[ kids ] <<- id
