@@ -33,7 +33,7 @@ addNode(node, parent, to, ...)
   coerced to be compatible with a flat tree, i.e. has an id and the
   host tree added to it.
 }
-\references{\url{http://www.w3.org} }
+\references{\url{https://www.w3.org} }
 \author{Duncan Temple Lang}
 
 

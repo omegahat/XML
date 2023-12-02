@@ -37,7 +37,7 @@ asXMLTreeNode(node, env, id = get(".nodeIdGenerator", env)(xmlName(node)),
   An object of class \code{className}, i.e. by default
   \code{"XMLTreeNode"}.
 }
-\references{\url{http://www.w3.org/XML}}
+\references{\url{https://www.w3.org/XML}}
 \author{ Duncan Temple Lang }
 
 \seealso{

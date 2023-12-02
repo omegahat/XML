@@ -44,9 +44,7 @@ Duncan Temple Lang
 \seealso{
 \code{\link{readHTMLTable}}
 }
-\examples{
-  readHTMLList("http://www.omegahat.net")
-}
+%\examples{}
 \keyword{IO}
 \keyword{programming}
 

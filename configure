@@ -3608,7 +3608,7 @@ if test -n "" ; then
   #XXX get the redirection correct
 "$R_HOME/bin/R" CMD SHLIB testRemoveFinalizers.c &> 6
 if test "$?" = 0 ;  then
- $R_HOME/bin/R --slave --vanilla < testRemoveFinalizers.R &> 6
+ $R_HOME/bin/R --no-echo --vanilla < testRemoveFinalizers.R &> 6
 fi
 
 if ! test "$?" = 0 ; then

@@ -33,7 +33,7 @@ Doctype(system = character(), public = character(), name = "")
 \value{
  An object of class \code{Doctype}.
 }
-\references{\url{http://www.w3.org/XML}
+\references{\url{https://www.w3.org/XML}
  XML Elements of Style, Simon St. Laurent.
 }
 \author{ Duncan Temple Lang }

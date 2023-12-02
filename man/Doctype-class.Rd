@@ -21,11 +21,11 @@
 }
 \section{Methods}{
   There is a constructor function
-  and also methods for \code{\link[methods]{coerce}} to convert an object
+  and also methods for \code{\link{coerce}} to convert an object
   of this class to a character.
 }
 
-\references{\url{http://www.w3.org/XML}, \url{http://www.xmlsoft.org}}
+\references{\url{https://www.w3.org/XML}, \url{http://www.xmlsoft.org}}
 \author{Duncan Temple Lang}
 
 \seealso{

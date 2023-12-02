@@ -91,7 +91,7 @@ d <- parseDTD(txt, asText=TRUE)
 
 
 \dontrun{
- url <- "http://www.omegahat.net/XML/DTDs/DatasetByRecord.dtd"
+ url <- system.file("examples/DatasetByRecord.dtd", package = "XML")
  d <- parseDTD(url, asText = FALSE)  
 }
 }

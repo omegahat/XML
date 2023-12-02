@@ -39,6 +39,7 @@ parseURI(uri)
  \code{\link{getRelativeURL}}
 }
 \examples{
+\dontrun{
   parseURI("http://www.omegahat.net:8080/RCurl/index.html")
   parseURI("ftp://duncan@www.omegahat.net:8080/RCurl/index.html")
 
@@ -47,6 +48,7 @@ parseURI(uri)
   as(parseURI("http://duncan@www.omegahat.net:8080/RCurl/index.html#my_anchor"), "character")
 
   as(parseURI("ftp://duncan@www.omegahat.net:8080/RCurl/index.html?foo=1&bar=axd"), "character")
+}
 }
 \keyword{IO}
 \concept{URI}
