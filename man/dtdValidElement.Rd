@@ -34,8 +34,8 @@ FALSE indicates that it cannot.
 }
 
 
-\references{\url{http://www.w3.org/XML}, \url{http://www.jclark.com/xml},
-\url{http://www.omegahat.net}  }
+\references{\url{https://www.w3.org/XML}, \url{http://www.jclark.com/xml},
+\url{http://github.com/omegahat/XML}  }
 \author{ Duncan Temple Lang }
 
 

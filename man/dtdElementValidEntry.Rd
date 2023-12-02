@@ -38,8 +38,8 @@ indirectly by the
 can appear in an \code{element} tag or not.
 }
 
-\references{\url{http://www.w3.org/XML}, \url{http://www.jclark.com/xml},
-\url{http://www.omegahat.net}  }
+\references{\url{https://www.w3.org/XML}, \url{http://www.jclark.com/xml},
+\url{http://github.com/omegahat/XML}  }
 \author{ Duncan Temple Lang }
 
 
