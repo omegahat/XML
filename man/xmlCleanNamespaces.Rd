@@ -43,5 +43,5 @@ doc = xmlParse(f)
 print(doc)
 newDoc = xmlCleanNamespaces(f, out = FALSE)
 }
-\keyword{programming} 
+\keyword{programming}
 \keyword{IO}

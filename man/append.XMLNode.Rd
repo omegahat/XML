@@ -12,7 +12,7 @@ append.xmlNode(to, ...)
 \arguments{
   \item{to}{the XML node to which the sub-nodes are to be added.}
   \item{\dots}{the sub-nodes which are to be added to the \code{to} node.
-   If this is a \code{list} of \code{XMLNode} objects (e.g. create by a call to 
+   If this is a \code{list} of \code{XMLNode} objects (e.g. create by a call to
    \code{\link{lapply}}), then that list is used.}
 }
 \value{

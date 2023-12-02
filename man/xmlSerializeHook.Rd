@@ -23,7 +23,7 @@
 \code{
 saveRDS(obj, filename, refhook = xmlSerializeHook)
 readRDS(filename, refhook = xmlDeserializeHook)
-}  
+}
 }
 \usage{
 xmlSerializeHook(x)

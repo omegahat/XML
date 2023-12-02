@@ -20,7 +20,7 @@ specifically \code{element}.}
 
 \value{
  A logical value indicating if the
-list of attributes suppported by the 
+list of attributes suppported by the
 specified element has an entry named
 \code{name}.
 This does indicate what type of value

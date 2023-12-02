@@ -5,10 +5,10 @@
 \description{
  These functions allow one to assign a sub-node
 to an existing XML node by name or index.
- These are the assignment equivalents of the 
+ These are the assignment equivalents of the
 subsetting accessor functions.
 They are typically called indirectly
-via the assignment operator, such as 
+via the assignment operator, such as
 \code{x[["myTag"]] <- xmlNode("mySubTag")}.
 }
 \usage{

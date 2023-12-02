@@ -10,7 +10,7 @@ it treats  the object as a string and creates
 an \code{XMLTextNode} object.
 
  Also, there is a method for converting an XMLInternalNode
- - the C-level libxml representation of a node - to 
+ - the C-level libxml representation of a node - to
  an explicit R-only object which contains the R values
  of the data in the internal node.
 }
@@ -29,7 +29,7 @@ asXMLNode(x)
 \url{https://github.com/omegahat/XML}  }
 \author{ Duncan Temple Lang }
 
-\seealso{ 
+\seealso{
 \code{\link{xmlNode}}
 \code{\link{xmlTextNode}}
 }

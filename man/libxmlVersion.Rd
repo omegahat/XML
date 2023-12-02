@@ -29,13 +29,13 @@ fields
 
 \code{libxmlFeatures} returns a logical vector with names given by:
 \code{
- [1] "THREAD"     "TREE"       "OUTPUT"     "PUSH"       "READER"    
- [6] "PATTERN"    "WRITER"     "SAX1"       "FTP"        "HTTP"      
-[11] "VALID"      "HTML"       "LEGACY"     "C14N"       "CATALOG"   
-[16] "XPATH"      "XPTR"       "XINCLUDE"   "ICONV"      "ISO8859X"  
-[21] "UNICODE"    "REGEXP"     "AUTOMATA"   "EXPR"       "SCHEMAS"   
-[26] "SCHEMATRON" "MODULES"    "DEBUG"      "DEBUG_MEM"  "DEBUG_RUN" 
-[31] "ZLIB"      
+ [1] "THREAD"     "TREE"       "OUTPUT"     "PUSH"       "READER"
+ [6] "PATTERN"    "WRITER"     "SAX1"       "FTP"        "HTTP"
+[11] "VALID"      "HTML"       "LEGACY"     "C14N"       "CATALOG"
+[16] "XPATH"      "XPTR"       "XINCLUDE"   "ICONV"      "ISO8859X"
+[21] "UNICODE"    "REGEXP"     "AUTOMATA"   "EXPR"       "SCHEMAS"
+[26] "SCHEMATRON" "MODULES"    "DEBUG"      "DEBUG_MEM"  "DEBUG_RUN"
+[31] "ZLIB"
 }
 Elements are either \code{TRUE} or \code{FALSE} indicating whether support
 was activatd for that feature, or \code{NA} if that feature is not

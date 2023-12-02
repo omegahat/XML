@@ -7,7 +7,7 @@
  and some tag-specific functions to illustrate how one can
  add functions for specific DTDs and XML element types.
  Contains a local \link{list} which can be mutated
- by invocations of the closure's function. 
+ by invocations of the closure's function.
 }
 \usage{
 xmlHandler()

@@ -13,7 +13,7 @@
 \alias{docName<-,XMLHashTree-method}
 \title{Accessors for name of XML document}
 \description{
-  These functions and methods allow us to query and set the 
+  These functions and methods allow us to query and set the
   \dQuote{name} of an XML document. This is intended to be
   its URL or file name or a description of its origin if
   raw XML content provided as a string.

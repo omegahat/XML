@@ -13,7 +13,7 @@ supportsExpat()
 supportsLibxml()
 }
 \details{
- One might to use different parsers to test 
+ One might to use different parsers to test
 validity of a document in different ways and
 to get different error messages. Additionally,
 one parser may be more efficient than the other.

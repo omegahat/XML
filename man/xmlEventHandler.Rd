@@ -2,8 +2,8 @@
 \alias{xmlEventHandler}
 \title{Default handlers for the SAX-style event XML parser}
 \description{
- This is a function that returns a closure instance 
- containing the default handlers for use with 
+ This is a function that returns a closure instance
+ containing the default handlers for use with
  \code{\link{xmlEventParse}} for parsing XML documents
  via the SAX-style parsing.
 }
@@ -11,7 +11,7 @@
 xmlEventHandler()
 }
 \details{
- These handlers simply build up the DOM tree and thus 
+ These handlers simply build up the DOM tree and thus
  perform the same job as \code{xmlTreeParse}.
  It is here more as an example, reference and a base
  that users can extend.
@@ -21,7 +21,7 @@ The return value is a list of functions
 which are used as callbacks by the internal XML parser
 when it encounters certain XML elements/structures.
 These include items such as the start of an element,
-end of an element, processing instruction, 
+end of an element, processing instruction,
 text node, comment, entity references and definitions, etc.
 
   \item{startElement}{}

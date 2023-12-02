@@ -10,7 +10,7 @@
   relative to a base URI.
 
   The return value is an S3-style object of class \code{URI}.
-  
+
   This function uses libxml routines to perform the parsing.
 }
 \usage{
@@ -32,7 +32,7 @@ parseURI(uri)
          the bit after '?' of the form \code{name=value&name=value}}
   \item{fragment}{a string giving the coo}
   \item{port}{an integer identifying the port number on which the
-  connection is to be made}    
+  connection is to be made}
 }
 
 \seealso{

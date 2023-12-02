@@ -12,7 +12,7 @@
 \alias{coerce,vector,XMLInternalNode-method}
 \title{Create internal XML node or document object}
 \description{
-These are used to create internal `libxml' nodes and top-level document objects 
+These are used to create internal `libxml' nodes and top-level document objects
 that are used to write XML trees.  While the functions are available,
 their direct use is not encouraged. Instead, use \code{\link{xmlTree}}
 as the functions need to be used within a strict regime to avoid
@@ -49,13 +49,13 @@ How do we define a default namespace?
 }
 \usage{
 xmlDoc(node, addFinalizer = TRUE)
-newXMLDoc(dtd = "", namespaces=NULL, addFinalizer = TRUE, 
+newXMLDoc(dtd = "", namespaces=NULL, addFinalizer = TRUE,
            name = character(), node = NULL, isHTML = FALSE)
-newHTMLDoc(dtd = "loose", addFinalizer = TRUE, name = character(), 
+newHTMLDoc(dtd = "loose", addFinalizer = TRUE, name = character(),
             node = newXMLNode("html",
-                               newXMLNode("head", addFinalizer = FALSE), 
+                               newXMLNode("head", addFinalizer = FALSE),
                                newXMLNode("body", addFinalizer = FALSE),
-                              addFinalizer = FALSE)) 
+                              addFinalizer = FALSE))
 newXMLNode(name, ..., attrs = NULL, namespace = character(),
             namespaceDefinitions = character(),
              doc = NULL, .children = list(...), parent = NULL,
@@ -65,14 +65,14 @@ newXMLNode(name, ..., attrs = NULL, namespace = character(),
              sibling = NULL, addFinalizer = NA,
               noNamespace = length(namespace) == 0 && !missing(namespace),
                fixNamespaces = c(dummy = TRUE, default = TRUE))
-newXMLTextNode(text, parent = NULL, doc = NULL, cdata = FALSE, 
+newXMLTextNode(text, parent = NULL, doc = NULL, cdata = FALSE,
                 escapeEntities = is(text, "AsIs"), addFinalizer = NA)
 newXMLCDataNode(text, parent = NULL, doc = NULL, at = NA, sep = "\n",
                    addFinalizer = NA)
 newXMLCommentNode(text, parent = NULL, doc = NULL, at = NA, addFinalizer = NA)
 newXMLPINode(name, text, parent = NULL, doc = NULL, at = NA, addFinalizer = NA)
 newXMLDTDNode(nodeName, externalID = character(),
-              systemID = character(), doc = NULL, addFinalizer = NA)  
+              systemID = character(), doc = NULL, addFinalizer = NA)
 }
 \arguments{
   \item{node}{a \code{XMLInternalNode} object that will be copied to
@@ -97,7 +97,7 @@ newXMLDTDNode(nodeName, externalID = character(),
   \item{...}{the children of this node. These can be other nodes created
   earlier or R strings that are converted to text nodes and added as children
   to this newly created node.}
-  \item{attrs}{a named list of name-value pairs to be used as 
+  \item{attrs}{a named list of name-value pairs to be used as
     attributes for the XML node.
     One should not use this argument to define namespaces,
     i.e. attributes of the form \code{xmlns:prefix='http:/...'}.
@@ -177,7 +177,7 @@ This is just a convenient form of \code{parent = xmlParent(node)}.}
   then the CDATA node.  If one is not certain what characters are in
   the text,  it is useful to use \code{TRUE} to ensure that they are
   \dQuote{escaped}.
- 
+
   It is an argument for \code{newXMLNode} as the child nodes can be
   given as simple strings and are converted to text nodes. This
   \code{cdata} value is passed to the calls to create these text nodes
@@ -190,7 +190,7 @@ This is just a convenient form of \code{parent = xmlParent(node)}.}
   from 0 to the current number of children.}
   \item{sep}{when adding text nodes, this is used as an additional separator text to insert between the specified strings.}
 
-  \item{escapeEntities}{a logical value indicating whether to mark the 
+  \item{escapeEntities}{a logical value indicating whether to mark the
   internal text node in such a way that protects characters in its contents from
   being escaped as entities when being serialized via
   \code{\link{saveXML}}}
@@ -341,7 +341,7 @@ z$addNode("address", "4210 Mathematical Sciences Building, UC Davis")
 
 
 
-   # 
+   #
 txt = newXMLTextNode("x &lt; 1")
 txt # okay
 saveXML(txt) # x &amp;lt; 1

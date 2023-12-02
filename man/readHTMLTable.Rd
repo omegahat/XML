@@ -68,7 +68,7 @@ readHTMLTable(doc, header = NA,
   \item{trim}{a logical value indicating whether to remove leading and
  trailing white space from the content cells.}
   \item{elFun}{a function which, if specified, is called when converting
-     each cell. Currently, only the node is specified. In the future, we might 
+     each cell. Currently, only the node is specified. In the future, we might
      additionally pass the index of the column so that the function has
     some context, e.g. whether the value is a row label or a regular
     value, or if the caller knows the type of columns.
@@ -90,13 +90,13 @@ readHTMLTable(doc, header = NA,
   If a single HTML node is provided
 }
 \references{
-HTML4.0 specification  
+HTML4.0 specification
 }
 \author{Duncan Temple Lang}
 \seealso{
   \code{\link{htmlParse}}
   \code{\link{getNodeSet}}
-  \code{\link{xpathSApply}}    
+  \code{\link{xpathSApply}}
 }
 \examples{
 # u = "http://en.wikipedia.org/wiki/World_population"
@@ -104,7 +104,7 @@ HTML4.0 specification
   u = "http://www.inflationdata.com/Inflation/Consumer_Price_Index/HistoricalCPI.aspx"
   zz = readHTMLTable(u)
        # guard against the structure of the page changing.
-  if(any(i <- sapply(zz, function(x) if(is.null(x)) 0 else ncol(x)) == 14)){ 
+  if(any(i <- sapply(zz, function(x) if(is.null(x)) 0 else ncol(x)) == 14)){
     zz = zz[[which(i)[1]]]  # 4th table
         # convert columns to numeric.  Could use colClasses in the call to readHTMLTable()
     zz[-1] = lapply(zz[-1], function(x) as.numeric(gsub(".* ", "", as.character(x))))
@@ -115,7 +115,7 @@ HTML4.0 specification
 # From Marsh Feldman on R-help
 doc <- "http://www.nber.org/cycles/cyclesmain.html"
      # The  main table is the second one because it's embedded in the page table.
-table <- getNodeSet(htmlParse(doc),"//table") [[2]]   
+table <- getNodeSet(htmlParse(doc),"//table") [[2]]
 xt <- readHTMLTable(table,
                     header = c("peak","trough","contraction",
                                "expansion","trough2trough","peak2peak"),

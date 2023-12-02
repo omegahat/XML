@@ -16,7 +16,7 @@ of an XML node.
 \arguments{
   \item{x}{the XML node or the top-level document content in which the children are to be accessed.
   The \code{XMLDocumentContent} is the container for the top-level node that also contains information
-  such as the URI/filename and XML version. This accessor method is merely a convenience to get 
+  such as the URI/filename and XML version. This accessor method is merely a convenience to get
   access to children of the top-level node.}
 % \item{i}{index of the child of interest or the name of an XML element
 %   of interest. In this latter case, only the first matching element is

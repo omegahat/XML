@@ -13,7 +13,7 @@ in which DTD (Document Type Definition) the definition of that element
 can be found.  This avoids the problem of having different document
 definitions using the same names for XML elements that have different
 meaning.
-To resolve the name space, i.e. 
+To resolve the name space, i.e.
  i.e. find out to where the identifier points,
 one can use the
 expression \code{xmlNamespace(xmlRoot(doc))}.
@@ -50,7 +50,7 @@ namespace.}
  \code{\link{xmlChildren}}
  \code{\link{xmlAttrs}}
  \code{\link{xmlValue}}
- \code{\link{xmlNamespaceDefinitions}} 
+ \code{\link{xmlNamespaceDefinitions}}
 }
 
 \examples{

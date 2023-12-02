@@ -27,7 +27,7 @@ Duncan Temple Lang
 
 
 \seealso{
-\code{\link{xmlParse}}  
+\code{\link{xmlParse}}
 \code{\link{getXIncludes2}}
 \code{\link{getNodeLocation}}
 }

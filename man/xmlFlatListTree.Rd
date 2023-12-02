@@ -12,7 +12,7 @@
   ...  in which each node has a list of its own children. In a
   functional language like R, it is not possible then for the children
   to be able to identify their parents.
-  
+
   We use an environment to represent these flat trees.  Since these are
   mutable without requiring the change to be reassigned, we can modify a
   part of the tree locally without having to reassign the top-level
@@ -23,7 +23,7 @@
   performance difference.
 }
 \usage{
-xmlHashTree(nodes = list(), parents = character(), children = list(), 
+xmlHashTree(nodes = list(), parents = character(), children = list(),
              env = new.env(TRUE, parent = emptyenv()))
 xmlFlatListTree(nodes = list(), parents = character(), children = list(),
                 env = new.env(), n = 200)
@@ -92,7 +92,7 @@ xmlFlatListTree(nodes = list(), parents = character(), children = list(),
   \code{\link{xmlTreeParse}}
   \code{\link{xmlTree}}
   \code{\link{xmlOutputBuffer}}
-  \code{\link{xmlOutputDOM}}    
+  \code{\link{xmlOutputDOM}}
 }
 \examples{
  f = system.file("exampleData", "dataframe.xml", package = "XML")
@@ -133,7 +133,7 @@ xmlFlatListTree(nodes = list(), parents = character(), children = list(),
  r = xmlInternalTreeParse(f, xinclude = TRUE)
  ht = as(r, "XMLHashTree")
  ht
- 
+
   # work on the root node, or any node actually
  as(xmlRoot(r), "XMLHashTree")
 

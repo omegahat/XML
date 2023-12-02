@@ -20,7 +20,7 @@ dtdElementValidEntry(element, name, pos=NULL)
 \arguments{
   \item{element}{The \code{XMLElementDef} defining the tag
 in which we are asking whether the sub-element can be used. }
-  \item{name}{The name of the sub-element about which we are 
+  \item{name}{The name of the sub-element about which we are
 querying the list of sub-tags within \code{element}.
 }
   \item{pos}{An optional argument which, if supplied,
@@ -30,7 +30,7 @@ as the \code{pos}-th child of \code{element}.
 }
 \details{
 This is not intended to be called directly, but
-indirectly by the 
+indirectly by the
 \code{\link{dtdValidElement}} function.
 }
 \value{
@@ -51,8 +51,8 @@ can appear in an \code{element} tag or not.
 
 \examples{
  dtdFile <- system.file("exampleData", "foo.dtd",package="XML")
- dtd <- parseDTD(dtdFile) 
- 
+ dtd <- parseDTD(dtdFile)
+
   dtdElementValidEntry(dtdElement("variables",dtd), "variable")
 }
 \keyword{file}

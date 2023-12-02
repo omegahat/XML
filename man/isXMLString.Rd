@@ -14,14 +14,14 @@
  \code{xmlParseString} is a convenience routine for converting an
  XML string into an XML node/tree.
 
- \code{isXMLString} is examines a strings content and heuristically 
+ \code{isXMLString} is examines a strings content and heuristically
  determines whether it is XML.
 }
 \usage{
 isXMLString(str)
 xmlParseString(content, doc = NULL, namespaces = RXMLNamespaces,
-                clean = TRUE, addFinalizer = NA) 
-xml(x) 
+                clean = TRUE, addFinalizer = NA)
+xml(x)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

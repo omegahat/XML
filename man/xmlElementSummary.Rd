@@ -4,8 +4,8 @@
 \description{
   This function is used to get an understanding of the use
   of element and attribute names in an XML document.
-  It uses a collection of handler functions to gather 
-  the information via a SAX-style parser.  
+  It uses a collection of handler functions to gather
+  the information via a SAX-style parser.
   The distribution of attribute names is done within each
   "type" of element (i.e. element name)
 }

@@ -10,7 +10,7 @@ parseDTD(extId, asText=FALSE, name="", isURL=FALSE, error = xmlErrorCumulator())
 \arguments{
  \item{extId}{The name of the file containing the DTD to be processed.}
  \item{asText}{logical indicating whether the value of `extId' is the name of a file
-or the DTD content itself. Use this when the DTD is read as a character vector, before being parsed 
+or the DTD content itself. Use this when the DTD is read as a character vector, before being parsed
 and handed to the parser as content only.}
  \item{name}{Optional name to provide to the parsing mechanism.}
  \item{isURL}{A logical value indicating whether the input source is to be
@@ -20,18 +20,18 @@ and handed to the parser as content only.}
  an error in R.  See the error parameter for \code{link{xmlTreeParse}}.}
 }
 \details{
- Parses and converts the contents of the DTD in the specified file 
+ Parses and converts the contents of the DTD in the specified file
 into a user-level object containing all the information about the DTD.
 }
 \value{
  A list with two entries, one for the entities and the other for the elements
 defined within the DTD.
-  \item{entities}{a named list of the entities defined in the DTD. 
+  \item{entities}{a named list of the entities defined in the DTD.
 Each entry is indexed by the name of the corresponding entity.
 Each is an object of class \code{XMLEntity}
 or alternatively \code{XMLExternalEntity} if the entity refers
 to an external definition.
-The fields of these types of objects are 
+The fields of these types of objects are
 \itemize{
  \item{name}{the name of the entity by which users refer to it.}
  \item{content}{the expanded value or definition of the entity}
@@ -53,13 +53,13 @@ internally and externally.
  \item{contents}{a description of the elements that can be nested within this element.
 This is an object of class \code{XMLElementContent}
 or one of its specializations - \code{XMLSequenceContent}, \code{XMLOrContent}.
-Each of these encodes the number of such elements permitted 
+Each of these encodes the number of such elements permitted
 (one, one or more, zero or one, or zero or more);
 the type indicating whether the contents consist of a single element type,
 an ordered sequence of elements, or one of a set of elements.
 Finally, the actual contents description is described in the
 \code{elements} field. This is a list of
-one or more \code{XMLElementContent}, \code{XMLSequenceContent} and \code{XMLOrContent} 
+one or more \code{XMLElementContent}, \code{XMLSequenceContent} and \code{XMLOrContent}
 objects.
 }
  \item{attributes}{a named list of the attributes defined for this element in the DTD.
@@ -76,9 +76,9 @@ objects.
 \author{Duncan Temple Lang <duncan@wald.ucdavis.edu>}
 \note{Needs libxml (currently version 1.8.7)}
 
-\section{WARNING}{Errors in the DTD are stored as warnings for programmatic access.} 
+\section{WARNING}{Errors in the DTD are stored as warnings for programmatic access.}
 
-\seealso{\code{\link{xmlTreeParse}}, 
+\seealso{\code{\link{xmlTreeParse}},
  WritingXML.html in the distribution.}
 
 \examples{
@@ -92,7 +92,7 @@ d <- parseDTD(txt, asText=TRUE)
 
 \dontrun{
  url <- system.file("examples/DatasetByRecord.dtd", package = "XML")
- d <- parseDTD(url, asText = FALSE)  
+ d <- parseDTD(url, asText = FALSE)
 }
 }
 \keyword{file}

@@ -40,7 +40,7 @@ xmlName(node, full = FALSE)
 }
 
 \examples{
- fileName <- system.file("exampleData", "test.xml", package="XML") 
+ fileName <- system.file("exampleData", "test.xml", package="XML")
  doc <- xmlTreeParse(fileName)
  xmlName(xmlRoot(doc)[[1]])
 
@@ -55,7 +55,7 @@ xmlName(node, full = FALSE)
  xmlName(n)
  xmlName(n) <- "y"
 
- 
+
  xmlName(n) <- "r:y"
 
 }

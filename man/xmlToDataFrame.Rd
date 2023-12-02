@@ -73,7 +73,7 @@ xmlToDataFrame(doc, colClasses = NULL, homogeneous = NA,
 \author{Duncan Temple Lang}
 \seealso{
   \code{\link{xmlParse}}
-  \code{\link{getNodeSet}}  
+  \code{\link{getNodeSet}}
 }
 \examples{
  f = system.file("exampleData", "size.xml", package = "XML")

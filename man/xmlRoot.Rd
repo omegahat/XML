@@ -27,7 +27,7 @@ xmlRoot(x, skip = TRUE, ...)
     XMLComment objects that appear
     before the \dQuote{real} top-level node of the document should be ignored (\code{TRUE})
    or not (\code{FALSE}) when returning the root node.}
-  \item{...}{arguments that are passed by the generic to the different specialized 
+  \item{...}{arguments that are passed by the generic to the different specialized
     methods of this generic.}
   \item{addFinalizer}{a logical value or identifier for a C routine
         that controls whether we register finalizers on the internal node.}
@@ -39,8 +39,8 @@ xmlRoot(x, skip = TRUE, ...)
 \url{http://www.omegahat.net}  }
 \author{ Duncan Temple Lang }
 \note{One cannot obtain the parent or top-level node
-  of an XMLNode object in S. This is different from 
-  languages like C, Java, Perl, etc. and is primarily 
+  of an XMLNode object in S. This is different from
+  languages like C, Java, Perl, etc. and is primarily
   because S does not provide support for references.}
 \seealso{
 \code{\link{xmlTreeParse}}

@@ -25,7 +25,7 @@ getNodeLocation(node, recursive = TRUE, fileOnly = FALSE)
 \arguments{
   \item{node}{the node whose location or line number is of interest}
   \item{\dots}{additional parameters for methods should they be defined.}
-  \item{recursive}{a logical value that controls whether the 
+  \item{recursive}{a logical value that controls whether the
     full path of the nested includes is returned or just the
     path in the immediate XInclude element.}
   \item{fileOnly}{a logical value which if \code{TRUE} means that only
@@ -48,7 +48,7 @@ getNodeLocation(node, recursive = TRUE, fileOnly = FALSE)
   \code{\link{findXInclude}}
   \code{\link{xmlParse}}
   \code{\link{getNodeSet}}
-  \code{\link{xpathApply}}    
+  \code{\link{xpathApply}}
 }
 \examples{
 f = system.file("exampleData", "xysize.svg", package = "XML")

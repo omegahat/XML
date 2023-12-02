@@ -3,7 +3,7 @@
 \title{Get the names of an XML nodes children.}
 \description{
 This is a convenient way to obtain the XML tag name
-of each of the sub-nodes of a given 
+of each of the sub-nodes of a given
 \code{XMLNode} object.
 }
 \usage{

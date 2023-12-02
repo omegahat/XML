@@ -2,7 +2,7 @@
 \alias{dtdValidElement}
 \title{Determines whether an XML tag is valid within another.}
 \description{
-  This tests whether \code{name} is a legitimate tag 
+  This tests whether \code{name} is a legitimate tag
 to use as a direct sub-element of the \code{within} tag
 according to the definition of the \code{within}
 element in the specified DTD.
@@ -23,7 +23,7 @@ These are comma-separated entries in the element definition.}
 }
 \details{
 This applies to direct sub-elements
-or children of the \code{within} tag and not tags nested 
+or children of the \code{within} tag and not tags nested
 within children of that tag, i.e. descendants.
 }
 \value{

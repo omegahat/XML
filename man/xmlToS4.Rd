@@ -27,7 +27,7 @@ xmlToS4(node, obj = new(xmlName(node)), ...)
 \author{Duncan Temple Lang}
 
 \seealso{
- \code{\link{makeClassTemplate}}  
+ \code{\link{makeClassTemplate}}
 }
 \examples{
  txt = "<doc><part><name>ABC</name><type>XYZ</type><cost>3.54</cost>

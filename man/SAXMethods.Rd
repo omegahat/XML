@@ -48,7 +48,7 @@ entityDeclaration.SAX(name, base, sysId, publicId, notationName,  .state = NULL)
     should dispatch.}
   \item{where}{the package in which the class and method definitions
     should be defined. This is almost always unspecified.}
-  
+
 }
 \value{
   Each method should return the (potentially modified)

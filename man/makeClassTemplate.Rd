@@ -11,7 +11,7 @@
   by the caller (via the \code{types}) parameter.
   The function also generates a coercion method from an
   \code{XMLAbstractNode} to an instance of this new class.
-   
+
 
   This function can either return the code that defines the class
   or it can define the new class in the R session.
@@ -41,7 +41,7 @@ makeClassTemplate(xnode, types = character(), default = "ANY",
   \item{def}{code for defining the class}
   \item{coerce}{code for defining the coercion method from an
     XMLAbstractNode to an instance of the new class}
-  
+
   If \code{where} is not \code{NULL}, the class and coercion code
   is actually evaluated and the class and method will be defined
   in the R session as a side effect.
@@ -50,7 +50,7 @@ makeClassTemplate(xnode, types = character(), default = "ANY",
 \author{Duncan Temple Lang}
 
 \seealso{
- \code{\link{xmlToS4}}  
+ \code{\link{xmlToS4}}
 }
 \examples{
  txt =

@@ -1,7 +1,7 @@
 \name{getHTMLLinks}
 \alias{getHTMLLinks}
 \alias{getHTMLExternalFiles}
-\title{Get links or names of external files in HTML document} 
+\title{Get links or names of external files in HTML document}
 \description{
   These functions allow us to retrieve either the links
   within an HTML document, or the collection of names of

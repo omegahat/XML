@@ -34,10 +34,10 @@
 \alias{XMLNamespaceDefinitions-class}
 
 \title{Classes to describe an XML node object.}
-\description{These classes are intended to 
+\description{These classes are intended to
 represent an XML node, either directly in S or a reference to an internal
- libxml node.  Such nodes respond to queries about 
- their name, attributes, namespaces and children.  
+ libxml node.  Such nodes respond to queries about
+ their name, attributes, namespaces and children.
  These are old-style, S3 class definitions at present.
 }
 \section{Slots}{

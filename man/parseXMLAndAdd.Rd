@@ -51,8 +51,8 @@ Duncan Temple Lang
 
 \seealso{
   \code{\link{newXMLNode}}
-  \code{\link{xmlParse}}  
-  \code{\link{addChildren}}  
+  \code{\link{xmlParse}}
+  \code{\link{addChildren}}
 }
 \examples{
   long = runif(10000, -122, -80)
@@ -71,13 +71,13 @@ Duncan Temple Lang
       # as a string is very fast as it is done in C.
   f = newXMLNode("Folder")
   mapply(function(a, b) {
-           newXMLNode("Placemark", 
-                       newXMLNode("Point", 
-                                   newXMLNode("coordinates", 
-                                               paste(a, b, "0", collapse = ","))), 
+           newXMLNode("Placemark",
+                       newXMLNode("Point",
+                                   newXMLNode("coordinates",
+                                               paste(a, b, "0", collapse = ","))),
 		       parent = f)
            },
-         long, lat) 
+         long, lat)
   xmlSize(f)
 
 

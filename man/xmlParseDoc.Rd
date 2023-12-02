@@ -31,7 +31,7 @@ This function is a generalization of \code{\link{xmlParse}}
 that parses an XML document.  With this function, we can specify
 a combination of different options that control the operation of the
 parser. The options control many different aspects the parsing process
- 
+
 }
 \usage{
 xmlParseDoc(file, options = 1L, encoding = character(),
@@ -60,7 +60,7 @@ xmlParseDoc(file, options = 1L, encoding = character(),
     content rather than a URL}
 }
 \value{
- An object of class \code{XMLInternalDocument}.  
+ An object of class \code{XMLInternalDocument}.
 }
 \references{libxml2}
 \author{Duncan Temple Lang}

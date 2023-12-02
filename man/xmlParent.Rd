@@ -9,7 +9,7 @@
 \title{Get parent node, ancestor nodes or sibling nodes of XMLInternalNode}
 \description{
  \code{xmlParent} operates on an XML node
- and returns a reference to its parent node 
+ and returns a reference to its parent node
  within the document tree.
  This works for an internal, C-level
  \code{XMLInternalNode} object
@@ -27,12 +27,12 @@
  top of the document and either returns a list of those
  nodes, or alternatively a list of the values obtained
  by applying a function to each of the nodes.
- 
+
 }
 \usage{
 xmlParent(x, ...)
 xmlAncestors(x, fun = NULL, ..., addFinalizer = NA, count = -1L)
-getSiblings(node, after = TRUE, ...) 
+getSiblings(node, after = TRUE, ...)
 }
 \arguments{
   \item{x,node}{an object of class \code{XMLInternalNode} whose parent is being requested. }
@@ -56,7 +56,7 @@ getSiblings(node, after = TRUE, ...)
    or, if \code{FALSE}, the nodes before \code{node}.}
 }
 \details{
- This uses the internal libxml structures to access the parent in the DOM tree. 
+ This uses the internal libxml structures to access the parent in the DOM tree.
  This function is generic so that we can add methods for other types of nodes
  if we so want in the future.
 }

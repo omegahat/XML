@@ -37,7 +37,7 @@ Duncan Temple Lang
 }
 \examples{
 
-tt = 
+tt =
  '<x>
      <a>text</a>
      <b foo="1"/>
@@ -51,7 +51,7 @@ tt =
   d = getNodeSet(b, "//d")[[1]]
   xmlName(d) = "bob"
   addSibling(xmlParent(d), newXMLNode("c"))
-  
+
   compareXMLDocs(a, b)
 }
 

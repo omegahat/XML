@@ -9,7 +9,7 @@
 \alias{XML_PARSE_BIG_LINES}
 \title{XML Parser}
 \description{
- Parses an XML or HTML file or string containing XML/HTML content, and generates an R 
+ Parses an XML or HTML file or string containing XML/HTML content, and generates an R
  structure representing the XML/HTML tree.  Use \code{htmlTreeParse} when the content is known
  to be (potentially malformed) HTML.
  This function has numerous parameters/options and operates quite differently
@@ -17,7 +17,7 @@
   It can create trees in R or using internal C-level nodes, both of
   which are useful in different contexts.
  It can perform conversion of the nodes into R objects using
- caller-specified  handler functions and this can be used to 
+ caller-specified  handler functions and this can be used to
  map the XML document directly into R data structures,
  by-passing the conversion to an R-level tree which would then
  be processed recursively or with multiple descents to extract the
@@ -25,10 +25,10 @@
 
   \code{xmlParse} and \code{htmlParse} are equivalent to the
   \code{xmlTreeParse} and \code{htmlTreeParse} respectively,
- except they both use a default value for the \code{useInternalNodes} parameter 
+ except they both use a default value for the \code{useInternalNodes} parameter
   of \code{TRUE}, i.e. they working with and return internal
   nodes/C-level nodes.  These can then be searched using
-  XPath expressions via \code{\link{xpathApply}} and 
+  XPath expressions via \code{\link{xpathApply}} and
   \code{\link{getNodeSet}}.
 
  \code{xmlSchemaParse} is a convenience function for parsing an XML schema.
@@ -71,15 +71,15 @@ htmlTreeParse(file, ignoreBlanks=TRUE, handlers=NULL, replaceEntities=FALSE,
              xinclude = TRUE, addFinalizer = TRUE, error = htmlErrorHandler,
              isHTML = TRUE, options = integer(), parentFirst = FALSE)
 
-htmlParse(file, ignoreBlanks = TRUE, handlers = NULL, replaceEntities = FALSE, 
-          asText = FALSE, trim = TRUE, validate = FALSE, getDTD = TRUE, 
-           isURL = FALSE, asTree = FALSE, addAttributeNamespaces = FALSE, 
-            useInternalNodes = TRUE, isSchema = FALSE, fullNamespaceInfo = FALSE, 
-             encoding = character(), 
-             useDotNames = length(grep("^\\\\.", names(handlers))) > 0, 
-              xinclude = TRUE, addFinalizer = TRUE, 
+htmlParse(file, ignoreBlanks = TRUE, handlers = NULL, replaceEntities = FALSE,
+          asText = FALSE, trim = TRUE, validate = FALSE, getDTD = TRUE,
+           isURL = FALSE, asTree = FALSE, addAttributeNamespaces = FALSE,
+            useInternalNodes = TRUE, isSchema = FALSE, fullNamespaceInfo = FALSE,
+             encoding = character(),
+             useDotNames = length(grep("^\\\\.", names(handlers))) > 0,
+              xinclude = TRUE, addFinalizer = TRUE,
                error = htmlErrorHandler, isHTML = TRUE,
-                options = integer(), parentFirst = FALSE) 
+                options = integer(), parentFirst = FALSE)
 
 xmlSchemaParse(file, asText = FALSE, xinclude = TRUE, error = xmlErrorCumulator())
 }
@@ -119,9 +119,9 @@ in the resulting `tree'. }
     with full reference information.
     }
   \item{asText}{logical value indicating that the first argument,
-    `file', 
-     should be treated as the XML text to parse, not the name of 
-     a file. This allows the contents of documents to be retrieved 
+    `file',
+     should be treated as the XML text to parse, not the name of
+     a file. This allows the contents of documents to be retrieved
      from different sources (e.g. HTTP servers, XML-RPC, etc.) and still
      use this parser.}
  \item{trim}{
@@ -130,13 +130,13 @@ in the resulting `tree'. }
 \item{validate}{
 logical indicating whether to use a validating parser or not, or in other words
 check the contents against the DTD specification. If this is true, warning
-messages will be displayed about errors in the DTD and/or document, but the parsing 
+messages will be displayed about errors in the DTD and/or document, but the parsing
 will proceed except for the presence of terminal errors.
 This is ignored when parsing an HTML document.
 }
 \item{getDTD}{
 logical flag indicating whether the DTD (both internal and external)
-should be returned along with the document nodes. This changes the 
+should be returned along with the document nodes. This changes the
 return type.
 This is ignored when parsing an HTML document.
 }
@@ -144,7 +144,7 @@ This is ignored when parsing an HTML document.
    indicates whether the \code{file}  argument refers to a URL
   (accessible via ftp or http) or a regular file on the system.
   If \code{asText} is TRUE, this should not be specified.
-  The function attempts to determine whether the 
+  The function attempts to determine whether the
   data source is a URL by using \code{\link{grep}}
   to look for http or ftp at the start of the string.
   The libxml parser handles the connection to servers,
@@ -161,10 +161,10 @@ This is ignored when parsing an HTML document.
    \code{xsi:type="xsd:string"} is reported with the name
      \code{xsi:type}.
     If it is \code{FALSE}, the name of the attribute is \code{type}.}
- \item{useInternalNodes}{a logical value indicating whether 
+ \item{useInternalNodes}{a logical value indicating whether
   to call the converter functions with objects of class
    \code{XMLInternalNode} rather than \code{XMLNode}.
-   This should make things faster as we do not convert  the 
+   This should make things faster as we do not convert  the
   contents of the internal nodes to R explicit objects.
   Also, it allows one to access the parent and ancestor nodes.
   However, since the objects refer to volatile C-level objects,
@@ -240,7 +240,7 @@ This is ignored when parsing an HTML document.
 
    If parsing completes and no document is generated, this function is
    called again with only argument which is a character vector of
-   length 0.  This gives the function an opportunity to report all the 
+   length 0.  This gives the function an opportunity to report all the
    errors and raise an exception rather than doing this when it sees
    th first one.
 
@@ -248,11 +248,11 @@ This is ignored when parsing an HTML document.
     It can raise an R error or let parser continue and potentially
     find further errors.
 
-    The default value of this argument supplies a function that 
+    The default value of this argument supplies a function that
     cumulates the errors
 
     If this is \code{NULL}, the default error handler function in the
-    package  \code{\link{xmlStructuredStop}} is invoked and this will 
+    package  \code{\link{xmlStructuredStop}} is invoked and this will
     raise an error in R at that time in R.
 }
 \item{isHTML}{a logical value that allows this function to be used for parsing HTML documents.
@@ -274,8 +274,8 @@ This is ignored when parsing an HTML document.
  The \code{handlers} argument is used similarly
 to those specified in \link{xmlEventParse}.
  When an XML tag (element) is processed,
-  we look for a function in this collection 
-  with the same name as the tag's name. 
+  we look for a function in this collection
+  with the same name as the tag's name.
   If this is not found, we look for one named
   \code{startElement}. If this is not found, we use the default
   built in converter.
@@ -295,9 +295,9 @@ so should have a default value (\code{NULL}).
 
 The \code{namespace} function is called with a single argument which
 is an object of class \code{XMLNameSpace}.  This contains
-\describe{ 
+\describe{
 \item{id}{the namespace identifier as used to
-qualify tag names;} 
+qualify tag names;}
 \item{uri}{the value of the namespace identifier,
 i.e. the URI
  identifying the namespace.}
@@ -320,7 +320,7 @@ contents.
 
 }
 \value{
- By default ( when \code{useInternalNodes} is \code{FALSE}, 
+ By default ( when \code{useInternalNodes} is \code{FALSE},
   \code{getDTD} is \code{TRUE},  and no
  handler functions are provided), the return value is, an object of
  (S3) class \code{XMLDocument}.
@@ -328,7 +328,7 @@ contents.
  and are of class \code{DTDList} and \code{XMLDocumentContent} respectively.
 
  If \code{getDTD} is \code{FALSE},  only the \code{doc} object is returned.
- 
+
  The \code{doc} object has three fields of its own:
   \code{file}, \code{version} and \code{children}.
   \item{\code{file}}{The (expanded) name of the file  containing the XML.}
@@ -340,12 +340,12 @@ contents.
   \itemize{
    \item{\code{name}}{The name of the element.}
    \item{\code{attributes}}{For regular elements, a named list
-     of XML attributes converted from the 
+     of XML attributes converted from the
        <tag x="1" y="abc">}
    \item{\code{children}}{List of sub-nodes.}
    \item{\code{value}}{Used only for text entries.}
   }
- Some nodes specializations of \code{XMLNode}, such as 
+ Some nodes specializations of \code{XMLNode}, such as
  \code{XMLComment}, \code{XMLProcessingInstruction},
  \code{XMLEntityRef} are used.
 
@@ -354,10 +354,10 @@ contents.
  will be available in the \code{dtd} field.  The second element is a
  list containing the external and internal DTDs. Each of these
  contains 2 lists - one for element definitions and another for entities. See
- \code{\link{parseDTD}}. 
+ \code{\link{parseDTD}}.
 
 
- If a list of functions is given via \code{handlers}, 
+ If a list of functions is given via \code{handlers},
  this list is returned. Typically, these handler functions
  share state via a closure and the resulting updated data structures
  which contain the extracted and processed values from the XML
@@ -376,7 +376,7 @@ contents.
  \code{\link{xpathApply}} and \code{doc["xpath-expression"]}.
 
  If internal nodes are used and the internal tree returned directly,
- all the nodes are returned as-is and no attempt to 
+ all the nodes are returned as-is and no attempt to
   trim white space, remove ``empty'' nodes (i.e. containing only white
  space), etc. is done. This is potentially quite expensive and so is
  not done generally, but should  be done during the processing
@@ -389,12 +389,12 @@ contents.
  white space.
  \code{ xmlChildren(node)[ ! xmlSApply(node, function(x) inherit(x,
               "XMLInternalTextNode")] && trim(xmlValue(x)) == "")}
-  
+
  } }
 
  \references{\url{http://xmlsoft.org}, \url{http://www.w3.org/xml}}
 
- \author{Duncan Temple Lang <duncan@wald.ucdavis.edu>} 
+ \author{Duncan Temple Lang <duncan@wald.ucdavis.edu>}
 
 \note{Make sure  that the necessary 3rd party libraries are available.}
 
@@ -410,7 +410,7 @@ contents.
  xmlTreeParse(fileName)
 
    # parse the document, discarding comments.
-  
+
  xmlTreeParse(fileName, handlers=list("comment"=function(x,...){NULL}), asTree = TRUE)
 
    # print the entities
@@ -436,31 +436,31 @@ contents.
 
 
  # Read a MathML document and convert each node
- # so that the primary class is 
+ # so that the primary class is
  #   <name of tag>MathML
  # so that we can use method  dispatching when processing
  # it rather than conditional statements on the tag name.
  # See plotMathML() in examples/.
  fileName <- system.file("exampleData", "mathml.xml",package="XML")
-m <- xmlTreeParse(fileName, 
+m <- xmlTreeParse(fileName,
                   handlers=list(
                    startElement = function(node){
                    cname <- paste(xmlName(node),"MathML", sep="",collapse="")
-                   class(node) <- c(cname, class(node)); 
+                   class(node) <- c(cname, class(node));
                    node
                 }))
 
 
 
   # In this example, we extract _just_ the names of the
-  # variables in the mtcars.xml file. 
+  # variables in the mtcars.xml file.
   # The names are the contents of the <variable>
   # tags. We discard all other tags by returning NULL
   # from the startElement handler.
   #
   # We cumulate the names of variables in a character
   # vector named `vars'.
-  # We define this within a closure and define the 
+  # We define this within a closure and define the
   # variable function within that closure so that it
   # will be invoked when the parser encounters a <variable>
   # tag.
@@ -468,7 +468,7 @@ m <- xmlTreeParse(fileName,
   # its children) and the list of attributes.
   # We get the variable name via call to xmlValue().
 
-  # Note that we define the closure function in the call and then 
+  # Note that we define the closure function in the call and then
   # create an instance of it by calling it directly as
   #   (function() {...})()
 
@@ -477,14 +477,14 @@ m <- xmlTreeParse(fileName,
   # xmlSApply(xmlRoot(doc)[[1]], function(x) xmlValue(x[[1]]))
   # which is simpler but is more costly in terms of memory.
  fileName <- system.file("exampleData", "mtcars.xml", package="XML")
- doc <- xmlTreeParse(fileName,  handlers = (function() { 
+ doc <- xmlTreeParse(fileName,  handlers = (function() {
                                  vars <- character(0) ;
-                                list(variable=function(x, attrs) { 
-                                                vars <<- c(vars, xmlValue(x[[1]])); 
-                                                NULL}, 
+                                list(variable=function(x, attrs) {
+                                                vars <<- c(vars, xmlValue(x[[1]]));
+                                                NULL},
                                      startElement=function(x,attr){
                                                    NULL
-                                                  }, 
+                                                  },
                                      names = function() {
                                                  vars
                                              }
@@ -533,16 +533,16 @@ m <- xmlTreeParse(fileName,
  htmlTreeParse(readLines(f), asText = TRUE)
  htmlTreeParse(readLines(f))
 
-  # Same as 
+  # Same as
  htmlTreeParse(paste(readLines(f), collapse = "\n"), asText = TRUE)
 
 
- getLinks = function() { 
-       links = character() 
-       list(a = function(node, ...) { 
+ getLinks = function() {
+       links = character()
+       list(a = function(node, ...) {
                    links <<- c(links, xmlGetAttr(node, "href"))
-                   node 
-                }, 
+                   node
+                },
             links = function()links)
      }
 
@@ -566,8 +566,8 @@ m <- xmlTreeParse(fileName,
  doc = xmlTreeParse(f, useInternalNodes = TRUE)
 
  sapply(getNodeSet(doc, "//variable"), xmlValue)
-         
- #free(doc) 
+
+ #free(doc)
 
 
   # character set encoding for HTML
@@ -599,10 +599,10 @@ m <- xmlTreeParse(fileName,
                                          cat("Errors in XML document\n", e$message, "\n")
                                        })
 
-    #  terminate on first error            
+    #  terminate on first error
   try(xmlTreeParse("<doc><a> & < <?pi > </doc>", error = NULL))
 
-    #  see xmlErrorCumulator in the XML package 
+    #  see xmlErrorCumulator in the XML package
 
 
   f = system.file("exampleData", "book.xml", package = "XML")

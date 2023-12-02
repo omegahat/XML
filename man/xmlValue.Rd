@@ -40,7 +40,7 @@ xmlValue(x, ignoreComments = FALSE, recursive = TRUE,
    trailing white space when returning the string value}
 }
 \value{
- The object stored in the 
+ The object stored in the
  \code{value} slot of the \code{XMLNode} object.
  This is typically a string.
 }

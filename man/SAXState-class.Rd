@@ -7,7 +7,7 @@
   expected to sub-class  when they want to
   use S4 methods as handler functions for SAX-based XML parsing.
   The idea is that one can pass both i)  a collection of handlers
-  to \code{\link{xmlEventParse}} which are simply 
+  to \code{\link{xmlEventParse}} which are simply
   the generic functions for the different SAX actions,
   and ii) a suitable object to maintain state across
   the different SAX calls.
@@ -24,7 +24,7 @@
   of \code{SAXState} and then they do not have to
   implement methods for each of the
   different handlers.
-}  
+}
 \section{Objects from the Class}{A virtual Class: No objects may be created from it.}
 
 

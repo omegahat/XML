@@ -30,18 +30,18 @@ xmlGetAttr(node, name, default = NULL, converter = NULL,
       name space prefixes and URIs to use when resolving for the
       the attribute with a namespace.
        The values are used to compare the name space prefix used in
-       the \code{name} given by the user to the name space 
+       the \code{name} given by the user to the name space
        definition in the node to ensure they match.
      This is important as we might ask for an attribute named
     \code{r:width} assuming that the prefix \code{r} corresponded to the
-     URI \code{http://www.r-project.org}. However, there may 
+     URI \code{http://www.r-project.org}. However, there may
      be a name space prefix \code{r} defined on the node that points
      to  a different URI and so this would be an erroneous match.
   }
-  \item{addNamespace}{a logical value that indicates whether we should put the 
+  \item{addNamespace}{a logical value that indicates whether we should put the
    namespace prefix on the resulting name.
    This is passed on to \code{\link{xmlAttrs}} and so controls whether the resulting
-   attribute names  have the prefix attached. 
+   attribute names  have the prefix attached.
    So one specifies \code{TRUE} for this argument if the attribute identifier
    has a namespace prefix.
   }

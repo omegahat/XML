@@ -24,7 +24,7 @@ We would end up with a list with elements named "a", "b" and "c".
 vector \code{c(foo = "1")} (i.e. the attributes) and "c" would
 contain the list with two elements named "d" and ".attrs".
 The element corresponding to "d" is a
-character vector with the single element "a phrase". 
+character vector with the single element "a phrase".
 The ".attrs" element of the list is the character vector of
 attributes from the node \code{<c>...</c>}.
 }
@@ -71,7 +71,7 @@ xmlToList(node, addAttributes = TRUE, simplify = FALSE,
  accessing the content of XML nodes.
 }
 \examples{
-tt = 
+tt =
  '<x>
      <a>text</a>
      <b foo="1"/>
@@ -96,7 +96,7 @@ tt =
   v2 = xmlToList('<foo a="1" b="xyz"><f>123</f><g>2.2</g></foo>', TRUE)
 
    # add a and b as regular elements to the resulting list to get
-   #  f, g, a and b 
+   #  f, g, a and b
   v3 = xmlToList('<foo a="1" b="xyz"><f>123</f><g>2.2</g></foo>', TRUE, attributesAsElements = TRUE)
 }
 \keyword{IO}

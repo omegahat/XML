@@ -60,7 +60,7 @@ processXInclude(node, flags = 0L)
   doc = xmlInternalTreeParse(f, xinclude = FALSE)
   section1 = getNodeSet(doc, "//section")[[1]]
 
-     # process 
+     # process
   processXInclude(section1[[2]])
 }
 

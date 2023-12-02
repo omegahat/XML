@@ -22,7 +22,7 @@
   And it allows for criteria identifying nodes by position, etc.
   using some counting operations.  Combining  XPath with R
   allows for quite flexible node identification and manipulation.
-  XPath offers an alternative way to find nodes of interest 
+  XPath offers an alternative way to find nodes of interest
   than recursively or iteratively navigating the entire tree in R
   and performing the navigation explicitly.
 
@@ -38,7 +38,7 @@
   (See \code{xpathFuns}.)
 
   The set of matching nodes corresponding to an XPath expression
-  are returned in R as a list.  One can then  iterate over these elements to process the 
+  are returned in R as a list.  One can then  iterate over these elements to process the
   nodes in whatever way one wants. Unfortunately, this involves two loops -
   one in the XPath query over the entire tree, and another in R.
   Typically, this is fine as the number of matching nodes is reasonably small.
@@ -51,7 +51,7 @@
   and the first argument of the call will be replaced with the node.
 
   Dealing with expressions that relate to the default namespaces in the
-  XML document can be confusing. 
+  XML document can be confusing.
 
   \code{xpathSApply} is a version of \code{xpathApply}
   which attempts to simplify the result if it can be converted
@@ -100,7 +100,7 @@
    See the 'Details' section below for some more information.
 }
 \usage{
-getNodeSet(doc, path, namespaces = xmlNamespaceDefinitions(doc, simplify = TRUE), 
+getNodeSet(doc, path, namespaces = xmlNamespaceDefinitions(doc, simplify = TRUE),
                     fun = NULL, sessionEncoding = CE_NATIVE, addFinalizer = NA, ...)
 xpathApply(doc, path, fun, ... ,
             namespaces =  xmlNamespaceDefinitions(doc, simplify = TRUE),
@@ -120,7 +120,7 @@ matchNamespaces(doc, namespaces,
   \item{namespaces}{ a named character vector giving the
     namespace prefix and URI pairs that are to be used
     in the XPath expression and matching of nodes.
-   The prefix is just a simple string that acts as a short-hand 
+   The prefix is just a simple string that acts as a short-hand
    or alias for the URI that is the unique identifier for the
    namespace.
    The URI is the element in this vector and the prefix is the
@@ -137,7 +137,7 @@ matchNamespaces(doc, namespaces,
     that URI.
   }
  \item{fun}{a function object, or an expression or call, which is used when the result is a node set
-     and evaluated for each node element in the node set.  If this is a call, the first argument is replaced 
+     and evaluated for each node element in the node set.  If this is a call, the first argument is replaced
      with the current node.
  }
  \item{...}{any additional arguments to be passed to \code{fun} for each
@@ -166,7 +166,7 @@ matchNamespaces(doc, namespaces,
   to encoding.}
   \item{addFinalizer}{a logical value or identifier for a C routine
         that controls whether we register finalizers on the internal
-	node.} 
+	node.}
 
   \item{xpathFuns}{a list containing either character strings, functions
     or named elements containing the address of a C routine.
@@ -184,7 +184,7 @@ matchNamespaces(doc, namespaces,
   an XPath expression must use a namespace, even if it is the default
   namespace for the XML document/node.
   For example, suppose we have an XML document
-\code{<help xmlns="http://www.r-project.org/Rd"><topic>...</topic></help>}  
+\code{<help xmlns="http://www.r-project.org/Rd"><topic>...</topic></help>}
 To find all the topic nodes, we might want to use
 the XPath expression \code{"/help/topic"}.
 However, we must use an explicit namespace prefix that is associated
@@ -197,8 +197,8 @@ So we would use
    the namespaces to be specified easily by the R user
    and matched to the namespace definitions in the
    target document.
-   
-   
+
+
   This calls the libxml routine \code{xmlXPathEval}.
 }
 \value{
@@ -209,11 +209,11 @@ So we would use
   \item{logical}{a boolean}
   \item{character}{a string, i.e. a single character element.}
 
-  If \code{fun} is supplied and the result of the XPath query is a node set, 
+  If \code{fun} is supplied and the result of the XPath query is a node set,
   the result in R is a list.
 }
 
-\references{\url{http://xmlsoft.org}, 
+\references{\url{http://xmlsoft.org},
   \url{http://www.w3.org/xml}
   \url{http://www.w3.org/TR/xpath}
   \url{http://www.omegahat.net/RSXML}
@@ -231,19 +231,19 @@ So we would use
   \code{getNodeSet(d, "//d:myNode", c(d = "http://www.omegahat.net"))}
   to match myNode in the default namespace
   \code{http://www.omegahat.net}.
-  
+
   This default namespace of the document is now computed for us and
   is the default value for the namespaces argument.
   It can be referenced using the prefix 'd',
   standing for default but sufficiently short to be
   easily used within the XPath expression.
 
-  
+
   More of the XPath functionality provided by libxml can and may be
   made available to the R package.
   Facilities such as compiled XPath expressions, functions, ordered node
   information are examples.
-   
+
   Please send requests to the package maintainer.
 }
 
@@ -252,7 +252,7 @@ So we would use
 }
 \examples{
  doc = xmlParse(system.file("exampleData", "tagnames.xml", package = "XML"))
- 
+
  els = getNodeSet(doc, "/doc//a[@status]")
  sapply(els, function(el) xmlGetAttr(el, "status"))
 
@@ -266,10 +266,10 @@ So we would use
  ns = structure(sapply(nsDefs, function(x) x$uri), names = names(nsDefs))
  getNodeSet(doc, "/doc//b[@omegahat:status='foo']", ns)[[1]]
 
- # free(doc) 
+ # free(doc)
 
  #####
- f = system.file("exampleData", "eurofxref-hist.xml.gz", package = "XML") 
+ f = system.file("exampleData", "eurofxref-hist.xml.gz", package = "XML")
  e = xmlParse(f)
  ans = getNodeSet(e, "//o:Cube[@currency='USD']", "o")
  sapply(ans, xmlGetAttr, "rate")
@@ -281,7 +281,7 @@ So we would use
 
 
   # Using a namespace
- f = system.file("exampleData", "SOAPNamespaces.xml", package = "XML") 
+ f = system.file("exampleData", "SOAPNamespaces.xml", package = "XML")
  z = xmlParse(f)
  getNodeSet(z, "/a:Envelope/a:Body", c("a" = "http://schemas.xmlsoap.org/soap/envelope/"))
  getNodeSet(z, "//a:Body", c("a" = "http://schemas.xmlsoap.org/soap/envelope/"))
@@ -289,7 +289,7 @@ So we would use
 
 
   # Get two items back with namespaces
- f = system.file("exampleData", "gnumeric.xml", package = "XML") 
+ f = system.file("exampleData", "gnumeric.xml", package = "XML")
  z = xmlParse(f)
  getNodeSet(z, "//gmr:Item/gmr:name", c(gmr="http://www.gnome.org/gnumeric/v2"))
 
@@ -313,13 +313,13 @@ So we would use
 
  slovenia = getNodeSet(doc, "//ns:Cube[@currency='SIT']", namespaces )
 
-    # Now we have a list of such nodes, loop over them 
+    # Now we have a list of such nodes, loop over them
     # and get the rate attribute
  rates = as.numeric( sapply(slovenia, xmlGetAttr, "rate") )
     # Now put the date on each element
     # find nodes of the form <Cube time=".." ... >
     # and extract the time attribute
- names(rates) = sapply(getNodeSet(doc, "//ns:Cube[@time]", namespaces ), 
+ names(rates) = sapply(getNodeSet(doc, "//ns:Cube[@time]", namespaces ),
                       xmlGetAttr, "time")
 
     #  Or we could turn these into dates with strptime()
@@ -327,12 +327,12 @@ So we would use
 
 
    #  Using xpathApply, we can do
- rates = xpathApply(doc, "//ns:Cube[@currency='SIT']", xmlGetAttr, "rate", 
+ rates = xpathApply(doc, "//ns:Cube[@currency='SIT']", xmlGetAttr, "rate",
                      namespaces = namespaces )
  rates = as.numeric(unlist(rates))
 
    # Using an expression rather than  a function and ...
- rates = xpathApply(doc, "//ns:Cube[@currency='SIT']", quote(xmlGetAttr(x, "rate")), 
+ rates = xpathApply(doc, "//ns:Cube[@currency='SIT']", quote(xmlGetAttr(x, "rate")),
                     namespaces = namespaces )
 
  #free(doc)
@@ -351,7 +351,7 @@ So we would use
 
    # the following, perhaps unexpectedly but correctly, returns an empty
    # with no matches
-   
+
   getNodeSet(d, "//defaultNs", "http://www.omegahat.net")
 
    # But if we create our own prefix for the evaluation of the XPath
@@ -361,10 +361,10 @@ So we would use
 
    # And since the default value for the namespaces argument is the
    # default namespace of the document, we can refer to it with our own
-   # prefix given as 
+   # prefix given as
   getNodeSet(d, "//d:defaultNs", "d")
 
-   # And the syntactic sugar is 
+   # And the syntactic sugar is
   d["//d:defaultNs", namespace = "d"]
 
 
@@ -387,10 +387,10 @@ So we would use
 
   doc = htmlTreeParse("http://finance.yahoo.com/bonds/composite_bond_rates",
                       useInternalNodes = TRUE)
-  if(is.null(xmlRoot(doc))) 
+  if(is.null(xmlRoot(doc)))
      doc = htmlTreeParse("http://finance.yahoo.com/bonds", useInternalNodes = TRUE)
 
-     # Use XPath expression to find the nodes 
+     # Use XPath expression to find the nodes
      #  <div><table class="yfirttbl">..
      # as these are the ones we want.
 
@@ -410,7 +410,7 @@ So we would use
               dimnames = list(vals[1,], colNames[-1]),
               byrow = TRUE
             )
-    }  
+    }
 
 
      # Now process each of the table nodes in the o list.
@@ -445,7 +445,7 @@ So we would use
      # Will fail because it doesn't know what the namespace x is
      # and we have to have one eventhough it has no prefix in the document.
     xpathApply(doc, "//x:b")
-}    
+}
       # So this is how we do it - just  say x is to be mapped to the
       # default unprefixed namespace which we shall call x!
     xpathApply(doc, "//x:b", namespaces = "x")
@@ -465,7 +465,7 @@ So we would use
     class)))
 
 
-       
+
        # Use of XPath 2.0 functions min() and max()
      doc = xmlParse('<doc><p age="10"/><p age="12"/><p age="7"/></doc>')
      getNodeSet(doc, "//p[@age  = min(//p/@age)]")
