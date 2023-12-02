@@ -129,7 +129,7 @@ if test -n "" ; then
   #XXX get the redirection correct
 "$R_HOME/bin/R" CMD SHLIB testRemoveFinalizers.c &> AS_MESSAGE_FD
 if test "$?" = 0 ;  then
- $R_HOME/bin/R --slave --vanilla < testRemoveFinalizers.R &> AS_MESSAGE_FD
+ $R_HOME/bin/R --no-echo --vanilla < testRemoveFinalizers.R &> AS_MESSAGE_FD
 fi
 
 if ! test "$?" = 0 ; then
