@@ -55,10 +55,13 @@ names(diffs) = common
 ndiff = sapply(diffs, length)
 
 check = diffs[ndiff > 0]
+ndiff = sapply(check, length)
 
-
-nn = table(sapply(check, length))
+nn = table(ndiff)
 sum(as.integer(names(nn)) * nn)
+
+
+cat(paste(common[ndiff > 0], ndiff[ndiff > 0]) , sep = "\n", file  = "~/GitWorkingArea/XML/CranGitFileDiffs")
 
 # CRAN toString.R
 # git  toString.S
