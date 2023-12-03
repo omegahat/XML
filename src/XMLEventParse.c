@@ -80,12 +80,11 @@ createSAX2AttributesList(const xmlChar **attributes, int nb_attributes, int nb_d
       char *tmp;
       int len;
 
-      len = (ptr[4] - ptr[3] + 1);
+      len = (int) (ptr[4] - ptr[3] + 1);
       tmp = malloc(sizeof(char) * len);
-      if(!tmp) {
-         PROBLEM "Cannot allocate space for attribute of length %d", (int) (ptr[4] - ptr[3] + 2)
-	 ERROR;
-      }
+      if(!tmp) 
+	  Rf_error("Cannot allocate space for attribute of length %d", (int) (ptr[4] - ptr[3] + 2));
+
       memcpy(tmp, ptr[3], ptr[4] - ptr[3]);
       tmp[len-1] = '\0'; /*XXX*/
       SET_STRING_ELT(attr_values, i,  ENC_COPY_TO_USER_STRING(tmp));
@@ -132,11 +131,12 @@ typedef struct {
 int
 RS_XML_readConnectionInput(void *context, char *buffer, int len)
 {
-  SEXP e, tmp, arg;
+  SEXP e, tmp, arg = R_NilValue;
   int n;
   int errorOccurred;
   const char *str;
   int left = len-1, count;
+  int nprot = 0;
 
 #ifdef R_XML_DEBUG
   char *orig = buffer;
@@ -162,12 +162,11 @@ RS_XML_readConnectionInput(void *context, char *buffer, int len)
      if they gave us a connection. */
   if(isFunction(fun)) {
      /* Invoke the user-provided function to get the next line. */
-    PROTECT(e = allocVector(LANGSXP, 2));
-    SETCAR(e, fun);
-    PROTECT(arg = NEW_INTEGER(1));
-    INTEGER_DATA(arg)[0] = len;
-    SETCAR(CDR(e), arg);
-    UNPROTECT(1);
+      PROTECT(e = allocVector(LANGSXP, 2)); nprot++;
+      SETCAR(e, fun);
+      PROTECT(arg = NEW_INTEGER(1)); nprot++;
+      INTEGER_DATA(arg)[0] = len;
+      SETCAR(CDR(e), arg);
   } else
       e = fun;
 
@@ -183,7 +182,7 @@ RS_XML_readConnectionInput(void *context, char *buffer, int len)
    tmp = R_tryEval(e, R_GlobalEnv, &errorOccurred);
 
    if(errorOccurred || !IS_CHARACTER(tmp)) {
-     UNPROTECT(1);
+     UNPROTECT(nprot);
      if ((ctx->sax != NULL) && (ctx->sax->error != NULL))  /* throw an XML error. */
            ctx->sax->error(ctx->userData, "Failed to call read on XML connection");
      return(-1);
@@ -192,15 +191,14 @@ RS_XML_readConnectionInput(void *context, char *buffer, int len)
    if(GET_LENGTH(tmp)) {
 
       str = CHAR_DEREF(STRING_ELT(tmp, 0));
-      n = strlen(str);
+      n = (int) strlen(str);
 
 
       if(n != 0) { /* Just add a new line and do it again. */
 
-         if(n > left) {
-            PROBLEM "string read from XML connection too long for buffer: truncating %s to %d characters", str, left
-     	    WARN;
-         }
+         if(n > left) 
+	     Rf_warning("string read from XML connection too long for buffer: truncating %s to %d characters", str, left);
+
          strncpy(buffer, str, left);
          left -= n;
 
@@ -254,10 +252,9 @@ RS_XML_xmlCreateConnectionParserCtxt(USER_OBJECT_ con)
 #endif
 
       xmlParserInputPtr input = xmlNewIOInputStream(ctx, buf, XML_CHAR_ENCODING_NONE);
-      if(!input) {
-	  PROBLEM "can't create new IOInputStream"
-	      ERROR;
-      }
+      if(!input) 
+	  Rf_error("can't create new IOInputStream");
+	      
       inputPush(ctx, input);
 #endif
       return(ctx);
@@ -288,12 +285,8 @@ RS_XML(libXMLEventParse)(const char *fileName, RS_XMLParserData *parserData, RS_
       ctx = NULL;
   }
 
-
-  if(ctx == NULL) {
-    PROBLEM "Can't parse %s", fileName
-    ERROR;
-  }
-
+  if(ctx == NULL) 
+      Rf_error("Can't parse %s", fileName);
 
   xmlParserHandler = (xmlSAXHandlerPtr) S_alloc(sizeof(xmlSAXHandler), 1);
   /* Make certain this is initialized so that we don't have any references  to unwanted routines!  */
@@ -305,10 +298,8 @@ RS_XML(libXMLEventParse)(const char *fileName, RS_XMLParserData *parserData, RS_
   ctx->userData = parserData;
   ctx->sax = xmlParserHandler;
 
-  if(Rf_length(r_encoding) && STRING_ELT(r_encoding, 0) != R_NaString) {
-//      Rf_PrintValue(r_encoding);
-      ctx->encoding = xmlStrdup(CHAR(STRING_ELT(r_encoding, 0)));
-  }
+  if(Rf_length(r_encoding) && STRING_ELT(r_encoding, 0) != R_NaString) 
+      ctx->encoding = xmlStrdup( (const xmlChar *) CHAR(STRING_ELT(r_encoding, 0)));
 
   status = xmlParseDocument(ctx);
 
@@ -342,18 +333,17 @@ R_isBranch(const xmlChar *localname, RS_XMLParserData *rinfo)
 char *
 getPropertyValue(const xmlChar **ptr)
 {
-  int len;
-  char *tmp;
+    int len;
+    char *tmp;
 
-      len = (ptr[4] - ptr[3] + 1);
-      tmp = malloc(sizeof(char) * len);
-      if(!tmp) {
-         PROBLEM "Cannot allocate space for attribute of length %d", (int) (ptr[4] - ptr[3] + 2)
-	 ERROR;
-      }
-      memcpy(tmp, ptr[3], ptr[4] - ptr[3]);
-      tmp[len-1] = '\0'; /*XXX*/
-      return(tmp);
+    len = (int) (ptr[4] - ptr[3] + 1);
+    tmp = malloc(sizeof(char) * len);
+    if(!tmp) 
+	Rf_error("Cannot allocate space for attribute of length %d", (int) (ptr[4] - ptr[3] + 2));
+
+    memcpy(tmp, ptr[3], ptr[4] - ptr[3]);
+    tmp[len-1] = '\0'; /*XXX*/
+    return(tmp);
 }
 
 void
@@ -381,8 +371,8 @@ R_processBranch(RS_XMLParserData * rinfo,
 	} else {
 	  const xmlChar **ptr = p;
 	  for(i = 0; i < nb_attributes; i++, ptr += 5) {
-	    /*XXX does this get freed later on?*/
-            xmlSetProp(node, xmlStrdup(ptr[0]), getPropertyValue(ptr));
+	      /*XXX does this get freed later on?*/
+	      xmlSetProp(node, xmlStrdup(ptr[0]), (const xmlChar *) getPropertyValue(ptr));
 	  }
 	}
     }
@@ -414,7 +404,7 @@ fprintf(stderr, "Freeing XML node from a branch\n");
 int numDocsCreated = 0;
 
 void
-R_reportDocGC()
+R_reportDocGC(void)
 {
     REprintf("<r:docReport createdInBranch='%d' createdByXMLPackage='%d' freed='%d'/>\n", numDocsCreated, R_numXMLDocs, R_numXMLDocsFreed);
 }
@@ -449,7 +439,7 @@ R_endBranch(RS_XMLParserData *rinfo,
 	    } else {
 		PROTECT(args = NEW_LIST(1));
 		if(tmp->doc == NULL) {
-		    doc = xmlNewDoc("1.0");
+		    doc = xmlNewDoc( (const xmlChar *) "1.0");
 		    initDocRefCounter(doc);
 		    xmlDocSetRootElement(doc, tmp);
 /*		fprintf(stderr, "<r:createDoc addr='%p'/>\n", doc); */
@@ -536,7 +526,7 @@ RS_XML(xmlSAX2StartElementNs)(void * userData,
   PROTECT(tmp = NEW_CHARACTER(1));
   if(URI) {
      SET_STRING_ELT(tmp, 0, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(URI)));
-     SET_NAMES(tmp, ScalarString(CreateCharSexpWithEncoding(encoding,  ( (void*)prefix ? XMLCHAR_TO_CHAR(prefix) : ""))));
+     SET_NAMES(tmp, ScalarString(CreateCharSexpWithEncoding(encoding,  ( (void*)prefix ? prefix : (const xmlChar *) ""))));
   }
   SET_VECTOR_ELT(opArgs, 2, tmp);
   UNPROTECT(1);
@@ -587,15 +577,17 @@ RS_XML(xmlSAX2EndElementNs)(void * ctx,
   PROTECT(args = NEW_LIST(2));
   SET_VECTOR_ELT(args, 0, ScalarString(ENC_COPY_TO_USER_STRING(localname)));
 
-  PROTECT(tmp = ScalarString(ENC_COPY_TO_USER_STRING((XMLCHAR_TO_CHAR(URI)) ? XMLCHAR_TO_CHAR(URI) : "")));
+  PROTECT(tmp = ScalarString(ENC_COPY_TO_USER_STRING( URI ? ((const char *) URI) : "")));
   if(prefix)
       SET_NAMES(tmp, ScalarString(ENC_COPY_TO_USER_STRING(prefix)));
   SET_VECTOR_ELT(args, 1, tmp);
 
-  fun = findEndElementFun(localname, rinfo);
+  fun = findEndElementFun((const char *) localname, rinfo);
   if(fun)  {
       USER_OBJECT_ val = RS_XML(invokeFunction)(fun, args, rinfo->stateObject, rinfo->ctx);
+      PROTECT(val);
       updateState(val, rinfo);
+      UNPROTECT(1);
   } else
       RS_XML(callUserFunction)(HANDLER_FUN_NAME(ctx, "endElement"), NULL, (RS_XMLParserData *)ctx, args);
 
@@ -603,7 +595,7 @@ RS_XML(xmlSAX2EndElementNs)(void * ctx,
 }
 
 
-
+//??? #if 0 this out?
 static void
 RS_XML(xmlSAX2StartDocument)(void *userData)
 {
@@ -801,7 +793,7 @@ do_getEntityHandler(void *userData, const xmlChar *name, const char * r_funName)
 	    ans->name = xmlStrdup(name);
 	    ans->orig = NULL; // xmlStrdup(CHAR_TO_XMLCHAR(value));
 	    ans->content = xmlStrdup(CHAR_TO_XMLCHAR(value));
-	    ans->length = strlen(value);
+	    ans->length = (int) strlen(value);
 #ifndef NO_CHECKED_ENTITY_FIELD
 	    ans->checked = 1;
 #endif
@@ -847,11 +839,8 @@ RS_XML(fatalErrorHandler)(void *ctx, const char *format, ...)
 
   va_end(args);
 
-
-  PROBLEM "Fatal error in the XML event driven parser for %s: %s",
-	  ((RS_XMLParserData*) ctx)->fileName, msg
-  ERROR;
-
+  Rf_error("Fatal error in the XML event driven parser for %s: %s",
+	   ((RS_XMLParserData*) ctx)->fileName, msg);
 }
 
 void
@@ -866,34 +855,27 @@ RS_XML(errorHandler)(void *ctx, const char *format, ...)
 
   va_end(args);
 
-  PROBLEM "Error in the XML event driven parser for %s: %s",
-    ((RS_XMLParserData*) ctx)->fileName, msg
-  ERROR;
-
+  Rf_error("Error in the XML event driven parser for %s: %s",
+	   ((RS_XMLParserData*) ctx)->fileName, msg);
 }
 
 void
 RS_XML(structuredErrorHandler)(void *ctx, xmlErrorPtr err)
 {
    if(err->level == XML_ERR_FATAL) {
-      PROBLEM "Error in the XML event driven parser (line = %d, column = %d): %s",
-         err->line, err->int2 , err->message
-      ERROR;
+       Rf_error("Error in the XML event driven parser (line = %d, column = %d): %s",
+		err->line, err->int2 , err->message);
    } else {
-      PROBLEM "Error in the XML event driven parser (line = %d, column = %d): %s",
-         err->line, err->int2 , err->message
-      WARN;
+       Rf_warning("Error in the XML event driven parser (line = %d, column = %d): %s",
+		  err->line, err->int2 , err->message);
    }
 }
 
 void
 RS_XML(warningHandler)(void *ctx, const char *msg, ...)
 {
-
- PROBLEM "XML event driven parser warning from %s.",
-   ((RS_XMLParserData*) ctx)->fileName
- WARN;
-
+    Rf_warning("XML event driven parser warning from %s.",
+	       ((RS_XMLParserData*) ctx)->fileName);
 }
 
 
@@ -903,16 +885,13 @@ RS_XML_xmlStopParser(SEXP r_context)
 {
     xmlParserCtxtPtr context;
 
-    if(TYPEOF(r_context) != EXTPTRSXP || R_ExternalPtrTag(r_context) != Rf_install(XML_PARSER_CONTEXT_TYPE_NAME)) {
-	PROBLEM "xmlStopParser requires an " XML_PARSER_CONTEXT_TYPE_NAME " object"
-	    ERROR;
-    }
+    if(TYPEOF(r_context) != EXTPTRSXP || R_ExternalPtrTag(r_context) != Rf_install(XML_PARSER_CONTEXT_TYPE_NAME)) 
+	Rf_error("xmlStopParser requires an " XML_PARSER_CONTEXT_TYPE_NAME " object");
+
     context = (xmlParserCtxtPtr) R_ExternalPtrAddr(r_context);
 
-    if(!context) {
-	PROBLEM "NULL value passed to RS_XML_xmlStopParser. Is it a value from a previous session?"
-	    ERROR;
-    }
+    if(!context) 
+	Rf_error("NULL value passed to RS_XML_xmlStopParser. Is it a value from a previous session?");
 
     xmlStopParser(context);
     return(ScalarLogical(1));
