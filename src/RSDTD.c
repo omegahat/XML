@@ -107,18 +107,15 @@ RS_XML(getDTD)(USER_OBJECT_ dtdFileName, USER_OBJECT_ externalId,
      if(LOGICAL_DATA(isURL)[0] == 0) {
 	 struct stat tmp_stat;
 	 if(extId == NULL || stat(extId, &tmp_stat) < 0) {
-             PROBLEM "Can't find file %s", extId
-	     ERROR;
+             Rf_error("Can't find file %s", extId);
 	 }
      }
 
       ctxt = xmlCreateFileParserCtxt(extId);  /* from parser.c xmlSAXParseFile */
  }
 
- if(ctxt == NULL) {
-    PROBLEM "error creating XML parser for `%s'", extId
-    ERROR;
- }
+ if(ctxt == NULL) 
+     Rf_error("error creating XML parser for `%s'", extId);
 
   ctxt->validate = 1;
 
@@ -160,8 +157,7 @@ RS_XML(getDTD)(USER_OBJECT_ dtdFileName, USER_OBJECT_ externalId,
       } else
         return(stop("DTDParseError", "error parsing %s", dtdName));
 
-   PROBLEM "error in DTD %s", extId
-   ERROR;
+      Rf_error("error in DTD %s", extId);
   }
 
   if(localAsText) {
@@ -248,12 +244,20 @@ struct ElementTableScanner {
   int counter;
 };
 
-#ifndef NO_XML_HASH_SCANNER_RETURN
-void *RS_xmlElementTableConverter(void *payload, void *data, xmlChar *name);
-void* RS_xmlEntityTableConverter(void *payload, void *data, xmlChar *name);
+// CRAN
+#if LIBXML_VERSION >= 20908
+# define CONST const
 #else
-void RS_xmlElementTableConverter(void *payload, void *data, xmlChar *name);
-void RS_xmlEntityTableConverter(void *payload, void *data, xmlChar *name);
+# define CONST
+#endif
+
+
+#ifndef NO_XML_HASH_SCANNER_RETURN
+void *RS_xmlElementTableConverter(void *payload, void *data, CONST xmlChar *name);
+void* RS_xmlEntityTableConverter(void *payload, void *data, CONST xmlChar *name);
+#else
+void RS_xmlElementTableConverter(void *payload, void *data, CONST xmlChar *name);
+void RS_xmlEntityTableConverter(void *payload, void *data, CONST xmlChar *name);
 #endif
 
 
@@ -279,7 +283,8 @@ RS_XML(ProcessElements)(xmlElementTablePtr table, xmlParserCtxtPtr ctxt)
   if(n > 0) {
     USER_OBJECT_ dtdNames = NULL_USER_OBJECT;
 
-    PROTECT(dtdEls = NEW_LIST(n));
+    PROTECT_INDEX ipx;
+    PROTECT_WITH_INDEX(dtdEls = NEW_LIST(n), &ipx);    
     PROTECT(dtdNames = NEW_CHARACTER(n));
 #ifdef LIBXML2
  {
@@ -291,6 +296,7 @@ RS_XML(ProcessElements)(xmlElementTablePtr table, xmlParserCtxtPtr ctxt)
    xmlHashScan(table, RS_xmlElementTableConverter, &scanData);
 
    SET_LENGTH(dtdEls, scanData.counter);
+   REPROTECT(dtdEls, ipx);
    SET_LENGTH(dtdNames, scanData.counter);
  }
 #else
@@ -317,7 +323,7 @@ void*
 #else
 void
 #endif
-RS_xmlElementTableConverter(void *payload, void *data, xmlChar *name)
+RS_xmlElementTableConverter(void *payload, void *data, CONST xmlChar *name)
 {
   struct ElementTableScanner *scanData = (struct ElementTableScanner *)data;
 
@@ -350,7 +356,8 @@ RS_XML(ProcessEntities)(xmlEntitiesTablePtr table, xmlParserCtxtPtr ctxt)
   if(n > 0) {
     USER_OBJECT_ dtdNames;
 
-    PROTECT(dtdEls = NEW_LIST(n));
+    PROTECT_INDEX ipx;
+    PROTECT_WITH_INDEX(dtdEls = NEW_LIST(n), &ipx);    
     PROTECT(dtdNames = NEW_CHARACTER(n));
 
 #ifdef LIBXML2
@@ -367,6 +374,7 @@ RS_XML(ProcessEntities)(xmlEntitiesTablePtr table, xmlParserCtxtPtr ctxt)
       */
 
    SET_LENGTH(dtdEls, scanData.counter);
+   REPROTECT(dtdEls, ipx);
    SET_LENGTH(dtdNames, scanData.counter);
 
  }
@@ -391,7 +399,7 @@ void*
 #else
 void
 #endif
-RS_xmlEntityTableConverter(void *payload, void *data, xmlChar *name)
+RS_xmlEntityTableConverter(void *payload, void *data, CONST xmlChar *name)
 {
   struct ElementTableScanner *scanData = (struct ElementTableScanner *)data;
 
