@@ -93,8 +93,7 @@ RS_XML_catalogDump(SEXP fileName)
     FILE *out;
     out = fopen(CHAR(STRING_ELT(fileName, 0)), "w");
     if(!out) {
-	PROBLEM "Can't open file %s for write access", CHAR(STRING_ELT(fileName, 0))
-	    ERROR;
+	Rf_error("Can't open file %s for write access", CHAR(STRING_ELT(fileName, 0)));
     }
 
     xmlCatalogDump(out);
