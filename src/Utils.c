@@ -106,7 +106,7 @@ RS_XML(treeApply)(USER_OBJECT_ rtree, USER_OBJECT_ function, USER_OBJECT_ args)
 
 #include <stdarg.h>
 
-void localXmlParserPrintFileInfo(xmlParserInputPtr input, char *buf);
+void localXmlParserPrintFileInfo(xmlParserInputPtr input, char *buf, int bufLen);
 
 
 #ifndef USE_LINKED_ERROR_HANDLER
@@ -128,7 +128,7 @@ void xmlParserError(void *ctx, const char *msg, ...)
   memset(buf , '\0', sizeof(buf)/sizeof(buf[0]));
 
     /* Insert the file and line number. */
-  localXmlParserPrintFileInfo(ctxt->input, buf);
+  localXmlParserPrintFileInfo(ctxt->input, buf, 3000);
     /* Move to the end of the buffer's contents. */
   tmp = buf + strlen(buf);
 
@@ -136,8 +136,7 @@ void xmlParserError(void *ctx, const char *msg, ...)
     /* Write in the actual message. */
   vsprintf(tmp, msg, args);
   va_end(args);
-  PROBLEM "XML Parsing Error: %s", buf
-  WARN;
+  Rf_warning("XML Parsing Error: %s", buf);
 #endif
 }
 
@@ -149,20 +148,15 @@ void xmlParserError(void *ctx, const char *msg, ...)
 void
 RSXML_setErrorHandlers()
 {
+#if LIBXMLVERSION < 21000    
    xmlDefaultSAXHandlerInit();
    htmlDefaultSAXHandlerInit();
-#if 0
-   docbDefaultSAXHandlerInit();
 #endif
 
    xmlDefaultSAXHandler.error = S_xmlParserError;
 
 #ifdef HAS_HTML_DEFAULT_SAX_HANDLER
    htmlDefaultSAXHandler.error = S_xmlParserError;
-#endif
-
-#if 0
-   docbDefaultSAXHandler.error = S_xmlParserError;
 #endif
 }
 #endif
@@ -172,13 +166,13 @@ RSXML_setErrorHandlers()
     Write the file name and the current line number into the specified
     string.
  */
-void localXmlParserPrintFileInfo(xmlParserInputPtr input, char *buf) {
+void localXmlParserPrintFileInfo(xmlParserInputPtr input, char *buf, int bufLen) {
     if (input != NULL) {
 	if (input->filename)
-	    sprintf(buf, "%s:%d: ", input->filename,
+	    snprintf(buf, bufLen, "%s:%d: ", input->filename,
 		    input->line);
 	else
-	    sprintf(buf, "Entity: line %d: ", input->line);
+	    snprintf(buf, bufLen, "Entity: line %d: ", input->line);
     }
 }
 
@@ -272,16 +266,15 @@ R_makeRefObject(void *ref, const char *className)
    SEXP klass, obj, sref;
 
    if(!ref) {
-      PROBLEM "NULL value for external reference"
-      WARN;
-      return(R_NilValue);
+       Rf_warning("NULL value for external reference");
+       return(R_NilValue);
    }
 
    PROTECT(klass = MAKE_CLASS((char *) className)); /* XXX define MAKE_CLASS with const */
    if(klass == R_NilValue) { /* Is this the right test? */
-      PROBLEM "Cannot find class %s for external reference", className
-      ERROR;
+       Rf_error("Cannot find class %s for external reference", className);
    }
+   
    PROTECT(obj = NEW_OBJECT(klass));
    PROTECT(sref = R_MakeExternalPtr(ref, Rf_install(className), R_NilValue));
 
@@ -302,10 +295,8 @@ R_parseURI(SEXP r_uri)
   SEXP ans, names;
   int i= 0;
   uri = xmlParseURI( CHAR( STRING_ELT( r_uri, 0 )));
-  if(!uri) {
-     PROBLEM "cannot parse URI %s", CHAR( STRING_ELT( r_uri, 0) )
-     ERROR;
-  }
+  if(!uri) 
+      Rf_error("cannot parse URI %s", CHAR( STRING_ELT( r_uri, 0) ));
 
   PROTECT(ans = NEW_LIST(8));
   PROTECT(names = NEW_CHARACTER(8));
