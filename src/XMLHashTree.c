@@ -63,7 +63,8 @@ static const char * const nodeElementNames[] =  {
    uniqueness.  Ignore the next definition in the comment!
 #define SET_NODE_NAME(x, id) sprintf(x, "%d", id)
 */
-#define SET_NODE_NAME(x, id, node) sprintf(x, "%p", node)
+#define NODE_NAME_SIZE 200
+#define SET_NODE_NAME(x, id, node) snprintf(x, NODE_NAME_SIZE, "%p", node)
 
 
 SEXP
@@ -84,7 +85,7 @@ makeHashNode(xmlNodePtr node, char *buf, SEXP env, R_XMLSettings *parserSettings
   PROTECT(ans = NEW_LIST(numEls));
   PROTECT(tmp = mkString(node->name ? XMLCHAR_TO_CHAR(node->name) : ""));
   if(node->ns)
-    SET_NAMES(tmp, mkString(node->ns->prefix));
+      SET_NAMES(tmp, mkString((const char *) node->ns->prefix));
 
   SET_VECTOR_ELT(ans, i++, tmp);
   UNPROTECT(1);
@@ -96,7 +97,7 @@ makeHashNode(xmlNodePtr node, char *buf, SEXP env, R_XMLSettings *parserSettings
   SET_VECTOR_ELT(ans, i++, mkString(buf));
   SET_VECTOR_ELT(ans, i++, env);
   if(hasValue)
-     SET_VECTOR_ELT(ans, i++, mkString(node->content));
+      SET_VECTOR_ELT(ans, i++, mkString((const char *) node->content));
   if(node->nsDef)
     SET_VECTOR_ELT(ans, i++, processNamespaceDefinitions(node->nsDef, node, parserSettings));
 
@@ -161,7 +162,7 @@ collectChildNodes(xmlNodePtr root, unsigned int *ctr, SEXP kids)
 	if(node->type == XML_XINCLUDE_START)
 	    collectChildNodes(node, ctr, kids);
 	else {
-	    char buf[20];
+	    char buf[NODE_NAME_SIZE];
 	    SET_NODE_NAME(buf, *ctr + 1,  node);
 	    SET_STRING_ELT(kids, *ctr, mkChar(buf));
 	    (*ctr)++;
@@ -186,39 +187,40 @@ processNode(xmlNodePtr root, xmlNodePtr parent, unsigned int *ctr, int parentId,
   xmlNodePtr node;
   SEXP rnode, kids;
   unsigned int curId = *ctr;
-  char buf[20];
+  char buf[NODE_NAME_SIZE];
 
   SET_NODE_NAME(id, curId, root);
 
 
   if(root->type != XML_XINCLUDE_START && root->type != XML_XINCLUDE_END) {
-  rnode = makeHashNode(root, id, env, parserSettings);
+      rnode = PROTECT(makeHashNode(root, id, env, parserSettings));
+      defineVar(Rf_install(id), rnode, env);
+      UNPROTECT(1);
 
-  defineVar(Rf_install(id), rnode, env);
-
-  if(root->parent && root->parent->type != XML_DOCUMENT_NODE && root->parent->type != XML_HTML_DOCUMENT_NODE) {
+      if(root->parent && root->parent->type != XML_DOCUMENT_NODE && root->parent->type != XML_HTML_DOCUMENT_NODE) {
       /* Put an entry in the .parents environment for this current id with the single value
          which is the value of the parentId as a string, equivalent of
            assign(curId,  parentId, parentEnv)
        */
-     SET_NODE_NAME(id, curId, root);
-     SET_NODE_NAME(buf, parentId, parent);
-     defineVar(Rf_install(id), mkString(buf), parentEnv);
-   }
+	  SET_NODE_NAME(id, curId, root);
+	  SET_NODE_NAME(buf, parentId, parent);
+	  defineVar(Rf_install(id), PROTECT(mkString(buf)), parentEnv);
+	  UNPROTECT(1);
+      }
 
-  if(root->children) {
+      if(root->children) {
         /* We have to deal with */
-      unsigned int i = 0;
-      countChildNodes(root, &i);
+	  unsigned int i = 0;
+	  countChildNodes(root, &i);
 
-      PROTECT(kids = NEW_CHARACTER(i));
-      i = 0; collectChildNodes(root, &i, kids);
-      defineVar(Rf_install(id), kids, childrenEnv);
-      UNPROTECT(1);
+	  PROTECT(kids = NEW_CHARACTER(i));
+	  i = 0; collectChildNodes(root, &i, kids);
+	  defineVar(Rf_install(id), kids, childrenEnv);
+	  UNPROTECT(1);
+      }
+
+      (*ctr)++;
   }
-
-  (*ctr)++;
- }
 
   if(root->type != XML_XINCLUDE_END) {
         /* Discard XML_INCLUDE_END nodes, but for XML_INCLUDE_START, we need to specify a different parent,
@@ -242,11 +244,11 @@ convertDOMToHashTree(xmlNodePtr root, SEXP env, SEXP childrenEnv, SEXP parentEnv
 //  SEXP rnode;
   unsigned int ctr = 0;
   xmlNodePtr tmp;
-  char id[20];
+  char id[NODE_NAME_SIZE];
   memset(id, '\0', sizeof(id));
 
   for(tmp = root; tmp; tmp = tmp->next)
-    processNode(tmp, (xmlNodePtr) NULL, &ctr, -1, id, env, childrenEnv, parentEnv, parserSettings);
+      processNode(tmp, (xmlNodePtr) NULL, &ctr, -1, id, env, childrenEnv, parentEnv, parserSettings);
 
 
   return(ctr);
