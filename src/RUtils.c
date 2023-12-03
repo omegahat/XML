@@ -285,7 +285,7 @@ R_isInstanceOf(USER_OBJECT_ obj, const char *klass)
 
 
 SEXP
-RS_XML_getStructuredErrorHandler()
+RS_XML_getStructuredErrorHandler(void)
 {
     SEXP ans;
     PROTECT(ans = NEW_LIST(2));
@@ -305,10 +305,8 @@ RS_XML_setStructuredErrorHandler(SEXP els)
     fun = VECTOR_ELT(els, 0);
     sym = VECTOR_ELT(els, 1);
 
-    if(sym != R_NilValue && TYPEOF(sym) != EXTPTRSXP) {
-	PROBLEM "invalid symbol object for XML error handler. Need an external pointer, e.g from getNativeSymbolInfo"
-        ERROR;
-    }
+    if(sym != R_NilValue && TYPEOF(sym) != EXTPTRSXP) 
+	Rf_error("invalid symbol object for XML error handler. Need an external pointer, e.g from getNativeSymbolInfo");
 
     if(fun == R_NilValue)
 	ctx = NULL;
@@ -338,19 +336,21 @@ CreateCharSexpWithEncoding(const xmlChar *encoding, const xmlChar *str)
 #ifdef HAVE_R_CETYPE_T
     cetype_t enc = CE_NATIVE;
 
-    if(encoding == (const xmlChar *) NULL || encoding == (const xmlChar *) "") {
+    // Casts from CRAN.
+    if(encoding == (const xmlChar *) NULL || xmlStrcmp(encoding, (const xmlChar *) "")) {
   	    enc = CE_NATIVE;
-    } else if(xmlStrcmp(encoding, "UTF-8") == 0 || xmlStrcmp(encoding, "utf-8") == 0)
+    } else if(xmlStrcmp(encoding, (xmlChar *) "UTF-8") == 0 || xmlStrcmp(encoding, (xmlChar *) "utf-8") == 0)
 	    enc = CE_UTF8;
-    else if(xmlStrcmp(encoding, "ISO-8859-1") == 0 || xmlStrcmp(encoding, "iso-8859-1") == 0)
+    else if(xmlStrcmp(encoding, (xmlChar *) "ISO-8859-1") == 0 || xmlStrcmp(encoding, (xmlChar *) "iso-8859-1") == 0)
 	    enc = CE_LATIN1;
     else {
-	str = translateChar(mkChar(str));
+	//XXX check xmlChar * cast of translateChar()
+	str = (const xmlChar *)  translateChar(mkChar( (const char *) str));
     }
-// REprintf("encoding: %d\n", enc);
-    ans = mkCharCE(str, enc);
+
+    ans = mkCharCE( (const char *) str, enc);
 #else
-    ans = mkChar(str);
+    ans = mkChar( (const char *) str);
 #endif
     return(ans);
 }
@@ -361,7 +361,7 @@ R_lookString(SEXP rstr)
 {
     const char *str;
     str = CHAR(STRING_ELT(rstr, 0));
-    return(ScalarInteger(strlen(str)));
+    return(ScalarReal( (double) strlen(str)) );
 }
 
 
