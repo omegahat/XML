@@ -12,8 +12,8 @@
 
 #ifdef FROM_GNOME_XML_DIR
 #include <gnome-xml/valid.h>
-#include <gnome-xml/parser.h> 
-#include <gnome-xml/parserInternals.h> 
+#include <gnome-xml/parser.h>
+#include <gnome-xml/parserInternals.h>
 #include <gnome-xml/tree.h>
 #include <gnome-xml/entities.h>
 #else
@@ -22,8 +22,8 @@
 #include <libxml/valid.h>
 #endif
 
-#include <libxml/parser.h> 
-#include <libxml/parserInternals.h> 
+#include <libxml/parser.h>
+#include <libxml/parserInternals.h>
 #include <libxml/tree.h>
 #include <libxml/entities.h>
 #endif

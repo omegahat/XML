@@ -16,10 +16,10 @@
 #endif
 
 #include <sys/stat.h>
-#include <unistd.h>  
+#include <unistd.h>
 
 USER_OBJECT_
-RS_XML(HtmlParseTree)(USER_OBJECT_ fileName, USER_OBJECT_ converterFunctions, 
+RS_XML(HtmlParseTree)(USER_OBJECT_ fileName, USER_OBJECT_ converterFunctions,
                        USER_OBJECT_ skipBlankLines, USER_OBJECT_ replaceEntities,
                        USER_OBJECT_ asText, USER_OBJECT_ trim, USER_OBJECT_ isURL)
 {
@@ -38,7 +38,7 @@ RS_XML(HtmlParseTree)(USER_OBJECT_ fileName, USER_OBJECT_ converterFunctions,
   parserSettings.trim = LOGICAL_DATA(trim)[0];
 
   if(asTextBuffer == 0) {
-    struct stat tmp_stat;  
+    struct stat tmp_stat;
 #ifdef USE_R
     name = CHAR(STRING_ELT(fileName, 0));
 #else
@@ -57,7 +57,7 @@ RS_XML(HtmlParseTree)(USER_OBJECT_ fileName, USER_OBJECT_ converterFunctions,
 #if 0
     /* If one wants entities expanded directly and to appear as text.  */
   if(LOGICAL_DATA(replaceEntities)[0])
-    xmlSubstituteEntitiesDefault(1);   
+    xmlSubstituteEntitiesDefault(1);
 #endif
 
   if(asTextBuffer) {
@@ -90,12 +90,12 @@ RS_XML(HtmlParseTree)(USER_OBJECT_ fileName, USER_OBJECT_ converterFunctions,
      /* Set the class for the document. */
   className = NEW_CHARACTER(1);
   PROTECT(className);
-    SET_STRING_ELT(className, 0, mkChar("HTMLDocument"));   
+    SET_STRING_ELT(className, 0, mkChar("HTMLDocument"));
     SET_CLASS(rdoc, className);
   UNPROTECT(1);
 
 
- UNPROTECT(1); 
+ UNPROTECT(1);
  return(rdoc);
 }
 
@@ -129,7 +129,7 @@ RS_XML_dumpHTMLDoc(USER_OBJECT_ r_node, USER_OBJECT_ format, USER_OBJECT_ r_enco
     }
 #endif
 
-   
+
     if(GET_LENGTH(r_encoding))
 	encoding = CHAR_DEREF(STRING_ELT(r_encoding, 0));
 

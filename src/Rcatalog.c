@@ -13,12 +13,12 @@ R_xmlCatalogResolve(USER_OBJECT_ r_id, USER_OBJECT_ type, USER_OBJECT_ debug)
     int n, i;
 
     debugLevel = xmlCatalogSetDebug(LOGICAL(debug)[0]);
-    
+
     n = GET_LENGTH(r_id);
     PROTECT(r_ans = NEW_CHARACTER(n));
 
     for(i = 0; i < n; i++) {
-       id = CHAR_TO_XMLCHAR(CHAR_DEREF(STRING_ELT(r_id, i)));	    
+       id = CHAR_TO_XMLCHAR(CHAR_DEREF(STRING_ELT(r_id, i)));
 
        switch(INTEGER(type)[i]) {
        case 1:
@@ -70,7 +70,7 @@ RS_XML_clearCatalog(void)
     return(ScalarLogical(1));
 }
 
-SEXP 
+SEXP
 RS_XML_catalogAdd(SEXP orig, SEXP replace, SEXP type)
 {
     int i, n;
@@ -79,8 +79,8 @@ RS_XML_catalogAdd(SEXP orig, SEXP replace, SEXP type)
     n =  LENGTH(orig);
     ans = NEW_LOGICAL(n);
     for(i = 0; i < n ; i++) {
-	LOGICAL(ans)[i] = (xmlCatalogAdd(CHAR_TO_XMLCHAR(CHAR(STRING_ELT(type, i))), 
-                                         CHAR_TO_XMLCHAR(CHAR(STRING_ELT(orig, i))), 
+	LOGICAL(ans)[i] = (xmlCatalogAdd(CHAR_TO_XMLCHAR(CHAR(STRING_ELT(type, i))),
+                                         CHAR_TO_XMLCHAR(CHAR(STRING_ELT(orig, i))),
 					 CHAR_TO_XMLCHAR(CHAR(STRING_ELT(replace, i)))) == 0);
     }
 

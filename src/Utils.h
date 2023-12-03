@@ -50,31 +50,31 @@ void RSXML_setErrorHandlers(void);
 
 
 USER_OBJECT_ RS_XML(RecursiveApply)(USER_OBJECT_ top, USER_OBJECT_ func, USER_OBJECT_ klasses);
-USER_OBJECT_ RS_XML(HtmlParseTree)(USER_OBJECT_ fileName, USER_OBJECT_ converterFunctions, 
+USER_OBJECT_ RS_XML(HtmlParseTree)(USER_OBJECT_ fileName, USER_OBJECT_ converterFunctions,
 				   USER_OBJECT_ skipBlankLines, USER_OBJECT_ replaceEntities,
 				   USER_OBJECT_ asText, USER_OBJECT_ trim, USER_OBJECT_ isURL);
 
-USER_OBJECT_ RS_XML(getDTD)(USER_OBJECT_ dtdFileName, USER_OBJECT_ externalId, 
+USER_OBJECT_ RS_XML(getDTD)(USER_OBJECT_ dtdFileName, USER_OBJECT_ externalId,
 			    USER_OBJECT_ asText, USER_OBJECT_ isURL, USER_OBJECT_ errorFun);
 USER_OBJECT_ RS_XML(libxmlVersion)(void);
 
 
-USER_OBJECT_ 
-RS_XML(Parse)(USER_OBJECT_ fileName, USER_OBJECT_ handlers, USER_OBJECT_ endElementHandlers, USER_OBJECT_ addContext, 
+USER_OBJECT_
+RS_XML(Parse)(USER_OBJECT_ fileName, USER_OBJECT_ handlers, USER_OBJECT_ endElementHandlers, USER_OBJECT_ addContext,
                USER_OBJECT_ ignoreBlanks,  USER_OBJECT_ useTagName, USER_OBJECT_ asText,
                  USER_OBJECT_ trim, USER_OBJECT_ useExpat, USER_OBJECT_ stateObject,
                   USER_OBJECT_ replaceEntities, USER_OBJECT_ validate, USER_OBJECT_ saxVersion,
     	           USER_OBJECT_ branches, USER_OBJECT_ useDotNames, USER_OBJECT_ errorFun,
 	            USER_OBJECT_ manageMemory, USER_OBJECT_ r_encoding);
 /*
-USER_OBJECT_ RS_XML(Parse)(USER_OBJECT_ fileName, USER_OBJECT_ handlers, USER_OBJECT_ addContext, 
+USER_OBJECT_ RS_XML(Parse)(USER_OBJECT_ fileName, USER_OBJECT_ handlers, USER_OBJECT_ addContext,
 			   USER_OBJECT_ ignoreBlanks,  USER_OBJECT_ useTagName, USER_OBJECT_ asText,
 			   USER_OBJECT_ trim, USER_OBJECT_ useExpat, USER_OBJECT_ stateObject,
 			   USER_OBJECT_ replaceEntities, USER_OBJECT_ validate);
 */
 
 USER_OBJECT_
-RS_XML(ParseTree)(USER_OBJECT_ fileName, USER_OBJECT_ converterFunctions, 
+RS_XML(ParseTree)(USER_OBJECT_ fileName, USER_OBJECT_ converterFunctions,
 		  USER_OBJECT_ skipBlankLines, USER_OBJECT_ replaceEntities,
 		  USER_OBJECT_ asText, USER_OBJECT_ trim, USER_OBJECT_ validate,
 		  USER_OBJECT_ getDTD, USER_OBJECT_ isURL,
@@ -94,7 +94,7 @@ USER_OBJECT_ R_newXMLPINode(USER_OBJECT_ sdoc, USER_OBJECT_ name, USER_OBJECT_ c
 USER_OBJECT_ R_xmlNewNs(USER_OBJECT_ sdoc, USER_OBJECT_ shref, USER_OBJECT_ sprefix);
 USER_OBJECT_ R_xmlSetNs(USER_OBJECT_ s_node, USER_OBJECT_ s_ns, USER_OBJECT_ append);
 USER_OBJECT_ R_insertXMLNode(USER_OBJECT_ node, USER_OBJECT_ parent, USER_OBJECT_ r_at, USER_OBJECT_ shallow) ;
-USER_OBJECT_ R_saveXMLDOM(USER_OBJECT_ sdoc, USER_OBJECT_ sfileName, USER_OBJECT_ compression, USER_OBJECT_ sindent, 
+USER_OBJECT_ R_saveXMLDOM(USER_OBJECT_ sdoc, USER_OBJECT_ sfileName, USER_OBJECT_ compression, USER_OBJECT_ sindent,
 			  USER_OBJECT_ prefix, USER_OBJECT_ r_encoding);
 
 
@@ -230,8 +230,8 @@ SEXP CreateCharSexpWithEncoding(const xmlChar *encoding, const xmlChar *str);
 #ifdef R_USE_XML_ENCODING
 #undef COPY_TO_USER_STRING
 //#warning "Redefining COPY_TO_USER_STRING to use encoding from XML parser"
-#define COPY_TO_USER_STRING(x)  mkChar(XMLCHAR_TO_CONST_CHAR (x)) 
-#define ENC_COPY_TO_USER_STRING(x)  CreateCharSexpWithEncoding(encoding, CHAR_TO_XMLCHAR (x)) 
+#define COPY_TO_USER_STRING(x)  mkChar(XMLCHAR_TO_CONST_CHAR (x))
+#define ENC_COPY_TO_USER_STRING(x)  CreateCharSexpWithEncoding(encoding, CHAR_TO_XMLCHAR (x))
 #endif
 
 

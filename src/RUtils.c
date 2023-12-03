@@ -17,7 +17,7 @@ R_makeXMLContextRef(xmlParserCtxtPtr ctx)
   USER_OBJECT_ ans;
   PROTECT(ans = R_MakeExternalPtr(ctx, Rf_install(XML_PARSER_CONTEXT_TYPE_NAME), R_NilValue));
   SET_CLASS(ans, mkString(XML_PARSER_CONTEXT_TYPE_NAME));
-  UNPROTECT(1); 
+  UNPROTECT(1);
   return(ans);
 }
 
@@ -42,7 +42,7 @@ RS_XML(invokeFunction)(USER_OBJECT_ fun, USER_OBJECT_ opArgs, USER_OBJECT_ data,
 
   if(n  > 0) {
 #if 1
-    PROTECT(call = allocVector(LANGSXP, n));      
+    PROTECT(call = allocVector(LANGSXP, n));
     c = call;
     SETCAR(call, fun); c = CDR(c);
 
@@ -60,7 +60,7 @@ RS_XML(invokeFunction)(USER_OBJECT_ fun, USER_OBJECT_ opArgs, USER_OBJECT_ data,
     if(data) {
        SETCAR(c, data);
        SET_TAG(c, Rf_install(".state"));
-    }    
+    }
 #else
     PROTECT(c = call = allocList(n));
     if(addContext)  {
@@ -85,7 +85,7 @@ RS_XML(invokeFunction)(USER_OBJECT_ fun, USER_OBJECT_ opArgs, USER_OBJECT_ data,
      SETCAR(call, fun);
      if(addContext)
 	 SETCAR(CDR(call), R_makeXMLContextRef(context));
-  }  
+  }
 
 
   ans = eval(call, R_GlobalEnv);
@@ -118,7 +118,7 @@ R_InternalRecursiveApply(USER_OBJECT_ top, USER_OBJECT_ func, USER_OBJECT_ klass
     numChildren = GET_LENGTH(kids);
         /* Do the children first. */
     PROTECT(args = NEW_LIST(1));
-    PROTECT(tmp = NEW_LIST(numChildren));  
+    PROTECT(tmp = NEW_LIST(numChildren));
     for(i = 0; i < numChildren; i++) {
       SET_VECTOR_ELT(tmp, i, R_InternalRecursiveApply(VECTOR_ELT(kids, i), func, klasses));
     }
@@ -139,7 +139,7 @@ RS_XML_SubstituteEntitiesDefault(USER_OBJECT_ replaceEntities)
 {
     int value;
     USER_OBJECT_ ans;
-    value = xmlSubstituteEntitiesDefault(LOGICAL_DATA(replaceEntities)[0]);   
+    value = xmlSubstituteEntitiesDefault(LOGICAL_DATA(replaceEntities)[0]);
     ans = NEW_LOGICAL(1);
     LOGICAL_DATA(ans)[0] = value;
     return(ans);
@@ -301,7 +301,7 @@ RS_XML_setStructuredErrorHandler(SEXP els)
     void *ctx;
     xmlStructuredErrorFunc handler;
     SEXP fun, sym;
-    
+
     fun = VECTOR_ELT(els, 0);
     sym = VECTOR_ELT(els, 1);
 

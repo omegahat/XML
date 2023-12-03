@@ -38,14 +38,14 @@ void RS_XML(startDocumentHandler)(void *ctx);
 void RS_XML(endDocumentHandler)(void *ctx);
 void RS_XML(cdataBlockHandler)(void *ctx, const xmlChar *value, int len);
 void RS_XML(piHandler)(void *ctx, const xmlChar *target, const xmlChar *data);
-void RS_XML(entityDeclaration)(void *ctx, const xmlChar *name, int type, const xmlChar *publicId, 
+void RS_XML(entityDeclaration)(void *ctx, const xmlChar *name, int type, const xmlChar *publicId,
                                 const xmlChar *systemId, xmlChar *content);
 xmlEntityPtr RS_XML(getEntityHandler)(void *userData, const xmlChar *name);
 xmlEntityPtr RS_XML(getParameterEntityHandler)(void *userData, const xmlChar *name);
 
 int RS_XML(isStandAloneHandler)(void *ctx);
 void RS_XML(warningHandler)(void *ctx, const char *msg, ...);
-void RS_XML(errorHandler)(void *ctx, const char *format, ...); 
+void RS_XML(errorHandler)(void *ctx, const char *format, ...);
 void RS_XML(fatalErrorHandler)(void *ctx, const char *msg, ...);
 void RS_XML(structuredErrorHandler)(void *ctx, xmlErrorPtr err);
 
@@ -65,7 +65,7 @@ createSAX2AttributesList(const xmlChar **attributes, int nb_attributes, int nb_d
   USER_OBJECT_ attr_values;
   USER_OBJECT_ nsURI, nsNames;
 
- 
+
   if(nb_attributes < 1)
     return(NULL_USER_OBJECT);
 
@@ -149,7 +149,7 @@ RS_XML_readConnectionInput(void *context, char *buffer, int len)
 #ifndef LIBXML2_NEW_BUFFER
   ctx = (xmlParserCtxtPtr) context;
   fun = ctx->_private;
-#else  
+#else
   RFunCtxData *user = (RFunCtxData *) context;
   ctx = user->ctx;
   fun = user->fun;
@@ -158,7 +158,7 @@ RS_XML_readConnectionInput(void *context, char *buffer, int len)
   if(len == -1)
      return(0);
 
-  /* Setup the expression to call the user-supplied R function or call readLines(con, 1) 
+  /* Setup the expression to call the user-supplied R function or call readLines(con, 1)
      if they gave us a connection. */
   if(isFunction(fun)) {
      /* Invoke the user-provided function to get the next line. */
@@ -168,7 +168,7 @@ RS_XML_readConnectionInput(void *context, char *buffer, int len)
     INTEGER_DATA(arg)[0] = len;
     SETCAR(CDR(e), arg);
     UNPROTECT(1);
-  } else 
+  } else
       e = fun;
 
   n = count = 0;
@@ -207,8 +207,8 @@ RS_XML_readConnectionInput(void *context, char *buffer, int len)
          count += n ;
       }
    } else {
-           /* Notice that we may have actually added something to the 
-              buffer, specifically a sequence of empty lines \n, 
+           /* Notice that we may have actually added something to the
+              buffer, specifically a sequence of empty lines \n,
               and these will be discarded and not passed to the XML parser
               but these are extraneous anyway. Are they?
             */
@@ -268,7 +268,7 @@ RS_XML(libXMLEventParse)(const char *fileName, RS_XMLParserData *parserData, RS_
 			 int saxVersion, USER_OBJECT_ r_encoding)
 {
  xmlSAXHandlerPtr xmlParserHandler;
- xmlParserCtxtPtr ctx; 
+ xmlParserCtxtPtr ctx;
  int status;
 
   switch(asText) {
@@ -305,7 +305,7 @@ RS_XML(libXMLEventParse)(const char *fileName, RS_XMLParserData *parserData, RS_
   ctx->userData = parserData;
   ctx->sax = xmlParserHandler;
 
-  if(Rf_length(r_encoding) && STRING_ELT(r_encoding, 0) != R_NaString) { 
+  if(Rf_length(r_encoding) && STRING_ELT(r_encoding, 0) != R_NaString) {
 //      Rf_PrintValue(r_encoding);
       ctx->encoding = xmlStrdup(CHAR(STRING_ELT(r_encoding, 0)));
   }
@@ -335,8 +335,8 @@ R_isBranch(const xmlChar *localname, RS_XMLParserData *rinfo)
             }
         }
     }
-     
-    return(-1);   
+
+    return(-1);
 }
 
 char *
@@ -357,15 +357,15 @@ getPropertyValue(const xmlChar **ptr)
 }
 
 void
-R_processBranch(RS_XMLParserData * rinfo, 
-                int branchIndex, 
-                const xmlChar * localname, 
-                const xmlChar * prefix, 
-                const xmlChar * URI, 
-                int nb_namespaces, 
-                const xmlChar ** namespaces, 
-                int nb_attributes, 
-                int nb_defaulted, 
+R_processBranch(RS_XMLParserData * rinfo,
+                int branchIndex,
+                const xmlChar * localname,
+                const xmlChar * prefix,
+                const xmlChar * URI,
+                int nb_namespaces,
+                const xmlChar ** namespaces,
+                int nb_attributes,
+                int nb_defaulted,
                 const xmlChar ** attributes,
 		Rboolean sax1)
 {
@@ -376,7 +376,7 @@ R_processBranch(RS_XMLParserData * rinfo,
         const xmlChar ** p = attributes;
         int i;
 	if(sax1) {
-	  for(i = 0; *p ; i += 2, p += 2) 
+	  for(i = 0; *p ; i += 2, p += 2)
             xmlSetProp(node, p[0], p[1]); /*??? Do we need to xmlStrdup() this. */
 	} else {
 	  const xmlChar **ptr = p;
@@ -424,8 +424,8 @@ typedef void (*BranchRoutine)(xmlNodePtr, xmlParserCtxtPtr);
 
 void
 R_endBranch(RS_XMLParserData *rinfo,
-            const xmlChar * localname, 
-            const xmlChar * prefix, 
+            const xmlChar * localname,
+            const xmlChar * prefix,
             const xmlChar * URI)
 {
     if(rinfo->current) {
@@ -480,13 +480,13 @@ R_endBranch(RS_XMLParserData *rinfo,
 }
 
 
-static int 
+static int
 isBranchFunction(SEXP obj)
 {
     int i, n;
     SEXP classes;
 
-    if(TYPEOF(obj) != CLOSXP) 
+    if(TYPEOF(obj) != CLOSXP)
 	return(0);
 
     classes = GET_CLASS(obj);
@@ -494,20 +494,20 @@ isBranchFunction(SEXP obj)
     for(i = 0; i < n; i++)
 	if(strcmp(CHAR(STRING_ELT(classes, i)), "SAXBranchFunction") == 0)
 	    return(1);
-    
+
     return(0);
 }
 
 
-static void	
-RS_XML(xmlSAX2StartElementNs)(void * userData, 
-			      const xmlChar * localname, 
-			      const xmlChar * prefix, 
-			      const xmlChar * URI, 
-			      int nb_namespaces, 
-			      const xmlChar ** namespaces, 
-			      int nb_attributes, 
-			      int nb_defaulted, 
+static void
+RS_XML(xmlSAX2StartElementNs)(void * userData,
+			      const xmlChar * localname,
+			      const xmlChar * prefix,
+			      const xmlChar * URI,
+			      int nb_namespaces,
+			      const xmlChar ** namespaces,
+			      int nb_attributes,
+			      int nb_defaulted,
 			      const xmlChar ** attributes)
 {
   int i, n;
@@ -527,7 +527,7 @@ RS_XML(xmlSAX2StartElementNs)(void * userData,
 
   PROTECT(opArgs = NEW_LIST(4));
   SET_VECTOR_ELT(opArgs, 0, NEW_CHARACTER(1));
-  SET_STRING_ELT(VECTOR_ELT(opArgs, 0), 0, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(localname))); 
+  SET_STRING_ELT(VECTOR_ELT(opArgs, 0), 0, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(localname)));
 
       /* Now convert the attributes list. */
   SET_VECTOR_ELT(opArgs, 1, createSAX2AttributesList(attributes, nb_attributes, nb_defaulted, encoding));
@@ -535,8 +535,8 @@ RS_XML(xmlSAX2StartElementNs)(void * userData,
 
   PROTECT(tmp = NEW_CHARACTER(1));
   if(URI) {
-     SET_STRING_ELT(tmp, 0, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(URI))); 
-     SET_NAMES(tmp, ScalarString(CreateCharSexpWithEncoding(encoding,  ( (void*)prefix ? XMLCHAR_TO_CHAR(prefix) : "")))); 
+     SET_STRING_ELT(tmp, 0, ENC_COPY_TO_USER_STRING(XMLCHAR_TO_CHAR(URI)));
+     SET_NAMES(tmp, ScalarString(CreateCharSexpWithEncoding(encoding,  ( (void*)prefix ? XMLCHAR_TO_CHAR(prefix) : ""))));
   }
   SET_VECTOR_ELT(opArgs, 2, tmp);
   UNPROTECT(1);
@@ -556,7 +556,7 @@ RS_XML(xmlSAX2StartElementNs)(void * userData,
 
   ans = RS_XML(callUserFunction)(HANDLER_FUN_NAME(rinfo, "startElement"), XMLCHAR_TO_CHAR(localname), rinfo, opArgs);
 
-  /* If the handler function returned us a SAXBranchFunction function, then we need to build the node's sub-tree and 
+  /* If the handler function returned us a SAXBranchFunction function, then we need to build the node's sub-tree and
      then invoke the function with that node as the main argument. (It may also get the context/parser.) */
   if(isBranchFunction(ans)) {
          /* Hold on to the function to avoid it being garbage collected. */
@@ -570,9 +570,9 @@ RS_XML(xmlSAX2StartElementNs)(void * userData,
 
 
 static void
-RS_XML(xmlSAX2EndElementNs)(void * ctx, 
-			    const xmlChar * localname, 
-			    const xmlChar * prefix, 
+RS_XML(xmlSAX2EndElementNs)(void * ctx,
+			    const xmlChar * localname,
+			    const xmlChar * prefix,
 			    const xmlChar * URI)
 {
   USER_OBJECT_ args, tmp, fun;
@@ -587,7 +587,7 @@ RS_XML(xmlSAX2EndElementNs)(void * ctx,
   PROTECT(args = NEW_LIST(2));
   SET_VECTOR_ELT(args, 0, ScalarString(ENC_COPY_TO_USER_STRING(localname)));
 
-  PROTECT(tmp = ScalarString(ENC_COPY_TO_USER_STRING((XMLCHAR_TO_CHAR(URI)) ? XMLCHAR_TO_CHAR(URI) : ""))); 
+  PROTECT(tmp = ScalarString(ENC_COPY_TO_USER_STRING((XMLCHAR_TO_CHAR(URI)) ? XMLCHAR_TO_CHAR(URI) : "")));
   if(prefix)
       SET_NAMES(tmp, ScalarString(ENC_COPY_TO_USER_STRING(prefix)));
   SET_VECTOR_ELT(args, 1, tmp);
@@ -661,7 +661,7 @@ RS_XML(initXMLParserHandler)(xmlSAXHandlerPtr xmlParserHandler, int saxVersion)
   xmlParserHandler->elementDecl = NULL;
   xmlParserHandler->notationDecl = NULL;
   xmlParserHandler->unparsedEntityDecl = NULL;
-	       
+
   xmlParserHandler->setDocumentLocator = NULL;
   xmlParserHandler->reference = NULL;
   xmlParserHandler->ignorableWhitespace = NULL;
@@ -688,7 +688,7 @@ RS_XML(commentElementHandler)(void *ctx, const xmlChar *val)
   RS_XML(commentHandler)(ctx, (const XML_Char*)val);
 }
 
-void 
+void
 RS_XML(charactersHandler)(void *user_data, const xmlChar *ch, int len)
 {
   RS_XML(textHandler)(user_data, (const XML_Char*)ch, len);
@@ -757,8 +757,8 @@ RS_XML(entityDeclaration)(void *ctx,
     DECL_ENCODING_FROM_EVENT_PARSER(parserData)
 
     /* check if there is a function to call before making the list of 5 elements. */
-    fun = RS_XML(findFunction)(HANDLER_FUN_NAME(parserData, "entityDeclaration"), parserData->methods); 
-    if(fun == NULL || fun == NULL_USER_OBJECT) 
+    fun = RS_XML(findFunction)(HANDLER_FUN_NAME(parserData, "entityDeclaration"), parserData->methods);
+    if(fun == NULL || fun == NULL_USER_OBJECT)
 	return;
 
     PROTECT(fun);
@@ -772,7 +772,7 @@ RS_XML(entityDeclaration)(void *ctx,
     SET_VECTOR_ELT(opArgs, 3, RString(systemId));
     SET_VECTOR_ELT(opArgs, 4, RString(publicId));
 
-    (void) RS_XML(invokeFunction)(fun, opArgs, parserData->stateObject, parserData->ctx);    
+    (void) RS_XML(invokeFunction)(fun, opArgs, parserData->stateObject, parserData->ctx);
     UNPROTECT(2);
 }
 
@@ -788,7 +788,7 @@ do_getEntityHandler(void *userData, const xmlChar *name, const char * r_funName)
     PROTECT(opArgs = NEW_LIST(1)) ;
     SET_VECTOR_ELT(opArgs, 0, ScalarString(ENC_COPY_TO_USER_STRING(name))); /*XXX should we encode this? Done now! */
     r_ans = RS_XML(callUserFunction)(r_funName, NULL, (RS_XMLParserData *) userData, opArgs);
-    
+
     PROTECT(r_ans) ;
     if(r_ans != NULL_USER_OBJECT && GET_LENGTH(r_ans) > 0) {
 	if(TYPEOF(r_ans) == STRSXP) {
@@ -800,7 +800,7 @@ do_getEntityHandler(void *userData, const xmlChar *name, const char * r_funName)
 	    ans->etype = XML_INTERNAL_GENERAL_ENTITY;
 	    ans->name = xmlStrdup(name);
 	    ans->orig = NULL; // xmlStrdup(CHAR_TO_XMLCHAR(value));
-	    ans->content = xmlStrdup(CHAR_TO_XMLCHAR(value));	    
+	    ans->content = xmlStrdup(CHAR_TO_XMLCHAR(value));
 	    ans->length = strlen(value);
 #ifndef NO_CHECKED_ENTITY_FIELD
 	    ans->checked = 1;
@@ -872,7 +872,7 @@ RS_XML(errorHandler)(void *ctx, const char *format, ...)
 
 }
 
-void 
+void
 RS_XML(structuredErrorHandler)(void *ctx, xmlErrorPtr err)
 {
    if(err->level == XML_ERR_FATAL) {
@@ -898,7 +898,7 @@ RS_XML(warningHandler)(void *ctx, const char *msg, ...)
 
 
 
-SEXP 
+SEXP
 RS_XML_xmlStopParser(SEXP r_context)
 {
     xmlParserCtxtPtr context;
@@ -913,7 +913,7 @@ RS_XML_xmlStopParser(SEXP r_context)
 	PROBLEM "NULL value passed to RS_XML_xmlStopParser. Is it a value from a previous session?"
 	    ERROR;
     }
-    
+
     xmlStopParser(context);
     return(ScalarLogical(1));
 }

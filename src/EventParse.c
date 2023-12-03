@@ -23,7 +23,7 @@ extern void R_ReleaseObject(SEXP);
 
 /*
   Read the specified file as an XML document and invoke functions/methods in
-  the handlers closure object when each node in the tree is encountered by 
+  the handlers closure object when each node in the tree is encountered by
   the parser. These events are startElement,endElement, character data, etc.
   The remaining arguments control how the calls to the user level functions
   are made. The first (addContext) indicates whether information about the position
@@ -50,8 +50,8 @@ IsConnection(USER_OBJECT_ obj)
 }
 
 
-static USER_OBJECT_ 
-RS_XML(createAttributesList)(const char **atts, const xmlChar *encoding) 
+static USER_OBJECT_
+RS_XML(createAttributesList)(const char **atts, const xmlChar *encoding)
 {
   int n=0, i;
   const char **ptr = atts;
@@ -64,7 +64,7 @@ RS_XML(createAttributesList)(const char **atts, const xmlChar *encoding)
     ptr += 2;
   }
 
- 
+
   if(n < 1)
     return(NULL_USER_OBJECT);
 
@@ -82,9 +82,9 @@ RS_XML(createAttributesList)(const char **atts, const xmlChar *encoding)
 }
 
 
-USER_OBJECT_ 
+USER_OBJECT_
 RS_XML(Parse)(USER_OBJECT_ fileName, USER_OBJECT_ handlers, USER_OBJECT_ endElementHandlers,
-               USER_OBJECT_ addContext, 
+               USER_OBJECT_ addContext,
                 USER_OBJECT_ ignoreBlanks,  USER_OBJECT_ useTagName, USER_OBJECT_ asText,
                  USER_OBJECT_ trim, USER_OBJECT_ useExpat, USER_OBJECT_ stateObject,
                   USER_OBJECT_ replaceEntities, USER_OBJECT_ validate, USER_OBJECT_ saxVersion,
@@ -104,7 +104,7 @@ RS_XML(Parse)(USER_OBJECT_ fileName, USER_OBJECT_ handlers, USER_OBJECT_ endElem
 
   if(IsConnection(fileName) || isFunction(fileName))
      asTextBuffer = RS_XML_CONNECTION;
-  else 
+  else
      asTextBuffer = LOGICAL_DATA(asText)[0] ? RS_XML_TEXT : RS_XML_FILENAME;
 
 #ifdef LIBEXPAT
@@ -136,16 +136,16 @@ RS_XML(Parse)(USER_OBJECT_ fileName, USER_OBJECT_ handlers, USER_OBJECT_ endElem
   parserData = RS_XML(createParserData)(handlers, manageMemory);
   parserData->endElementHandlers = endElementHandlers;
   parserData->branches         = branches;
-  parserData->fileName         = name; 
-  parserData->callByTagName    = LOGICAL_DATA(useTagName)[0]; 
-  parserData->addContextInfo   = LOGICAL_DATA(addContext)[0]; 
-  parserData->trim             = LOGICAL_DATA(trim)[0]; 
-  parserData->ignoreBlankLines = LOGICAL_DATA(ignoreBlanks)[0]; 
+  parserData->fileName         = name;
+  parserData->callByTagName    = LOGICAL_DATA(useTagName)[0];
+  parserData->addContextInfo   = LOGICAL_DATA(addContext)[0];
+  parserData->trim             = LOGICAL_DATA(trim)[0];
+  parserData->ignoreBlankLines = LOGICAL_DATA(ignoreBlanks)[0];
   parserData->stateObject = (stateObject == NULL_USER_OBJECT ? NULL : stateObject);
   parserData->useDotNames = LOGICAL_DATA(useDotNames)[0];
   parserData->dynamicBranchFunction = NULL;
 
-  /*Is this necessary? Shouldn't it already be protected? Or is there a chance that we may 
+  /*Is this necessary? Shouldn't it already be protected? Or is there a chance that we may
     be doing this asynchronously in a pull approach. */
   if(parserData->stateObject && parserData->stateObject != NULL_USER_OBJECT)
      R_PreserveObject(parserData->stateObject);
@@ -156,16 +156,16 @@ RS_XML(Parse)(USER_OBJECT_ fileName, USER_OBJECT_ handlers, USER_OBJECT_ endElem
       if(asTextBuffer == 0) {
      	RS_XML(parseWithParserData)(file, parserData);
       } else {
-     	parserData->fileName = "<buffer>"; 
+     	parserData->fileName = "<buffer>";
      	RS_XML(parseBufferWithParserData)(name, parserData);
      	free(name); /* match the strdup() above */
       }
-  } else 
+  } else
 #endif /* ifdef LIBEXPAT */
 
 #if 0
     /* If one wants entities expanded directly and to appear as text.  */
-   xmlSubstituteEntitiesDefault(LOGICAL_DATA(replaceEntities)[0]);   
+   xmlSubstituteEntitiesDefault(LOGICAL_DATA(replaceEntities)[0]);
 #endif
 
   status = RS_XML(libXMLEventParse)(input, parserData, asTextBuffer, INTEGER_DATA(saxVersion)[0], r_encoding);
@@ -178,7 +178,7 @@ RS_XML(Parse)(USER_OBJECT_ fileName, USER_OBJECT_ handlers, USER_OBJECT_ endElem
   if(parserData->stateObject && parserData->stateObject != NULL_USER_OBJECT)
      R_ReleaseObject(parserData->stateObject);
 
-  if(status != 0) 
+  if(status != 0)
      RSXML_structuredStop(errorFun, NULL);
 
 
@@ -190,13 +190,13 @@ RS_XML(Parse)(USER_OBJECT_ fileName, USER_OBJECT_ handlers, USER_OBJECT_ endElem
 
 
 /**
-Handler that receives declarations of unparsed entities. These are entity declarations that have a notation (NDATA) field: 
+Handler that receives declarations of unparsed entities. These are entity declarations that have a notation (NDATA) field:
 
                   <!ENTITY logo SYSTEM "images/logo.gif" NDATA gif>
 */
-void 
-RS_XML(entityDeclarationHandler)(void *userData, const XML_Char *entityName, 
-                                 const XML_Char *base, const XML_Char *systemId, 
+void
+RS_XML(entityDeclarationHandler)(void *userData, const XML_Char *entityName,
+                                 const XML_Char *base, const XML_Char *systemId,
                                    const XML_Char *publicId, const XML_Char *notationName)
 {
  RS_XMLParserData *parserData = (RS_XMLParserData*)userData;
@@ -215,15 +215,15 @@ RS_XML(entityDeclarationHandler)(void *userData, const XML_Char *entityName,
   opArgs = NEW_LIST(num);
   for(i =0;i < num; i++) {
    SET_VECTOR_ELT(opArgs, i,  NEW_CHARACTER(1));
-   SET_STRING_ELT(VECTOR_ELT(opArgs, i), 0, ENC_COPY_TO_USER_STRING(xml_args[i] ? xml_args[i] :  "")); 
+   SET_STRING_ELT(VECTOR_ELT(opArgs, i), 0, ENC_COPY_TO_USER_STRING(xml_args[i] ? xml_args[i] :  ""));
   }
 
-  RS_XML(callUserFunction)(HANDLER_FUN_NAME(parserData, "entityDeclaration"), 
+  RS_XML(callUserFunction)(HANDLER_FUN_NAME(parserData, "entityDeclaration"),
                            (const char*)NULL, parserData, opArgs);
 }
 
 
-void 
+void
 RS_XML(startElement)(void *userData, const char *name, const char **atts)
 {
   USER_OBJECT_ opArgs;
@@ -238,7 +238,7 @@ RS_XML(startElement)(void *userData, const char *name, const char **atts)
 
   PROTECT(opArgs = NEW_LIST(2));
   SET_VECTOR_ELT(opArgs, 0, NEW_CHARACTER(1));
-  SET_STRING_ELT(VECTOR_ELT(opArgs, 0), 0, ENC_COPY_TO_USER_STRING(name)); 
+  SET_STRING_ELT(VECTOR_ELT(opArgs, 0), 0, ENC_COPY_TO_USER_STRING(name));
 
   /* Now convert the attributes list. */
    SET_VECTOR_ELT(opArgs, 1, RS_XML(createAttributesList)(atts, encoding));
@@ -246,7 +246,7 @@ RS_XML(startElement)(void *userData, const char *name, const char **atts)
    UNPROTECT(1);
 }
 
-void 
+void
 RS_XML(commentHandler)(void *userData, const XML_Char *data)
 {
   USER_OBJECT_ opArgs = NEW_LIST(1);
@@ -256,7 +256,7 @@ RS_XML(commentHandler)(void *userData, const XML_Char *data)
   PROTECT(opArgs);
   SET_VECTOR_ELT(opArgs, 0, NEW_CHARACTER(1));
      SET_STRING_ELT(VECTOR_ELT(opArgs, 0), 0, ENC_COPY_TO_USER_STRING(data));
-     RS_XML(callUserFunction)(HANDLER_FUN_NAME(rinfo, "comment"), 
+     RS_XML(callUserFunction)(HANDLER_FUN_NAME(rinfo, "comment"),
 			      (const char *)NULL, ((RS_XMLParserData*)userData), opArgs);
   UNPROTECT(1);
 }
@@ -312,11 +312,11 @@ void RS_XML(endElement)(void *userData, const char *name)
 /**
  Called for inline expressions of the form
   <?target data-text>
- such as 
+ such as
   <?R plot(1:10)>
 */
-void 
-RS_XML(processingInstructionHandler)(void *userData, const XML_Char *target, const XML_Char *data) 
+void
+RS_XML(processingInstructionHandler)(void *userData, const XML_Char *target, const XML_Char *data)
 {
  USER_OBJECT_ opArgs;
  RS_XMLParserData *parserData = (RS_XMLParserData *) userData;
@@ -328,18 +328,18 @@ RS_XML(processingInstructionHandler)(void *userData, const XML_Char *target, con
    SET_STRING_ELT(VECTOR_ELT(opArgs, 0), 0, ENC_COPY_TO_USER_STRING(target));
  SET_VECTOR_ELT(opArgs, 1, NEW_CHARACTER(1));
    SET_STRING_ELT(VECTOR_ELT(opArgs, 1), 0, ENC_COPY_TO_USER_STRING(data));
-   RS_XML(callUserFunction)(HANDLER_FUN_NAME(parserData, "processingInstruction"), 
+   RS_XML(callUserFunction)(HANDLER_FUN_NAME(parserData, "processingInstruction"),
                              (const char *)NULL, (RS_XMLParserData*)userData, opArgs);
  UNPROTECT(1);
 }
 
-void 
-RS_XML(startCdataSectionHandler)(void *userData) 
+void
+RS_XML(startCdataSectionHandler)(void *userData)
 {
 }
 
-void 
-RS_XML(endCdataSectionHandler)(void *userData) 
+void
+RS_XML(endCdataSectionHandler)(void *userData)
 {
 }
 
@@ -377,12 +377,12 @@ fixedTrim(char *str,  int len, int *start, int *end)
 }
 
 
-void 
+void
 RS_XML(textHandler)(void *userData,  const XML_Char *s, int len)
 {
  char *tmpString, *tmp;
  USER_OBJECT_ opArgs = NULL;
- RS_XMLParserData *parserData = (RS_XMLParserData*)userData; 
+ RS_XMLParserData *parserData = (RS_XMLParserData*)userData;
  DECL_ENCODING_FROM_EVENT_PARSER(parserData)
 
    /* XXX Here is where we have to ignoreBlankLines and use the trim setting in parserData */
@@ -392,8 +392,8 @@ RS_XML(textHandler)(void *userData,  const XML_Char *s, int len)
 #if 1
       if(parserData->trim) {
           tmpString =  fixedTrim(XMLCHAR_TO_CHAR(s), len, &start, &end);
-	  newLen = end - start; 
-      } else 
+	  newLen = end - start;
+      } else
           tmpString = XMLCHAR_TO_CHAR(s);
 
       if(newLen < 0 && parserData->ignoreBlankLines)
@@ -416,15 +416,15 @@ RS_XML(textHandler)(void *userData,  const XML_Char *s, int len)
      <abc/>
      <next>
      */
- if(s == (XML_Char*)NULL || s[0] == (XML_Char)NULL || len == 0 
+ if(s == (XML_Char*)NULL || s[0] == (XML_Char)NULL || len == 0
        || (len == 1 && ((const char *) s)[0] == '\n' && parserData->trim))
     return;
 
-           /*XXX Deal with encoding, memory cleanup, 
+           /*XXX Deal with encoding, memory cleanup,
              1 more than length so we can put a \0 on the end. */
     tmp = tmpString = (char*)calloc(len+1, sizeof(char));
     strncpy(tmpString, s, len);
- 
+
     if(parserData->trim) {
       tmpString = trim(tmpString);
       len = strlen(tmpString);
@@ -458,15 +458,15 @@ RS_XML(notStandAloneHandler)(void *userData)
 
 
 /**
-  Create the parser data which contains the 
-  the collection of functions to call for each 
+  Create the parser data which contains the
+  the collection of functions to call for each
   event type.
 
   This allocates the parser memory using calloc.
   The caller should arrange to free it.
 */
 RS_XMLParserData *
-RS_XML(createParserData)(USER_OBJECT_ handlers, USER_OBJECT_ finalize) 
+RS_XML(createParserData)(USER_OBJECT_ handlers, USER_OBJECT_ finalize)
 {
  RS_XMLParserData *parser = (RS_XMLParserData *) R_alloc(1, sizeof(RS_XMLParserData));
 
@@ -482,10 +482,10 @@ RS_XML(createParserData)(USER_OBJECT_ handlers, USER_OBJECT_ finalize)
 
    opName is the  identifier for the generic operation, i.e. startElement, text, etc.
    perferredName is the identifier for the node.
-   
+
 */
 USER_OBJECT_
-RS_XML(callUserFunction)(const char *opName, const char *preferredName, RS_XMLParserData *parserData, USER_OBJECT_ opArgs) 
+RS_XML(callUserFunction)(const char *opName, const char *preferredName, RS_XMLParserData *parserData, USER_OBJECT_ opArgs)
 {
   USER_OBJECT_ fun = NULL, val;
   USER_OBJECT_ _userObject = parserData->methods;
@@ -502,7 +502,7 @@ RS_XML(callUserFunction)(const char *opName, const char *preferredName, RS_XMLPa
     fun = RS_XML(findFunction)(opName, _userObject);
   }
 
-  if(fun == NULL || isFunction(fun) == 0 ) {  
+  if(fun == NULL || isFunction(fun) == 0 ) {
 /* || (general && R_isInstanceOf(fun, "AsIs"))) Should we do this? */
       /* FAILED */
    return(NULL_USER_OBJECT);
@@ -510,7 +510,7 @@ RS_XML(callUserFunction)(const char *opName, const char *preferredName, RS_XMLPa
 
   val = RS_XML(invokeFunction)(fun, opArgs, parserData->stateObject, parserData->ctx);
   updateState(val, parserData);
-  return(val); 
+  return(val);
 }
 
 void

@@ -22,7 +22,7 @@ extern char *strdup(const char *);
 
 #include <sys/stat.h>
 
-/* For reading DTDs directly from text, not files. 
+/* For reading DTDs directly from text, not files.
    Copied directly from parser.c in the libxml(-1.7.3) library.
 */
 
@@ -90,7 +90,7 @@ const char *RS_XML(DtdNames)[] = {"elements", "entities"};
    externalId  - file identfying the DTD from which its contents are read.
  */
 USER_OBJECT_
-RS_XML(getDTD)(USER_OBJECT_ dtdFileName, USER_OBJECT_ externalId, 
+RS_XML(getDTD)(USER_OBJECT_ dtdFileName, USER_OBJECT_ externalId,
   	       USER_OBJECT_ asText, USER_OBJECT_ isURL, USER_OBJECT_ errorFun)
 {
  USER_OBJECT_ ans;
@@ -99,7 +99,7 @@ RS_XML(getDTD)(USER_OBJECT_ dtdFileName, USER_OBJECT_ externalId,
  int localAsText = LOGICAL_DATA(asText)[0];
  xmlParserCtxtPtr ctxt;
  xmlDtdPtr        dtd;
- 
+
 
  if(localAsText) {
      ctxt = xmlCreateDocParserCtxt((xmlChar*) extId);
@@ -150,7 +150,7 @@ RS_XML(getDTD)(USER_OBJECT_ dtdFileName, USER_OBJECT_ externalId,
     dtd = ctxt->myDoc->extSubset;
   }
 
-#ifdef RS_XML_SET_STRUCTURED_ERROR 
+#ifdef RS_XML_SET_STRUCTURED_ERROR
   xmlSetStructuredErrorFunc(NULL, NULL);
 #endif
 
@@ -167,7 +167,7 @@ RS_XML(getDTD)(USER_OBJECT_ dtdFileName, USER_OBJECT_ externalId,
   if(localAsText) {
       /* Don't bother with the internal and external split, just do the internal and return it. */
     ans = RS_XML(createDTDParts)(dtd, ctxt);
-  } else 
+  } else
     ans = RS_XML(ConstructDTDList)(ctxt->myDoc, 0, ctxt);
 
   return(ans);
@@ -180,7 +180,7 @@ const char *RS_XML(DtdTypeNames)[] = {"external", "internal"};
   using both the internal and external descriptions and returning a list
   of the appropriate length. If the external description is empty, then we just
   return the description of the internal description. Otherwise, we return a named
-  list of length 2 containing descriptions of both. 
+  list of length 2 containing descriptions of both.
  */
 USER_OBJECT_
 RS_XML(ConstructDTDList)(xmlDocPtr myDoc, int processInternals, xmlParserCtxtPtr ctxt)
@@ -188,7 +188,7 @@ RS_XML(ConstructDTDList)(xmlDocPtr myDoc, int processInternals, xmlParserCtxtPtr
  USER_OBJECT_ ans, el, klass;
  int i;
  xmlDtdPtr sets[2];
-  
+
  int num = processInternals ? 2  : 1;
  sets[0] = myDoc->extSubset;
 
@@ -220,7 +220,7 @@ RS_XML(ConstructDTDList)(xmlDocPtr myDoc, int processInternals, xmlParserCtxtPtr
  */
 USER_OBJECT_
 RS_XML(createDTDParts)(xmlDtdPtr dtd,  xmlParserCtxtPtr ctxt)
-{ 
+{
  xmlEntitiesTablePtr entities;
  xmlElementTable *table;
   USER_OBJECT_ ans;
@@ -233,7 +233,7 @@ RS_XML(createDTDParts)(xmlDtdPtr dtd,  xmlParserCtxtPtr ctxt)
   entities = (xmlEntitiesTablePtr) dtd->entities;
   if(entities)
      SET_VECTOR_ELT(ans, DTD_ENTITIES_SLOT, RS_XML(ProcessEntities)(entities, ctxt));
-   
+
    RS_XML(SetNames)(DTD_NUM_SLOTS, RS_XML(DtdNames), ans);
 
    UNPROTECT(1);
@@ -302,7 +302,7 @@ RS_XML(ProcessElements)(xmlElementTablePtr table, xmlParserCtxtPtr ctxt)
 #endif
     SET_NAMES(dtdEls, dtdNames);
     UNPROTECT(2);
-  } 
+  }
 
   return(dtdEls);
 }
@@ -310,7 +310,7 @@ RS_XML(ProcessElements)(xmlElementTablePtr table, xmlParserCtxtPtr ctxt)
 #ifdef LIBXML2
 /* libxml2 2.4.21 (and perhaps earlier) redefines this to have a return type of void,
    rather than void*. Need to figure out if this makes any real difference to the interface
-   and also when to 
+   and also when to
 */
 #ifndef NO_XML_HASH_SCANNER_RETURN
 void*
@@ -379,7 +379,7 @@ RS_XML(ProcessEntities)(xmlEntitiesTablePtr table, xmlParserCtxtPtr ctxt)
 #endif
     SET_NAMES(dtdEls, dtdNames);
     UNPROTECT(2);
-  } 
+  }
 
   return(dtdEls);
 }
@@ -416,7 +416,7 @@ RS_xmlEntityTableConverter(void *payload, void *data, xmlChar *name)
   Indices for the slots of the user-level list representing the entity.
  */
 enum { DTD_ENTITY_NAME_SLOT,  DTD_ENTITY_CONTENT_SLOT, DTD_ENTITY_ORIG_SLOT, DTD_ENTITY_NUM_SLOTS};
-/* 
+/*
   Names for the slots of the user-level list representing the entity.
 */
 const char *RS_XML(EntityNames)[] = {"name", "value", "original"};
@@ -531,7 +531,7 @@ const char *RS_XML(OccuranceNames)[] = {"Once", "Zero or One", "Mult","One or Mo
 
 
   The recursive argument allows the RS_XML(SequenceContent) routine  to use part of this
-  routine.  
+  routine.
 
 */
 
@@ -560,7 +560,7 @@ RS_XML(createDTDElementContents)(xmlElementContentPtr vals, xmlElementPtr el, in
     if(recursive || 1)
       num += (vals->c2 != NULL);
 
-    if(num > 0) {   
+    if(num > 0) {
       SET_VECTOR_ELT(ans, DTD_CONTENT_ELEMENTS_SLOT, NEW_LIST(num));
       num = 0;
       if(vals->c1) {
@@ -604,8 +604,8 @@ RS_XML(createDTDElementContents)(xmlElementContentPtr vals, xmlElementPtr el, in
 
 /**
   Process the DTD element, knowing that it is a sequence definition.
-  Compute the number of elements in the sequence by flattening  out the 
-  lob-sided tree and then convert the each element and append it to the list. 
+  Compute the number of elements in the sequence by flattening  out the
+  lob-sided tree and then convert the each element and append it to the list.
  */
 USER_OBJECT_
 RS_XML(SequenceContent)(xmlElementContentPtr vals, xmlElementPtr el)
@@ -615,11 +615,11 @@ RS_XML(SequenceContent)(xmlElementContentPtr vals, xmlElementPtr el)
   USER_OBJECT_ ans = NULL_USER_OBJECT;
   USER_OBJECT_ tmp;
 
-     /* Count the number of elements in this sequence. 
+     /* Count the number of elements in this sequence.
         Descend all the c2's below this one.
       */
   while(ptr && ok) {
-    ok = (ptr->type == XML_ELEMENT_CONTENT_SEQ); 
+    ok = (ptr->type == XML_ELEMENT_CONTENT_SEQ);
     ptr = ptr->c2;
     n++;
   }
@@ -634,8 +634,8 @@ RS_XML(SequenceContent)(xmlElementContentPtr vals, xmlElementPtr el)
       /* Some jumping around here beacuse of the recursion and split types. Should be cleaner. */
     deep = (ptr->c1  != NULL && ptr->type == XML_ELEMENT_CONTENT_SEQ );
     tmp = RS_XML(createDTDElementContents)( deep ? ptr->c1 : ptr, el, deep);
-    SET_VECTOR_ELT(ans, n, tmp); 
-    ok = (ptr->type == XML_ELEMENT_CONTENT_SEQ); 
+    SET_VECTOR_ELT(ans, n, tmp);
+    ok = (ptr->type == XML_ELEMENT_CONTENT_SEQ);
     ptr = ptr->c2;
     n++;
   } while(ptr && ok);
@@ -649,7 +649,7 @@ RS_XML(SequenceContent)(xmlElementContentPtr vals, xmlElementPtr el)
 
 
 /**
-   Routine that creates a named list of XMLAttributeDef objects from a collection of 
+   Routine that creates a named list of XMLAttributeDef objects from a collection of
    attribute definitions associated with the specified XML element definition.
  */
 USER_OBJECT_
@@ -707,7 +707,7 @@ const char *RS_XML(AttributeSlotNames)[] = {"name", "type", "defaultType", "defa
        Name, Type, Default Type and Default Value.
    The first is a simple string (character vector of length 1). The next two are enumerated
    types describing the type of the attribute value and whether it is required, fixed, implied, etc.
-   The final value is the default value 
+   The final value is the default value
  */
 USER_OBJECT_
 RS_XML(createDTDAttribute)(xmlAttributePtr val, xmlElementPtr el)
@@ -747,7 +747,7 @@ RS_XML(createDTDAttribute)(xmlAttributePtr val, xmlElementPtr el)
 
   UNPROTECT(1);
   return(ans);
-}    
+}
 
 
 /**
