@@ -8,10 +8,10 @@
 #include "RS_XML.h"
 #include "RSCommon.h"
 
-#define XMLCHAR_TO_CHAR(val)  ((char *) val)
-#define XMLCHAR_TO_CONST_CHAR(val)  ((const char *) val)
-#define CHAR_TO_XMLCHAR(val)  ((xmlChar *) val)
-#define CHAR_TO_CONST_XMLCHAR(val)  ((const xmlChar *) val)
+#define XMLCHAR_TO_CHAR(val)  ((char *) (val))
+#define XMLCHAR_TO_CONST_CHAR(val)  ((const char *) (val))
+#define CHAR_TO_XMLCHAR(val)  ((xmlChar *) (val))
+#define CHAR_TO_CONST_XMLCHAR(val)  ((const xmlChar *) (val))
 
 int isBlank(const char *str);
 char *trim(char *str);
@@ -230,7 +230,7 @@ SEXP CreateCharSexpWithEncoding(const xmlChar *encoding, const xmlChar *str);
 #ifdef R_USE_XML_ENCODING
 #undef COPY_TO_USER_STRING
 //#warning "Redefining COPY_TO_USER_STRING to use encoding from XML parser"
-#define COPY_TO_USER_STRING(x)  mkChar(XMLCHAR_TO_CONST_CHAR (x))
+#define COPY_TO_USER_STRING(x)  mkChar( (const char *) (x) )
 #define ENC_COPY_TO_USER_STRING(x)  CreateCharSexpWithEncoding(encoding, CHAR_TO_XMLCHAR (x))
 #endif
 
