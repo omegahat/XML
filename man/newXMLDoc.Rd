@@ -90,7 +90,7 @@ newXMLDTDNode(nodeName, externalID = character(),
   external pointer object.
   This can also be the name of a C routine or a reference
   to a C routine retrieved using
-  \code{\link[base]{getNativeSymbolInfo}}. }
+  \code{\link{getNativeSymbolInfo}}. }
  \item{name}{the tag/element name for the XML node and
    the for a Processing Instruction (PI) node, this is the "target",
    e.g. the identifier for the system for whose attention this PI node is intended.}
@@ -226,12 +226,12 @@ These are of class \code{XMLInternalDocument}
 and \code{XMLInternalNode}, respectively
 }
 
-\references{\url{http://www.w3.org/XML}, \url{http://www.xmlsoft.org},
-\url{http://www.omegahat.net}}
+\references{\url{https://www.w3.org/XML}, \url{http://www.xmlsoft.org},
+             \url{https://github.com/omegahat/XML}}
 \author{ Duncan Temple Lang }
 
 \note{These functions are used to build up an internal XML tree.
-This can be used in the Sxslt package (\url{http://www.omegahat.net/Sxslt})
+This can be used in the Sxslt package (\url{http://github.com/omegahat/Sxslt})
 when creating content in R that is to be dynamically inserted into an XML
 document.}
 

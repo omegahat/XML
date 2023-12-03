@@ -50,14 +50,14 @@ xmlErrorCumulator(class = "XMLParserErrorList", immediate = TRUE)
     URL.}
   \item{class}{ character vector,  any classes to prepend to the class
     attribute to make the error/condition. These are prepended to those
-   returned via \code{\link[base]{simpleError}}.}
+   returned via \code{\link{simpleError}}.}
   \item{immediate}{logical value,  if  \code{TRUE} errors are
     displayed on the R console as they are encountered. Otherwise, the
   errors are collected and displayed at the end of the XML parsing.}
 }
 
 \value{
-  This calls \code{\link[base]{stop}} and so does not return a value.
+  This calls \code{\link{stop}} and so does not return a value.
 }
 \references{libxml2 and its error handling facilities (\url{http://xmlsoft.org}}
 \author{ Duncan Temple Lang}

@@ -26,7 +26,7 @@ xmlClone(node, recursive = TRUE, addFinalizer = FALSE, ...)
   \item{addFinalizer}{typically a logical value indicating whether to bring this
     new object under R's regular garbage collection.
      This can also be a reference to a C routine which is to be used as
-      the finalizer. See \code{\link[base]{getNativeSymbolInfo}}.
+      the finalizer. See \code{\link{getNativeSymbolInfo}}.
 
    }
   \item{\dots}{additional parameters for methods}
@@ -42,8 +42,8 @@ xmlClone(node, recursive = TRUE, addFinalizer = FALSE, ...)
   \code{\link{newXMLDoc}}
 }
 \examples{
-  txt = '<doc><author  id="dtl"><firstname>Duncan</firstname>
-                                <surname>Temple  Lang</surname></author></doc>'
+  txt = paste0('<doc><author  id="dtl"><firstname>Duncan</firstname>'
+               '<surname>Temple  Lang</surname></author></doc>')
   doc = xmlParse(txt)
 
   au = xmlRoot(doc)[[1]]

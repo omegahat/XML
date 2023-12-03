@@ -47,7 +47,7 @@ getSiblings(node, after = TRUE, ...)
   external pointer object.
   This can also be the name of a C routine or a reference
   to a C routine retrieved using
-  \code{\link[base]{getNativeSymbolInfo}}.
+  \code{\link{getNativeSymbolInfo}}.
 }
  \item{count}{an integer that indicates how many levels of the hierarchy
    to traverse. This allows us to get the \code{count} most recent
@@ -73,7 +73,7 @@ getSiblings(node, after = TRUE, ...)
   each node. Again, the order is top down.
 }
 
-\references{\url{http://www.w3.org/XML}}
+\references{\url{https://www.w3.org/XML}}
 \author{ Duncan Temple Lang }
 
 \seealso{

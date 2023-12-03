@@ -39,13 +39,10 @@ on \code{xmlChildren(x)}.
 }
 
 \references{
-  \url{http://www.w3.org/XML},
-  \url{http://www.jclark.com/xml},
-  \url{http://www.omegahat.net}
+  \url{https://www.w3.org/XML}
 }
 
 \author{Duncan Temple Lang}
-
 
 \seealso{
  \code{\link{xmlChildren}}

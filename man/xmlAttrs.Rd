@@ -44,7 +44,7 @@ This corresponds to the (attr<i>, "value<i>")
 pairs in the XML tag
 \code{<tag attr1="value1"  attr2="value2"}
 }
-\references{\url{http://www.w3.org} }
+\references{\url{https://www.w3.org} }
 \author{Duncan Temple Lang}
 \seealso{ \code{\link{xmlChildren}}, \code{\link{xmlSize}},
 \code{\link{xmlName}}}

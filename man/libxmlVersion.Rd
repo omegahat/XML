@@ -42,8 +42,8 @@ was activatd for that feature, or \code{NA} if that feature is not
 part of the particular version of libcurl.
 }
 
-\references{\url{http://www.w3.org/XML}, \url{http://www.xmlsoft.org},
-\url{http://www.omegahat.net}  }
+\references{\url{https://www.w3.org/XML}, \url{http://www.xmlsoft.org},
+           \url{https://github.com/omegahat/XML}  }
 \author{ Duncan Temple Lang }
 
 %\seealso{}
@@ -51,7 +51,7 @@ part of the particular version of libcurl.
 \examples{
  ver <- libxmlVersion()
  if(is.null(ver)) {
-   cat("Relly old version of libxml\n")
+   cat("Really old version of libxml\n")
  } else {
    if(ver$major > 1) {
      cat("Using libxml2\n")

@@ -87,7 +87,7 @@ saveXML(doc, file=NULL, compression=0, indent=TRUE, prefix = '<?xml version="1.0
  the resulting XML content.
  If \code{file} is passed in the call,
 }
-\references{\url{http://www.w3.org/XML}, \url{http://www.omegahat.net/RSXML}}
+\references{\url{https://www.w3.org/XML}, \url{https://github.com/omegahat/XML}}
 \author{Duncan Temple Lang}
 
 \seealso{
@@ -119,8 +119,7 @@ con$addTag("number", "582-3217")
 con$closeTag() # phone
 con$closeTag() # address
 
-saveXML(con$value(), file="out.xml")
-
+saveXML(con$value(), file = file.path(tempdir(), "out.xml"))
 
 # Work with entities
 

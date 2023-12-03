@@ -26,7 +26,7 @@
 \usage{
 xmlToDataFrame(doc, colClasses = NULL, homogeneous = NA,
                collectNames = TRUE, nodes = list(),
-               stringsAsFactors = default.stringsAsFactors())
+               stringsAsFactors = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -36,7 +36,7 @@ xmlToDataFrame(doc, colClasses = NULL, homogeneous = NA,
   \item{colClasses}{a list/vector giving the names of the R types for the
     corresponding variables and this is used to coerce the resulting
     column in the data frame to this type. These can be named. This is similar to
-    the \code{colClasses} parameter for \code{\link[utils]{read.table}}.
+    the \code{colClasses} parameter for \code{\link{read.table}}.
     If this is given as a list, columns in the data frame
     corresponding to elements that are \code{NULL} are omitted from the
     answer.

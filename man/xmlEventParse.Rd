@@ -87,7 +87,7 @@ xmlEventParse(file, handlers = xmlEventHandler(),
     (Note this is not the case in S-Plus, as far as I know.)
 
     If a connection is given, the parser incrementally reads one line at
-    a time by calling the function \code{\link[base]{readLines}} with
+    a time by calling the function \code{\link{readLines}} with
     the connection as the first argument (and \code{1} as the number of
     lines to read).  The parser calls this function each time it needs
     more input.
@@ -243,7 +243,7 @@ If this is True, each callback function  should support
     For example, \code{xmlns:r="http://www.r-project.org"}
     would be passed as \code{c(r = "http://www.r-project.org")}.
     If there is no prefix because the namespace is being used as the
-    default, the result of calling \code{\link[base]{names}} on
+    default, the result of calling \code{\link{names}} on
     the string is \code{""}.
     The second additional argument (the fourth in total) gives the collection of all the namespaces
     defined within this element.
@@ -334,7 +334,7 @@ the callback functions have manipulated variables
 local to it and that the caller knows how to extract this.
 }
 
-\references{\url{http://www.w3.org/XML}, \url{http://www.jclark.com/xml}}
+\references{\url{https://www.w3.org/XML}, \url{http://www.jclark.com/xml}}
 \author{Duncan Temple Lang}
 \note{
  The libxml parser can read URLs via http or ftp.
@@ -371,7 +371,7 @@ local to it and that the caller knows how to extract this.
 \dontrun{
   # Parse the text rather than a file or URL by reading the URL's contents
   # and making it a single string. Then call xmlEventParse
-xmlURL <- "http://www.omegahat.net/Scripts/Data/mtcars.xml"
+xmlURL <- "https://raw.githubusercontent.com/omegahat/XML/master/inst/exampleData/mtcars.xml"
 xmlText <- paste(scan(xmlURL, what="",sep="\n"),"\n",collapse="\n")
 xmlEventParse(xmlText, asText=TRUE)
 }

@@ -94,7 +94,7 @@ and is read directly without the user having
 to de-compress (gunzip) it.}
  \item{ignoreBlanks}{ logical value indicating whether
 text elements made up entirely of white space should be included
-in the resulting `tree'. }
+in the resulting \sQuote{tree}. }
  \item{handlers}{Optional collection of functions
   used to map the different XML nodes to R
   objects. Typically, this is a named list of functions,
@@ -119,7 +119,7 @@ in the resulting `tree'. }
     with full reference information.
     }
   \item{asText}{logical value indicating that the first argument,
-    `file',
+    \sQuote{file},
      should be treated as the XML text to parse, not the name of
      a file. This allows the contents of documents to be retrieved
      from different sources (e.g. HTTP servers, XML-RPC, etc.) and still
@@ -337,7 +337,7 @@ contents.
  A list of the XML nodes at the top of the document.
  Each of these is of class \code{XMLNode}.
  These are made up of 4 fields.
-  \itemize{
+  \describe{
    \item{\code{name}}{The name of the element.}
    \item{\code{attributes}}{For regular elements, a named list
      of XML attributes converted from the
@@ -377,7 +377,7 @@ contents.
 
  If internal nodes are used and the internal tree returned directly,
  all the nodes are returned as-is and no attempt to
-  trim white space, remove ``empty'' nodes (i.e. containing only white
+  trim white space, remove \dQuote{empty} nodes (i.e. containing only white
  space), etc. is done. This is potentially quite expensive and so is
  not done generally, but should  be done during the processing
  of the nodes.  When using XPath queries, such nodes are easily
@@ -392,7 +392,7 @@ contents.
 
  } }
 
- \references{\url{http://xmlsoft.org}, \url{http://www.w3.org/xml}}
+ \references{\url{http://xmlsoft.org}, \url{https://www.w3.org/xml}}
 
  \author{Duncan Temple Lang <duncan@wald.ucdavis.edu>}
 
@@ -508,6 +508,7 @@ m <- xmlTreeParse(fileName,
 \dontrun{
  # Parse an XML document directly from a URL.
  # Requires Internet access.
+ #  xmlParse/xmlTreeParse can't do HTTPS !
  xmlTreeParse("http://www.omegahat.net/Scripts/Data/mtcars.xml", asText=TRUE)
 }
 
