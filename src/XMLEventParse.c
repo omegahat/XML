@@ -432,7 +432,6 @@ R_endBranch(RS_XMLParserData *rinfo,
 		fun = VECTOR_ELT(rinfo->branches, rinfo->branchIndex);
  	    }
 
-
 	    if(TYPEOF(fun) == EXTPTRSXP) {
 		BranchRoutine r = (BranchRoutine) R_ExternalPtrAddr(fun);
 		r(tmp, rinfo->ctx);
@@ -442,21 +441,12 @@ R_endBranch(RS_XMLParserData *rinfo,
 		    doc = xmlNewDoc( (const xmlChar *) "1.0");
 		    initDocRefCounter(doc);
 		    xmlDocSetRootElement(doc, tmp);
-/*		fprintf(stderr, "<r:createDoc addr='%p'/>\n", doc); */
 		    numDocsCreated++;
 		}
 		SET_VECTOR_ELT(args, 0, rnode = R_createXMLNodeRef(tmp, rinfo->finalize));
 		RS_XML(invokeFunction)(fun, args, NULL, rinfo->ctx);
 		UNPROTECT(1);
 	    }
-	    /*
-            xmlFreeNode(rinfo->top);
-            rinfo->top = NULL;
-	    */
-
-#if 0
-            fprintf(stderr, "Finishing branch for %s %s\n", tmp->name, tmp->properties->children->content);
-#endif
 
 	    /* if(rinfo->dynamicBranchFunction)
                  R_ReleaseObject(rinfo->dynamicBranchFunction);
