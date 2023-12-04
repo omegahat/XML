@@ -35,7 +35,7 @@
  event-driven or asynchronous calling
 
  In addition to the generic token event handlers such as
- "begin an XML element" (the \code{startElement} handler), one can
+ \dQuote{begin an XML element} (the \code{startElement} handler), one can
  also provide handler functions for specific tags/elements such
  as \code{<myTag>} with handler elements  with the same name as the
  XML element of interest, i.e. \code{"myTag" = function(x, attrs)}.
@@ -372,8 +372,9 @@ local to it and that the caller knows how to extract this.
   # Parse the text rather than a file or URL by reading the URL's contents
   # and making it a single string. Then call xmlEventParse
 xmlURL <- "https://raw.githubusercontent.com/omegahat/XML/master/inst/exampleData/mtcars.xml"
-xmlText <- paste(scan(xmlURL, what="",sep="\n"),"\n",collapse="\n")
-xmlEventParse(xmlText, asText=TRUE)
+xmlText <- paste(readLines(xmlURL), collapse = "\n")
+# xmlText <- paste(scan(xmlURL, what = "",sep="\n"),"\n",collapse="\n")
+xmlEventParse(xmlText, asText = TRUE)
 }
 
     # Using a state object to share mutable data across callbacks
@@ -387,8 +388,6 @@ zz <- xmlEventParse(f,
 print(zz)
 
 
-
-
     # Illustrate the startDocument and endDocument handlers.
 xmlEventParse(fileName,
                handlers = list(startDocument = function() {
@@ -400,15 +399,13 @@ xmlEventParse(fileName,
                saxVersion = 2)
 
 
-
-
 if(libxmlVersion()$major >= 2) {
-
 
  startElement = function(x, ...) cat(x, "\n")
 
- xmlEventParse(file(f), handlers = list(startElement = startElement))
-
+ con = file(f)
+ xmlEventParse(con, handlers = list(startElement = startElement))
+ close(con)
 
  # Parse with a function providing the input as needed.
  xmlConnection =
@@ -449,11 +446,16 @@ if(libxmlVersion()$major >= 2) {
 
  ff = xmlConnection(f)
  xmlEventParse(ff, handlers = list(startElement = startElement))
+ rm(ff)
+ gc()
+  # removing ff should garbage collect the connection.
+
 
   # Parse from a connection. Each time the parser needs more input, it
   # calls readLines(<con>, 1)
- xmlEventParse(file(f),  handlers = list(startElement = startElement))
-
+ con = file(f)
+ xmlEventParse(con,  handlers = list(startElement = startElement))
+ close(con)
 
   # using SAX 2
  h = list(startElement = function(name, attrs, namespace, allNamespaces){
