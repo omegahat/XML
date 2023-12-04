@@ -385,6 +385,7 @@ So we would use
    # Work with the nodes and their content (not just attributes) from the node set.
    # From bondsTables.R in examples/
 
+\dontrun{
   doc = htmlTreeParse("http://finance.yahoo.com/bonds/composite_bond_rates",
                       useInternalNodes = TRUE)
   if(is.null(xmlRoot(doc)))
@@ -417,6 +418,7 @@ So we would use
     tables = lapply(o, readHTMLTable)
     names(tables) = lapply(o, function(x) xmlValue(x[["caption"]]))
   }
+}
 
 
      # this illustrates an approach to doing queries on a sub tree
