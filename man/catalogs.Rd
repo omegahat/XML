@@ -13,7 +13,7 @@
    C-level libxml2 library and hence in R packages that use these, e.g.
    the XML and Sxslt packages.
    Catalogs are consulted whenever an external document needs to be loaded.
-   XML catalogs allow one to influence how such a document is loaded
+   XML catalogs allow one to influence how such a document is found
    by mapping document identifiers to
    alternative locations, for example to refer to locally
    available versions.
@@ -55,7 +55,7 @@
    \url{http://xmlsoft.org/catalog.html}
    and \url{http://www.sagehill.net/docbookxsl/Catalogs.html}
    among many resources and the specification for the catalog format at
-    \url{http://www.oasis-open.org/committees/entity/spec-2001-08-06.html}.
+    \url{https://www.oasis-open.org/committees/entity/spec-2001-08-06.html}.
    }
 
 \usage{
@@ -100,29 +100,30 @@ catalogDump(fileName = tempfile(), asText = TRUE)
    }
 
 \seealso{
-
      \code{\link{catalogResolve}}
 
-
      XInclude, XSL and import/include directives.
-
-
-     In addition to these functions, there is an un-exported, undocumented
-     function named \code{catalogDump} that can be used to
-     get the contents of the (first) catalog table.
-
-   }
+}
 
 \examples{
 
           # Add a rewrite rule
 
-  catalogAdd(c("http://www.omegahat.net/XML" = system.file("XML", package = "XML")))
-  catalogAdd("http://www.omegahat.net/XML", system.file("XML", package = "XML"))
+  # The URIs here are identifiers and not locators. In other words, the corresponding
+  # URLs do not have to be reachable.  Indeed, that is part of the of the point of XML
+  # catalogs - we rewrite the location.
+
+  catalogAdd(c("http://www.omegahat.net/XML" = system.file("examples", package = "XML")))
+  catalogAdd("http://www.omegahat.net/XML", system.file("examples", package = "XML"))
+
+  catalogResolve("http://www.omegahat.net/XML/getElements.S")
+
   dir = paste(R.home(), "doc", "", sep = .Platform$file.sep)
   catalogAdd("http://www.r-project.org/doc/", dir)
 
-          #
+  catalogResolve("http://www.r-project.org/doc/")
+  catalogResolve("http://www.r-project.org/doc/manual/R-lang.html")
+
      # This shows how we can load a catalog and then resolve a system identifier
      # that it maps.
 
