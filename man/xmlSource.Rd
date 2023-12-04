@@ -19,7 +19,7 @@
 
 \title{Source the R code, examples, etc. from an XML document}
 \description{
-  This is the equivalent of a smart \code{\link[base]{source}}
+  This is the equivalent of a smart \code{\link{source}}
   for extracting the R code elements from an XML document and
   evaluating them. This allows for a \dQuote{simple} way to collect
   R functions definitions or a sequence of (annotated) R code segments in an XML
@@ -150,7 +150,7 @@ xmlSourceSection(doc, ids = character(),
    code segments are being evaluated is displayed on the console.
    \code{echo} controls whether code is displayed, but this controls
    whether additional informatin is also displayed.
-   See \code{\link[base]{source}}.
+   See \code{\link{source}}.
   }
   \item{xnodes}{a character vector.  This is a collection of xpath
     expressions given as individual strings which find the
@@ -208,7 +208,7 @@ xmlSourceSection(doc, ids = character(),
 \value{
   An R object (typically a list) that contains the results of
   evaluating the content of the different selected code segments
-  in the XML document.  We use \code{\link[base]{sapply}} to
+  in the XML document.  We use \code{\link{sapply}} to
   iterate over the nodes and so If the results of all the nodes
   A list giving the pairs of expressions and evaluated objects
   for each of the different XML elements processed.
