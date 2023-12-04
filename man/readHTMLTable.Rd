@@ -101,8 +101,8 @@ HTML4.0 specification
 \examples{
 # u = "http://en.wikipedia.org/wiki/World_population"
 
-  u = "http://www.inflationdata.com/Inflation/Consumer_Price_Index/HistoricalCPI.aspx"
-  zz = readHTMLTable(u)
+  u = "https://www.inflationdata.com/Inflation/Consumer_Price_Index/HistoricalCPI.aspx"
+  zz = readHTMLTable( paste(readLines(u), collapse = "\n" ))
        # guard against the structure of the page changing.
   if(any(i <- sapply(zz, function(x) if(is.null(x)) 0 else ncol(x)) == 14)){
     zz = zz[[which(i)[1]]]  # 4th table
@@ -112,6 +112,8 @@ HTML4.0 specification
   }
 
 
+
+\dontrun{
 # From Marsh Feldman on R-help
 doc <- "http://www.nber.org/cycles/cyclesmain.html"
      # The  main table is the second one because it's embedded in the page table.
@@ -123,6 +125,7 @@ xt <- readHTMLTable(table,
                                    "character","character","character"),
                     trim = TRUE, stringsAsFactors = FALSE
                    )
+}
 
 
 if(FALSE) {
@@ -136,16 +139,9 @@ if(FALSE) {
 }
 
 
-if(require(RCurl) && url.exists("http://www.omegahat.net/RCurl/testPassword/table.html")) {
-  tt =  getURL("http://www.omegahat.net/RCurl/testPassword/table.html",  userpwd = "bob:duncantl")
-  readHTMLTable(tt)
-}
 
-
-
-if(require(RCurl)) {
  u = "https://en.wikipedia.org/wiki/List_of_countries_by_population"
- doc = htmlParse( getURLContent( u ) )
+ doc = htmlParse( readLines(u) )
  tables = readHTMLTable(doc)
  names(tables)
 
@@ -175,7 +171,15 @@ if(require(RCurl)) {
 
  tb = readHTMLTable(tableNodes[[2]], elFun = tryAsInteger,
                        colClasses = c("character", rep("integer", 9)))
+
+
+\dontrun{
+  if(require(RCurl) && url.exists("http://www.omegahat.net/RCurl/testPassword/table.html")) {
+     tt =  getURL("http://www.omegahat.net/RCurl/testPassword/table.html",  userpwd = "bob:duncantl")
+     readHTMLTable(tt)
+  }
 }
+
 }
 \keyword{IO}
 \keyword{data}
