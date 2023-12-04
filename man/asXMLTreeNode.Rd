@@ -6,9 +6,8 @@
  node) to a form that can be inserted into a flat tree, i.e.
  one that stores the nodes in a non-hierarchical manner.
  It is thus used in conjunction with
- \code{\link{xmlHashTree}}
- and
- \code{\link{xmlFlatListTree}}.
+ \code{\link{xmlHashTree}}.
+% and \code{\link{xmlFlatListTree}}.
  It adds \code{id} and \code{env} fields to the
  node and specializes the class by prefixing \code{className}
  to the class attribute.
@@ -42,7 +41,7 @@ asXMLTreeNode(node, env, id = get(".nodeIdGenerator", env)(xmlName(node)),
 
 \seealso{
   \code{\link{xmlHashTree}}
-  \code{\link{xmlFlatListTree}}
+%  \code{\link{xmlFlatListTree}}
 }
 \examples{
   txt = '<foo a="123" b="an attribute"><bar>some text</bar>other text</foo>'
