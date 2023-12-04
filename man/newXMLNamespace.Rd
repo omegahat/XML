@@ -15,19 +15,19 @@ newXMLNamespace(node, namespace, prefix = names(namespace), set = FALSE)
   \item{node}{the XML node for which the name space is to be defined.}
   \item{namespace}{the namespace(s).
      This can be a simple character vector giving the URI,
-     a named character vector giving the prefix = URI pairs, with the prefixes being the names 
+     a named character vector giving the prefix = URI pairs, with the prefixes being the names
      of the character vector,
-     or one or more (a list) of \code{XMLNamespace} objects, e.g. returned from a call to 
+     or one or more (a list) of \code{XMLNamespace} objects, e.g. returned from a call to
      \code{\link{xmlNamespaceDefinitions}}}
-  \item{prefix}{ 
+  \item{prefix}{
      the prefixes to be associated with the URIs given in \code{namespace}.
   }
-  \item{set}{  a logical value indicating whether to 
+  \item{set}{  a logical value indicating whether to
     set the  namespace for this node to this newly created name space definition.
   }
 }
 \value{
- An name space definition object whose class corresponds 
+ An name space definition object whose class corresponds
  to the type of XML node given in \code{node}.
 }
 \note{

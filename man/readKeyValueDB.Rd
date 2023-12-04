@@ -4,15 +4,20 @@
 \alias{readKeyValueDB,XMLInternalDocument-method}
 \alias{readKeyValueDB,XMLInternalNode-method}
 \alias{readKeyValueDB,AsIs-method}
-
-\title{Read an XML property-list style document}
+\title{Read an XML property-list (plist) style document}
 \description{
-  This function and its methods reads an XML document
-  that is in the format of name-value or key-value
-  pairs made up of a \code{plist} and
-  \code{dict} nodes, each of which is made up \code{key}, and value node
-  pairs.  These used to be used for property lists on OS X and
-  can represetn arbitrary data relatively conveniently.
+  This function and its methods reads a property-list/plist XML document
+  used on some operating systems and other places to serialize
+  data.   These used to be used for property lists on OS X and
+  can represent arbitrary data relatively conveniently.
+  The format has a root node named \code{plist} and
+  then typically an object such as a dictionary or array.
+  A dictionary is a series of name-value or key-value
+  pairs.
+  An array is a sequence of elements.
+  While the function is named readKeyValueDB, it can now
+  read more generally, i.e., plist files whose
+  primary element is not a \code{dict} object.
 }
 \usage{
 readKeyValueDB(doc, ...)
@@ -23,6 +28,10 @@ readKeyValueDB(doc, ...)
   \item{\dots}{additional parameters for the methods.
     One can pass \code{dropComments} as a logical value to control
     whether comment nodes are processed or ignored (\code{TRUE}).
+    Also, one can specify a value of \code{TRUE} or \code{FALSE} for
+    a \code{simplify} argument. This controls whether we attempt to 
+    simplify the result of \code{array} nodes to a vector (using
+    \code{\link{simplify2array}}) or not.
   }
 }
 \value{
@@ -43,12 +52,24 @@ Duncan Temple Lang
   \code{\link{xmlParse}}
 }
 \examples{
- if(file.exists("/usr/share/hiutil/Stopwords.plist")) {
-  o = readKeyValueDB("/usr/share/hiutil/Stopwords.plist")
- }
+  b = readKeyValueDB(system.file("examples/BoxEdit.launch.plist", package = "XML"))
 
- if(file.exists("/usr/share/java/Tools/Applet Launcher.app/Contents/Info.plist"))
-    javaInfo = readKeyValueDB('/usr/share/java/Tools/Applet Launcher.app/Contents/Info.plist')
+  # an array not a dict as the top node in the plist.
+  f = system.file("examples/array.plist", package = "XML")
+  a = readKeyValueDB(f)
+  a2 = readKeyValueDB(f, simplify = FALSE)
+
+  readKeyValueDB("<plist><string>XYZ</string></plist>")
+
+  readKeyValueDB("<plist><array><string>XYZ</string><real>3.1415</real></array></plist>")
+
+  readKeyValueDB("<plist><array><string>XYZ</string><real>3.1415</real></array></plist>", simplify = FALSE)
+
+  if(file.exists("/usr/share/hiutil/Stopwords.plist")) 
+     o = readKeyValueDB("/usr/share/hiutil/Stopwords.plist")
+
+  if(file.exists("/usr/share/java/Tools/Applet Launcher.app/Contents/Info.plist"))
+     javaInfo = readKeyValueDB('/usr/share/java/Tools/Applet Launcher.app/Contents/Info.plist')
 }
 \keyword{IO}
 \concept{XML}

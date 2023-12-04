@@ -16,7 +16,7 @@
 \description{
  These two classes allow the user to identify an XML document or file
  as containing R code (amongst other content). Objects of either of these
- classes can then be passed to \code{\link{source}} to read the 
+ classes can then be passed to \code{\link{source}} to read the
  code into R and also used in \code{link{xmlSource}} to read just parts of it.
  \code{XMLCodeFile} represents the file by its name;
  \code{XMLCodeDoc} parses the contents of the file when the R object is created.
@@ -45,14 +45,14 @@ Class \code{"\linkS4class{vector}"}, by class "character", distance 2.
 }
 \section{Methods}{
   \describe{
-    \item{[[}{\code{signature(x = "XMLCodeFile", i = "ANY", j = "ANY")}: 
+    \item{[[}{\code{signature(x = "XMLCodeFile", i = "ANY", j = "ANY")}:
        this method allows one to retrieve/access an individual R code element
-       in the XML document. This is typically done by specifying the value of the XML element's 
+       in the XML document. This is typically done by specifying the value of the XML element's
        "id" attribute.
        }
     \item{coerce}{\code{signature(from = "XMLCodeFile", to = "XMLCodeDoc")}:
         parse the XML document from the "file" and treat the result as a
-       \code{XMLCodeDoc} object. 
+       \code{XMLCodeDoc} object.
      }
     \item{source}{\code{signature(file = "XMLCodeFile")}: read and evaluate all the
       R code in the XML document. For more control, use \code{\link{xmlSource}}.}

@@ -31,7 +31,8 @@ convertNodeSetToR(xmlNodeSetPtr obj, SEXP fun, int encoding, SEXP manageMemory)
     PROTECT(expr = allocVector(LANGSXP, 2)); nprot++;
     SETCAR(expr, fun);
     arg = CDR(expr);
-  } else if(TYPEOF(fun) == LANGSXP) { 
+  } else if(TYPEOF(fun) == LANGSXP) {
+    // From Tomas  Kalibera 20016-11-10
     PROTECT(expr = duplicate(fun)); nprot++;
     arg = CDR(expr);
   }
@@ -42,6 +43,7 @@ convertNodeSetToR(xmlNodeSetPtr obj, SEXP fun, int encoding, SEXP manageMemory)
       if(el->type == XML_ATTRIBUTE_NODE) {
 #if 0
 	  PROTECT(ref = mkString((el->children && el->children->content) ? XMLCHAR_TO_CHAR(el->children->content) : ""));
+	  nprot++;
 	  SET_NAMES(ref, mkString(el->name));
 #else
 	  PROTECT(ref = ScalarString(mkCharCE((el->children && el->children->content) ? XMLCHAR_TO_CHAR(el->children->content) : "", encoding)));
@@ -67,7 +69,7 @@ convertNodeSetToR(xmlNodeSetPtr obj, SEXP fun, int encoding, SEXP manageMemory)
   if(!expr)   // change from Tomas Kalibera 2016-11-10
     SET_CLASS(ans, mkString("XMLNodeSet"));
 
-  UNPROTECT(nprot); 
+  UNPROTECT(nprot);
 
   return(ans);
 }
@@ -93,14 +95,17 @@ convertXPathObjectToR(xmlXPathObjectPtr obj, SEXP fun, int encoding, SEXP manage
 	    REAL(ans)[0] = NA_REAL;
 	break;
     case XPATH_STRING:
-        ans = mkString(XMLCHAR_TO_CHAR(obj->stringval)); //XXX encoding 
+        ans = mkString(XMLCHAR_TO_CHAR(obj->stringval)); //XXX encoding
 	break;
+#ifdef LIBXML_XPTR_LOCS_ENABLED  // XXX check. Comes from CRAN.	
     case XPATH_POINT:
     case XPATH_RANGE:
     case XPATH_LOCATIONSET:
+#endif 	
     case XPATH_USERS:
-	PROBLEM "currently unsupported xmlXPathObject type %d in convertXPathObjectToR. Please send mail to maintainer.", obj->type
-        WARN
+	Rf_warning("currently unsupported xmlXPathObject type %d in convertXPathObjectToR. Please send mail to maintainer.",
+		   obj->type);
+
     default:
 	ans = R_NilValue;
   }
@@ -118,21 +123,19 @@ R_namespaceArray(SEXP namespaces, xmlXPathContextPtr ctxt)
  xmlNsPtr *els;
 
  n = GET_LENGTH(namespaces);
- els = xmlMallocAtomic(sizeof(xmlNsPtr) * n); 
- 
- if(!els) {
-   PROBLEM  "Failed to allocated space for namespaces"
-   ERROR;
- }
+ els = xmlMallocAtomic(sizeof(xmlNsPtr) * n);
+
+ if(!els) 
+     Rf_error("Failed to allocated space for namespaces");
 
  for(i = 0; i < n; i++) {
 /*XXX who owns these strings. */
    const xmlChar *prefix, *href;
    href = CHAR_TO_XMLCHAR(strdup(CHAR_DEREF(STRING_ELT(namespaces, i))));
-   prefix = names == NULL_USER_OBJECT ?  CHAR_TO_XMLCHAR("") /* NULL */ 
+   prefix = names == NULL_USER_OBJECT ?  CHAR_TO_XMLCHAR("") /* NULL */
                                       :  CHAR_TO_XMLCHAR(strdup(CHAR_DEREF(STRING_ELT(names, i))));
    els[i] = xmlNewNs(NULL, href, prefix);
-   if(ctxt) 
+   if(ctxt)
        xmlXPathRegisterNs(ctxt, prefix, href);
  }
 
@@ -168,7 +171,7 @@ R_addXMLInternalDocument_finalizer(SEXP sdoc, SEXP fun)
     LastDoc = sdoc;
 #endif
     if(TYPEOF(fun) == CLOSXP) {
-	R_RegisterFinalizer(sdoc, fun);	
+	R_RegisterFinalizer(sdoc, fun);
 	return(sdoc);
     }
 
@@ -190,13 +193,11 @@ R_addXMLInternalDocument_finalizer(SEXP sdoc, SEXP fun)
 SEXP
 R_XMLInternalDocument_free(SEXP sdoc)
 {
-  if(TYPEOF(sdoc) != EXTPTRSXP || R_ExternalPtrTag(sdoc) != Rf_install("XMLInternalDocument")) {
-     PROBLEM "R_free must be given an internal XML document object, 'XMLInternalDocument'"
-     ERROR;
-  }
+  if(TYPEOF(sdoc) != EXTPTRSXP || R_ExternalPtrTag(sdoc) != Rf_install("XMLInternalDocument")) 
+      Rf_error("R_free must be given an internal XML document object, 'XMLInternalDocument'");
 
   R_xmlFreeDoc(sdoc);
-  
+
   return(sdoc);
 }
 
@@ -214,10 +215,8 @@ RS_XML_xpathEval(SEXP sdoc, SEXP r_node, SEXP path, SEXP namespaces, SEXP fun, S
 
  xmlDocPtr doc;
 
- if(TYPEOF(sdoc) != EXTPTRSXP || R_ExternalPtrTag(sdoc) != Rf_install("XMLInternalDocument")) {
-   PROBLEM "xpathEval must be given an internal XML document object, 'XMLInternalDocument'"
-   ERROR;
- }
+ if(TYPEOF(sdoc) != EXTPTRSXP || R_ExternalPtrTag(sdoc) != Rf_install("XMLInternalDocument"))
+     Rf_error("xpathEval must be given an internal XML document object, 'XMLInternalDocument'");
 
  doc = (xmlDocPtr) R_ExternalPtrAddr(sdoc);
  ctxt = xmlXPathNewContext(doc);
@@ -231,36 +230,34 @@ RS_XML_xpathEval(SEXP sdoc, SEXP r_node, SEXP path, SEXP namespaces, SEXP fun, S
      ctxt->nsNr = GET_LENGTH(namespaces);
  }
 
- xmlXPathRegisterFunc(ctxt, "lower-case", xpathTolower);
- xmlXPathRegisterFunc(ctxt, "ends-with", xpathEndswith);
- xmlXPathRegisterFunc(ctxt, "matches", xpathGrepl);
- xmlXPathRegisterFunc(ctxt, "replace", xpathReplace);
- xmlXPathRegisterFunc(ctxt, "abs", xpathAbs);
- xmlXPathRegisterFunc(ctxt, "base-uri", xpathBaseURI);
- xmlXPathRegisterFunc(ctxt, "min", xpathMin);
- xmlXPathRegisterFunc(ctxt, "max", xpathMax);
+ xmlXPathRegisterFunc(ctxt, (const xmlChar *) "lower-case", xpathTolower);
+ xmlXPathRegisterFunc(ctxt, (const xmlChar *) "ends-with", xpathEndswith);
+ xmlXPathRegisterFunc(ctxt, (const xmlChar *) "matches", xpathGrepl);
+ xmlXPathRegisterFunc(ctxt, (const xmlChar *) "replace", xpathReplace);
+ xmlXPathRegisterFunc(ctxt, (const xmlChar *) "abs", xpathAbs);
+ xmlXPathRegisterFunc(ctxt, (const xmlChar *) "base-uri", xpathBaseURI);
+ xmlXPathRegisterFunc(ctxt, (const xmlChar *) "min", xpathMin);
+ xmlXPathRegisterFunc(ctxt, (const xmlChar *) "max", xpathMax);
 
  R_AnonXPathFuns = anonFuns;
  if(Rf_length(xpathFuns)) {
      SEXP names = GET_NAMES(xpathFuns), el;
      int i;
      xmlXPathFunction routine;
-     xmlChar *id;
+     const xmlChar *id;
      for(i = 0; i < Rf_length(xpathFuns); i++) {
 	 el = VECTOR_ELT(xpathFuns, i);
-	 id = (names != R_NilValue) ? CHAR(STRING_ELT(names, i)) : NULL;
+	 id = (names != R_NilValue) ? (const xmlChar *) CHAR(STRING_ELT(names, i)) : NULL;
 	 if(TYPEOF(el) == EXTPTRSXP) {
 	     routine = R_ExternalPtrAddr(el);
-	     if(!id) {
-		 PROBLEM "no name for XPath function routine"
-		     ERROR;
-	     }
+	     if(!id) 
+		 Rf_error("no name for XPath function routine");
 	 } else if(TYPEOF(el) == CLOSXP) {
 	     routine = R_genericAnonXPathFun;
 	 } else {
 	     routine = R_genericXPathFun;
 	     if(TYPEOF(el) == STRSXP)
-		 id = CHAR(STRING_ELT(el, 0));
+		 id = (const xmlChar *) CHAR(STRING_ELT(el, 0));
 	 }
 
 	 xmlXPathRegisterFunc(ctxt, id,  routine);
@@ -271,15 +268,13 @@ RS_XML_xpathEval(SEXP sdoc, SEXP r_node, SEXP path, SEXP namespaces, SEXP fun, S
 
  if(result)
      ans = convertXPathObjectToR(result, fun, INTEGER(charEncoding)[0], manageMemory);
- 
+
  xmlXPathFreeObject(result);
  xmlXPathFreeContext(ctxt);
  R_AnonXPathFuns = NULL;
 
- if(!result) {
-   PROBLEM  "error evaluating xpath expression %s", CHAR_DEREF(STRING_ELT(path, 0))
-   ERROR;
- }
+ if(!result) 
+     Rf_error("error evaluating xpath expression %s", CHAR_DEREF(STRING_ELT(path, 0)));
 
  return(ans);
 }
@@ -324,7 +319,7 @@ RS_XML_copyNodesToDoc(USER_OBJECT_ s_node, USER_OBJECT_ s_doc, USER_OBJECT_ mana
  for(i = 0; i < len; i++) {
      node = (xmlNodePtr) R_ExternalPtrAddr(VECTOR_ELT(s_node, i));
      ptr = xmlDocCopyNode(node, doc, 1);
-     SET_VECTOR_ELT(ans, i, R_createXMLNodeRef(ptr, manageMemory)); 
+     SET_VECTOR_ELT(ans, i, R_createXMLNodeRef(ptr, manageMemory));
  }
  UNPROTECT(1);
  return(ans);
@@ -340,8 +335,7 @@ RS_XML_killNodesFreeDoc(SEXP sdoc)
 {
    xmlDocPtr doc = (xmlDocPtr) R_ExternalPtrAddr(sdoc);
    if(!doc) {
-       PROBLEM "null xmlDocPtr passed as externalptr to RS_XML_killNodesFreeDoc"
-	   WARN;
+       Rf_warning("null xmlDocPtr passed as externalptr to RS_XML_killNodesFreeDoc");
        return(ScalarLogical(FALSE));
    }
    doc->children = NULL;
@@ -360,10 +354,8 @@ RS_XML_xpathNodeEval(SEXP s_node, SEXP path, SEXP namespaces, SEXP fun)
 
  xmlDocPtr doc;
 
- if(TYPEOF(s_node) != EXTPTRSXP || R_ExternalPtrTag(s_node) != Rf_install("XMLInternalNode")) {
-   PROBLEM "xpathEval must be given an internal XML document object, 'XMLInternalNode'"
-   ERROR;
- }
+ if(TYPEOF(s_node) != EXTPTRSXP || R_ExternalPtrTag(s_node) != Rf_install("XMLInternalNode")) 
+     Rf_error("xpathEval must be given an internal XML document object, 'XMLInternalNode'");
 
  ctxt = xmlXPathNewContext(doc);
 
@@ -372,19 +364,16 @@ RS_XML_xpathNodeEval(SEXP s_node, SEXP path, SEXP namespaces, SEXP fun)
      ctxt->nsNr = GET_LENGTH(namespaces);
  }
 
-
  result = xmlXPathEvalExpression(CHAR_TO_XMLCHAR(CHAR_DEREF(STRING_ELT(path, 0))), ctxt);
 
  if(result)
      ans = convertXPathObjectToR(result, fun);
- 
+
  xmlXPathFreeObject(result);
  xmlXPathFreeContext(ctxt);
 
- if(!result) {
-   PROBLEM  "error evaluating xpath expression %s", CHAR_DEREF(STRING_ELT(path, 0))
-   ERROR;
- }
+ if(!result) 
+     Rf_error("error evaluating xpath expression %s", CHAR_DEREF(STRING_ELT(path, 0)));
 
  return(ans);
 }
@@ -397,7 +386,7 @@ R_matchNodesInList(SEXP r_nodes, SEXP r_target, SEXP r_nomatch)
     xmlNodePtr el;
     int i, j, n, n2;
     SEXP ans;
-      
+
     n = GET_LENGTH(r_nodes);
     n2 = GET_LENGTH(r_target);
     ans = NEW_INTEGER( n );
@@ -407,7 +396,7 @@ R_matchNodesInList(SEXP r_nodes, SEXP r_target, SEXP r_nomatch)
 	for(j = 0; j < n2; j++) {
 	    if(el == R_ExternalPtrAddr(VECTOR_ELT(r_target, j))) {
 		INTEGER(ans)[i] = j;
-		break; 
+		break;
 	    }
 	}
     }
@@ -448,7 +437,7 @@ R_xmlXPathNewNodeSet(USER_OBJECT_ s_node)
 
 #include <ctype.h>
 
-/* 
+/*
  XXX Does not handle unicode in any way. Very simple-minded for now.
  */
 void
@@ -457,7 +446,7 @@ xpathTolower(xmlXPathParserContextPtr ctxt, int nargs)
     if(nargs == 0)
 	return;
 
-    xmlXPathObjectPtr obj = valuePop(ctxt); 
+    xmlXPathObjectPtr obj = valuePop(ctxt);
     if (obj->type != XPATH_STRING) {
 	valuePush(ctxt, obj);
 	xmlXPathStringFunction(ctxt, 1);
@@ -466,10 +455,10 @@ xpathTolower(xmlXPathParserContextPtr ctxt, int nargs)
 
     xmlChar *str = xmlStrdup(obj->stringval);
 
-    xmlChar *ptr = str;
-     int i, n = xmlStrlen(str);
-     for(i = 0; i < n ; i++) 
-	str[i] = tolower(str[i]);
+    // xmlChar *ptr = str;
+    int i, n = xmlStrlen(str);
+    for(i = 0; i < n ; i++)
+	str[i] = (xmlChar) tolower(str[i]);
 
     valuePush(ctxt, xmlXPathNewString(str));
 }
@@ -480,13 +469,13 @@ xpathEndswith(xmlXPathParserContextPtr ctxt, int nargs)
     if(nargs < 2)
 	return;
 
-    xmlChar *pattern = xmlXPathPopString(ctxt); 
-    xmlChar *input = xmlXPathPopString(ctxt); 
+    xmlChar *pattern = xmlXPathPopString(ctxt);
+    xmlChar *input = xmlXPathPopString(ctxt);
 
     int i, n = xmlStrlen(input), lenPattern = xmlStrlen(pattern);
-    
+
     if(n < lenPattern)
-	xmlXPathReturnBoolean(ctxt, 0);	
+	xmlXPathReturnBoolean(ctxt, 0);
 
     xmlChar *ptr = input + n - lenPattern;
     for(i = 0; i < lenPattern ; i++) {
@@ -503,7 +492,7 @@ xpathAbs(xmlXPathParserContextPtr ctxt, int nargs)
     if(nargs < 1)
 	return;
 
-    float num = xmlXPathPopNumber(ctxt); 
+    double num = xmlXPathPopNumber(ctxt);
     xmlXPathReturnNumber(ctxt, num < 0 ? - num : num);
 }
 
@@ -515,13 +504,13 @@ xpathBaseURI(xmlXPathParserContextPtr ctxt, int nargs)
 	doc = ctxt->context->doc;
     } else {
 	xmlXPathObjectPtr obj = valuePop(ctxt);
-	if(obj->type != XPATH_NODESET) 
+	if(obj->type != XPATH_NODESET)
 	    return;
 
 	xmlNodePtr node = obj->nodesetval->nodeTab[0];
 	doc = node->doc;
     }
-    xmlXPathReturnString(ctxt, xmlStrdup((doc && doc->URL) ? doc->URL : ""));
+    xmlXPathReturnString(ctxt, xmlStrdup((doc && doc->URL) ? doc->URL : (const xmlChar *) ""));
 }
 
 
@@ -534,11 +523,11 @@ xpathExtreme(xmlXPathParserContextPtr ctxt, int nargs, int isMax)
     if(nargs < 1)
 	return;
 
-    float ans  = 0;
+    double ans  = 0.;
     int set = 0;
     int i, a;
     xmlXPathObjectPtr obj;
-    double tmp;
+    double tmp = 0.0;
     for(a = 0; a < nargs; a++) {
 	obj = valuePop(ctxt);
 	if(obj->type == XPATH_NODESET) {
@@ -583,14 +572,14 @@ xpathGrepl(xmlXPathParserContextPtr ctxt, int nargs)
     if(nargs < 2)
 	return;
 
-    xmlChar *pattern = xmlXPathPopString(ctxt); 
-    xmlChar *input = xmlXPathPopString(ctxt); 
+    xmlChar *pattern = xmlXPathPopString(ctxt);
+    xmlChar *input = xmlXPathPopString(ctxt);
 
     SEXP e = Rf_allocVector(LANGSXP, 3);
     PROTECT(e);
     SETCAR(e, Rf_install("grepl"));
-    SETCAR(CDR(e), ScalarString(mkChar(pattern)));
-    SETCAR(CDR(CDR(e)), ScalarString(mkChar(input)));
+    SETCAR(CDR(e), ScalarString(mkChar( (const char *) pattern)));
+    SETCAR(CDR(CDR(e)), ScalarString(mkChar( (const char *) input)));
 
     SEXP ans = Rf_eval(e, R_GlobalEnv);
 
@@ -604,21 +593,21 @@ xpathReplace(xmlXPathParserContextPtr ctxt, int nargs)
     if(nargs < 3)
 	return;
 
-    xmlChar *replacement = xmlXPathPopString(ctxt); 
-    xmlChar *pattern = xmlXPathPopString(ctxt); 
-    xmlChar *input = xmlXPathPopString(ctxt); 
+    xmlChar *replacement = xmlXPathPopString(ctxt);
+    xmlChar *pattern = xmlXPathPopString(ctxt);
+    xmlChar *input = xmlXPathPopString(ctxt);
 
     SEXP e = Rf_allocVector(LANGSXP, 4);
     PROTECT(e);
     SEXP cur = e;
     SETCAR(e, Rf_install("gsub")); cur = CDR(cur);
-    SETCAR(cur, ScalarString(mkChar(pattern))); cur = CDR(cur);
-    SETCAR(cur, ScalarString(mkChar(replacement))); cur = CDR(cur);
-    SETCAR(cur, ScalarString(mkChar(input))); 
+    SETCAR(cur, ScalarString(mkChar( (const char *) pattern))); cur = CDR(cur);
+    SETCAR(cur, ScalarString(mkChar( (const char *) replacement))); cur = CDR(cur);
+    SETCAR(cur, ScalarString(mkChar( (const char *) input)));
 
     SEXP ans = Rf_eval(e, R_GlobalEnv);
 
-    xmlXPathReturnString(ctxt, xmlStrdup(CHAR(STRING_ELT(ans, 0))));
+    xmlXPathReturnString(ctxt, xmlStrdup( (const xmlChar *) CHAR(STRING_ELT(ans, 0))));
     UNPROTECT(1);
 }
 
@@ -637,7 +626,7 @@ convertXPathVal(xmlXPathObjectPtr xval)
 	ans = ScalarReal(xval->floatval);
 	break;
     case XPATH_STRING:
-	ans = ScalarString(mkChar(xval->stringval));
+	ans = ScalarString(mkChar( (const char *) xval->stringval));
 	break;
     case XPATH_NODESET:
       {
@@ -648,13 +637,12 @@ convertXPathVal(xmlXPathObjectPtr xval)
       }
 	break;
     default:
-	PROBLEM "converting an XPath type %d to R not supported now", xval->type
-	    WARN;
+	Rf_warning("converting an XPath type %d to R not supported now", xval->type);
     }
     return(ans);
 }
 
-void 
+void
 R_pushResult(xmlXPathParserContextPtr ctxt, SEXP ans)
 {
     switch(TYPEOF(ans)) {
@@ -668,11 +656,10 @@ R_pushResult(xmlXPathParserContextPtr ctxt, SEXP ans)
 	xmlXPathReturnNumber(ctxt, REAL(ans)[0]);
 	break;
     case STRSXP:
-	xmlXPathReturnString(ctxt, xmlStrdup(CHAR(STRING_ELT(ans, 0))));
+	xmlXPathReturnString(ctxt, xmlStrdup((const xmlChar *) CHAR(STRING_ELT(ans, 0))));
 	break;
     default:
-	PROBLEM "R type not supported as result of XPath function"
-	    ERROR;
+	Rf_error("R type not supported as result of XPath function");
     }
 }
 
@@ -691,11 +678,11 @@ R_callGenericXPathFun(xmlXPathParserContextPtr ctxt, int nargs, SEXP fun)
     for(int i = nargs ; i > 0; i--) {
         /* The arguments are on the stack with the last on the top, second to last next, and so on.
            So we have to add them to our expression starting at the end. */
-	cur = e; 
+	cur = e;
 	for(j = 0 ; j < i; j++)  cur = CDR(cur);
 
 	tmp = valuePop(ctxt);
-	SETCAR(cur, convertXPathVal(tmp)); 
+	SETCAR(cur, convertXPathVal(tmp));
 	xmlXPathFreeObject(tmp);
     }
 
@@ -716,7 +703,7 @@ R_genericAnonXPathFun(xmlXPathParserContextPtr ctxt, int nargs)
     int i, n = Rf_length(R_AnonXPathFuns);
     SEXP names = GET_NAMES(R_AnonXPathFuns);
     for(i = 0; i < n; i++) {
-	if(strcmp(ctxt->context->function, CHAR(STRING_ELT(names, i))) == 0) {
+	if(strcmp((const char *) ctxt->context->function, CHAR(STRING_ELT(names, i))) == 0) {
 	    R_callGenericXPathFun(ctxt, nargs, VECTOR_ELT(R_AnonXPathFuns, i));
 	    return;
 	}
@@ -726,7 +713,7 @@ R_genericAnonXPathFun(xmlXPathParserContextPtr ctxt, int nargs)
 void
 R_genericXPathFun(xmlXPathParserContextPtr ctxt, int nargs)
 {
-    SEXP f = Rf_install(ctxt->context->function);
+    SEXP f = Rf_install( (const char *) ctxt->context->function);
     PROTECT(f);
     R_callGenericXPathFun(ctxt, nargs, f);
     UNPROTECT(1);

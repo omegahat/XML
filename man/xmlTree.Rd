@@ -8,9 +8,9 @@ spirit as \code{\link{xmlOutputBuffer}}
 and \code{\link{xmlOutputDOM}}
 but that uses the internal structures of
 libxml.
-This can be used to create a DOM that can be 
+This can be used to create a DOM that can be
 constructed in R and exported to another system
-such as XSLT (\url{http://www.omegahat.net/Sxslt})
+such as XSLT (\url{http://github.com/omegahat/Sxslt})
 }
 \usage{
 xmlTree(tag, attrs = NULL, dtd=NULL, namespaces=list(),
@@ -31,7 +31,7 @@ xmlTree(tag, attrs = NULL, dtd=NULL, namespaces=list(),
     character vector.}
   \item{dtd}{the name of the external DTD for this document.
     If specified, this adds the DOCTYPE node to the resulting document.
-    This can be a node created earlier with a call to 
+    This can be a node created earlier with a call to
     \code{\link{newXMLDTDNode}}, or alternatively it can be a
     character vector with 1, 2 or 3 elements
     giving the name of the top-level node, and the public identifier
@@ -58,10 +58,10 @@ An object of class
 \code{XMLInternalDOM}
 that extends \code{XMLOutputStream}
 and has the same interface (i.e. ``methods'') as
-\code{\link{xmlOutputBuffer}} 
+\code{\link{xmlOutputBuffer}}
 and \code{\link{xmlOutputDOM}}.
-Each object has methods for 
-adding a new XML tag, 
+Each object has methods for
+adding a new XML tag,
 closing a tag, adding an XML comment,
 and retrieving the contents of the tree.
 \item{addTag}{create a new tag at the current position,
@@ -72,15 +72,15 @@ making its parent the active element into
 which new nodes will be added.}
 \item{addComment}{add an XML comment node
 as a child of the active node in the document.}
-\item{value}{retrieve an object representing the 
+\item{value}{retrieve an object representing the
 XML tree. See \code{\link{saveXML}} to serialize the
 contents of the tree.}
 \item{add}{degenerate method in this context.}
 }
 
 
-\references{\url{http://www.w3.org/XML}, \url{http://www.xmlsoft.org},
-\url{http://www.omegahat.net}  }
+\references{\url{https://www.w3.org/XML}, \url{http://www.xmlsoft.org},
+   \url{https://github.com/omegahat/XML}  }
 \author{ Duncan Temple Lang }
 
 \note{This is an early version of this function and I need to iron out some

@@ -8,7 +8,7 @@
 \description{
  These functions allow one to create XML nodes
 as are created in C code when reading XML documents.
-Trees of XML nodes can be constructed and 
+Trees of XML nodes can be constructed and
 integrated with other trees generated manually
 or with via the parser.
 }
@@ -32,11 +32,11 @@ xmlCommentNode(text)
    in an existing list.  The \dots mechanism is for use when the
     children are specified directly and individually.
  }
-  \item{attrs}{A named character vector giving the 
+  \item{attrs}{A named character vector giving the
      name, value pairs of attributes for this XML node.}
   \item{value}{This is the text that is to be used when forming
      an \code{XMLTextNode}.}
-    \item{cdata}{a logical value which controls whether the text 
+    \item{cdata}{a logical value which controls whether the text
      being used for the child node is to be first
       enclosed within a CDATA node to escape special characters such
       as \code{>} and \code{&}.
@@ -44,7 +44,7 @@ xmlCommentNode(text)
   \item{namespace}{The XML namespace identifier for this node.}
   \item{namespaceDefinitions}{a collection of name space definitions, containing the prefixes and the corresponding URIs.
     This is most conveniently specified as a character vector whose names attribute is the vector of prefixes
-   and whose values are the URIs.  Alternatively, one can provide a list of name space definition objects 
+   and whose values are the URIs.  Alternatively, one can provide a list of name space definition objects
    such as those returned}
   \item{sys}{the name of the system for which the processing instruction
     is targeted. This is the value that appears in the
@@ -55,7 +55,7 @@ xmlCommentNode(text)
      This provides the  character-expanded
      entity pairings of 'character = entity' , e.g. '<' = "lt" which are
      used to make the content valid XML
-     so that it can be used within a text node.  
+     so that it can be used within a text node.
      The text searched sequentially
      for instances of each character in the names and each instance is
      replaced with the corresponding '&entity;' }
@@ -68,7 +68,7 @@ The fields or slots that objects
 of these classes have
 include
 \code{name}, \code{attributes}, \code{children} and \code{namespace}.
-However, one should 
+However, one should
 the accessor functions
 \code{\link{xmlName}},
 \code{\link{xmlAttrs}},
@@ -76,12 +76,12 @@ the accessor functions
 and
 \code{\link{xmlNamespace}}
 }
-\references{\url{http://www.w3.org/XML}, \url{http://www.jclark.com/xml},
-\url{http://www.omegahat.net}  }
+\references{\url{https://www.w3.org/XML}, \url{http://www.jclark.com/xml},
+\url{https://github.com/omegahat/XML}  }
 \author{ Duncan Temple Lang }
 
 \seealso{
- \code{\link{addChildren}}  
+ \code{\link{addChildren}}
  \code{\link{xmlTreeParse}}
  \code{\link{asXMLNode}}
  \code{\link{newXMLNode}}
@@ -108,10 +108,10 @@ and
  xmlAttrs(a) = c(a = 1, b = "a string", append = FALSE)
 
  newXMLNamespace(a, c("r" = "http://www.r-project.org"))
- xmlAttrs(a) = c("r:class" = "character") 
+ xmlAttrs(a) = c("r:class" = "character")
 
 
- xmlAttrs(a[[1]]) = c("r:class" = "character") 
+ xmlAttrs(a[[1]]) = c("r:class" = "character")
 
 
   # Using a character vector as a namespace definitions

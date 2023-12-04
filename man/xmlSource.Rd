@@ -19,7 +19,7 @@
 
 \title{Source the R code, examples, etc. from an XML document}
 \description{
-  This is the equivalent of a smart \code{\link[base]{source}}
+  This is the equivalent of a smart \code{\link{source}}
   for extracting the R code elements from an XML document and
   evaluating them. This allows for a \dQuote{simple} way to collect
   R functions definitions or a sequence of (annotated) R code segments in an XML
@@ -36,14 +36,14 @@
   This is a convenient way to annotate code in a rich way
   and work with source files in a new and potentially more effective
   manner.
-  
+
   \code{xmlSourceFunctions} provides a convenient way to read only
   the function definitions, i.e. the \code{<r:function>} nodes.
   We can restrict to a subset by specifying the node ids of interest.
 
   \code{xmlSourceSection} allows us to evaluate the code in one or more
   specific sections.
-  
+
   This style of authoring code supports mixed language support
   in which we put, for example, C and R code together in the same
   document.
@@ -60,7 +60,7 @@
   separated \code{id} values as if they had been specified via the
   argument \code{ids} to this function.
 
-  
+
   We can also use XSL to extract the code. See \code{getCode.xsl}
   in the Omegahat XSL collection.
 
@@ -82,7 +82,7 @@ xmlSource(url, ...,
           force = FALSE)
 xmlSourceFunctions(doc, ids = character(), parse = TRUE, ...)
 xmlSourceSection(doc, ids = character(),
-                 xnodes = c(".//r:function", ".//r:init[not(@eval='false')]", 
+                 xnodes = c(".//r:function", ".//r:init[not(@eval='false')]",
                             ".//r:code[not(@eval='false')]",
                             ".//r:plot[not(@eval='false')]"),
                  namespaces = DefaultXPathNamespaces, ...)
@@ -150,7 +150,7 @@ xmlSourceSection(doc, ids = character(),
    code segments are being evaluated is displayed on the console.
    \code{echo} controls whether code is displayed, but this controls
    whether additional informatin is also displayed.
-   See \code{\link[base]{source}}.
+   See \code{\link{source}}.
   }
   \item{xnodes}{a character vector.  This is a collection of xpath
     expressions given as individual strings which find the
@@ -164,14 +164,14 @@ xmlSourceSection(doc, ids = character(),
     but the prefixes are local to the XPath expression.
     The default provides mappings for the prefixes "r", "omg",
     "perl", "py", and so on. See \code{XML:::DefaultXPathNamespaces}.
-  }    
- \item{section}{a vector of numbers or  strings.  This allows the caller to 
-   specify that the function should only look for R-related 
+  }
+ \item{section}{a vector of numbers or  strings.  This allows the caller to
+   specify that the function should only look for R-related
   nodes within the specified section(s). This is useful
   for being able to easily  process only the code in a particular subset of the document
   identified by a DocBook \code{section} node.  A string value is used to
     match  the \code{id} attribute of the \code{section} node.
-   A number (assumed to be an integer) is used to index the set of 
+   A number (assumed to be an integer) is used to index the set of
   \code{section} nodes. These amount to XPath expressions of the form
   \code{//section[number]} and \code{//section[@id = string]}.
   }
@@ -208,7 +208,7 @@ xmlSourceSection(doc, ids = character(),
 \value{
   An R object (typically a list) that contains the results of
   evaluating the content of the different selected code segments
-  in the XML document.  We use \code{\link[base]{sapply}} to
+  in the XML document.  We use \code{\link{sapply}} to
   iterate over the nodes and so If the results of all the nodes
   A list giving the pairs of expressions and evaluated objects
   for each of the different XML elements processed.

@@ -1,7 +1,7 @@
 \name{getHTMLLinks}
 \alias{getHTMLLinks}
 \alias{getHTMLExternalFiles}
-\title{Get links or names of external files in HTML document} 
+\title{Get links or names of external files in HTML document}
 \description{
   These functions allow us to retrieve either the links
   within an HTML document, or the collection of names of
@@ -9,7 +9,7 @@
   The external files include images, JavaScript and CSS documents.
 }
 \usage{
-getHTMLLinks(doc, externalOnly = TRUE, xpQuery = "//a/@href",
+getHTMLLinks(doc, externalOnly = TRUE, xpQuery = "//a[@href]",
                baseURL = docName(doc), relative = FALSE)
 getHTMLExternalFiles(doc, xpQuery = c("//img/@src", "//link/@href",
                                       "//script/@href", "//embed/@src"),
@@ -48,14 +48,18 @@ getHTMLExternalFiles(doc, xpQuery = c("//img/@src", "//link/@href",
 Duncan Temple Lang
 }
 \seealso{
-  \code{\link{getXIncludes}}
+  \code{\link{getXIncludes}},
+  \code{\link{getRelativeURL}}
 }
 \examples{
-  getHTMLLinks("http://www.omegahat.net")
 
-  getHTMLLinks("http://www.omegahat.net/RSXML")
+  f = system.file("examples/index.html", package = "XML")
+  getHTMLLinks(f)
 
-  unique(getHTMLExternalFiles("http://www.omegahat.net"))
+  txt = readLines("https://www.r-project.org")
+  getHTMLLinks(txt)
+
+  unique(getHTMLExternalFiles(txt))
 }
 \keyword{IO}
 \keyword{programming}

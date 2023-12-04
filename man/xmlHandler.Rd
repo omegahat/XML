@@ -7,7 +7,7 @@
  and some tag-specific functions to illustrate how one can
  add functions for specific DTDs and XML element types.
  Contains a local \link{list} which can be mutated
- by invocations of the closure's function. 
+ by invocations of the closure's function.
 }
 \usage{
 xmlHandler()
@@ -26,14 +26,15 @@ xmlHandler()
 
 \examples{
 \dontrun{
-xmlURL <- "http://www.omegahat.net/Scripts/Data/mtcars.xml"
+xmlURL <- "https://raw.githubusercontent.com/omegahat/XML/master/inst/exampleData/mtcars.xml"
 xmlText <- paste(scan(xmlURL, what="", sep="\n"),"\n",collapse="\n")
+xmlEventParse(xmlText, xmlHandler(), useTagName = TRUE, asText = TRUE)
 }
 
-xmlURL <- system.file("exampleData", "mtcars.xml", package="XML")
-xmlText <- paste(readLines(xmlURL), "\n", collapse="")
-xmlEventParse(xmlText, handlers = NULL, asText=TRUE)
-xmlEventParse(xmlText, xmlHandler(), useTagName=TRUE, asText=TRUE)
+xmlURL <- system.file("exampleData/mtcars.xml", package = "XML")
+xmlText <- paste(readLines(xmlURL), "\n", collapse = "")
+xmlEventParse(xmlText, handlers = NULL, asText = TRUE)
+xmlEventParse(xmlText, xmlHandler(), useTagName = TRUE, asText = TRUE)
 }
 \keyword{file}
 \keyword{IO}

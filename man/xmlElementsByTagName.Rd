@@ -11,7 +11,7 @@ xmlElementsByTagName(el, name, recursive = FALSE)
 }
 \arguments{
   \item{el}{the node whose matching children are to be retrieved.}
-  \item{name}{a string giving the name of the tag to match in each of 
+  \item{name}{a string giving the name of the tag to match in each of
     \code{el}'s children.}
   \item{recursive}{a logical value. If this is \code{FALSE}, the
     default, only the direct child nodes are searched.
@@ -20,7 +20,7 @@ xmlElementsByTagName(el, name, recursive = FALSE)
     we find all descendants of the node \code{el}
     and return a list with the nodes having the given name.
     The relationship between the nodes in the resulting list
-    cannot be determined. This is a set of nodes. See the note. 
+    cannot be determined. This is a set of nodes. See the note.
   }
 }
 \details{
@@ -32,7 +32,7 @@ xmlElementsByTagName(el, name, recursive = FALSE)
 \note{
   The addition of the \code{recursive} argument makes this
   function behave like the \code{getElementsByTagName}
-  in other language APIs such as Java, C\#.
+  in other language APIs such as Java, C\code{#}.
   However, one should be careful to understand that
   in those languages, one would get back a set of
   node objects. These nodes have references to their

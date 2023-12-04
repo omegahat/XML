@@ -9,7 +9,7 @@
   directory on our local machine and then not have to
   modify any of the documents if we move the local files to another
   directory, e.g. install a new version in an alternate directory.
-   
+
   This function provides a mechanism to query the catalog to
   resolve a URI, PUBLIC or SYSTEM identifier.
 
@@ -44,7 +44,7 @@ catalogResolve(id, type = "uri", asIs = FALSE, debug = FALSE)
 }
 \references{
   \url{http://www.xmlsoft.org}
-  \url{http://www.sagehill.net/docbookxsl/Catalogs.html} provides a short, succinct tutorial on catalogs. 
+  \url{http://www.sagehill.net/docbookxsl/Catalogs.html} provides a short, succinct tutorial on catalogs.
 }
 \author{Duncan Temple Lang}
 

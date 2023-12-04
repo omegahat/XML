@@ -27,11 +27,13 @@ xmlToS4(node, obj = new(xmlName(node)), ...)
 \author{Duncan Temple Lang}
 
 \seealso{
- \code{\link{makeClassTemplate}}  
+ \code{\link{makeClassTemplate}}
 }
+
+% need to paste rather than have a long string because of the R documentation system
 \examples{
- txt = "<doc><part><name>ABC</name><type>XYZ</type><cost>3.54</cost>
-<status>available</status></part></doc>"
+ txt = paste0("<doc><part><name>ABC</name><type>XYZ</type><cost>3.54</cost>",
+              "<status>available</status></part></doc>")
 
  doc = xmlParse(txt)
 

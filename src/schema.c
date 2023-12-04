@@ -13,18 +13,16 @@ name(SEXP obj) \
 { \
    SEXP ref = GET_SLOT(obj, Rf_install("ref")); \
    if(TYPEOF(ref) != EXTPTRSXP) { \
-      PROBLEM "Expected external pointer object" \
-      ERROR; \
+       Rf_error("Expected external pointer object"); \
    } \
 \
    if(R_ExternalPtrTag(ref) != Rf_install(#type)) { \
-      PROBLEM "Expected external pointer to have internal tag %s, got %s",  \
-               #type, PRINTNAME(ref) \
-      ERROR; \
+      Rf_error("Expected external pointer to have internal tag %s, got %s", \
+               #type, PRINTNAME(ref)); \
    } \
 \
    return((type) R_ExternalPtrAddr(ref)); \
-} 
+}
 
 
 R_GET_EXTERNAL_REF(xmlHashTablePtr, R_libxmlTypeTableGetRef)
@@ -33,30 +31,25 @@ R_GET_EXTERNAL_REF(xmlSchemaElementPtr, R_libxmlSchemaElementGetRef)
 
 
 void *
-R_getExternalRef(SEXP obj, const char *className) 
+R_getExternalRef(SEXP obj, const char *className)
 {
-   SEXP ref = GET_SLOT(obj, Rf_install("ref")); 
+   SEXP ref = GET_SLOT(obj, Rf_install("ref"));
    void *ans;
 
-   if(TYPEOF(ref) != EXTPTRSXP) { 
-      PROBLEM "Expected external pointer object" 
-      ERROR; 
-   } 
+   if(TYPEOF(ref) != EXTPTRSXP) 
+       Rf_error("Expected external pointer object");
 
-   if(className && R_ExternalPtrTag(ref) != Rf_install(className)) { 
-      PROBLEM "Expected external pointer to have internal tag %s, got %s",  
-  	     className, CHAR(PRINTNAME(R_ExternalPtrTag(ref)))
-      ERROR; 
-   } 
-
-   ans = R_ExternalPtrAddr(ref);
-   if(!ans) {
-       PROBLEM "Got NULL value in reference for %s", className
-       ERROR;
+   if(className && R_ExternalPtrTag(ref) != Rf_install(className)) {
+       Rf_error("Expected external pointer to have internal tag %s, got %s",
+		className, CHAR(PRINTNAME(R_ExternalPtrTag(ref))));
    }
 
-   return(ans); 
-} 
+   ans = R_ExternalPtrAddr(ref);
+   if(!ans) 
+       Rf_error("Got NULL value in reference for %s", className);
+
+   return(ans);
+}
 
 
 
@@ -107,7 +100,7 @@ R_libxmlTypeTable_names(USER_OBJECT_ table, USER_OBJECT_ s_elType)
    }
    xmlHashScan(t, getKeys, &d);
 
-   if(getElements) 
+   if(getElements)
      SET_NAMES(d.els, d.names);
    else
       d.els = d.names;
@@ -125,7 +118,7 @@ R_libxmlTypeTable_lookup(USER_OBJECT_ table, USER_OBJECT_ name, USER_OBJECT_ s_e
    void *p;
 
    t = R_getExternalRef(table, NULL); /* R_libxmlTypeTableGetRef(table); */
-   p = xmlHashLookup(t, CHAR_TO_CONST_XMLCHAR( CHAR_DEREF(STRING_ELT(name, 0))) );
+   p = xmlHashLookup(t, (const xmlChar *)  CHAR_DEREF(STRING_ELT(name, 0)) );
    ans = R_makeRefObject(p, CHAR_DEREF(STRING_ELT(s_elType, 0)));
 
    return(ans);
@@ -140,7 +133,7 @@ R_libxmlTypeTable_##id(USER_OBJECT_ s) \
    schema = R_getExternalRef(s, "xmlSchemaRef"); \
 \
    return(schema->id != NULL ? R_makeRefObject(schema->id, type) : R_NilValue);	\
-} 
+}
 
 SchemaElement(elemDecl, "SchemaElementTable")
 SchemaElement(typeDecl, "SchemaTypeTable")
@@ -199,7 +192,7 @@ R_schemaValidityWarningFunc(R_SchemaValidCallback *ctx, const char *msg, ...)
 }
 
 
-SEXP 
+SEXP
 RS_XML_xmlSchemaValidateDoc(SEXP r_schema, SEXP r_doc, SEXP r_options, SEXP r_errorHandlers)
 {
     xmlSchemaValidCtxtPtr ctxt;
@@ -219,13 +212,13 @@ RS_XML_xmlSchemaValidateDoc(SEXP r_schema, SEXP r_doc, SEXP r_options, SEXP r_er
 	R_SchemaValidCallback cbinfo;
 	PROTECT(cbinfo.fun = allocVector(LANGSXP, 2));
 	SETCAR(cbinfo.fun, VECTOR_ELT(r_errorHandlers, 0));
-	xmlSchemaSetValidErrors(ctxt, (xmlSchemaValidityErrorFunc) R_schemaValidityErrorFunc, 
+	xmlSchemaSetValidErrors(ctxt, (xmlSchemaValidityErrorFunc) R_schemaValidityErrorFunc,
                                       (xmlSchemaValidityWarningFunc) R_schemaValidityWarningFunc, &cbinfo);
     }
 
     status = xmlSchemaValidateDoc(ctxt, doc);
     xmlSchemaFreeValidCtxt(ctxt); /* R_alloc this if possible. */
-    if(numErrHandlers > 0) 
+    if(numErrHandlers > 0)
 	UNPROTECT(1);
 
     return(ScalarInteger(status));
@@ -249,7 +242,7 @@ RS_XML_xmlSchemaNewValidCtxt(SEXP r_schema, SEXP r_options, SEXP r_errorHandlers
 	cbinfo->fun = VECTOR_ELT(r_errorHandlers);
 	xmlSchemaSetValidErrors(routine);
     }
-    
+
     return();
 }
 #endif

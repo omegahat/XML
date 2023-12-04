@@ -12,9 +12,9 @@
  collect the errors and warnings from the schema validation  operation.
 }
 \usage{
-xmlSchemaValidate(schema, doc, 
-                                 errorHandler = xmlErrorFun(),
-                                  options = 0L)
+xmlSchemaValidate(schema, doc,
+                  errorHandler = xmlErrorFun(),
+                  options = 0L)
 
 schemaValidationErrorHandler()
 }

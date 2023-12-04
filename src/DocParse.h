@@ -6,7 +6,7 @@
 #define XMLPARSE_H
 
 #include <ctype.h>
-#include <stdlib.h> 
+#include <stdlib.h>
 
 #include "RSCommon.h"
 

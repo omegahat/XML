@@ -48,16 +48,16 @@ entityDeclaration.SAX(name, base, sysId, publicId, notationName,  .state = NULL)
     should dispatch.}
   \item{where}{the package in which the class and method definitions
     should be defined. This is almost always unspecified.}
-  
+
 }
 \value{
   Each method should return the (potentially modified)
   state value.
 }
-\references{\url{http://www.w3.org/XML}, \url{http://www.xmlsoft.org}}
+\references{\url{https://www.w3.org/XML}, \url{http://www.xmlsoft.org}}
 \author{Duncan Temple Lang}
 \note{ This no longer requires the Expat XML parser to be installed.
-Instead, we use libxml's SAX parser.}
+       Instead, we use libxml's SAX parser.}
 
 \seealso{
 \code{\link{xmlEventParse}}

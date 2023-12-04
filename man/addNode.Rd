@@ -13,7 +13,7 @@
   is directly mutable without requiring reassignment,
   i.e. the changes do not induce a new copy of the original tree object.
   DOM trees which are lists of lists of lists do not fall into this category.
-  
+
   }
 \usage{
 addNode(node, parent, to, ...)
@@ -23,7 +23,7 @@ addNode(node, parent, to, ...)
   \item{node}{the node to be added as a child of the parent.}
   \item{parent}{the parent node or identifier}
   \item{to}{the tree object}
-  \item{\dots}{additional arguments that are understood by the different methods for the different types of 
+  \item{\dots}{additional arguments that are understood by the different methods for the different types of
    trees/nodes. These can include \code{attrs}, \code{namespace}, \code{namespaceDefinitions},
     \code{.children}.}
 }
@@ -33,14 +33,14 @@ addNode(node, parent, to, ...)
   coerced to be compatible with a flat tree, i.e. has an id and the
   host tree added to it.
 }
-\references{\url{http://www.w3.org} }
+\references{\url{https://www.w3.org} }
 \author{Duncan Temple Lang}
 
 
 
 \seealso{
   \code{\link{xmlHashTree}}
-  \code{\link{asXMLTreeNode}}  
+  \code{\link{asXMLTreeNode}}
 }
 \examples{
 
@@ -51,7 +51,7 @@ addNode(node, parent, to, ...)
   b = addNode(xmlNode("b"), top, tt)
   c = addNode(xmlNode("c"), b, tt)
   addNode(xmlNode("c"), top, tt)
-  addNode(xmlNode("c"), b, tt)    
+  addNode(xmlNode("c"), b, tt)
   addNode(xmlTextNode("Some text"), c, tt)
 
   xmlElementsByTagName(tt$top, "c")

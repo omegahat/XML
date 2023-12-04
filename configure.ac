@@ -129,7 +129,7 @@ if test -n "" ; then
   #XXX get the redirection correct
 "$R_HOME/bin/R" CMD SHLIB testRemoveFinalizers.c &> AS_MESSAGE_FD
 if test "$?" = 0 ;  then
- $R_HOME/bin/R --slave --vanilla < testRemoveFinalizers.R &> AS_MESSAGE_FD
+ $R_HOME/bin/R --no-echo --vanilla < testRemoveFinalizers.R &> AS_MESSAGE_FD
 fi
 
 if ! test "$?" = 0 ; then
@@ -759,6 +759,34 @@ AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 ]], [[
 	2 > XML_PARSE_BIG_LINES
 ]])],[PKG_CPPFLAGS="$PKG_CPPFLAGS -DHAVE_XML_PARSE_BIG_LINES=1"; echo "Version has XML_PARSE_BIG_LINES"],[echo "No XML_PARSE_BIG_LINES."])
+
+
+
+
+
+
+
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#ifdef FROM_GNOME_XML_DIR
+#include <gnome-xml/xmlsave.h>
+#else
+#include <libxml/xmlsave.h>
+#endif
+]], [[
+	xmlIndentTreeOutput = 1;
+]])],[PKG_CPPFLAGS="$PKG_CPPFLAGS -DHAVE_XMLSAVE_H=1"; echo "libxml2 has xmlsave.h and xmlIndentTreeOutput"],[echo "No xmlsave.h with xmlIndentTreeOutput"])
+
+
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#ifdef FROM_GNOME_XML_DIR
+#include <gnome-xml/xmlsave.h>
+#else
+#include <libxml/xmlsave.h>
+#endif
+]], [[
+       htmlDefaultSAXHandler.error = NULL;
+]])],[PKG_CPPFLAGS="$PKG_CPPFLAGS -DHAS_HTML_DEFAULT_SAX_HANDLER=1"; echo "libxml2 has htmlDefaultSAXHandler"],[echo "No htmlDefaultSAXHandler"])
+
 
 
 

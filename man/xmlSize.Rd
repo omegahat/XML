@@ -21,8 +21,9 @@ or XMLDocument.}
  an integer which is the \code{\link{length}}
  of the value from \code{\link{xmlChildren}}.
 }
-\references{\url{http://www.w3.org/XML}, \url{http://www.jclark.com/xml},
-\url{http://www.omegahat.net}  }
+\references{\url{https://www.w3.org/XML},
+            \url{http://www.jclark.com/xml},
+            \url{https://github.com/omegahat/XML}  }
 \author{ Duncan Temple Lang }
 
 \seealso{
@@ -33,7 +34,7 @@ or XMLDocument.}
 }
 
 \examples{
-  fileName <- system.file("exampleData", "mtcars.xml", package="XML") 
+  fileName <- system.file("exampleData", "mtcars.xml", package="XML")
   doc <- xmlTreeParse(fileName)
   xmlSize(doc)
   xmlSize(doc$doc$children[["dataset"]][["variables"]])

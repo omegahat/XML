@@ -19,13 +19,13 @@ For example, if given a node of the form
      </c>
   </x>
 }
-We would end up with a list with elements named "a", "b" and "c".
-"a" would be the string "text", b would contain the named character
+We would end up with a list with elements named \code{"a"}, \code{"b"} and \code{"c"}.
+\code{"a"} would be the string \code{"text"}, b would contain the named character
 vector \code{c(foo = "1")} (i.e. the attributes) and "c" would
-contain the list with two elements named "d" and ".attrs".
-The element corresponding to "d" is a
-character vector with the single element "a phrase". 
-The ".attrs" element of the list is the character vector of
+contain the list with two elements named \code{"d"} and \code{".attrs"}.
+The element corresponding to \code{"d"} is a
+character vector with the single element \dQuote{a phrase}.
+The \code{.attrs} element of the list is the character vector of
 attributes from the node \code{<c>...</c>}.
 }
 \usage{
@@ -34,7 +34,7 @@ xmlToList(node, addAttributes = TRUE, simplify = FALSE,
 }
 \arguments{
   \item{node}{the XML node or document to be converted to an R list.
-   This can be an "internal" or C-level node (i.e. \code{\link{XMLInternalNode-class}})
+   This can be an \dQuote{internal} or C-level node (i.e. \code{\link{XMLInternalNode-class}})
    or a regular R-level node (either \code{\link{XMLNode-class}} or \code{XMLHashNode}).}
   \item{addAttributes}{a logical value which controls whether the attributes of a node
     are added to the list as a character vector element named \code{.attrs},
@@ -71,7 +71,7 @@ xmlToList(node, addAttributes = TRUE, simplify = FALSE,
  accessing the content of XML nodes.
 }
 \examples{
-tt = 
+tt =
  '<x>
      <a>text</a>
      <b foo="1"/>
@@ -96,7 +96,7 @@ tt =
   v2 = xmlToList('<foo a="1" b="xyz"><f>123</f><g>2.2</g></foo>', TRUE)
 
    # add a and b as regular elements to the resulting list to get
-   #  f, g, a and b 
+   #  f, g, a and b
   v3 = xmlToList('<foo a="1" b="xyz"><f>123</f><g>2.2</g></foo>', TRUE, attributesAsElements = TRUE)
 }
 \keyword{IO}

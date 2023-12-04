@@ -11,7 +11,7 @@
   document}
 \description{
   This class is used to provide a handle/reference to a C-level
-  data structure that contains the information from parsing 
+  data structure that contains the information from parsing
   parsing XML content.
   This leaves the nodes in the DOM or tree as C-level nodes
   rather than converting them to explicit R \code{XMLNode}
@@ -42,13 +42,13 @@ Class \code{\linkS4class{oldClass}}, directly.
   an XPath expression.
 }
 \references{
- XPath  \url{http://www.w3.org/TR/xpath}
+ XPath \url{https://www.w3.org/TR/xpath}
 }
 \seealso{
 
   \code{\link{xmlTreeParse}}
   \code{\link{htmlTreeParse}}
-  \code{\link{getNodeSet}}  
+  \code{\link{getNodeSet}}
 }
 \examples{
 

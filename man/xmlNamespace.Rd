@@ -13,7 +13,7 @@ in which DTD (Document Type Definition) the definition of that element
 can be found.  This avoids the problem of having different document
 definitions using the same names for XML elements that have different
 meaning.
-To resolve the name space, i.e. 
+To resolve the name space, i.e.
  i.e. find out to where the identifier points,
 one can use the
 expression \code{xmlNamespace(xmlRoot(doc))}.
@@ -41,16 +41,16 @@ namespace.}
 \item{uri}{the URI or location that defines this namespace.}
 \item{local}{? (can't remember off-hand).}
 }
-\references{\url{http://www.w3.org/XML}, \url{http://www.jclark.com/xml},
-\url{http://www.omegahat.net}  }
-\author{ Duncan Temple Lang }
+\references{\url{https://www.w3.org/XML}, \url{http://www.jclark.com/xml},
+            \url{https://github.com/omegahat/XML}  }
+\author{Duncan Temple Lang}
 
 \seealso{
  \code{\link{xmlName}}
  \code{\link{xmlChildren}}
  \code{\link{xmlAttrs}}
  \code{\link{xmlValue}}
- \code{\link{xmlNamespaceDefinitions}} 
+ \code{\link{xmlNamespaceDefinitions}}
 }
 
 \examples{

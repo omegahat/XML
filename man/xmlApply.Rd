@@ -9,9 +9,9 @@
 \alias{xmlSApply.XMLDocumentContent}
 \title{Applies a function to each of the children of an XMLNode}
 \description{
- These methods are simple wrappers for the 
+ These methods are simple wrappers for the
  \code{\link{lapply}} and \code{\link{sapply}} functions.
- They operate on the 
+ They operate on the
  sub-nodes of the XML node, and not on the fields of the node object itself.
 }
 \usage{
@@ -33,19 +33,16 @@ xmlSApply(X, FUN, ...)
     \code{FUN}. This is passed directly to the relevant \code{\link{apply}} function.}
 }
 \value{
- The result is that obtained from calling 
+ The result is that obtained from calling
 the \code{\link{apply}} or \code{\link{sapply}}
 on \code{xmlChildren(x)}.
 }
 
 \references{
-  \url{http://www.w3.org/XML},
-  \url{http://www.jclark.com/xml},
-  \url{http://www.omegahat.net}
+  \url{https://www.w3.org/XML}
 }
 
 \author{Duncan Temple Lang}
-
 
 \seealso{
  \code{\link{xmlChildren}}

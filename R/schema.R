@@ -53,12 +53,12 @@ SchemaRefFields = c("name", "targetNamespace", "version", "id",
 setMethod("$", "xmlSchemaRef",
            function(x, name) {
 
-            idx = pmatch(name, SchemaRefFields)
-            if(is.na(idx))
-              stop("No field ", name, " in ", paste(SchemaRefFields, collapse = ", "))
+               idx = pmatch(name, SchemaRefFields)
+               if(is.na(idx))
+                   stop("No field ", name, " in ", paste(SchemaRefFields, collapse = ", "))
 
-            sym = paste("R_libxmlTypeTable", SchemaRefFields[idx], sep = "_")
-            .Call(sym,  x, PACKAGE = "XML")
+               sym = paste("R_libxmlTypeTable", SchemaRefFields[idx], sep = "_")
+               .Call(sym,  x, PACKAGE = "XML")
            })
 
 setMethod("names", "xmlSchemaRef", function(x) SchemaRefFields)

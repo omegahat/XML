@@ -12,7 +12,7 @@ append.xmlNode(to, ...)
 \arguments{
   \item{to}{the XML node to which the sub-nodes are to be added.}
   \item{\dots}{the sub-nodes which are to be added to the \code{to} node.
-   If this is a \code{list} of \code{XMLNode} objects (e.g. create by a call to 
+   If this is a \code{list} of \code{XMLNode} objects (e.g. create by a call to
    \code{\link{lapply}}), then that list is used.}
 }
 \value{
@@ -53,7 +53,7 @@ append.xmlNode(to, ...)
    # </record>
    # </data>
 
-
+\dontrun{
  n = xmlNode("data", attrs = c("numVars" = 2, numRecords = 3))
  n = append.xmlNode(n, xmlNode("varNames", xmlNode("string", "A"), xmlNode("string", "B")))
  n = append.xmlNode(n, xmlNode("record", "1.2 3.5"))
@@ -61,7 +61,7 @@ append.xmlNode(to, ...)
  n = append.xmlNode(n, xmlNode("record", "10.1 5.67"))
 
  print(n)
-
+}
 
 \dontrun{
    tmp <-  lapply(references, function(i) {

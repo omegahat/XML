@@ -8,7 +8,7 @@
   R. They also illustrate the basics which will allow others to
   provide customized error handlers that make more use of the
   information provided in each error reported.
- 
+
   The \code{xmlStructuredStop} function provides a simple R-level handler for errors
   raised by the XML parser.
   It collects the information provided by the XML parser and
@@ -17,7 +17,7 @@
   \code{error} argument of \code{\link{xmlTreeParse}},
   \code{\link{xmlTreeParse}} and \code{\link{htmlTreeParse}}.
 
-  The default is to use the function returned by a call to 
+  The default is to use the function returned by a call to
   \code{xmlErrorCumulator} as the error handler.
   This, as the name suggests, cumulates errors.
   The idea is to catch each error and let the parser continue
@@ -26,13 +26,13 @@
   If \code{immediate} is \code{TRUE}, the error is also reported on
   the console.
   When the parsing is complete and has failed, this function is
-  invoked again with a zero-length character vector as the 
+  invoked again with a zero-length character vector as the
   message (first argument) and then it raises an error.
   This function will then raise an R condition of class \code{class}.
 }
 \usage{
-xmlStructuredStop(msg, code, domain, line, col, level, filename, 
-                    class = "XMLError") 
+xmlStructuredStop(msg, code, domain, line, col, level, filename,
+                    class = "XMLError")
 xmlErrorCumulator(class = "XMLParserErrorList", immediate = TRUE)
 }
 \arguments{
@@ -50,19 +50,19 @@ xmlErrorCumulator(class = "XMLParserErrorList", immediate = TRUE)
     URL.}
   \item{class}{ character vector,  any classes to prepend to the class
     attribute to make the error/condition. These are prepended to those
-   returned via \code{\link[base]{simpleError}}.}
+   returned via \code{\link{simpleError}}.}
   \item{immediate}{logical value,  if  \code{TRUE} errors are
     displayed on the R console as they are encountered. Otherwise, the
   errors are collected and displayed at the end of the XML parsing.}
 }
 
 \value{
-  This calls \code{\link[base]{stop}} and so does not return a value.
+  This calls \code{\link{stop}} and so does not return a value.
 }
 \references{libxml2 and its error handling facilities (\url{http://xmlsoft.org}}
 \author{ Duncan Temple Lang}
 
-\seealso{ 
+\seealso{
  \code{\link{xmlTreeParse}}
  \code{\link{xmlInternalTreeParse}}
  \code{\link{htmlTreeParse}}
@@ -70,7 +70,7 @@ xmlErrorCumulator(class = "XMLParserErrorList", immediate = TRUE)
 \examples{
   tryCatch( xmlTreeParse("<a><b></a>", asText = TRUE, error = NULL),
                  XMLError = function(e) {
-                    cat("There was an error in the XML at line", 
+                    cat("There was an error in the XML at line",
                           e$line, "column", e$col, "\n",
                          e$message, "\n")
                 })

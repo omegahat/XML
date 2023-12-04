@@ -24,7 +24,7 @@ Collate: AAA.R
 	DTD.R
 	DTDClasses.R
 	DTDRef.R
-	SAXMethods.S
+	SAXMethods.R
 	XMLClasses.R
 	applyDOM.R
 	assignChild.R
@@ -35,10 +35,10 @@ Collate: AAA.R
 	flatTree.R
 	nodeAccessors.R
 	parseDTD.R
-	schema.S
+	schema.R
 	summary.R
 	tangle.R
-	toString.S
+	toString.R
 	tree.R
 	version.R
 	xmlErrorEnums.R

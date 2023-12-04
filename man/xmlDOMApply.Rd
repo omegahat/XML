@@ -11,7 +11,7 @@
  on the corresponding element
  of the original tree.
  The order in which the function is recursively applied
- is "bottom-up". In other words, 
+ is "bottom-up". In other words,
  function is first applied to each of the children
  nodes first and then to the  parent node
  containing the newly computed results for the children.
@@ -30,7 +30,7 @@ This is typically obtained by
 calling \code{\link{xmlRoot}} on the
 return value from \code{\link{xmlTreeParse}}.
 }
-  \item{func}{ 
+  \item{func}{
  the function to be applied to each node in the XML tree.
  This is passed the node object for the and the return
  value is inserted into the new tree that is to be returned
@@ -38,18 +38,18 @@ return value from \code{\link{xmlTreeParse}}.
  If the return value is \code{NULL}, this node is dropped from the tree.}
 }
 \details{
- This is a native (C code) implementation that 
+ This is a native (C code) implementation that
 understands the structure of an XML DOM returned
 from \code{\link{xmlTreeParse}} and iterates
 over the nodes in that tree.
 }
 \value{
- A tree that parallels the structure in the 
+ A tree that parallels the structure in the
 \code{dom} object passed to it.
 }
 \author{Duncan Temple Lang}
-\references{\url{http://www.w3.org/XML}, \url{http://www.jclark.com/xml},
-\url{http://www.omegahat.net}  }
+\references{\url{https://www.w3.org/XML}, \url{http://www.jclark.com/xml},
+            \url{https://github.com/omegahat/XML}  }
 \seealso{\link{xmlTreeParse}}
 
 \examples{
@@ -69,7 +69,7 @@ over the nodes in that tree.
  }
 
  h <- tagNames()
- xmlDOMApply(xmlRoot(dom), h$add) 
+ xmlDOMApply(xmlRoot(dom), h$add)
  h$tagNames()
 }
 \keyword{file}

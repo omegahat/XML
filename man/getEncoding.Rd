@@ -8,7 +8,7 @@
 \description{
  This function and its methods are intended to return the
  encoding of n XML .
- It is similar to \code{\link[base]{Encoding}} but currently
+ It is similar to \code{\link{Encoding}} but currently
  restricted to  XML nodes and documents.
 }
 \usage{

@@ -30,8 +30,8 @@
 \usage{
 xmlNamespaceDefinitions(x, addNames = TRUE, recursive = FALSE, simplify = FALSE, ...)
 xmlNamespaces(x, addNames = TRUE, recursive = FALSE,  simplify = FALSE, ...)
-getDefaultNamespace(doc, ns = xmlNamespaceDefinitions(doc, simplify = simplify),  
-                      simplify = FALSE) 
+getDefaultNamespace(doc, ns = xmlNamespaceDefinitions(doc, simplify = simplify),
+                      simplify = FALSE)
 }
 \arguments{
   \item{x}{the \code{XMLNode} object in which to find any namespace
@@ -50,12 +50,12 @@ getDefaultNamespace(doc, ns = xmlNamespaceDefinitions(doc, simplify = simplify),
     collected into a single "flat" list and so there may be duplicate
     names.
   }
- \item{simplify}{a logical value. If this is \code{TRUE}, 
+ \item{simplify}{a logical value. If this is \code{TRUE},
      a character vector of prefix-URI pairs is returned.
    This can be used directly in calls to functions such as
       \code{\link{xpathApply}}  and \code{\link{getNodeSet}}.
     The default value of \code{FALSE} returns a list
-    of name space definitions which also identify 
+    of name space definitions which also identify
    whether the definition is local to the particular node or inherited
    from an ancestor.
  }
@@ -74,13 +74,13 @@ getDefaultNamespace(doc, ns = xmlNamespaceDefinitions(doc, simplify = simplify),
   namespace definition. For default namespaces, i.e. those that have no
   prefix/alias, the name is \code{""}.
 }
-\references{\url{http://www.w3.org/XML}}
+\references{\url{https://www.w3.org/XML}}
 \author{ Duncan Temple Lang }
 
 \seealso{
   \code{\link{xmlTreeParse}}
   \code{\link{xmlAttrs}}
-  \code{\link{xmlGetAttr}}  
+  \code{\link{xmlGetAttr}}
 }
 \examples{
   f = system.file("exampleData", "longitudinalData.xml", package = "XML")

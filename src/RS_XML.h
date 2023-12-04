@@ -11,7 +11,7 @@
 
 #if 0
 #if 1
-#define XML_REF_COUNT_NODES 1   
+#define XML_REF_COUNT_NODES 1
 #else
 
 #ifdef XML_REF_COUNT_NODES

@@ -10,7 +10,7 @@
   relative to a base URI.
 
   The return value is an S3-style object of class \code{URI}.
-  
+
   This function uses libxml routines to perform the parsing.
 }
 \usage{
@@ -32,13 +32,14 @@ parseURI(uri)
          the bit after '?' of the form \code{name=value&name=value}}
   \item{fragment}{a string giving the coo}
   \item{port}{an integer identifying the port number on which the
-  connection is to be made}    
+  connection is to be made}
 }
 
 \seealso{
  \code{\link{getRelativeURL}}
 }
 \examples{
+\dontrun{
   parseURI("http://www.omegahat.net:8080/RCurl/index.html")
   parseURI("ftp://duncan@www.omegahat.net:8080/RCurl/index.html")
 
@@ -47,6 +48,7 @@ parseURI(uri)
   as(parseURI("http://duncan@www.omegahat.net:8080/RCurl/index.html#my_anchor"), "character")
 
   as(parseURI("ftp://duncan@www.omegahat.net:8080/RCurl/index.html?foo=1&bar=axd"), "character")
+}
 }
 \keyword{IO}
 \concept{URI}

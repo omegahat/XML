@@ -18,7 +18,7 @@
 
 
 
-void 
+void
 RS_XML(initParser)(XML_Parser parser, RS_XMLParserData *parserData)
 {
   XML_SetUserData(parser, parserData);
@@ -52,19 +52,15 @@ int RS_XML(parseWithParserData)(FILE *file, RS_XMLParserData *parserData)
     size_t len = fread(buf, 1, sizeof(buf), file);
     done = len < sizeof(buf);
     if (!XML_Parse(parser, buf, len, done)) {
-      PROBLEM 
-	      "%s at line %d\n",
-	      XML_ErrorString(XML_GetErrorCode(parser)),
-   	      XML_GetCurrentLineNumber(parser)
-        WARN;
-      return 1;
+	Rf_warning("%s at line %d\n",
+		   XML_ErrorString(XML_GetErrorCode(parser)),
+		   XML_GetCurrentLineNumber(parser));
+	return 1;
     }
   } while (!done);
   XML_ParserFree(parser);
   return 0;
 }
-
-
 
 int
 RS_XML(parseBufferWithParserData)(char *buf, RS_XMLParserData *parserData)
@@ -76,8 +72,7 @@ RS_XML(parseBufferWithParserData)(char *buf, RS_XMLParserData *parserData)
 
   if(status == 0) {
     const char *msg = XML_ErrorString(XML_GetErrorCode(parser));
-    PROBLEM "XML Parser Error: %s", msg
-    ERROR;
+    Rf_error( "XML Parser Error: %s", msg);
   }
 
   return(status);
@@ -85,9 +80,9 @@ RS_XML(parseBufferWithParserData)(char *buf, RS_XMLParserData *parserData)
 
 
 
-int 
-RS_XML(externalEntityHandler)(XML_Parser parser, const XML_Char *context, 
-                              const XML_Char *base, const XML_Char *systemId, 
+int
+RS_XML(externalEntityHandler)(XML_Parser parser, const XML_Char *context,
+                              const XML_Char *base, const XML_Char *systemId,
                                 const XML_Char *publicId)
 {
  RS_XMLParserData *parserData = (RS_XMLParserData*)XML_GetUserData(parser);
@@ -99,7 +94,7 @@ RS_XML(externalEntityHandler)(XML_Parser parser, const XML_Char *context,
 
   opArgs = NEW_LIST(num);
   for(i =0;i < num; i++) {
-    RECURSIVE_DATA(opArgs)[i] = NEW_CHARACTER(1); 
+    RECURSIVE_DATA(opArgs)[i] = NEW_CHARACTER(1);
     CHARACTER_DATA(RECURSIVE_DATA(opArgs)[i])[0] = ENC_COPY_TO_USER_STRING(xml_args[i] ? xml_args[i] : "");
   }
 
@@ -109,7 +104,7 @@ RS_XML(externalEntityHandler)(XML_Parser parser, const XML_Char *context,
 
 #else
 /* Something to avoid an empty file.*/
-void 
+void
 XML_Expat_unused_dummy(void)
 {
 }

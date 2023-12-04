@@ -13,7 +13,7 @@
  */
 
 
-#include "Utils.h"  
+#include "Utils.h"
 
 #include <ctype.h>  /* For isspace() */
 
@@ -34,7 +34,7 @@
 
 int isBlank(const char *str)
 {
-  int blank=0; 
+  int blank=0;
   const char *ptr = str;
   while(ptr && (blank = isspace(ptr[0]))) {
     ptr++;
@@ -98,7 +98,7 @@ RS_XML(treeApply)(USER_OBJECT_ rtree, USER_OBJECT_ function, USER_OBJECT_ args)
   Intercept the error handling by replacing it with a routine of the same name
   and have it print to a buffer. Then call the Warning handler. Then the warnings
   will end up in the local system, accessible via the warnings() function.
-  This allows them to be programmatically processed rather than having to process 
+  This allows them to be programmatically processed rather than having to process
   the output to the terminal (via catching it in a call sink()).
  */
 
@@ -106,7 +106,7 @@ RS_XML(treeApply)(USER_OBJECT_ rtree, USER_OBJECT_ function, USER_OBJECT_ args)
 
 #include <stdarg.h>
 
-void localXmlParserPrintFileInfo(xmlParserInputPtr input, char *buf);
+void localXmlParserPrintFileInfo(xmlParserInputPtr input, char *buf, int bufLen);
 
 
 #ifndef USE_LINKED_ERROR_HANDLER
@@ -114,7 +114,7 @@ void S_xmlParserError(void *ctx, const char *msg, ...)
 #else
 void xmlParserError(void *ctx, const char *msg, ...)
 #endif
-{ 
+{
   va_list args;
 
 #if 1
@@ -128,7 +128,7 @@ void xmlParserError(void *ctx, const char *msg, ...)
   memset(buf , '\0', sizeof(buf)/sizeof(buf[0]));
 
     /* Insert the file and line number. */
-  localXmlParserPrintFileInfo(ctxt->input, buf);
+  localXmlParserPrintFileInfo(ctxt->input, buf, 3000);
     /* Move to the end of the buffer's contents. */
   tmp = buf + strlen(buf);
 
@@ -136,45 +136,43 @@ void xmlParserError(void *ctx, const char *msg, ...)
     /* Write in the actual message. */
   vsprintf(tmp, msg, args);
   va_end(args);
-  PROBLEM "XML Parsing Error: %s", buf
-  WARN;
+  Rf_warning("XML Parsing Error: %s", buf);
 #endif
 }
 
 #ifndef USE_LINKED_ERROR_HANDLER
 /*
  Set the default error handlers in the libxml library
- 
+
 */
 void
 RSXML_setErrorHandlers()
 {
+#if LIBXMLVERSION < 21000    
    xmlDefaultSAXHandlerInit();
    htmlDefaultSAXHandlerInit();
-#if 0
-   docbDefaultSAXHandlerInit();
 #endif
 
    xmlDefaultSAXHandler.error = S_xmlParserError;
+
+#ifdef HAS_HTML_DEFAULT_SAX_HANDLER
    htmlDefaultSAXHandler.error = S_xmlParserError;
-#if 0
-   docbDefaultSAXHandler.error = S_xmlParserError;
 #endif
 }
 #endif
 
 
 /**
-    Write the file name and the current line number into the specified 
+    Write the file name and the current line number into the specified
     string.
  */
-void localXmlParserPrintFileInfo(xmlParserInputPtr input, char *buf) {
+void localXmlParserPrintFileInfo(xmlParserInputPtr input, char *buf, int bufLen) {
     if (input != NULL) {
 	if (input->filename)
-	    sprintf(buf, "%s:%d: ", input->filename,
+	    snprintf(buf, bufLen, "%s:%d: ", input->filename,
 		    input->line);
 	else
-	    sprintf(buf, "Entity: line %d: ", input->line);
+	    snprintf(buf, bufLen, "Entity: line %d: ", input->line);
     }
 }
 
@@ -213,21 +211,21 @@ int
 RS_XML(SetClassName)(const char *localClassName, USER_OBJECT_ target)
 {
     USER_OBJECT_ className;
-     PROTECT(className = NEW_CHARACTER(1)); 
+     PROTECT(className = NEW_CHARACTER(1));
 
        SET_STRING_ELT(className, 0, mkChar(localClassName));
        SET_CLASS(target, className);
      UNPROTECT(1);
- 
+
   return(1);
 }
 
 
 #if LIBXML2
-struct _xmlHashTable {     
-  struct _xmlHashEntry **table;    
-  int size; 
-}; 
+struct _xmlHashTable {
+  struct _xmlHashEntry **table;
+  int size;
+};
 #endif
 
 #if OWN_XML_HASH_SIZE
@@ -246,7 +244,7 @@ RS_XML(findFunction)(const char *opName, USER_OBJECT_ _userObject)
 {
   int i;
   USER_OBJECT_ fun = NULL;
- 
+
      /* Get the names of the list. */
   USER_OBJECT_ names = GET_NAMES(_userObject);
      /* lookup function in the names of the list */
@@ -257,27 +255,26 @@ RS_XML(findFunction)(const char *opName, USER_OBJECT_ _userObject)
       }
   }
   return(fun);
-}          
+}
 
 
 
 
-SEXP 
+SEXP
 R_makeRefObject(void *ref, const char *className)
 {
    SEXP klass, obj, sref;
 
    if(!ref) {
-      PROBLEM "NULL value for external reference"
-      WARN;
-      return(R_NilValue);
+       Rf_warning("NULL value for external reference");
+       return(R_NilValue);
    }
 
    PROTECT(klass = MAKE_CLASS((char *) className)); /* XXX define MAKE_CLASS with const */
    if(klass == R_NilValue) { /* Is this the right test? */
-      PROBLEM "Cannot find class %s for external reference", className
-      ERROR;
+       Rf_error("Cannot find class %s for external reference", className);
    }
+   
    PROTECT(obj = NEW_OBJECT(klass));
    PROTECT(sref = R_MakeExternalPtr(ref, Rf_install(className), R_NilValue));
 
@@ -298,14 +295,12 @@ R_parseURI(SEXP r_uri)
   SEXP ans, names;
   int i= 0;
   uri = xmlParseURI( CHAR( STRING_ELT( r_uri, 0 )));
-  if(!uri) {
-     PROBLEM "cannot parse URI %s", CHAR( STRING_ELT( r_uri, 0) )
-     ERROR;
-  }
+  if(!uri) 
+      Rf_error("cannot parse URI %s", CHAR( STRING_ELT( r_uri, 0) ));
 
   PROTECT(ans = NEW_LIST(8));
   PROTECT(names = NEW_CHARACTER(8));
- 
+
   copyStrField(scheme);
   copyStrField(authority);
   copyStrField(server);
@@ -317,7 +312,7 @@ R_parseURI(SEXP r_uri)
   SET_STRING_ELT(names, i, mkChar("port"));
 
   SET_NAMES(ans, names);
-  
+
   UNPROTECT(2);
   return(ans);
 }
@@ -342,11 +337,11 @@ RSXML_structuredStop(SEXP errorFun, xmlErrorPtr err)
 
     PROTECT(e = allocVector(LANGSXP, n));
 
-    SETCAR(e, errorFun != NULL && errorFun != R_NilValue ? errorFun :  Rf_install("xmlStructuredStop")); 
+    SETCAR(e, errorFun != NULL && errorFun != R_NilValue ? errorFun :  Rf_install("xmlStructuredStop"));
     ptr = CDR(e);
 
     if(err) {
-       SETCAR(ptr, mkString(err->message)); 
+       SETCAR(ptr, mkString(err->message));
        ptr= CDR(ptr);
        SETCAR(ptr, ScalarInteger(err->code));
        ptr= CDR(ptr);
@@ -360,7 +355,7 @@ RSXML_structuredStop(SEXP errorFun, xmlErrorPtr err)
        ptr= CDR(ptr);
        SETCAR(ptr, err->file ? mkString(err->file) : NEW_CHARACTER(0));
     } else {
-       SETCAR(ptr, NEW_CHARACTER(0));    
+       SETCAR(ptr, NEW_CHARACTER(0));
     }
 
     Rf_eval(e, R_GlobalEnv);
@@ -370,7 +365,7 @@ RSXML_structuredStop(SEXP errorFun, xmlErrorPtr err)
 }
 
 /*
- Because we call this function via Rf_eval(), we end up 
+ Because we call this function via Rf_eval(), we end up
  with an extra call on the stack when we enter recover.
  */
 SEXP
@@ -385,7 +380,7 @@ stop(const char *className, const char *msg, ...)
 /*    Rvsnprintf(buf, sizeof(buf)/sizeof(buf[0]), msg, ap); */
     vsnprintf(buf, sizeof(buf)/sizeof(buf[0]), msg, ap);
     va_end(ap);
-    
+
     PROTECT(error = mkString(buf));
 
 /*

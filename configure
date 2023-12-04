@@ -3608,7 +3608,7 @@ if test -n "" ; then
   #XXX get the redirection correct
 "$R_HOME/bin/R" CMD SHLIB testRemoveFinalizers.c &> 6
 if test "$?" = 0 ;  then
- $R_HOME/bin/R --slave --vanilla < testRemoveFinalizers.R &> 6
+ $R_HOME/bin/R --no-echo --vanilla < testRemoveFinalizers.R &> 6
 fi
 
 if ! test "$?" = 0 ; then
@@ -5415,6 +5415,68 @@ else $as_nop
   echo "No XML_PARSE_BIG_LINES."
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.beam conftest.$ac_ext
+
+
+
+
+
+
+
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#ifdef FROM_GNOME_XML_DIR
+#include <gnome-xml/xmlsave.h>
+#else
+#include <libxml/xmlsave.h>
+#endif
+
+int
+main (void)
+{
+
+	xmlIndentTreeOutput = 1;
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"
+then :
+  PKG_CPPFLAGS="$PKG_CPPFLAGS -DHAVE_XMLSAVE_H=1"; echo "libxml2 has xmlsave.h and xmlIndentTreeOutput"
+else $as_nop
+  echo "No xmlsave.h with xmlIndentTreeOutput"
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam conftest.$ac_ext
+
+
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#ifdef FROM_GNOME_XML_DIR
+#include <gnome-xml/xmlsave.h>
+#else
+#include <libxml/xmlsave.h>
+#endif
+
+int
+main (void)
+{
+
+       htmlDefaultSAXHandler.error = NULL;
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"
+then :
+  PKG_CPPFLAGS="$PKG_CPPFLAGS -DHAS_HTML_DEFAULT_SAX_HANDLER=1"; echo "libxml2 has htmlDefaultSAXHandler"
+else $as_nop
+  echo "No htmlDefaultSAXHandler"
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam conftest.$ac_ext
+
 
 
 

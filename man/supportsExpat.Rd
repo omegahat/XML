@@ -13,7 +13,7 @@ supportsExpat()
 supportsLibxml()
 }
 \details{
- One might to use different parsers to test 
+ One might to use different parsers to test
 validity of a document in different ways and
 to get different error messages. Additionally,
 one parser may be more efficient than the other.
@@ -27,8 +27,8 @@ if the first is not available.
 has been linked into the package.
 }
 
-\references{\url{http://www.w3.org/XML}, \url{http://www.jclark.com/xml},
-\url{http://www.omegahat.net}  }
+\references{\url{https://www.w3.org/XML}, \url{http://www.jclark.com/xml},
+            \url{https://github.com/omegahat/XML} }
 \author{ Duncan Temple Lang }
 
 \seealso{

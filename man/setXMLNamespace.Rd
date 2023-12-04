@@ -43,7 +43,7 @@ Duncan Temple Lang
  setXMLNamespace(e, "r")
  e
 
- 
+
 }
 \keyword{programming}
 

@@ -37,7 +37,7 @@ Duncan Temple Lang
 \seealso{
   \code{\link{xmlAttrs}}
   \code{\link{newXMLNode}}
-  \code{\link{xmlParse}}  
+  \code{\link{xmlParse}}
 }
 \examples{
   nn = newXMLNode("foo", attrs = c(a = "123", 'r:show' = "true"),

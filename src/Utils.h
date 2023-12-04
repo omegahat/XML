@@ -8,10 +8,10 @@
 #include "RS_XML.h"
 #include "RSCommon.h"
 
-#define XMLCHAR_TO_CHAR(val)  ((char *) val)
-#define XMLCHAR_TO_CONST_CHAR(val)  ((const char *) val)
-#define CHAR_TO_XMLCHAR(val)  ((xmlChar *) val)
-#define CHAR_TO_CONST_XMLCHAR(val)  ((const xmlChar *) val)
+#define XMLCHAR_TO_CHAR(val)  ((char *) (val))
+#define XMLCHAR_TO_CONST_CHAR(val)  ((const char *) (val))
+#define CHAR_TO_XMLCHAR(val)  ((xmlChar *) (val))
+#define CHAR_TO_CONST_XMLCHAR(val)  ((const xmlChar *) (val))
 
 int isBlank(const char *str);
 char *trim(char *str);
@@ -50,31 +50,31 @@ void RSXML_setErrorHandlers(void);
 
 
 USER_OBJECT_ RS_XML(RecursiveApply)(USER_OBJECT_ top, USER_OBJECT_ func, USER_OBJECT_ klasses);
-USER_OBJECT_ RS_XML(HtmlParseTree)(USER_OBJECT_ fileName, USER_OBJECT_ converterFunctions, 
+USER_OBJECT_ RS_XML(HtmlParseTree)(USER_OBJECT_ fileName, USER_OBJECT_ converterFunctions,
 				   USER_OBJECT_ skipBlankLines, USER_OBJECT_ replaceEntities,
 				   USER_OBJECT_ asText, USER_OBJECT_ trim, USER_OBJECT_ isURL);
 
-USER_OBJECT_ RS_XML(getDTD)(USER_OBJECT_ dtdFileName, USER_OBJECT_ externalId, 
+USER_OBJECT_ RS_XML(getDTD)(USER_OBJECT_ dtdFileName, USER_OBJECT_ externalId,
 			    USER_OBJECT_ asText, USER_OBJECT_ isURL, USER_OBJECT_ errorFun);
-USER_OBJECT_ RS_XML(libxmlVersion)();
+USER_OBJECT_ RS_XML(libxmlVersion)(void);
 
 
-USER_OBJECT_ 
-RS_XML(Parse)(USER_OBJECT_ fileName, USER_OBJECT_ handlers, USER_OBJECT_ endElementHandlers, USER_OBJECT_ addContext, 
+USER_OBJECT_
+RS_XML(Parse)(USER_OBJECT_ fileName, USER_OBJECT_ handlers, USER_OBJECT_ endElementHandlers, USER_OBJECT_ addContext,
                USER_OBJECT_ ignoreBlanks,  USER_OBJECT_ useTagName, USER_OBJECT_ asText,
                  USER_OBJECT_ trim, USER_OBJECT_ useExpat, USER_OBJECT_ stateObject,
                   USER_OBJECT_ replaceEntities, USER_OBJECT_ validate, USER_OBJECT_ saxVersion,
     	           USER_OBJECT_ branches, USER_OBJECT_ useDotNames, USER_OBJECT_ errorFun,
 	            USER_OBJECT_ manageMemory, USER_OBJECT_ r_encoding);
 /*
-USER_OBJECT_ RS_XML(Parse)(USER_OBJECT_ fileName, USER_OBJECT_ handlers, USER_OBJECT_ addContext, 
+USER_OBJECT_ RS_XML(Parse)(USER_OBJECT_ fileName, USER_OBJECT_ handlers, USER_OBJECT_ addContext,
 			   USER_OBJECT_ ignoreBlanks,  USER_OBJECT_ useTagName, USER_OBJECT_ asText,
 			   USER_OBJECT_ trim, USER_OBJECT_ useExpat, USER_OBJECT_ stateObject,
 			   USER_OBJECT_ replaceEntities, USER_OBJECT_ validate);
 */
 
 USER_OBJECT_
-RS_XML(ParseTree)(USER_OBJECT_ fileName, USER_OBJECT_ converterFunctions, 
+RS_XML(ParseTree)(USER_OBJECT_ fileName, USER_OBJECT_ converterFunctions,
 		  USER_OBJECT_ skipBlankLines, USER_OBJECT_ replaceEntities,
 		  USER_OBJECT_ asText, USER_OBJECT_ trim, USER_OBJECT_ validate,
 		  USER_OBJECT_ getDTD, USER_OBJECT_ isURL,
@@ -94,7 +94,7 @@ USER_OBJECT_ R_newXMLPINode(USER_OBJECT_ sdoc, USER_OBJECT_ name, USER_OBJECT_ c
 USER_OBJECT_ R_xmlNewNs(USER_OBJECT_ sdoc, USER_OBJECT_ shref, USER_OBJECT_ sprefix);
 USER_OBJECT_ R_xmlSetNs(USER_OBJECT_ s_node, USER_OBJECT_ s_ns, USER_OBJECT_ append);
 USER_OBJECT_ R_insertXMLNode(USER_OBJECT_ node, USER_OBJECT_ parent, USER_OBJECT_ r_at, USER_OBJECT_ shallow) ;
-USER_OBJECT_ R_saveXMLDOM(USER_OBJECT_ sdoc, USER_OBJECT_ sfileName, USER_OBJECT_ compression, USER_OBJECT_ sindent, 
+USER_OBJECT_ R_saveXMLDOM(USER_OBJECT_ sdoc, USER_OBJECT_ sfileName, USER_OBJECT_ compression, USER_OBJECT_ sindent,
 			  USER_OBJECT_ prefix, USER_OBJECT_ r_encoding);
 
 
@@ -132,11 +132,11 @@ SEXP RS_XML_setRootNode(USER_OBJECT_ r_doc, USER_OBJECT_ r_node);
 USER_OBJECT_ R_getNodeChildByIndex(USER_OBJECT_ snode, USER_OBJECT_ r_index, USER_OBJECT_ manageMemory);
 SEXP RS_XML_setDocEl(SEXP r_node, SEXP r_doc);
 USER_OBJECT_ RS_XML_isDescendantOf(USER_OBJECT_ r_node, USER_OBJECT_ r_top, USER_OBJECT_ strict);
-SEXP RS_XML_getStructuredErrorHandler();
+SEXP RS_XML_getStructuredErrorHandler(void);
 SEXP RS_XML_setStructuredErrorHandler(SEXP els);
 SEXP R_convertDOMToHashTree(SEXP rnode, SEXP env, SEXP childrenEnv, SEXP parentEnv);
 SEXP R_parseURI(SEXP r_uri);
-SEXP R_getXMLFeatures();
+SEXP R_getXMLFeatures(void);
 SEXP R_xmlReadMemory(SEXP r_txt, SEXP len, SEXP r_encoding, SEXP r_options, SEXP r_base);
 SEXP R_xmlReadFile(SEXP r_filename, SEXP r_encoding, SEXP r_options);
 USER_OBJECT_ R_libxmlTypeTable_names(USER_OBJECT_ table, USER_OBJECT_ s_elType) ;
@@ -190,7 +190,7 @@ USER_OBJECT_ RS_XML_replaceXMLNode(USER_OBJECT_ r_old, USER_OBJECT_ r_new, USER_
 
 USER_OBJECT_ RS_XML_xmlAddSiblingAt(USER_OBJECT_ r_to, USER_OBJECT_ r_node, USER_OBJECT_ r_before, USER_OBJECT_ manageMemory);
 
-SEXP RS_XML_clearCatalog();
+SEXP RS_XML_clearCatalog(void);
 SEXP RS_XML_loadCatalog(SEXP catalogs);
 SEXP RS_XML_catalogAdd(SEXP orig, SEXP replace, SEXP type);
 SEXP RS_XML_catalogDump(SEXP fileName);
@@ -230,8 +230,8 @@ SEXP CreateCharSexpWithEncoding(const xmlChar *encoding, const xmlChar *str);
 #ifdef R_USE_XML_ENCODING
 #undef COPY_TO_USER_STRING
 //#warning "Redefining COPY_TO_USER_STRING to use encoding from XML parser"
-#define COPY_TO_USER_STRING(x)  mkChar(XMLCHAR_TO_CONST_CHAR (x)) 
-#define ENC_COPY_TO_USER_STRING(x)  CreateCharSexpWithEncoding(encoding, CHAR_TO_XMLCHAR (x)) 
+#define COPY_TO_USER_STRING(x)  mkChar( (const char *) (x) )
+#define ENC_COPY_TO_USER_STRING(x)  CreateCharSexpWithEncoding(encoding, CHAR_TO_XMLCHAR (x))
 #endif
 
 

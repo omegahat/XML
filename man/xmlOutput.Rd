@@ -47,7 +47,7 @@ This provides a convenient way to specify the default name space that appers in 
   created.}
  \item{xmlDeclaration}{ a logical value or a string.
    If this is a logical value and \code{TRUE}, the default <?xml version='1.0'?>
-    processing instruction is emitted at the top of the document.  
+    processing instruction is emitted at the top of the document.
    If it is \code{FALSE}, no xml declaration is emitted at the top of
    the document.
     If this is provided as a string, the contents of this is added
@@ -67,7 +67,7 @@ creation.
  Both of these functions return  a list
 of functions which operate on the XML data in a shared environment.
 
-  \item{value}{get the contents of the XML document as they are currently 
+  \item{value}{get the contents of the XML document as they are currently
   defined.}
   \item{addTag}{add a new element to the document, specifying its name and attributes.
    This allows the tag to be left open so that new elements will be added as children
@@ -80,11 +80,11 @@ of functions which operate on the XML data in a shared environment.
 The following are specific to \code{xmlOutputDOM}:
   \item{addNode}{insert an complete \code{XMLNode} object
       into the currently active (i.e. open)  node.}
-  \item{current}{obtain the path or collection of indices to 
+  \item{current}{obtain the path or collection of indices to
    to the currently active/open node from the root node.}
 }
-\references{\url{http://www.omegahat.net/RSXML},
-\url{http://www.w3.org/xml}}
+\references{\url{https://github.com/omegahat/XML},
+            \url{https://www.w3.org/xml}}
 \author{Duncan Temple Lang}
 
 \seealso{
@@ -138,7 +138,7 @@ con$closeTag() # section
  print(d$value())
 
 
- d = xmlOutputBuffer("bob", header = "<?xml version='1.0' encoding='UTF-8'?>", 
+ d = xmlOutputBuffer("bob", header = "<?xml version='1.0' encoding='UTF-8'?>",
                       dtd = "foo.dtd")
  d$addTag("bob")
  cat(d$value())

@@ -34,7 +34,7 @@ addChildren(node, ..., kids = list(...), at = NA, cdata = FALSE, append = TRUE)
 removeChildren(node, ..., kids = list(...), free = FALSE)
 removeNodes(node, free = rep(FALSE, length(node)))
 replaceNodes(oldNode, newNode, ...)
-addAttributes(node, ..., .attrs = NULL, 
+addAttributes(node, ..., .attrs = NULL,
                suppressNamespaceWarning = getOption("suppressXMLNamespaceWarning", FALSE),
                 append = TRUE)
 removeAttributes(node, ..., .attrs = NULL, .namespace = FALSE,
@@ -59,7 +59,7 @@ removeAttributes(node, ..., .attrs = NULL, .namespace = FALSE,
 
       For \code{removeChildren}, this is again a list
       which identifies the child nodes to be
-      removed using 
+      removed using
       the integer identifier of the child, or
       the name of the XML node (but this will only remove the first such
       node and not necessarily do what you expect when there are
@@ -82,7 +82,7 @@ removeAttributes(node, ..., .attrs = NULL, .namespace = FALSE,
     \item{cdata}{a logical value which controls whether children that
      are specified as strings/text are enclosed within a CDATA node
      when converted to actual nodes.  This value is passed on to the
-     relevant function that creates the text nodes, e.g. 
+     relevant function that creates the text nodes, e.g.
      \code{\link{xmlTextNode}} and \code{\link{newXMLTextNode}}.
    }
     \item{.attrs}{a character vector identifying the names of the
@@ -111,7 +111,7 @@ removeAttributes(node, ..., .attrs = NULL, .namespace = FALSE,
       with \code{xmlTree} and \code{newXMLNode} and related functions.
       It is necessary as automated garbage collection is tricky in this
       tree-based context spanning both R and C data structures and
-      memory managers. 
+      memory managers.
     }
     \item{.all}{a logical value indicating whether to remove all of the
       attributes within the XML node without having to specify them by
@@ -120,19 +120,19 @@ removeAttributes(node, ..., .attrs = NULL, .namespace = FALSE,
    \item{newNode}{the node which is to take the place of
      \code{oldNode} in the list of children of the parent of
      \code{oldNode}}
-   \item{suppressNamespaceWarning}{a logical value or a character string. 
+   \item{suppressNamespaceWarning}{a logical value or a character string.
       This is used to control the situation when an  XML node
       or attribute is created with a name space prefix that currently has no
-      definition for that node. 
+      definition for that node.
       This is not necessarily an error but can lead to one.
       This argument controls whether a warning is issued
        or if a separate function is called.
-      A value of \code{FALSE} means not to suppress the warning and 
+      A value of \code{FALSE} means not to suppress the warning and
       so it is issued. A value of \code{TRUE} causes the potential
       problem to be ignored assuming that the namespace will be added
       to this node or one of its ancestors at a later point.
       And if this value is a character string, we search for a
-      function of that name and invoke it. 
+      function of that name and invoke it.
      }
   \item{append}{a logical value that indicates whether (\code{TRUE}) the specified
    attributes or children should be added to the existing  attributes on the XML node
@@ -146,7 +146,7 @@ removeAttributes(node, ..., .attrs = NULL, .namespace = FALSE,
  For an R \code{XMLNode} object, this is is an entirely
  separate object from the original node.
  It must be inserted back into its parent "node" or context if the changes are to be
- seen in that wider context. 
+ seen in that wider context.
 }
 \references{
 libxml2 \url{http://www.xmlsoft.org}
@@ -197,7 +197,7 @@ removeChildren(b, kids = c("m", "n", "q"))
 
 
 
-x <- xmlNode("a", 
+x <- xmlNode("a",
                xmlNode("b", "1"),
                xmlNode("c", "1"),
 	       "some basic text")
@@ -211,7 +211,7 @@ v = removeChildren(x, "c", "b")
 v = removeChildren(x, 3, "c")
 
 \dontrun{
-    # this won't work as the 10 gets coerced to a 
+    # this won't work as the 10 gets coerced to a
     # character vector element to be combined with 'w'
     # and there is no node name 10.
  removeChildren(b, kids = c(10, "w"))
@@ -234,7 +234,7 @@ o
  doc = xmlParse("<top><a/><b/><c><d/><e>bob</e></c></top>")
  top = xmlRoot(doc)
  top
- 
+
  removeNodes(list(top[[1]], top[[3]]))
 
     # a and c have disappeared.

@@ -17,7 +17,7 @@ R_makeXMLContextRef(xmlParserCtxtPtr ctx)
   USER_OBJECT_ ans;
   PROTECT(ans = R_MakeExternalPtr(ctx, Rf_install(XML_PARSER_CONTEXT_TYPE_NAME), R_NilValue));
   SET_CLASS(ans, mkString(XML_PARSER_CONTEXT_TYPE_NAME));
-  UNPROTECT(1); 
+  UNPROTECT(1);
   return(ans);
 }
 
@@ -42,7 +42,7 @@ RS_XML(invokeFunction)(USER_OBJECT_ fun, USER_OBJECT_ opArgs, USER_OBJECT_ data,
 
   if(n  > 0) {
 #if 1
-    PROTECT(call = allocVector(LANGSXP, n));      
+    PROTECT(call = allocVector(LANGSXP, n));
     c = call;
     SETCAR(call, fun); c = CDR(c);
 
@@ -60,7 +60,7 @@ RS_XML(invokeFunction)(USER_OBJECT_ fun, USER_OBJECT_ opArgs, USER_OBJECT_ data,
     if(data) {
        SETCAR(c, data);
        SET_TAG(c, Rf_install(".state"));
-    }    
+    }
 #else
     PROTECT(c = call = allocList(n));
     if(addContext)  {
@@ -85,7 +85,7 @@ RS_XML(invokeFunction)(USER_OBJECT_ fun, USER_OBJECT_ opArgs, USER_OBJECT_ data,
      SETCAR(call, fun);
      if(addContext)
 	 SETCAR(CDR(call), R_makeXMLContextRef(context));
-  }  
+  }
 
 
   ans = eval(call, R_GlobalEnv);
@@ -118,7 +118,7 @@ R_InternalRecursiveApply(USER_OBJECT_ top, USER_OBJECT_ func, USER_OBJECT_ klass
     numChildren = GET_LENGTH(kids);
         /* Do the children first. */
     PROTECT(args = NEW_LIST(1));
-    PROTECT(tmp = NEW_LIST(numChildren));  
+    PROTECT(tmp = NEW_LIST(numChildren));
     for(i = 0; i < numChildren; i++) {
       SET_VECTOR_ELT(tmp, i, R_InternalRecursiveApply(VECTOR_ELT(kids, i), func, klasses));
     }
@@ -139,7 +139,7 @@ RS_XML_SubstituteEntitiesDefault(USER_OBJECT_ replaceEntities)
 {
     int value;
     USER_OBJECT_ ans;
-    value = xmlSubstituteEntitiesDefault(LOGICAL_DATA(replaceEntities)[0]);   
+    value = xmlSubstituteEntitiesDefault(LOGICAL_DATA(replaceEntities)[0]);
     ans = NEW_LOGICAL(1);
     LOGICAL_DATA(ans)[0] = value;
     return(ans);
@@ -285,7 +285,7 @@ R_isInstanceOf(USER_OBJECT_ obj, const char *klass)
 
 
 SEXP
-RS_XML_getStructuredErrorHandler()
+RS_XML_getStructuredErrorHandler(void)
 {
     SEXP ans;
     PROTECT(ans = NEW_LIST(2));
@@ -301,14 +301,12 @@ RS_XML_setStructuredErrorHandler(SEXP els)
     void *ctx;
     xmlStructuredErrorFunc handler;
     SEXP fun, sym;
-    
+
     fun = VECTOR_ELT(els, 0);
     sym = VECTOR_ELT(els, 1);
 
-    if(sym != R_NilValue && TYPEOF(sym) != EXTPTRSXP) {
-	PROBLEM "invalid symbol object for XML error handler. Need an external pointer, e.g from getNativeSymbolInfo"
-        ERROR;
-    }
+    if(sym != R_NilValue && TYPEOF(sym) != EXTPTRSXP) 
+	Rf_error("invalid symbol object for XML error handler. Need an external pointer, e.g from getNativeSymbolInfo");
 
     if(fun == R_NilValue)
 	ctx = NULL;
@@ -338,19 +336,21 @@ CreateCharSexpWithEncoding(const xmlChar *encoding, const xmlChar *str)
 #ifdef HAVE_R_CETYPE_T
     cetype_t enc = CE_NATIVE;
 
-    if(encoding == (const xmlChar *) NULL || encoding == (const xmlChar *) "") {
+    // Casts from CRAN.
+    if(encoding == (const xmlChar *) NULL || xmlStrcmp(encoding, (const xmlChar *) "")) {
   	    enc = CE_NATIVE;
-    } else if(xmlStrcmp(encoding, "UTF-8") == 0 || xmlStrcmp(encoding, "utf-8") == 0)
+    } else if(xmlStrcmp(encoding, (xmlChar *) "UTF-8") == 0 || xmlStrcmp(encoding, (xmlChar *) "utf-8") == 0)
 	    enc = CE_UTF8;
-    else if(xmlStrcmp(encoding, "ISO-8859-1") == 0 || xmlStrcmp(encoding, "iso-8859-1") == 0)
+    else if(xmlStrcmp(encoding, (xmlChar *) "ISO-8859-1") == 0 || xmlStrcmp(encoding, (xmlChar *) "iso-8859-1") == 0)
 	    enc = CE_LATIN1;
     else {
-	str = translateChar(mkChar(str));
+	//XXX check xmlChar * cast of translateChar()
+	str = (const xmlChar *)  translateChar(mkChar( (const char *) str));
     }
-// REprintf("encoding: %d\n", enc);
-    ans = mkCharCE(str, enc);
+
+    ans = mkCharCE( (const char *) str, enc);
 #else
-    ans = mkChar(str);
+    ans = mkChar( (const char *) str);
 #endif
     return(ans);
 }
@@ -361,7 +361,7 @@ R_lookString(SEXP rstr)
 {
     const char *str;
     str = CHAR(STRING_ELT(rstr, 0));
-    return(ScalarInteger(strlen(str)));
+    return(ScalarReal( (double) strlen(str)) );
 }
 
 

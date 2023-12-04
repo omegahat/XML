@@ -19,8 +19,8 @@ Check
 CodeDetails
 ^Docs$
 FIXME_NOW
-GNUmakefile
-GNUmakefile.admin
+^GNUmakefile
+^GNUmakefile.admin
 ^Notes$
 addFinalizer
 ^libxml2.9.R$
@@ -45,3 +45,8 @@ Todo-orig.html
 QuestionSolutions
 ^index.html$
 ^index.html.in$
+^src/SPlus/.*
+^DiffWithCRAN$
+^xdiff.R$
+src/TOFIX
+VersionInfo

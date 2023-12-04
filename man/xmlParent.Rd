@@ -5,10 +5,11 @@
 \alias{xmlParent,XMLInternalNode-method}
 \alias{xmlParent,XMLHashTreeNode-method}
 \alias{xmlParent,XMLTreeNode-method}
-\title{Get parent node of XMLInternalNode or ancestor nodes}
+\alias{getSiblings}
+\title{Get parent node, ancestor nodes or sibling nodes of XMLInternalNode}
 \description{
  \code{xmlParent} operates on an XML node
- and returns a reference to its parent node 
+ and returns a reference to its parent node
  within the document tree.
  This works for an internal, C-level
  \code{XMLInternalNode} object
@@ -26,14 +27,15 @@
  top of the document and either returns a list of those
  nodes, or alternatively a list of the values obtained
  by applying a function to each of the nodes.
- 
+
 }
 \usage{
 xmlParent(x, ...)
 xmlAncestors(x, fun = NULL, ..., addFinalizer = NA, count = -1L)
+getSiblings(node, after = TRUE, ...)
 }
 \arguments{
-  \item{x}{an object of class \code{XMLInternalNode} whose parent is being requested. }
+  \item{x,node}{an object of class \code{XMLInternalNode} whose parent is being requested. }
   \item{fun}{an R function which is invoked for each  node as we walk up
     the tree.}
   \item{\dots}{any additional arguments that are passed in calls to
@@ -45,14 +47,16 @@ xmlAncestors(x, fun = NULL, ..., addFinalizer = NA, count = -1L)
   external pointer object.
   This can also be the name of a C routine or a reference
   to a C routine retrieved using
-  \code{\link[base]{getNativeSymbolInfo}}.
+  \code{\link{getNativeSymbolInfo}}.
 }
  \item{count}{an integer that indicates how many levels of the hierarchy
    to traverse. This allows us to get the \code{count} most recent
    ancestors of the node.}
+ \item{after}{a logical value that indicates we want the siblings following \code{node}
+   or, if \code{FALSE}, the nodes before \code{node}.}
 }
 \details{
- This uses the internal libxml structures to access the parent in the DOM tree. 
+ This uses the internal libxml structures to access the parent in the DOM tree.
  This function is generic so that we can add methods for other types of nodes
  if we so want in the future.
 }
@@ -69,7 +73,7 @@ xmlAncestors(x, fun = NULL, ..., addFinalizer = NA, count = -1L)
   each node. Again, the order is top down.
 }
 
-\references{\url{http://www.w3.org/XML}}
+\references{\url{https://www.w3.org/XML}}
 \author{ Duncan Temple Lang }
 
 \seealso{

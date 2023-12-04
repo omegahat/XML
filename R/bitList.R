@@ -7,8 +7,9 @@ function(...)
     return(x)
 
   ans = x[1]
+  bitOr = bitops::bitOr
   for(i in 2:length(x)) {
-    ans = bitops::bitOr(ans, x[i])
+    ans = bitOr(ans, x[i])
   }
   ans
 }

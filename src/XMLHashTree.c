@@ -6,7 +6,7 @@ XML DOM tree to an xmlHashTree.
 An xmlHashTree() is an environment, and so is mutable.
 It contains the following elements:
   1) nodes each with a unique identifier, e.g. 1, 2, 3.
-     which are used to index them in the elements that 
+     which are used to index them in the elements that
      specify the structure.
 
   2)  .children - an environment
@@ -23,7 +23,7 @@ we don't need these functions.
 
 
   As we move through the internal tree, we can construct
- a node and then the character vector of children for 
+ a node and then the character vector of children for
  that node and assign it to the .children environment
 
 
@@ -39,7 +39,7 @@ Suppose we have a tree like
 
 We start giving the nodes names by number, i.e. 1, 2, 3,....
 To create A, we make the node object as a list
-with name (A), attributes (NULL), namespace (""), [children],  
+with name (A), attributes (NULL), namespace (""), [children],
   id (1) and env.
 
 The children are
@@ -63,7 +63,8 @@ static const char * const nodeElementNames[] =  {
    uniqueness.  Ignore the next definition in the comment!
 #define SET_NODE_NAME(x, id) sprintf(x, "%d", id)
 */
-#define SET_NODE_NAME(x, id, node) sprintf(x, "%p", node)
+#define NODE_NAME_SIZE 200
+#define SET_NODE_NAME(x, id, node) snprintf(x, NODE_NAME_SIZE, "%p", node)
 
 
 SEXP
@@ -73,18 +74,18 @@ makeHashNode(xmlNodePtr node, char *buf, SEXP env, R_XMLSettings *parserSettings
   int i = 0, numEls = sizeof(nodeElementNames)/sizeof(nodeElementNames[0]);
   DECL_ENCODING_FROM_NODE(node)
 
-  int hasValue = node->type == XML_TEXT_NODE || node->type == XML_COMMENT_NODE 
+  int hasValue = node->type == XML_TEXT_NODE || node->type == XML_COMMENT_NODE
                     || node->type == XML_CDATA_SECTION_NODE || node->type == XML_PI_NODE;
 
   if(hasValue)
       numEls++;
-  if(node->nsDef) 
+  if(node->nsDef)
      numEls++;
 
   PROTECT(ans = NEW_LIST(numEls));
   PROTECT(tmp = mkString(node->name ? XMLCHAR_TO_CHAR(node->name) : ""));
-  if(node->ns) 
-    SET_NAMES(tmp, mkString(node->ns->prefix));
+  if(node->ns)
+      SET_NAMES(tmp, mkString((const char *) node->ns->prefix));
 
   SET_VECTOR_ELT(ans, i++, tmp);
   UNPROTECT(1);
@@ -92,18 +93,18 @@ makeHashNode(xmlNodePtr node, char *buf, SEXP env, R_XMLSettings *parserSettings
   SET_VECTOR_ELT(ans, i++, RS_XML(AttributeList)(node, parserSettings));
   SET_VECTOR_ELT(ans, i++, ScalarString(ENC_COPY_TO_USER_STRING(node->ns && node->ns->prefix ? XMLCHAR_TO_CHAR(node->ns->prefix) : "")));
      /* skip the children */
-  i = 4; 
+  i = 4;
   SET_VECTOR_ELT(ans, i++, mkString(buf));
   SET_VECTOR_ELT(ans, i++, env);
-  if(hasValue) 
-     SET_VECTOR_ELT(ans, i++, mkString(node->content));
-  if(node->nsDef) 
+  if(hasValue)
+      SET_VECTOR_ELT(ans, i++, mkString((const char *) node->content));
+  if(node->nsDef)
     SET_VECTOR_ELT(ans, i++, processNamespaceDefinitions(node->nsDef, node, parserSettings));
 
 
 
   PROTECT(names = NEW_CHARACTER(numEls));
-  for(i = 0; i < sizeof(nodeElementNames)/sizeof(nodeElementNames[0]); i++) 
+  for(i = 0; i < sizeof(nodeElementNames)/sizeof(nodeElementNames[0]); i++)
       SET_STRING_ELT(names, i, ENC_COPY_TO_USER_STRING(nodeElementNames[i]));
   if(hasValue)
       SET_STRING_ELT(names, i++, COPY_TO_USER_STRING("value"));
@@ -118,16 +119,16 @@ makeHashNode(xmlNodePtr node, char *buf, SEXP env, R_XMLSettings *parserSettings
   PROTECT(names = NEW_CHARACTER( node->type == XML_ELEMENT_NODE ? 2 : 3));
   i = 0;
   SET_STRING_ELT(names, i++, COPY_TO_USER_STRING("XMLHashTreeNode"));
-  if(node->type == XML_TEXT_NODE) 
-     SET_STRING_ELT(names, i++, COPY_TO_USER_STRING("XMLTextNode")); 
-  else if(node->type == XML_COMMENT_NODE) 
-     SET_STRING_ELT(names, i++, COPY_TO_USER_STRING("XMLCommentNode")); 
-  else if(node->type == XML_CDATA_SECTION_NODE) 
-     SET_STRING_ELT(names, i++, COPY_TO_USER_STRING("XMLCDataNode")); 
-  else if(node->type == XML_PI_NODE) 
-     SET_STRING_ELT(names, i++, COPY_TO_USER_STRING("XMLPINode")); 
+  if(node->type == XML_TEXT_NODE)
+     SET_STRING_ELT(names, i++, COPY_TO_USER_STRING("XMLTextNode"));
+  else if(node->type == XML_COMMENT_NODE)
+     SET_STRING_ELT(names, i++, COPY_TO_USER_STRING("XMLCommentNode"));
+  else if(node->type == XML_CDATA_SECTION_NODE)
+     SET_STRING_ELT(names, i++, COPY_TO_USER_STRING("XMLCDataNode"));
+  else if(node->type == XML_PI_NODE)
+     SET_STRING_ELT(names, i++, COPY_TO_USER_STRING("XMLPINode"));
 
-  SET_STRING_ELT(names, i++, COPY_TO_USER_STRING("XMLNode")); 
+  SET_STRING_ELT(names, i++, COPY_TO_USER_STRING("XMLNode"));
   SET_CLASS(ans, names);
 
   UNPROTECT(2);
@@ -141,7 +142,7 @@ countChildNodes(xmlNodePtr root, unsigned int *ctr)
 {
   xmlNodePtr node;
   for(node = root->children; node; node = node->next)  {
-     if(node->type == XML_XINCLUDE_START) 
+     if(node->type == XML_XINCLUDE_START)
         countChildNodes(node, ctr);
      else if(node->type != XML_XINCLUDE_END)
         (*ctr)++;
@@ -158,10 +159,10 @@ collectChildNodes(xmlNodePtr root, unsigned int *ctr, SEXP kids)
 	if(node->type == XML_XINCLUDE_END)
 	    continue;
 
-	if(node->type == XML_XINCLUDE_START) 
+	if(node->type == XML_XINCLUDE_START)
 	    collectChildNodes(node, ctr, kids);
 	else {
-	    char buf[20];
+	    char buf[NODE_NAME_SIZE];
 	    SET_NODE_NAME(buf, *ctr + 1,  node);
 	    SET_STRING_ELT(kids, *ctr, mkChar(buf));
 	    (*ctr)++;
@@ -175,7 +176,7 @@ collectChildNodes(xmlNodePtr root, unsigned int *ctr, SEXP kids)
  This is the recursive function that process a node and then its children.
  It builds the node (via makeHashNode) and then adds an entry for the
    children
- and 
+ and
    parent
  These provide the structure for the tree.
 */
@@ -186,48 +187,49 @@ processNode(xmlNodePtr root, xmlNodePtr parent, unsigned int *ctr, int parentId,
   xmlNodePtr node;
   SEXP rnode, kids;
   unsigned int curId = *ctr;
-  char buf[20];
+  char buf[NODE_NAME_SIZE];
 
   SET_NODE_NAME(id, curId, root);
 
 
   if(root->type != XML_XINCLUDE_START && root->type != XML_XINCLUDE_END) {
-  rnode = makeHashNode(root, id, env, parserSettings);
-  
-  defineVar(Rf_install(id), rnode, env);
+      rnode = PROTECT(makeHashNode(root, id, env, parserSettings));
+      defineVar(Rf_install(id), rnode, env);
+      UNPROTECT(1);
 
-  if(root->parent && root->parent->type != XML_DOCUMENT_NODE && root->parent->type != XML_HTML_DOCUMENT_NODE) {
+      if(root->parent && root->parent->type != XML_DOCUMENT_NODE && root->parent->type != XML_HTML_DOCUMENT_NODE) {
       /* Put an entry in the .parents environment for this current id with the single value
-         which is the value of the parentId as a string, equivalent of 
+         which is the value of the parentId as a string, equivalent of
            assign(curId,  parentId, parentEnv)
        */
-     SET_NODE_NAME(id, curId, root);
-     SET_NODE_NAME(buf, parentId, parent);
-     defineVar(Rf_install(id), mkString(buf), parentEnv);
-   }
+	  SET_NODE_NAME(id, curId, root);
+	  SET_NODE_NAME(buf, parentId, parent);
+	  defineVar(Rf_install(id), PROTECT(mkString(buf)), parentEnv);
+	  UNPROTECT(1);
+      }
 
-  if(root->children) {
+      if(root->children) {
         /* We have to deal with */
-      unsigned int i = 0;
-      countChildNodes(root, &i);
+	  unsigned int i = 0;
+	  countChildNodes(root, &i);
 
-      PROTECT(kids = NEW_CHARACTER(i));
-      i = 0; collectChildNodes(root, &i, kids);
-      defineVar(Rf_install(id), kids, childrenEnv);
-      UNPROTECT(1);
+	  PROTECT(kids = NEW_CHARACTER(i));
+	  i = 0; collectChildNodes(root, &i, kids);
+	  defineVar(Rf_install(id), kids, childrenEnv);
+	  UNPROTECT(1);
+      }
+
+      (*ctr)++;
   }
-
-  (*ctr)++;
- }
 
   if(root->type != XML_XINCLUDE_END) {
         /* Discard XML_INCLUDE_END nodes, but for XML_INCLUDE_START, we need to specify a different parent,
-             i.e.,  the parent of the XML_INCLUDE_START node so that it will act as the parent of the  
+             i.e.,  the parent of the XML_INCLUDE_START node so that it will act as the parent of the
              included nodes.
          */
       xmlNodePtr parent;
       parent = root->type == XML_XINCLUDE_START ? root->parent : root;
-      for(node = root->children; node; node = node->next) 
+      for(node = root->children; node; node = node->next)
           processNode(node, parent, ctr, curId, id, env, childrenEnv, parentEnv, parserSettings);
   }
 }
@@ -242,11 +244,11 @@ convertDOMToHashTree(xmlNodePtr root, SEXP env, SEXP childrenEnv, SEXP parentEnv
 //  SEXP rnode;
   unsigned int ctr = 0;
   xmlNodePtr tmp;
-  char id[20];
+  char id[NODE_NAME_SIZE];
   memset(id, '\0', sizeof(id));
 
-  for(tmp = root; tmp; tmp = tmp->next) 
-    processNode(tmp, (xmlNodePtr) NULL, &ctr, -1, id, env, childrenEnv, parentEnv, parserSettings);
+  for(tmp = root; tmp; tmp = tmp->next)
+      processNode(tmp, (xmlNodePtr) NULL, &ctr, -1, id, env, childrenEnv, parentEnv, parserSettings);
 
 
   return(ctr);

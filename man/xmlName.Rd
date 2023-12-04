@@ -28,8 +28,8 @@ xmlName(node, full = FALSE)
  A character vector of length 1
  which is the \code{node$name} entry.
 }
-\references{\url{http://www.w3.org/XML}, \url{http://www.jclark.com/xml},
-\url{http://www.omegahat.net}  }
+\references{\url{https://www.w3.org/XML}, \url{http://www.jclark.com/xml},
+\url{https://github.com/omegahat/XML}  }
 \author{ Duncan Temple Lang }
 
 
@@ -40,7 +40,7 @@ xmlName(node, full = FALSE)
 }
 
 \examples{
- fileName <- system.file("exampleData", "test.xml", package="XML") 
+ fileName <- system.file("exampleData", "test.xml", package="XML")
  doc <- xmlTreeParse(fileName)
  xmlName(xmlRoot(doc)[[1]])
 
@@ -55,7 +55,7 @@ xmlName(node, full = FALSE)
  xmlName(n)
  xmlName(n) <- "y"
 
- 
+
  xmlName(n) <- "r:y"
 
 }

@@ -8,7 +8,7 @@
 #endif
 
 SEXP
-R_getXMLFeatures()
+R_getXMLFeatures(void)
 {
 
 #ifdef HAVE_XML_HAS_FEATURE
@@ -52,7 +52,7 @@ R_getXMLFeatures()
    };
 
     const char * const names[] = {
-           "THREAD",   
+           "THREAD",
            "TREE",
            "OUTPUT",
            "PUSH",
@@ -83,7 +83,7 @@ R_getXMLFeatures()
            "DEBUG_MEM",
            "DEBUG_RUN",
            "ZLIB"
-     };     
+     };
 
     SEXP ans, rnames;
     int n = sizeof(features)/sizeof(features[0]), i;

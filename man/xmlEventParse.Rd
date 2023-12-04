@@ -35,7 +35,7 @@
  event-driven or asynchronous calling
 
  In addition to the generic token event handlers such as
- "begin an XML element" (the \code{startElement} handler), one can 
+ \dQuote{begin an XML element} (the \code{startElement} handler), one can
  also provide handler functions for specific tags/elements such
  as \code{<myTag>} with handler elements  with the same name as the
  XML element of interest, i.e. \code{"myTag" = function(x, attrs)}.
@@ -60,9 +60,9 @@
  the text variable to be empty.
 }
 \usage{
-xmlEventParse(file, handlers = xmlEventHandler(), 
+xmlEventParse(file, handlers = xmlEventHandler(),
                ignoreBlanks = FALSE, addContext=TRUE,
-                useTagName = TRUE, asText = FALSE, trim=TRUE, 
+                useTagName = TRUE, asText = FALSE, trim=TRUE,
                  useExpat=FALSE, isURL = FALSE,
                   state = NULL, replaceEntities = TRUE, validate = FALSE,
                    saxVersion = 1, branches = NULL,
@@ -87,7 +87,7 @@ xmlEventParse(file, handlers = xmlEventHandler(),
     (Note this is not the case in S-Plus, as far as I know.)
 
     If a connection is given, the parser incrementally reads one line at
-    a time by calling the function \code{\link[base]{readLines}} with
+    a time by calling the function \code{\link{readLines}} with
     the connection as the first argument (and \code{1} as the number of
     lines to read).  The parser calls this function each time it needs
     more input.
@@ -110,7 +110,7 @@ xmlEventParse(file, handlers = xmlEventHandler(),
     provided if one is using libxml2 and not libxml version 1.
 }
  \item{handlers}{ a closure object that contains  functions which will be invoked
-as the XML components in the document are encountered by the parser. 
+as the XML components in the document are encountered by the parser.
  The standard function or handler names are
 \code{startElement()}, \code{endElement()}
 \code{comment()}, \code{getEntity},
@@ -165,11 +165,11 @@ The use of PUBLIC identifiers is less common.
  \item{ignoreBlanks}{a logical value indicating whether
 text elements made up entirely of white space should be included
 in the resulting `tree'. }
- \item{addContext}{ logical value indicating whether the callback functions 
+ \item{addContext}{ logical value indicating whether the callback functions
 in `handlers' should be invoked with contextual  information about
-the parser and the position in the tree, such as node depth, 
+the parser and the position in the tree, such as node depth,
 path indices for the node relative the root, etc.
-If this is True, each callback function  should support 
+If this is True, each callback function  should support
 \dots.
 }
  \item{useTagName}{ a logical value.
@@ -183,7 +183,7 @@ If this is True, each callback function  should support
  names in a document and not have to establish a mechanism to invoke
  these functions within the \code{startElement} function. This is done
  by the XML package directly.
- 
+
  If the value is \code{FALSE}, then the \code{startElement} handler
  function will be called without any effort to find a node-specific
  handler.  If there are no node-specific handlers, specifying
@@ -191,9 +191,9 @@ If this is True, each callback function  should support
  slightly faster.
 }
   \item{asText}{logical value indicating that the first argument,
-    `file', 
-     should be treated as the XML text to parse, not the name of 
-     a file. This allows the contents of documents to be retrieved 
+    `file',
+     should be treated as the XML text to parse, not the name of
+     a file. This allows the contents of documents to be retrieved
      from different sources (e.g. HTTP servers, XML-RPC, etc.) and still
      use this parser.}
  \item{trim}{
@@ -216,9 +216,9 @@ If this is True, each callback function  should support
   the callbacks. If this is given, the callbacks should accept
   an argument  named \code{.state} and it should return an object
   that will be used as the updated value of this state object.
-  The new value can be any S object and will be passed to the next 
+  The new value can be any S object and will be passed to the next
   callback where again it will be updated by that functions return
-  value, and so on. 
+  value, and so on.
   If this not specified in the call to \code{xmlEventParse},
   no \code{.state} argument is passed to the callbacks. This makes the
   interface compatible with previous releases.
@@ -243,7 +243,7 @@ If this is True, each callback function  should support
     For example, \code{xmlns:r="http://www.r-project.org"}
     would be passed as \code{c(r = "http://www.r-project.org")}.
     If there is no prefix because the namespace is being used as the
-    default, the result of calling \code{\link[base]{names}} on
+    default, the result of calling \code{\link{names}} on
     the string is \code{""}.
     The second additional argument (the fourth in total) gives the collection of all the namespaces
     defined within this element.
@@ -254,7 +254,7 @@ If this is True, each callback function  should support
   document structure to do validation.
   a logical indicating whether to use a validating parser or not, or in other words
   check the contents against the DTD specification. If this is true, warning
-  messages will be displayed about errors in the DTD and/or document, but the parsing 
+  messages will be displayed about errors in the DTD and/or document, but the parsing
   will proceed except for the presence of terminal errors.
 }
 \item{branches}{a named list of functions.
@@ -280,11 +280,11 @@ If this is True, each callback function  should support
 
   One can cause the parser to collect a branch without identifying
   the  node within the \code{branches} list. Specifically, within
-  a  regular start-element handler, one can return a function 
+  a  regular start-element handler, one can return a function
   whose class is \code{SAXBranchFunction}.
   The SAX parser recognizes this and collects up the branch
   starting at the current node being processed  and when it is
-  complete, invokes this function. 
+  complete, invokes this function.
   This allows us to dynamically determine which nodes to treat as
   branches rather than just matching names. This is necessary when
   a node name has different meanings in different parts of the XML
@@ -334,7 +334,7 @@ the callback functions have manipulated variables
 local to it and that the caller knows how to extract this.
 }
 
-\references{\url{http://www.w3.org/XML}, \url{http://www.jclark.com/xml}}
+\references{\url{https://www.w3.org/XML}, \url{http://www.jclark.com/xml}}
 \author{Duncan Temple Lang}
 \note{
  The libxml parser can read URLs via http or ftp.
@@ -371,9 +371,10 @@ local to it and that the caller knows how to extract this.
 \dontrun{
   # Parse the text rather than a file or URL by reading the URL's contents
   # and making it a single string. Then call xmlEventParse
-xmlURL <- "http://www.omegahat.net/Scripts/Data/mtcars.xml"
-xmlText <- paste(scan(xmlURL, what="",sep="\n"),"\n",collapse="\n")
-xmlEventParse(xmlText, asText=TRUE)
+xmlURL <- "https://raw.githubusercontent.com/omegahat/XML/master/inst/exampleData/mtcars.xml"
+xmlText <- paste(readLines(xmlURL), collapse = "\n")
+# xmlText <- paste(scan(xmlURL, what = "",sep="\n"),"\n",collapse="\n")
+xmlEventParse(xmlText, asText = TRUE)
 }
 
     # Using a state object to share mutable data across callbacks
@@ -387,8 +388,6 @@ zz <- xmlEventParse(f,
 print(zz)
 
 
-
-
     # Illustrate the startDocument and endDocument handlers.
 xmlEventParse(fileName,
                handlers = list(startDocument = function() {
@@ -400,23 +399,21 @@ xmlEventParse(fileName,
                saxVersion = 2)
 
 
-
-
 if(libxmlVersion()$major >= 2) {
-
 
  startElement = function(x, ...) cat(x, "\n")
 
- xmlEventParse(file(f), handlers = list(startElement = startElement))
-
+ con = file(f)
+ xmlEventParse(con, handlers = list(startElement = startElement))
+ close(con)
 
  # Parse with a function providing the input as needed.
- xmlConnection = 
+ xmlConnection =
   function(con) {
 
    if(is.character(con))
      con = file(con, "r")
-  
+
    if(isOpen(con, "r"))
      open(con, "r")
 
@@ -440,7 +437,7 @@ if(libxmlVersion()$major >= 2) {
     }
     if(length(tmp) == 0)
       return(tmp)
-  
+
     x = paste(x, collapse="")
 
     x
@@ -449,14 +446,19 @@ if(libxmlVersion()$major >= 2) {
 
  ff = xmlConnection(f)
  xmlEventParse(ff, handlers = list(startElement = startElement))
+ rm(ff)
+ gc()
+  # removing ff should garbage collect the connection.
+
 
   # Parse from a connection. Each time the parser needs more input, it
   # calls readLines(<con>, 1)
- xmlEventParse(file(f),  handlers = list(startElement = startElement))
-
+ con = file(f)
+ xmlEventParse(con,  handlers = list(startElement = startElement))
+ close(con)
 
   # using SAX 2
- h = list(startElement = function(name, attrs, namespace, allNamespaces){ 
+ h = list(startElement = function(name, attrs, namespace, allNamespaces){
                                  cat("Starting", name,"\n")
                                  if(length(attrs))
                                      print(attrs)
@@ -465,8 +467,8 @@ if(libxmlVersion()$major >= 2) {
                          },
           endElement = function(name, uri) {
                           cat("Finishing", name, "\n")
-            }) 
- xmlEventParse(system.file("exampleData", "namespaces.xml", package="XML"), 
+            })
+ xmlEventParse(system.file("exampleData", "namespaces.xml", package="XML"),
                handlers = h, saxVersion = 2)
 
 
@@ -488,14 +490,14 @@ if(libxmlVersion()$major >= 2) {
 
 
   filename = system.file("exampleData", "branch.xml", package="XML")
-   
+
   invisible(xmlEventParse(filename, branches = list(b = function(node) {print(names(node))})))
   invisible(xmlEventParse(filename, branches = list(b = function(node) {
                                                            print(xmlName(xmlChildren(node)[[1]]))
                                                         })))
 }
 
-  
+
   ############################################
   # Stopping the parser mid-way and an example of using XMLParserContextFunction.
 
@@ -508,9 +510,9 @@ if(libxmlVersion()$major >= 2) {
 	   xmlStopParser(ctxt)
       }
   }
-  class(startElement) = "XMLParserContextFunction"  
+  class(startElement) = "XMLParserContextFunction"
   endElement =
-  function(name, ...) 
+  function(name, ...)
     cat("ending", name, "\n")
 
   fileName = system.file("exampleData", "catalog.xml", package = "XML")

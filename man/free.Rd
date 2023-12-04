@@ -30,12 +30,12 @@ free(obj)
 }
 \value{
   An updated version of the object with the external address set to NIL.
- This is up to the individual methods. 
+ This is up to the individual methods.
 }
 
 \author{ Duncan Temple Lang}
 \seealso{
-\code{\link{xmlTreeParse}} with \code{useInternalNodes = TRUE} 
+\code{\link{xmlTreeParse}} with \code{useInternalNodes = TRUE}
 }
 \examples{
  f = system.file("exampleData", "boxplot.svg", package = "XML")

@@ -18,7 +18,7 @@ R_fixDummyNS(SEXP r_node, SEXP r_recursive)
 {
     xmlNodePtr node;
     int status;
-    node = (xmlNodePtr) R_ExternalPtrAddr(r_node);	
+    node = (xmlNodePtr) R_ExternalPtrAddr(r_node);
     status = fixDummyNS(node, LOGICAL(r_recursive)[0]);
     return(ScalarInteger(status));
 }
@@ -29,7 +29,7 @@ fixDummyNS(xmlNodePtr node, int recursive)
     xmlNs *ns = node->ns;
     int count = 0;
 
-    if(ns && strcmp(ns->href, "<dummy>") == 0)
+    if(ns && strcmp((const char *) ns->href, "<dummy>") == 0)
 	count = setDummyNS(node, ns->prefix);
 
     if(recursive)  {
@@ -72,7 +72,7 @@ findNSByPrefix(xmlNodePtr node, const xmlChar *prefix)
 	if((!prefix || !prefix[0]) && !ptr->prefix)
 	    return(ptr);
 
-	if(prefix && ptr->prefix && strcmp(ptr->prefix, prefix) == 0)
+	if(prefix && ptr->prefix && xmlStrcmp(ptr->prefix, prefix) == 0)
 	    return(ptr);
 	ptr = ptr->next;
     }
@@ -105,7 +105,7 @@ R_getAncestorDefaultNSDef(SEXP r_node, SEXP r_recursive)
 
    node = cur->parent;
 
-   while(node && (node->type != XML_DOCUMENT_NODE && 
+   while(node && (node->type != XML_DOCUMENT_NODE &&
 		  node->type != XML_HTML_DOCUMENT_NODE)) {  /* Need to check for HTML_DOC or XML_DOC ?*/
        ans = findNSByPrefix(node, NULL);
        if(ans)

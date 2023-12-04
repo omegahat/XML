@@ -78,16 +78,14 @@ saveXML(doc, file=NULL, compression=0, indent=TRUE, prefix = '<?xml version="1.0
  \code{saveXML} is a generic function that allows one to call
  the rendering operation with either the top-level node
  of the DOM or of the document object (of class \code{XMLInternalDocument}
- that is used to 
- accumulate the nodes and with which the developer 
- adds nodes.
+ that is used to accumulate the nodes and with which the developer adds nodes.
 }
 \value{
  If \code{file} is not specified, the result is a character string containing
  the resulting XML content.
- If \code{file} is passed in the call, 
+ If \code{file} is passed in the call,
 }
-\references{\url{http://www.w3.org/XML}, \url{http://www.omegahat.net/RSXML}}
+\references{\url{https://www.w3.org/XML}, \url{https://github.com/omegahat/XML}}
 \author{Duncan Temple Lang}
 
 \seealso{
@@ -119,8 +117,7 @@ con$addTag("number", "582-3217")
 con$closeTag() # phone
 con$closeTag() # address
 
-saveXML(con$value(), file="out.xml")
-
+saveXML(con$value(), file = file.path(tempdir(), "out.xml"))
 
 # Work with entities
 

@@ -68,7 +68,7 @@ readHTMLTable(doc, header = NA,
   \item{trim}{a logical value indicating whether to remove leading and
  trailing white space from the content cells.}
   \item{elFun}{a function which, if specified, is called when converting
-     each cell. Currently, only the node is specified. In the future, we might 
+     each cell. Currently, only the node is specified. In the future, we might
      additionally pass the index of the column so that the function has
     some context, e.g. whether the value is a row label or a regular
     value, or if the caller knows the type of columns.
@@ -90,21 +90,21 @@ readHTMLTable(doc, header = NA,
   If a single HTML node is provided
 }
 \references{
-HTML4.0 specification  
+HTML4.0 specification
 }
 \author{Duncan Temple Lang}
 \seealso{
   \code{\link{htmlParse}}
   \code{\link{getNodeSet}}
-  \code{\link{xpathSApply}}    
+  \code{\link{xpathSApply}}
 }
 \examples{
 # u = "http://en.wikipedia.org/wiki/World_population"
 
-  u = "http://www.inflationdata.com/Inflation/Consumer_Price_Index/HistoricalCPI.aspx"
-  zz = readHTMLTable(u)
+  u = "https://www.inflationdata.com/Inflation/Consumer_Price_Index/HistoricalCPI.aspx"
+  zz = readHTMLTable( paste(readLines(u), collapse = "\n" ))
        # guard against the structure of the page changing.
-  if(any(i <- sapply(zz, function(x) if(is.null(x)) 0 else ncol(x)) == 14)){ 
+  if(any(i <- sapply(zz, function(x) if(is.null(x)) 0 else ncol(x)) == 14)){
     zz = zz[[which(i)[1]]]  # 4th table
         # convert columns to numeric.  Could use colClasses in the call to readHTMLTable()
     zz[-1] = lapply(zz[-1], function(x) as.numeric(gsub(".* ", "", as.character(x))))
@@ -112,10 +112,12 @@ HTML4.0 specification
   }
 
 
+
+\dontrun{
 # From Marsh Feldman on R-help
 doc <- "http://www.nber.org/cycles/cyclesmain.html"
      # The  main table is the second one because it's embedded in the page table.
-table <- getNodeSet(htmlParse(doc),"//table") [[2]]   
+table <- getNodeSet(htmlParse(doc),"//table") [[2]]
 xt <- readHTMLTable(table,
                     header = c("peak","trough","contraction",
                                "expansion","trough2trough","peak2peak"),
@@ -123,6 +125,7 @@ xt <- readHTMLTable(table,
                                    "character","character","character"),
                     trim = TRUE, stringsAsFactors = FALSE
                    )
+}
 
 
 if(FALSE) {
@@ -136,16 +139,9 @@ if(FALSE) {
 }
 
 
-if(require(RCurl) && url.exists("http://www.omegahat.net/RCurl/testPassword/table.html")) {
-  tt =  getURL("http://www.omegahat.net/RCurl/testPassword/table.html",  userpwd = "bob:duncantl")
-  readHTMLTable(tt)
-}
 
-
-
-if(require(RCurl)) {
  u = "https://en.wikipedia.org/wiki/List_of_countries_by_population"
- doc = htmlParse( getURLContent( u ) )
+ doc = htmlParse( readLines(u) )
  tables = readHTMLTable(doc)
  names(tables)
 
@@ -175,7 +171,15 @@ if(require(RCurl)) {
 
  tb = readHTMLTable(tableNodes[[2]], elFun = tryAsInteger,
                        colClasses = c("character", rep("integer", 9)))
+
+
+\dontrun{
+  if(require(RCurl) && url.exists("http://www.omegahat.net/RCurl/testPassword/table.html")) {
+     tt =  getURL("http://www.omegahat.net/RCurl/testPassword/table.html",  userpwd = "bob:duncantl")
+     readHTMLTable(tt)
+  }
 }
+
 }
 \keyword{IO}
 \keyword{data}

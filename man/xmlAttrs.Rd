@@ -10,7 +10,7 @@
 \alias{xmlAttrs.XMLInternalNode}
 \title{ Get the list of attributes of an XML node. }
 \description{
- This returns a named character vector giving the 
+ This returns a named character vector giving the
  name-value pairs of attributes of an XMLNode object which is part of
  an XML document.
 }
@@ -23,8 +23,8 @@
 \arguments{
   \item{node}{The \code{XMLNode} object
     whose attributes are to be extracted. }
-  \item{append}{a logical value indicating whether to add the attributes in \code{value} to the existing attributes 
-   within the XML node, or to replace the set of any existing attributes with this new set, i.e. remove the existing ones and 
+  \item{append}{a logical value indicating whether to add the attributes in \code{value} to the existing attributes
+   within the XML node, or to replace the set of any existing attributes with this new set, i.e. remove the existing ones and
    then set the attributes with the contents of \code{value}.}
   \item{...}{additional arguments for the specific methods. For XML
     internal nodes, these are \code{addNamespacePrefix} and
@@ -38,19 +38,19 @@
 }
 \value{
 A named character vector, where the names
-are the attribute names and the 
+are the attribute names and the
 elements are the corresponding values.
 This corresponds to the (attr<i>, "value<i>")
 pairs in the XML tag
 \code{<tag attr1="value1"  attr2="value2"}
 }
-\references{\url{http://www.w3.org} }
+\references{\url{https://www.w3.org} }
 \author{Duncan Temple Lang}
 \seealso{ \code{\link{xmlChildren}}, \code{\link{xmlSize}},
 \code{\link{xmlName}}}
 
 \examples{
- fileName <- system.file("exampleData", "mtcars.xml", package="XML") 
+ fileName <- system.file("exampleData", "mtcars.xml", package="XML")
  doc <- xmlTreeParse(fileName)
 
  xmlAttrs(xmlRoot(doc))

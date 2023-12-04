@@ -12,7 +12,7 @@
   R object in some intelligent manner.
   For example, we represent a vector as a table
   and we represent a matrix also as a table.
-  
+
 }
 \usage{
 toHTML(x, context = NULL)

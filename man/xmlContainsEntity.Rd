@@ -22,11 +22,11 @@ DTDs, entities and elements.
 }
 \value{
  A logical value indicating whether the entry
-was found in the appropriate list of 
+was found in the appropriate list of
 entitiy or element definitions.
 }
-\references{\url{http://www.w3.org/XML}, \url{http://www.jclark.com/xml},
-\url{http://www.omegahat.net}  }
+\references{\url{https://www.w3.org/XML}, 
+            \url{https://github.com/omegahat/XML}  }
 \author{ Duncan Temple Lang }
 \seealso{ \code{\link{parseDTD}},
 \code{\link{dtdEntity}},
@@ -36,7 +36,7 @@ entitiy or element definitions.
 \examples{
  dtdFile <- system.file("exampleData", "foo.dtd", package="XML")
  foo.dtd <- parseDTD(dtdFile)
- 
+
   # Look for entities.
  xmlContainsEntity("foo", foo.dtd)
  xmlContainsEntity("bar", foo.dtd)

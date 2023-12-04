@@ -2,7 +2,7 @@
 \alias{getXMLErrors}
 \title{Get XML/HTML document parse errors}
 \description{
- This function is intended to be a convenience for 
+ This function is intended to be a convenience for
 finding all the errors in an XML or HTML document due
 to being malformed, i.e. missing quotes on attributes,
 non-terminated elements/nodes, incorrectly terminated
@@ -33,12 +33,7 @@ getXMLErrors(filename, parse = xmlParse, ...)
 }
 \examples{
      # Get the "errors" in the HTML that was generated from this Rd file
-  getXMLErrors(system.file("html", "getXMLErrors.html", package = "XML"))
-
-\dontrun{
-  getXMLErrors("http://www.omegahat.net/index.html")
-}
-
+  getXMLErrors(system.file("html/getXMLErrors.html", package = "XML"))
 }
 \keyword{IO}
 \keyword{programming}

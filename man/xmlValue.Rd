@@ -40,12 +40,11 @@ xmlValue(x, ignoreComments = FALSE, recursive = TRUE,
    trailing white space when returning the string value}
 }
 \value{
- The object stored in the 
- \code{value} slot of the \code{XMLNode} object.
+ The object stored in the \code{value} slot of the \code{XMLNode} object.
  This is typically a string.
 }
-\references{\url{http://www.w3.org/XML}, \url{http://www.jclark.com/xml},
-\url{http://www.omegahat.net}  }
+\references{\url{https://www.w3.org/XML}, \url{http://www.jclark.com/xml},
+            \url{https://github.com/omegahat/XML}  }
 \author{ Duncan Temple Lang }
 
 \seealso{

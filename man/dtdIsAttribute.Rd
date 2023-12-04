@@ -20,15 +20,15 @@ specifically \code{element}.}
 
 \value{
  A logical value indicating if the
-list of attributes suppported by the 
+list of attributes suppported by the
 specified element has an entry named
 \code{name}.
 This does indicate what type of value
 that attribute has, whether it is required, implied,
 fixed, etc.
 }
-\references{\url{http://www.w3.org/XML}, \url{http://www.jclark.com/xml},
-\url{http://www.omegahat.net}  }
+\references{\url{https://www.w3.org/XML}, \url{http://www.jclark.com/xml},
+\url{http://github.com/omegahat/XML}  }
 \author{ Duncan Temple Lang }
 
 \seealso{

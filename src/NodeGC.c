@@ -6,13 +6,13 @@
  i.e. that have been returned to R across the .Call() interface.
  Each time a node is returned, we increment the number of references
  to that node by incrementing a table in the xmlDocPtr.
- Each time these R objects are garbage collected, we decrement the 
+ Each time these R objects are garbage collected, we decrement the
  reference count.  When the number of references to that node go to 0,
- we remove that entry from the table. When all the node entries 
+ we remove that entry from the table. When all the node entries
  are removed and the document itself is no longer being pointed to,
  we free the document.
 
- What about circularity? Does it occur? 
+ What about circularity? Does it occur?
  What happens when we reparent a node?
 
  What happens when we put a node into an R object
@@ -23,7 +23,7 @@
 */
 
 
-/* 
+/*
   This now contains the code related to our memory management.
  */
 
@@ -50,7 +50,7 @@ void R_xmlFreeDoc(SEXP ref)
 	      return;
 	  }
       }
-      
+
 #ifdef R_XML_DEBUG
       const xmlChar *url = doc->URL ? doc->URL : (doc->name ? doc->name : (const xmlChar *)"?? (internally created)");
       fprintf(stderr, "Cleaning up document %p, %s, has children %d\n", (void *) doc, url, (int) (doc->children != NULL));
@@ -73,7 +73,7 @@ void R_xmlFreeDoc(SEXP ref)
 SEXP
 RS_XML_freeDoc(SEXP ref)
 {
-    R_xmlFreeDoc(ref); 
+    R_xmlFreeDoc(ref);
     return(R_NilValue);
 }
 
@@ -83,7 +83,7 @@ RS_XML_forceFreeDoc(SEXP ref)
 {
     xmlDocPtr doc;
     doc = (xmlDocPtr) R_ExternalPtrAddr(ref);
-    xmlFreeDoc(doc); 
+    xmlFreeDoc(doc);
     return(R_NilValue);
 }
 
@@ -124,17 +124,17 @@ int R_XML_MemoryMgrMarker = 1010101011;
 int R_XML_NoMemoryMgmt = 111111111;
 
 /*
-  This returns a value that indicates whether we should 
+  This returns a value that indicates whether we should
   add a finalizer and put the XML node under a C finalizer
   to reduce the reference count.
   user is an R object that should be an integer vector of length
   1 and should be 0, 1 or NA  (effectively a logical)
   If it is NA, we consult the document object in which  the node
   is located (or NULL if not part of a document). This document
-  object can have a value in the _private field that tells us 
-  no to 
+  object can have a value in the _private field that tells us
+  no to
  */
-int 
+int
 R_XML_getManageMemory(SEXP user, xmlDocPtr doc, xmlNodePtr node)
 {
 
@@ -149,7 +149,7 @@ R_XML_getManageMemory(SEXP user, xmlDocPtr doc, xmlNodePtr node)
 	  manage = 1;
         else
 	  manage = doc->_private != &R_XML_NoMemoryMgmt;
-    }       
+    }
 #ifdef R_XML_DEBUG
     if(manage)
 	fprintf(stderr, "getManageMemory (%p) %d  (type = %d, name = %s)\n", doc, manage, node->type, node->name);fflush(stderr);
@@ -178,7 +178,7 @@ initDocRefCounter(xmlDocPtr doc)
     val[1] = (int) R_MEMORY_MANAGER_MARKER;
 }
 
-void 
+void
 incrementDocRefBy(xmlDocPtr doc, int num)
 {
     int *val;
@@ -196,7 +196,7 @@ incrementDocRefBy(xmlDocPtr doc, int num)
 
 void
 incrementDocRef(xmlDocPtr doc)
-{ 
+{
   incrementDocRefBy(doc, 1);
 }
 
@@ -265,7 +265,7 @@ int
 internal_decrementNodeRefCount(xmlNodePtr node)
 {
     int *val, status = 0;
-       /* */    
+       /* */
     if(!node || IS_NOT_OUR_NODE_TO_TOUCH(node))
                                  /* if node->_private == NULL, should
 				  * we free this node?, i.e. if it is
@@ -285,15 +285,15 @@ internal_decrementNodeRefCount(xmlNodePtr node)
         count memory altogether.
         Now that _we_ no longer need the node, perhaps we can free it.
         But we have to make certain that we don't free it if
-         a) it is a child of another node or 
+         a) it is a child of another node or
          b) if it is within a document and that document is still "in  play".
               To determine if the document is "in play" we look at it's
-              reference count. 
+              reference count.
               We decrement it by one since we added one to it for this
               node.
               If that makes the document's reference count 0, then we
               free it.
-      
+
      */
     val = (int *) node->_private;
     (*val)--;
@@ -312,7 +312,7 @@ internal_decrementNodeRefCount(xmlNodePtr node)
 #ifdef R_XML_DEBUG
 		fprintf(stderr, "releasing document (for node) %p %s (%s)\n", node->doc, node->doc->URL ? node->doc->URL : "?", val ? "has zero count" : "no count");fflush(stderr);
 #endif
-		if(val) 
+		if(val)
                     free(node->doc->_private);
 		node->doc->_private = NULL;
 		xmlFreeDoc(node->doc);
@@ -335,7 +335,7 @@ internal_decrementNodeRefCount(xmlNodePtr node)
 	} else {
             /* So we have a parent.  But what if that parent is not
                being held as an R variable. We need to free the node.
-               We need to make this smarter to see what parts of the 
+               We need to make this smarter to see what parts of the
                tree we can remove.  For instance, we might be holding
                onto this one, but not the parent, but that parent has
                a second child which is being held onto.
@@ -344,7 +344,7 @@ internal_decrementNodeRefCount(xmlNodePtr node)
             */
 	    int hold;
             xmlNodePtr p = node->parent;
-	    while(p->parent) 
+	    while(p->parent)
                 p = p->parent;
 
 	    hold = checkDescendantsInR(p, 0);
@@ -355,7 +355,7 @@ internal_decrementNodeRefCount(xmlNodePtr node)
 		xmlFree(p); //XXX xmlFree() or xmlFreeNode() ?
 		status = 1;
 	    }
-        
+
 	}
     }
 
@@ -408,7 +408,7 @@ R_clearNodeMemoryManagement(SEXP r_node)
    xmlNodePtr node = (xmlNodePtr) R_ExternalPtrAddr(r_node);
    int val;
 
-   if(!node) 
+   if(!node)
        return(ScalarInteger(-1));
 
    val = clearNodeMemoryManagement(node);
@@ -424,7 +424,7 @@ R_xmlRefCountEnabled()
   int ans =
 #ifdef XML_REF_COUNT_NODES
       1;
-#else 
+#else
       0;
 #endif
       return(ScalarLogical(ans));
