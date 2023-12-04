@@ -75,7 +75,7 @@ and handed to the parser as content only.}
 }
 \references{ \url{https://www.w3.org} }
 \author{Duncan Temple Lang <dtemplelang@ucdavis.edu>}
-\note{Needs libxml (currently version 1.8.7)}
+\note{Needs libxml/libxml2 (currently version 1.8.7)}
 
 \section{WARNING}{Errors in the DTD are stored as warnings for programmatic access.}
 
@@ -83,18 +83,13 @@ and handed to the parser as content only.}
  WritingXML.html in the distribution.}
 
 \examples{
-dtdFile <- system.file("exampleData", "foo.dtd", package="XML")
-parseDTD(dtdFile)
+ # ff <- system.file("examples/DatasetByRecord.dtd", package = "XML")
 
-txt <- readLines(dtdFile)
-txt <- paste(txt,  collapse="\n")
-d <- parseDTD(txt, asText=TRUE)
+ dtdFile <- system.file("exampleData", "foo.dtd", package="XML")
+ d1 = parseDTD(dtdFile)
 
-
-\dontrun{
- url <- system.file("examples/DatasetByRecord.dtd", package = "XML")
- d <- parseDTD(url, asText = FALSE)
-}
+ txt <- paste(readLines(dtdFile), collapse = "\n")
+ d2 <- parseDTD(txt, asText = TRUE)
 }
 \keyword{file}
 \keyword{IO}
