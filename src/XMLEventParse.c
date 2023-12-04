@@ -47,9 +47,7 @@ int RS_XML(isStandAloneHandler)(void *ctx);
 void RS_XML(warningHandler)(void *ctx, const char *msg, ...);
 void RS_XML(errorHandler)(void *ctx, const char *format, ...);
 void RS_XML(fatalErrorHandler)(void *ctx, const char *msg, ...);
-void RS_XML(structuredErrorHandler)(void *ctx, xmlErrorPtr err);
-
-
+void RS_XML(structuredErrorHandler)(void *ctx, const xmlError *err);
 
 
 static void RS_XML(initXMLParserHandler)(xmlSAXHandlerPtr xmlParserHandler, int saxVersion);
@@ -586,10 +584,12 @@ RS_XML(xmlSAX2EndElementNs)(void * ctx,
 
 
 //??? #if 0 this out?
+#if 0
 static void
 RS_XML(xmlSAX2StartDocument)(void *userData)
 {
 }
+#endif
 
 void
 RS_XML(initXMLParserHandler)(xmlSAXHandlerPtr xmlParserHandler, int saxVersion)
@@ -605,7 +605,7 @@ RS_XML(initXMLParserHandler)(xmlSAXHandlerPtr xmlParserHandler, int saxVersion)
      xmlParserHandler->startElement = NULL;
      xmlParserHandler->endElement = NULL;
 
-     xmlParserHandler->serror = RS_XML(structuredErrorHandler);
+     xmlParserHandler->serror = &(RS_XML(structuredErrorHandler));
 
   } else {
      xmlParserHandler->startElement = RS_XML(startElementHandler);
@@ -850,7 +850,7 @@ RS_XML(errorHandler)(void *ctx, const char *format, ...)
 }
 
 void
-RS_XML(structuredErrorHandler)(void *ctx, xmlErrorPtr err)
+RS_XML(structuredErrorHandler)(void *ctx, const xmlError *err)
 {
    if(err->level == XML_ERR_FATAL) {
        Rf_error("Error in the XML event driven parser (line = %d, column = %d): %s",
