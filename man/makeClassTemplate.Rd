@@ -53,9 +53,8 @@ makeClassTemplate(xnode, types = character(), default = "ANY",
  \code{\link{xmlToS4}}
 }
 \examples{
- txt =
- "<doc><part><name>ABC</name><type>XYZ</type><cost>3.54</cost>\
-<status>available</status></part></doc>"
+ txt = paste0("<doc><part><name>ABC</name><type>XYZ</type>",
+              "<cost>3.54</cost><status>available</status></part></doc>")
  doc = xmlParse(txt)
 
  code = makeClassTemplate(xmlRoot(doc)[[1]], types = c(cost = "numeric"))
