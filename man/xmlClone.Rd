@@ -42,7 +42,7 @@ xmlClone(node, recursive = TRUE, addFinalizer = FALSE, ...)
   \code{\link{newXMLDoc}}
 }
 \examples{
-  txt = paste0('<doc><author  id="dtl"><firstname>Duncan</firstname>'
+  txt = paste0('<doc><author  id="dtl"><firstname>Duncan</firstname>',
                '<surname>Temple  Lang</surname></author></doc>')
   doc = xmlParse(txt)
 
