@@ -2,8 +2,8 @@
 #  useDynLib(XML)
 
 import(methods)
-import(utils)
-import(grDevices)
+importFrom(utils, menu, URLdecode)
+importFrom(grDevices, dev.off, png, jpeg, pdf)
 
 
 export(
