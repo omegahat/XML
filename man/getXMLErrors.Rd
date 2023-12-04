@@ -33,12 +33,7 @@ getXMLErrors(filename, parse = xmlParse, ...)
 }
 \examples{
      # Get the "errors" in the HTML that was generated from this Rd file
-  getXMLErrors(system.file("html", "getXMLErrors.html", package = "XML"))
-
-\dontrun{
-  getXMLErrors("http://www.omegahat.net/index.html")
-}
-
+  getXMLErrors(system.file("html/getXMLErrors.html", package = "XML"))
 }
 \keyword{IO}
 \keyword{programming}
