@@ -42,7 +42,7 @@ Class \code{\linkS4class{oldClass}}, directly.
   an XPath expression.
 }
 \references{
- XPath  \url{http://www.w3.org/TR/xpath}
+ XPath \url{https://www.w3.org/TR/xpath}
 }
 \seealso{
 

@@ -74,7 +74,7 @@ getDefaultNamespace(doc, ns = xmlNamespaceDefinitions(doc, simplify = simplify),
   namespace definition. For default namespaces, i.e. those that have no
   prefix/alias, the name is \code{""}.
 }
-\references{\url{http://www.w3.org/XML}}
+\references{\url{https://www.w3.org/XML}}
 \author{ Duncan Temple Lang }
 
 \seealso{

@@ -34,8 +34,8 @@ text node, comment, entity references and definitions, etc.
   \item{cdata}{}
   \item{dom}{}
 }
-\references{\url{http://www.w3.org/XML}, \url{http://www.jclark.com/xml},
-\url{http://www.omegahat.net}  }
+\references{\url{https://www.w3.org/XML}, \url{http://www.jclark.com/xml},
+             \url{https://github.com/omegahat/XML}  }
 \author{ Duncan Temple Lang }
 
 \seealso{

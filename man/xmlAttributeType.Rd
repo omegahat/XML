@@ -25,7 +25,7 @@ if this attribute is defined as being a value from an enumerated set.}
 \value{
   A string identifying the type for the sspecified attributed.
 }
-\references{\url{http://www.w3.org/XML}, \url{http://www.omegahat.net/RSXML}}
+\references{\url{https://www.w3.org/XML}, \url{https://github.com/omegahat/XML}}
 \author{Duncan Temple Lang}
 
 \seealso{

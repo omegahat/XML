@@ -39,7 +39,7 @@
   }
 }
 
-\references{\url{http://www.w3.org/XML}, \url{http://www.xmlsoft.org}}
+\references{\url{https://www.w3.org/XML}, \url{http://www.xmlsoft.org}}
 \author{Duncan Temple Lang}
 
 

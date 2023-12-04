@@ -48,7 +48,7 @@ represent an XML node, either directly in S or a reference to an internal
 No methods defined with class "XMLNode" in the signature.
 }
 
-\references{\url{http://www.w3.org/XML}, \url{http://www.xmlsoft.org}}
+\references{\url{https://www.w3.org/XML}, \url{http://www.xmlsoft.org}}
 \author{Duncan Temple Lang}
 
 \seealso{

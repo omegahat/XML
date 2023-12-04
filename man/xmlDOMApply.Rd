@@ -48,8 +48,8 @@ over the nodes in that tree.
 \code{dom} object passed to it.
 }
 \author{Duncan Temple Lang}
-\references{\url{http://www.w3.org/XML}, \url{http://www.jclark.com/xml},
-\url{http://www.omegahat.net}  }
+\references{\url{https://www.w3.org/XML}, \url{http://www.jclark.com/xml},
+            \url{https://github.com/omegahat/XML}  }
 \seealso{\link{xmlTreeParse}}
 
 \examples{
