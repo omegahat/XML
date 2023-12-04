@@ -48,14 +48,18 @@ getHTMLExternalFiles(doc, xpQuery = c("//img/@src", "//link/@href",
 Duncan Temple Lang
 }
 \seealso{
-  \code{\link{getXIncludes}}
+  \code{\link{getXIncludes}},
+  \code{\link{getRelativeURL}}
 }
 \examples{
-  getHTMLLinks("http://www.omegahat.net")
 
-  getHTMLLinks("http://www.omegahat.net/RSXML")
+  f = system.file("examples/index.html", package = "XML")
+  getHTMLLinks(f)
 
-  unique(getHTMLExternalFiles("http://www.omegahat.net"))
+  txt = readLines("https://www.r-project.org")
+  getHTMLLinks(txt)
+
+  unique(getHTMLExternalFiles(txt))
 }
 \keyword{IO}
 \keyword{programming}
