@@ -116,10 +116,8 @@ RS_XML(Parse)(USER_OBJECT_ fileName, USER_OBJECT_ handlers, USER_OBJECT_ endElem
     name = CHARACTER_DATA(fileName)[0];
 #endif
     file = fopen(name,"r");
-    if(file == NULL) {
-      PROBLEM "Can't find file %s", name
-      ERROR;
-    }
+    if(file == NULL) 
+	Rf_error("Can't find file %s", name);
 
   } else
 #endif /* ifdef LIBEXPAT */
@@ -212,14 +210,17 @@ RS_XML(entityDeclarationHandler)(void *userData, const XML_Char *entityName,
    xml_args[2] = systemId; xml_args[3] = publicId;
    xml_args[4] = notationName;
 
-  opArgs = NEW_LIST(num);
-  for(i =0;i < num; i++) {
-   SET_VECTOR_ELT(opArgs, i,  NEW_CHARACTER(1));
-   SET_STRING_ELT(VECTOR_ELT(opArgs, i), 0, ENC_COPY_TO_USER_STRING(xml_args[i] ? xml_args[i] :  ""));
-  }
+   opArgs = PROTECT(NEW_LIST(num));
+   for(i = 0; i < num ; i++) {
+       SET_VECTOR_ELT(opArgs, i,  NEW_CHARACTER(1));
+       // CRAN cast
+       SET_STRING_ELT(VECTOR_ELT(opArgs, i), 0, ENC_COPY_TO_USER_STRING(xml_args[i] ? xml_args[i] : ""));
+   }
 
-  RS_XML(callUserFunction)(HANDLER_FUN_NAME(parserData, "entityDeclaration"),
+   RS_XML(callUserFunction)(HANDLER_FUN_NAME(parserData, "entityDeclaration"),
                            (const char*)NULL, parserData, opArgs);
+
+   UNPROTECT(1);
 }
 
 
@@ -293,12 +294,14 @@ void RS_XML(endElement)(void *userData, const char *name)
 
   PROTECT(opArgs = NEW_LIST(1));
   SET_VECTOR_ELT(opArgs, 0, NEW_CHARACTER(1));
-     SET_STRING_ELT(VECTOR_ELT(opArgs, 0), 0, ENC_COPY_TO_USER_STRING(name));
+  SET_STRING_ELT(VECTOR_ELT(opArgs, 0), 0, ENC_COPY_TO_USER_STRING(name));
 
   fun = findEndElementFun(name, rinfo);
   if(fun)  {
       USER_OBJECT_ val = RS_XML(invokeFunction)(fun, opArgs, rinfo->stateObject, rinfo->ctx);
+      PROTECT(val);
       updateState(val, rinfo);
+      UNPROTECT(1);
   }
   else
      RS_XML(callUserFunction)(HANDLER_FUN_NAME(rinfo, "endElement"), NULL, ((RS_XMLParserData*) userData), opArgs);
@@ -357,14 +360,14 @@ fixedTrim(char *str,  int len, int *start, int *end)
     return(str);
 
    /* Jump to the end */
-  tmp = str + len - 1;
+  tmp = str + len - 1; //XXX CRAN has - 2, I have - 1
   while(tmp >= str && isspace(*tmp)) {
       tmp--;
       (*end)--;
   }
-  if(tmp == str) {
+  
+  if(tmp == str) 
    return(str);
-  }
 
   tmp = str;
 
@@ -380,10 +383,11 @@ fixedTrim(char *str,  int len, int *start, int *end)
 void
 RS_XML(textHandler)(void *userData,  const XML_Char *s, int len)
 {
- char *tmpString, *tmp;
- USER_OBJECT_ opArgs = NULL;
- RS_XMLParserData *parserData = (RS_XMLParserData*)userData;
- DECL_ENCODING_FROM_EVENT_PARSER(parserData)
+    char *tmpString, *tmp;
+    USER_OBJECT_ opArgs = NULL;
+    RS_XMLParserData *parserData = (RS_XMLParserData*)userData;
+    DECL_ENCODING_FROM_EVENT_PARSER(parserData)
+    int nprot = 0;
 
    /* XXX Here is where we have to ignoreBlankLines and use the trim setting in parserData */
   if(parserData->current) {
@@ -402,7 +406,7 @@ RS_XML(textHandler)(void *userData,  const XML_Char *s, int len)
       tmpString = s;
 #endif
       if(newLen < 0)
-	tmp = strdup("");
+	  tmp = (xmlChar *) strdup("");
       else {
          tmp = (xmlChar *) S_alloc(newLen + 2, sizeof(xmlChar));
          memcpy(tmp, tmpString, newLen); tmp[newLen] = '\0';
@@ -416,24 +420,28 @@ RS_XML(textHandler)(void *userData,  const XML_Char *s, int len)
      <abc/>
      <next>
      */
- if(s == (XML_Char*)NULL || s[0] == (XML_Char)NULL || len == 0
+  if(s == (XML_Char*)NULL || s[0] == (XML_Char) 0 || len == 0
        || (len == 1 && ((const char *) s)[0] == '\n' && parserData->trim))
     return;
 
            /*XXX Deal with encoding, memory cleanup,
-             1 more than length so we can put a \0 on the end. */
+             1 more than length so we can put a \0 on the end.
+
+	     Should use R version now that we are not actively supporting S/Splus.
+	   */
     tmp = tmpString = (char*)calloc(len+1, sizeof(char));
     strncpy(tmpString, s, len);
 
     if(parserData->trim) {
       tmpString = trim(tmpString);
-      len = strlen(tmpString);
+      len = (int) strlen(tmpString);
     }
 
   if(len > 0 || parserData->ignoreBlankLines == 0 ) {
-    PROTECT(opArgs = NEW_LIST(1));
-     SET_VECTOR_ELT(opArgs, 0, NEW_CHARACTER(1));
-     SET_STRING_ELT(VECTOR_ELT(opArgs, 0), 0, ENC_COPY_TO_USER_STRING(tmpString));
+      PROTECT(opArgs = NEW_LIST(1));
+      nprot++;
+      SET_VECTOR_ELT(opArgs, 0, NEW_CHARACTER(1));
+      SET_STRING_ELT(VECTOR_ELT(opArgs, 0), 0, ENC_COPY_TO_USER_STRING(tmpString));
   }
 
   free(tmp);
@@ -441,11 +449,10 @@ RS_XML(textHandler)(void *userData,  const XML_Char *s, int len)
     /* If we are ignoring blanks and the potentially newly computed length is non-zero, then
        call the user function.
      */
-
-  if(opArgs != NULL) {
+  if(opArgs != NULL) 
       RS_XML(callUserFunction)(HANDLER_FUN_NAME(parserData, "text"), (const char *)NULL, ((RS_XMLParserData*) userData), opArgs);
-     UNPROTECT(1);
-  }
+  
+  UNPROTECT(nprot);  
 }
 
 
@@ -489,7 +496,7 @@ RS_XML(callUserFunction)(const char *opName, const char *preferredName, RS_XMLPa
 {
   USER_OBJECT_ fun = NULL, val;
   USER_OBJECT_ _userObject = parserData->methods;
-  int general = 0;
+  // int general = 0;
 
   R_CHECK_INTERRUPTS
 
@@ -498,8 +505,8 @@ RS_XML(callUserFunction)(const char *opName, const char *preferredName, RS_XMLPa
   }
 
   if(fun == NULL) {
-    general = 1;
-    fun = RS_XML(findFunction)(opName, _userObject);
+      // general = 1;
+      fun = RS_XML(findFunction)(opName, _userObject);
   }
 
   if(fun == NULL || isFunction(fun) == 0 ) {
@@ -508,8 +515,10 @@ RS_XML(callUserFunction)(const char *opName, const char *preferredName, RS_XMLPa
    return(NULL_USER_OBJECT);
   }
 
-  val = RS_XML(invokeFunction)(fun, opArgs, parserData->stateObject, parserData->ctx);
+  PROTECT(val = RS_XML(invokeFunction)(fun, opArgs, parserData->stateObject, parserData->ctx));
   updateState(val, parserData);
+  UNPROTECT(1);
+  
   return(val);
 }
 
