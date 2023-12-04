@@ -13,8 +13,8 @@
 }
 \usage{
 xmlSchemaValidate(schema, doc,
-                                 errorHandler = xmlErrorFun(),
-                                  options = 0L)
+                  errorHandler = xmlErrorFun(),
+                  options = 0L)
 
 schemaValidationErrorHandler()
 }
