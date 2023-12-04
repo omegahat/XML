@@ -455,10 +455,10 @@ xpathTolower(xmlXPathParserContextPtr ctxt, int nargs)
 
     xmlChar *str = xmlStrdup(obj->stringval);
 
-    xmlChar *ptr = str;
-     int i, n = xmlStrlen(str);
-     for(i = 0; i < n ; i++)
-	 str[i] = (xmlChar) tolower(str[i]);
+    // xmlChar *ptr = str;
+    int i, n = xmlStrlen(str);
+    for(i = 0; i < n ; i++)
+	str[i] = (xmlChar) tolower(str[i]);
 
     valuePush(ctxt, xmlXPathNewString(str));
 }
