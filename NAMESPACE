@@ -42,7 +42,6 @@ export(
  supportsExpat,
  supportsLibxml,
  text.SAX,
- toString.XMLNode,
  xmlApply,
  xmlAttributeType,
  xmlAttrs,
