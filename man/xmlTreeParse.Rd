@@ -479,11 +479,12 @@ m <- xmlTreeParse(fileName,
  fileName <- system.file("exampleData", "mtcars.xml", package="XML")
  doc <- xmlTreeParse(fileName,  handlers = (function() {
                                  vars <- character(0) ;
-                                list(variable=function(x, attrs) {
-                                                vars <<- c(vars, xmlValue(x[[1]]));
-                                                NULL},
-                                     startElement=function(x,attr){
-                                                   NULL
+                                list(variable = function(x, attrs) {
+                                                    vars <<- c(vars, xmlValue(x[[1]]));
+                                                     NULL
+                                                },
+                                     startElement = function(x,attr){
+                                                        NULL
                                                   },
                                      names = function() {
                                                  vars
@@ -497,13 +498,13 @@ m <- xmlTreeParse(fileName,
  doc <- xmlTreeParse(fileName, handlers = list(
                                   variable=function(x, attrs) {
                                              print(xmlValue(x[[1]])); TRUE
-                                           }), asTree=TRUE)
+                                           }), asTree = TRUE)
 
 
-  # This should raise an error.
+  # This should raise an error that we catch via try.
   try(xmlTreeParse(
             system.file("exampleData", "TestInvalid.xml", package="XML"),
-            validate=TRUE))
+            validate = TRUE))
 
 \dontrun{
  # Parse an XML document directly from a URL.
