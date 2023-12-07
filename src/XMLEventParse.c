@@ -47,7 +47,86 @@ int RS_XML(isStandAloneHandler)(void *ctx);
 void RS_XML(warningHandler)(void *ctx, const char *msg, ...);
 void RS_XML(errorHandler)(void *ctx, const char *format, ...);
 void RS_XML(fatalErrorHandler)(void *ctx, const char *msg, ...);
-void RS_XML(structuredErrorHandler)(void *ctx, const xmlError *err);
+
+void
+RS_XML(fatalErrorHandler)(void *ctx, const char *format, ...)
+{
+
+  const char *msg = "error message unavailable";
+  va_list args;
+  va_start(args, format);
+
+  if(strcmp(format, "%s") == 0)
+    msg = va_arg(args, char *);
+
+  va_end(args);
+
+  Rf_error("Fatal error in the XML event driven parser for %s: %s",
+	   ((RS_XMLParserData*) ctx)->fileName, msg);
+}
+
+void
+RS_XML(errorHandler)(void *ctx, const char *format, ...)
+{
+  const char *msg = "error message unavailable";
+  va_list args;
+  va_start(args, format);
+
+  if(strcmp(format, "%s") == 0)
+    msg = va_arg(args, char *);
+
+  va_end(args);
+
+  Rf_error("Error in the XML event driven parser for %s: %s",
+	   ((RS_XMLParserData*) ctx)->fileName, msg);
+}
+
+
+#if LIBXML_VERSION < 21200
+#define LCONST 
+#else
+#define LCONST const
+#endif
+
+void
+RS_XML(structuredErrorHandler)(void *ctx, LCONST xmlError *err)
+{
+   if(err->level == XML_ERR_FATAL) {
+       Rf_error("Error in the XML event driven parser (line = %d, column = %d): %s",
+		err->line, err->int2 , err->message);
+   } else {
+       Rf_warning("Error in the XML event driven parser (line = %d, column = %d): %s",
+		  err->line, err->int2 , err->message);
+   }
+}
+
+void
+RS_XML(warningHandler)(void *ctx, const char *msg, ...)
+{
+    Rf_warning("XML event driven parser warning from %s.",
+	       ((RS_XMLParserData*) ctx)->fileName);
+}
+
+
+
+SEXP
+RS_XML_xmlStopParser(SEXP r_context)
+{
+    xmlParserCtxtPtr context;
+
+    if(TYPEOF(r_context) != EXTPTRSXP || R_ExternalPtrTag(r_context) != Rf_install(XML_PARSER_CONTEXT_TYPE_NAME)) 
+	Rf_error("xmlStopParser requires an " XML_PARSER_CONTEXT_TYPE_NAME " object");
+
+    context = (xmlParserCtxtPtr) R_ExternalPtrAddr(r_context);
+
+    if(!context) 
+	Rf_error("NULL value passed to RS_XML_xmlStopParser. Is it a value from a previous session?");
+
+    xmlStopParser(context);
+    return(ScalarLogical(1));
+}
+
+
 
 
 static void RS_XML(initXMLParserHandler)(xmlSAXHandlerPtr xmlParserHandler, int saxVersion);
@@ -816,74 +895,4 @@ RS_XML(isStandAloneHandler)(void *ctx)
   return(1);
 }
 
-void
-RS_XML(fatalErrorHandler)(void *ctx, const char *format, ...)
-{
-
-  const char *msg = "error message unavailable";
-  va_list args;
-  va_start(args, format);
-
-  if(strcmp(format, "%s") == 0)
-    msg = va_arg(args, char *);
-
-  va_end(args);
-
-  Rf_error("Fatal error in the XML event driven parser for %s: %s",
-	   ((RS_XMLParserData*) ctx)->fileName, msg);
-}
-
-void
-RS_XML(errorHandler)(void *ctx, const char *format, ...)
-{
-  const char *msg = "error message unavailable";
-  va_list args;
-  va_start(args, format);
-
-  if(strcmp(format, "%s") == 0)
-    msg = va_arg(args, char *);
-
-  va_end(args);
-
-  Rf_error("Error in the XML event driven parser for %s: %s",
-	   ((RS_XMLParserData*) ctx)->fileName, msg);
-}
-
-void
-RS_XML(structuredErrorHandler)(void *ctx, const xmlError *err)
-{
-   if(err->level == XML_ERR_FATAL) {
-       Rf_error("Error in the XML event driven parser (line = %d, column = %d): %s",
-		err->line, err->int2 , err->message);
-   } else {
-       Rf_warning("Error in the XML event driven parser (line = %d, column = %d): %s",
-		  err->line, err->int2 , err->message);
-   }
-}
-
-void
-RS_XML(warningHandler)(void *ctx, const char *msg, ...)
-{
-    Rf_warning("XML event driven parser warning from %s.",
-	       ((RS_XMLParserData*) ctx)->fileName);
-}
-
-
-
-SEXP
-RS_XML_xmlStopParser(SEXP r_context)
-{
-    xmlParserCtxtPtr context;
-
-    if(TYPEOF(r_context) != EXTPTRSXP || R_ExternalPtrTag(r_context) != Rf_install(XML_PARSER_CONTEXT_TYPE_NAME)) 
-	Rf_error("xmlStopParser requires an " XML_PARSER_CONTEXT_TYPE_NAME " object");
-
-    context = (xmlParserCtxtPtr) R_ExternalPtrAddr(r_context);
-
-    if(!context) 
-	Rf_error("NULL value passed to RS_XML_xmlStopParser. Is it a value from a previous session?");
-
-    xmlStopParser(context);
-    return(ScalarLogical(1));
-}
 
