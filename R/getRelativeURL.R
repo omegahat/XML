@@ -48,11 +48,20 @@ function(u, baseURL, sep = "/", addBase = TRUE, simplify = TRUE, escapeQuery = F
 
 
       endsWithSlash = grepl("/$", b$path)
-
+      bdir <- if(endsWithSlash) b$path else dirname(b$path)
+      sep <- if(endsWithSlash) "" else sep
       if(endsWithSlash && grepl("^\\./", u))
           u = substring(u, 3)
+      
+      #handle ../ occurences
+      parent_levels <- gregexpr("\\.\\./",u)[[1]]
+      parent_levels <- parent_levels[parent_levels!=-1]
+      if(length(parent_levels)>0)
+        for(i in 1:length(parent_levels)) bdir <- dirname(bdir)
+        if(bdir=="/") bdir <- ""
+        u <- gsub("\\.\\./","",u)  
           
-      b$path = sprintf("%s%s%s", if(endsWithSlash) b$path else dirname(b$path), if(endsWithSlash) "" else sep, u)
+      b$path = sprintf("%s%s%s", bdir, sep, u)
         # handle .. in the path and try to collapse these.
       if(simplify && grepl("..", b$path, fixed = TRUE))
         b$path = simplifyPath(b$path)
